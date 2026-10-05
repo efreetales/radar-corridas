@@ -31,9 +31,8 @@ jobs:
       - name: Mostrar erros da compilação
         if: failure()
         run: |
-          grep -E "^e: |error:|What went wrong|Could not|> " build.log | head -40 | while IFS= read -r line; do
-            echo "::error::$line"
-          done
+          msg=$(grep -v "> Task" build.log | grep -E -A4 "^e: |error:|What went wrong" | head -60 | sed ':a;N;$!ba;s/%/%25/g;s/\r//g;s/\n/%0A/g')
+          echo "::error::$msg"
 
       - name: Renomear APK
         run: cp app/build/outputs/apk/debug/app-debug.apk RadarCorridas.apk
