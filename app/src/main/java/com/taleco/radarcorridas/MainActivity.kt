@@ -1,6 +1,11 @@
 package com.taleco.radarcorridas
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Build
+import android.os.PowerManager
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.Typeface
@@ -20,6 +25,8 @@ import android.widget.ScrollView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.button.MaterialButtonToggleGroup
@@ -65,6 +72,7 @@ class MainActivity : AppCompatActivity() {
         buildMetrics(col)
         buildCosts(col)
         buildAppearance(col)
+        buildTrips(col)
         buildData(col)
 
         val version = try {
@@ -82,6 +90,7 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         updateStatus()
         updateCount()
+        updateTripChecklist()
         refreshPreview()
     }
 
@@ -212,7 +221,15 @@ class MainActivity : AppCompatActivity() {
         card.addView(numberField("Km por litro", prefs.kmPerLiter) { prefs.kmPerLiter = it }, matchWrap(top = 10))
         card.addView(numberField("Preço do litro (R$)", prefs.fuelPrice) { prefs.fuelPrice = it }, matchWrap(top = 8))
         card.addView(
-            numberField("Outros custos por km (R$) — aluguel, manutenção", prefs.extraCostKm) { prefs.extraCostKm = it },
+            numberField("Aluguel ou parcela do carro por semana (R$) — 0 se não tiver", prefs.rentPerWeek) { prefs.rentPerWeek = it },
+            matchWrap(top = 8)
+        )
+        card.addView(
+            numberField("Km que você roda por semana (para dividir o aluguel)", prefs.kmPerWeek) { prefs.kmPerWeek = it },
+            matchWrap(top = 8)
+        )
+        card.addView(
+            numberField("Outros custos por km (R$) — manutenção, pneus, seguro", prefs.extraCostKm) { prefs.extraCostKm = it },
             matchWrap(top = 8)
         )
         costSummary = text("", 14f, Colors.TEXT, bold = true).apply { setPadding(0, dp(10), 0, 0) }
@@ -290,11 +307,11 @@ class MainActivity : AppCompatActivity() {
         ))
         countText = text("", 14f, Colors.TEXT).apply { setPadding(0, dp(8), 0, 0) }
         card.addView(countText)
-        card.addView(outlinedButton("Exportar ofertas (planilha CSV)").apply {
+        card.addView(outlinedButton("Exportar dados (ofertas, corridas e rotas)").apply {
             setOnClickListener {
-                if (!OfferLog.share(this@MainActivity, OfferLog.offersFile(this@MainActivity), "text/csv", "Ofertas — Radar Corridas")) {
-                    toast("Nenhuma oferta salva ainda")
-                }
+                val ctx = this@MainActivity
+                val files = listOf(OfferLog.offersFile(ctx), TripLog.tripsFile(ctx), TripLog.routesFile(ctx))
+                if (!OfferLog.shareAll(ctx, files, "Dados — Radar Corridas")) toast("Nenhum dado salvo ainda")
             }
         }, matchWrap(top = 6))
 
@@ -338,11 +355,97 @@ class MainActivity : AppCompatActivity() {
 
     private fun updateCount() {
         val n = OfferLog.offerCount(this)
-        countText.text = if (n == 1) "1 oferta salva" else "$n ofertas salvas"
+        val t = TripLog.count(this)
+        countText.text = (if (n == 1) "1 oferta salva" else "$n ofertas salvas") +
+            "  ·  " + (if (t == 1) "1 corrida registrada" else "$t corridas registradas")
+    }
+
+    // ---------- Corridas e percurso ----------
+
+    private lateinit var tripChecklist: TextView
+    private lateinit var tripPermBtn: MaterialButton
+
+    private fun has(perm: String) = ContextCompat.checkSelfPermission(this, perm) == PackageManager.PERMISSION_GRANTED
+
+    private fun hasLocation() = has(Manifest.permission.ACCESS_FINE_LOCATION)
+    private fun hasBackgroundLocation() =
+        Build.VERSION.SDK_INT < Build.VERSION_CODES.Q || has(Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+    private fun hasNotifications() =
+        Build.VERSION.SDK_INT < 33 || has(Manifest.permission.POST_NOTIFICATIONS)
+    private fun batteryFree(): Boolean {
+        val pm = getSystemService(PowerManager::class.java) ?: return true
+        return pm.isIgnoringBatteryOptimizations(packageName)
+    }
+
+    private fun buildTrips(col: LinearLayout) {
+        val card = section(col, "Corridas e percurso")
+        val sw = SwitchMaterial(this).apply {
+            text = "Registrar as corridas aceitas"
+            setTextColor(Colors.TEXT)
+            isChecked = prefs.trackTrips
+            setOnCheckedChangeListener { _, checked -> prefs.trackTrips = checked }
+        }
+        card.addView(sw, matchWrap())
+        card.addView(text(
+            "Quando você aceita uma corrida, o Radar liga o GPS e grava o percurso e os tempos: " +
+                "do aceite até chegar ao passageiro, a espera, a viagem até o destino. " +
+                "O GPS desliga sozinho quando a Uber volta para a tela inicial.",
+            12f, Colors.MUTED
+        ))
+        tripChecklist = text("", 14f, Colors.TEXT).apply { setPadding(0, dp(10), 0, 0) }
+        card.addView(tripChecklist)
+        tripPermBtn = MaterialButton(this).apply {
+            isAllCaps = false
+            setOnClickListener { nextPermissionStep() }
+        }
+        card.addView(tripPermBtn, matchWrap(top = 8))
+        updateTripChecklist()
+    }
+
+    private fun updateTripChecklist() {
+        if (!::tripChecklist.isInitialized) return
+        fun mark(ok: Boolean) = if (ok) "✅" else "❌"
+        tripChecklist.text = listOf(
+            "${mark(hasLocation())} Localização precisa",
+            "${mark(hasBackgroundLocation())} Localização \"o tempo todo\"",
+            "${mark(hasNotifications())} Notificações (aviso de GPS ligado)",
+            "${mark(batteryFree())} Sem restrição de bateria"
+        ).joinToString("\n")
+        val done = hasLocation() && hasBackgroundLocation() && hasNotifications() && batteryFree()
+        tripPermBtn.text = if (done) "Tudo pronto" else "Liberar próxima permissão"
+        tripPermBtn.isEnabled = !done
+    }
+
+    private fun nextPermissionStep() {
+        when {
+            !hasLocation() -> ActivityCompat.requestPermissions(
+                this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION), 10
+            )
+            !hasBackgroundLocation() -> {
+                toast("Escolha \"Permitir o tempo todo\"")
+                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_BACKGROUND_LOCATION), 11)
+            }
+            !hasNotifications() && Build.VERSION.SDK_INT >= 33 ->
+                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.POST_NOTIFICATIONS), 12)
+            !batteryFree() -> try {
+                startActivity(Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS, Uri.parse("package:$packageName")))
+            } catch (e: Exception) {
+                startActivity(Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS))
+            }
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        updateTripChecklist()
     }
 
     private fun updateCostSummary() {
-        costSummary.text = String.format(PT_BR, "Custo por km rodado: R$ %.2f", prefs.costPerKm)
+        val fuel = prefs.fuelPrice / prefs.kmPerLiter.coerceAtLeast(1f)
+        costSummary.text = String.format(
+            PT_BR, "Custo por km rodado: R$ %.2f\n(combustível R$ %.2f + aluguel R$ %.2f + outros R$ %.2f)",
+            prefs.costPerKm, fuel, prefs.rentPerKm, prefs.extraCostKm
+        )
     }
 
     private fun refreshPreview() {

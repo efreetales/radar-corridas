@@ -37,6 +37,7 @@ class RadarService : AccessibilityService() {
         /** Abaixo disso, consideramos que o app escondeu o texto da tela. */
         private const val MIN_VISIBLE_TEXTS = 3
         private const val IMAGE_READ_INTERVAL_MS = 1000L
+        private const val MAX_HIDDEN_READ_MS = 25_000L
     }
 
     private lateinit var prefs: Prefs
@@ -75,6 +76,7 @@ class RadarService : AccessibilityService() {
     private var lastImageReadAt = 0L
     private var watchPending = false
     private var lastImageDiag: String? = null
+    private var hiddenSince = 0L
 
     private val watchRunnable: Runnable = Runnable {
         watchPending = false
@@ -142,7 +144,13 @@ class RadarService : AccessibilityService() {
                 OfferLog.appendDiag(this, dump)
             }
         }
-        if (offer != null) handleOffer(offer) else handleNoOffer()
+        if (offer != null) {
+            handleOffer(offer)
+            TripTracker.onScreen(this, prefs, ScreenState.OFERTA, offer)
+        } else {
+            handleNoOffer()
+            TripTracker.onScreen(this, prefs, ScreenState.ESCONDIDA, null)
+        }
     }
 
     override fun onServiceConnected() {
@@ -180,6 +188,7 @@ class RadarService : AccessibilityService() {
 
     private fun cleanup() {
         handler.removeCallbacksAndMessages(null)
+        try { TripTracker.shutdown(this) } catch (_: Exception) {}
         if (instance === this) instance = null
         if (::overlay.isInitialized) {
             overlay.hideCard()
@@ -203,20 +212,36 @@ class RadarService : AccessibilityService() {
             offer = OfferParser.parse(app, texts)
             if (offer != null) break
         }
+        val now = System.currentTimeMillis()
         if (offer != null) {
+            hiddenSince = 0L
             handleOffer(offer)
+            TripTracker.onScreen(this, prefs, ScreenState.OFERTA, offer)
             return
         }
 
         // A Uber esconde o texto da tela de oferta: a janela aparece vazia.
-        // Nesse caso, lemos a oferta pela imagem da tela.
+        // Nesse caso, lemos a oferta pela imagem da tela (por no máximo 25 s seguidos,
+        // para não gastar bateria quando a tela escondida não é uma oferta).
         val hidden = screens.firstOrNull { it.second.size < MIN_VISIBLE_TEXTS }
         if (hidden != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            requestImageRead(hidden.first)
-            keepWatchingHiddenScreen()
+            if (hiddenSince == 0L) hiddenSince = now
+            if (now - hiddenSince <= MAX_HIDDEN_READ_MS) {
+                requestImageRead(hidden.first)
+                keepWatchingHiddenScreen()
+            } else {
+                handleNoOffer()
+            }
             return
         }
+        hiddenSince = 0L
 
+        val state = when {
+            screens.isEmpty() -> ScreenState.FORA
+            screens.any { TripTracker.isHomeScreen(it.second) } -> ScreenState.INICIO
+            else -> ScreenState.OUTRA
+        }
+        TripTracker.onScreen(this, prefs, state, null)
         handleNoOffer()
     }
 
@@ -246,7 +271,9 @@ class RadarService : AccessibilityService() {
 
         val now = System.currentTimeMillis()
         if (prefs.logOffers && (sig != lastLoggedSig || now - lastLoggedAt > 60_000)) {
-            OfferLog.append(this, eval)
+            val driverAt = Geo.lastKnown(this)
+            val ctx = this
+            Geo.geocode(this, offer.origin) { originAt -> OfferLog.append(ctx, eval, driverAt, originAt) }
             lastLoggedSig = sig
             lastLoggedAt = now
         }

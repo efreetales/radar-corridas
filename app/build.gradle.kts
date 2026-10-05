@@ -16,6 +16,11 @@ android {
         targetSdk = 34
         versionCode = buildNumber
         versionName = "0.1.$buildNumber"
+
+        // Só a arquitetura dos celulares atuais: deixa o app bem menor.
+        ndk {
+            abiFilters += listOf("arm64-v8a")
+        }
     }
 
     // Chave fixa: permite instalar versões novas por cima sem perder as configurações.

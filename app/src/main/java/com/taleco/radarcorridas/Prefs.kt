@@ -65,9 +65,26 @@ class Prefs(context: Context) {
         get() = sp.getFloat("custo_extra_km", 0f)
         set(v) = sp.edit().putFloat("custo_extra_km", v).apply()
 
-    /** Custo por km rodado: combustível + outros custos. */
+    var rentPerWeek: Float
+        get() = sp.getFloat("aluguel_semana", 0f)
+        set(v) = sp.edit().putFloat("aluguel_semana", v).apply()
+
+    var kmPerWeek: Float
+        get() = sp.getFloat("km_semana", 1000f)
+        set(v) = sp.edit().putFloat("km_semana", v).apply()
+
+    /** Parte do aluguel (ou parcela) que cabe a cada km rodado. */
+    val rentPerKm: Double
+        get() = if (rentPerWeek <= 0f) 0.0 else rentPerWeek.toDouble() / kmPerWeek.coerceAtLeast(1f).toDouble()
+
+    /** Custo por km rodado: combustível + aluguel diluído + outros custos. */
     val costPerKm: Double
-        get() = fuelPrice.toDouble() / kmPerLiter.coerceAtLeast(1f).toDouble() + extraCostKm.toDouble()
+        get() = fuelPrice.toDouble() / kmPerLiter.coerceAtLeast(1f).toDouble() + rentPerKm + extraCostKm.toDouble()
+
+    // Corridas aceitas
+    var trackTrips: Boolean
+        get() = sp.getBoolean("registrar_corridas", true)
+        set(v) = sp.edit().putBoolean("registrar_corridas", v).apply()
 
     // Aparência
     var position: CardPosition

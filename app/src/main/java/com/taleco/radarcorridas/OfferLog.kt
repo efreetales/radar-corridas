@@ -14,7 +14,8 @@ import java.util.Date
 object OfferLog {
 
     private const val HEADER =
-        "data_hora;app;categoria;valor;km_total;min_total;km_busca;min_busca;km_viagem;min_viagem;nota;rs_km;rs_hora;lucro;veredito;origem;destino"
+        "data_hora;app;categoria;valor;km_total;min_total;km_busca;min_busca;km_viagem;min_viagem;nota;rs_km;rs_hora;lucro;veredito;origem;destino;" +
+            "motorista_lat;motorista_lng;origem_lat;origem_lng"
     private const val DIAG_MAX_BYTES = 800_000L
 
     fun offersFile(ctx: Context) = File(ctx.filesDir, "ofertas.csv")
@@ -28,17 +29,30 @@ object OfferLog {
     private fun q(s: String?): String =
         if (s == null) "" else "\"" + s.replace("\"", "'") + "\""
 
-    fun append(ctx: Context, eval: Evaluation) {
+    private fun c(v: Double?): String = if (v == null) "" else String.format(java.util.Locale.US, "%.6f", v)
+
+    /** Se o arquivo é de uma versão antiga (sem as colunas novas), guarda com outro nome. */
+    private fun ensureHeader(f: File) {
+        if (f.exists()) {
+            val first = try { f.bufferedReader().use { it.readLine() } } catch (_: Exception) { null }
+            if (first == HEADER) return
+            f.renameTo(File(f.parentFile, "ofertas_antigas.csv"))
+        }
+        f.writeText(HEADER + "\n")
+    }
+
+    fun append(ctx: Context, eval: Evaluation, driverAt: LatLng? = null, originAt: LatLng? = null) {
         try {
             val o = eval.offer
             val f = offersFile(ctx)
-            if (!f.exists()) f.writeText(HEADER + "\n")
+            ensureHeader(f)
             val perKm = if (o.totalKm > 0) o.price / o.totalKm else null
             val perHour = if (o.totalMin > 0) o.price / (o.totalMin / 60.0) else null
             val line = listOf(
                 now(), o.app, q(o.category), n(o.price), n(o.totalKm), n(o.totalMin),
                 n(o.pickupKm), n(o.pickupMin), n(o.tripKm), n(o.tripMin), n(o.rating),
-                n(perKm), n(perHour), n(eval.profit), eval.overall.name, q(o.origin), q(o.destination)
+                n(perKm), n(perHour), n(eval.profit), eval.overall.name, q(o.origin), q(o.destination),
+                c(driverAt?.lat), c(driverAt?.lng), c(originAt?.lat), c(originAt?.lng)
             ).joinToString(";")
             f.appendText(line + "\n")
         } catch (_: Exception) {
@@ -62,6 +76,20 @@ object OfferLog {
         } catch (_: Exception) {
             0
         }
+    }
+
+    /** Envia vários arquivos de uma vez (ofertas, corridas e rotas). */
+    fun shareAll(ctx: Context, files: List<File>, title: String): Boolean {
+        val existing = files.filter { it.exists() && it.length() > 0L }
+        if (existing.isEmpty()) return false
+        val uris = ArrayList(existing.map { FileProvider.getUriForFile(ctx, ctx.packageName + ".files", it) })
+        val send = Intent(Intent.ACTION_SEND_MULTIPLE)
+            .setType("text/csv")
+            .putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris)
+            .putExtra(Intent.EXTRA_SUBJECT, title)
+            .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        ctx.startActivity(Intent.createChooser(send, title))
+        return true
     }
 
     fun share(ctx: Context, file: File, mime: String, title: String): Boolean {
