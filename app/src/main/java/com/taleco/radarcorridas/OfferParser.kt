@@ -14,7 +14,7 @@ object OfferParser {
     private val PRICE_FULL = Regex("""^R\$\s*(\d{1,3}(?:\.\d{3})*,\d{2})$""")
     private val PRICE_ANY = Regex("""(?<!\+)R\$\s*(\d{1,3}(?:\.\d{3})*,\d{2})(?!\s*/\s*km)""")
     private val LEG = Regex(
-        """(?:(\d+)\s*h(?:oras?)?\s*)?(\d+)\s*min(?:utos?|s)?\.?\s*\(\s*([\d.,]+)\s*(km|m)\s*\)""",
+        """(?:(\d+)\s*h(?:oras?)?\s*)?(\d+)\s*m[ií]n(?:utos?|s)?\.?\s*[(\[{]\s*([\d.,]+)\s*(km|m)\s*[)\]}]?""",
         RegexOption.IGNORE_CASE
     )
     private val RATING = Regex("""(?<![\d.,])([1-5][.,]\d{1,2})\s*\(\s*[\d.]+\s*\)""")
@@ -26,10 +26,35 @@ object OfferParser {
 
     private data class Leg(val minutes: Double, val km: Double, val index: Int, val rest: String)
 
-    fun parse(app: String, rawTexts: List<String>): Offer? {
-        val texts = rawTexts
+    // Erros comuns da leitura por imagem: "R$" lido como "RS", "R5" ou "R §".
+    private val OCR_CURRENCY = Regex("""(?<![A-Za-z])R\s?[S5§]\s?(?=\d)""")
+    private val ONLY_CURRENCY = Regex("""^R\s?[$S5§]$""")
+    private val ONLY_AMOUNT = Regex("""^\d{1,3}(?:\.\d{3})*,\d{2}$""")
+
+    /** Limpa os textos e junta "R$" e "22,02" quando a leitura os separa em duas linhas. */
+    private fun normalize(rawTexts: List<String>): List<String> {
+        val cleaned = rawTexts
             .map { it.replace(' ', ' ').replace('\n', ' ').trim() }
             .filter { it.isNotEmpty() }
+            .map { OCR_CURRENCY.replace(it, "R\$ ") }
+        val out = mutableListOf<String>()
+        var i = 0
+        while (i < cleaned.size) {
+            val t = cleaned[i]
+            val next = cleaned.getOrNull(i + 1)
+            if (ONLY_CURRENCY.matches(t) && next != null && ONLY_AMOUNT.matches(next)) {
+                out.add("R\$ $next")
+                i += 2
+            } else {
+                out.add(t)
+                i++
+            }
+        }
+        return out
+    }
+
+    fun parse(app: String, rawTexts: List<String>): Offer? {
+        val texts = normalize(rawTexts)
         if (texts.isEmpty()) return null
 
         val price = findPrice(texts) ?: return null

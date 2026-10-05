@@ -1,7 +1,12 @@
 package com.taleco.radarcorridas
 
 import android.accessibilityservice.AccessibilityService
+import android.accessibilityservice.AccessibilityService.ScreenshotResult
+import android.accessibilityservice.AccessibilityService.TakeScreenshotCallback
+import android.graphics.Bitmap
+import android.os.Build
 import android.os.Handler
+import android.view.Display
 import android.os.Looper
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
@@ -28,6 +33,10 @@ class RadarService : AccessibilityService() {
         private const val HIDE_GRACE_MS = 1200L
         private const val MAX_CARD_MS = 30_000L
         private const val MAX_NODES = 800
+
+        /** Abaixo disso, consideramos que o app escondeu o texto da tela. */
+        private const val MIN_VISIBLE_TEXTS = 3
+        private const val IMAGE_READ_INTERVAL_MS = 1000L
     }
 
     private lateinit var prefs: Prefs
@@ -48,8 +57,92 @@ class RadarService : AccessibilityService() {
 
     private val hideRunnable = Runnable {
         hidePending = false
+        handler.removeCallbacks(maxCardRunnable)
         overlay.hideCard()
         lastSig = null
+    }
+
+    private val maxCardRunnable = Runnable {
+        handler.removeCallbacks(hideRunnable)
+        hidePending = false
+        overlay.hideCard()
+        lastSig = null
+    }
+
+    // ---- Leitura pela imagem da tela ----
+
+    private var imageReadBusy = false
+    private var lastImageReadAt = 0L
+    private var watchPending = false
+    private var lastImageDiag: String? = null
+
+    private val watchRunnable = Runnable {
+        watchPending = false
+        scheduleScan()
+    }
+
+    /** Enquanto a tela da Uber estiver "vazia", continua olhando a cada segundo. */
+    private fun keepWatchingHiddenScreen() {
+        if (watchPending) return
+        watchPending = true
+        handler.postDelayed(watchRunnable, IMAGE_READ_INTERVAL_MS)
+    }
+
+    private fun requestImageRead(app: String) {
+        val now = System.currentTimeMillis()
+        if (imageReadBusy || now - lastImageReadAt < IMAGE_READ_INTERVAL_MS) return
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) return
+        imageReadBusy = true
+        lastImageReadAt = now
+        try {
+            takeScreenshot(Display.DEFAULT_DISPLAY, mainExecutor, object : TakeScreenshotCallback {
+                override fun onSuccess(result: ScreenshotResult) {
+                    val bitmap: Bitmap? = try {
+                        val hw = Bitmap.wrapHardwareBuffer(result.hardwareBuffer, result.colorSpace)
+                        val copy = hw?.copy(Bitmap.Config.ARGB_8888, false)
+                        hw?.recycle()
+                        copy
+                    } catch (e: Exception) {
+                        null
+                    } finally {
+                        try { result.hardwareBuffer.close() } catch (_: Exception) {}
+                    }
+                    if (bitmap == null) {
+                        imageReadBusy = false
+                        if (prefs.diagnostic) OfferLog.appendDiag(this@RadarService, "IMAGEM: falha ao converter a captura")
+                        return
+                    }
+                    ScreenReader.read(bitmap) { lines ->
+                        bitmap.recycle()
+                        imageReadBusy = false
+                        onImageText(app, lines)
+                    }
+                }
+
+                override fun onFailure(errorCode: Int) {
+                    imageReadBusy = false
+                    if (prefs.diagnostic) OfferLog.appendDiag(this@RadarService, "IMAGEM: captura recusada (código $errorCode)")
+                }
+            })
+        } catch (e: Exception) {
+            imageReadBusy = false
+            if (prefs.diagnostic) OfferLog.appendDiag(this, "IMAGEM: erro ${e.javaClass.simpleName}: ${e.message}")
+        }
+    }
+
+    private fun onImageText(app: String, lines: List<String>) {
+        if (instance == null) return
+        val offer = OfferParser.parse(app, lines)
+        if (prefs.diagnostic) {
+            val summary = if (offer == null) "nenhuma oferta reconhecida" else
+                String.format(PT_BR, "oferta R$ %.2f, %.1f km, %.0f min", offer.price, offer.totalKm, offer.totalMin)
+            val dump = "IMAGEM $app ($summary): " + lines.joinToString(" | ")
+            if (dump != lastImageDiag) {
+                lastImageDiag = dump
+                OfferLog.appendDiag(this, dump)
+            }
+        }
+        if (offer != null) handleOffer(offer) else handleNoOffer()
     }
 
     override fun onServiceConnected() {
@@ -110,15 +203,31 @@ class RadarService : AccessibilityService() {
             offer = OfferParser.parse(app, texts)
             if (offer != null) break
         }
-
-        if (offer == null) {
-            if (overlay.isCardShowing && !hidePending) {
-                hidePending = true
-                handler.postDelayed(hideRunnable, HIDE_GRACE_MS)
-            }
+        if (offer != null) {
+            handleOffer(offer)
             return
         }
 
+        // A Uber esconde o texto da tela de oferta: a janela aparece vazia.
+        // Nesse caso, lemos a oferta pela imagem da tela.
+        val hidden = screens.firstOrNull { it.second.size < MIN_VISIBLE_TEXTS }
+        if (hidden != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            requestImageRead(hidden.first)
+            keepWatchingHiddenScreen()
+            return
+        }
+
+        handleNoOffer()
+    }
+
+    private fun handleNoOffer() {
+        if (overlay.isCardShowing && !hidePending) {
+            hidePending = true
+            handler.postDelayed(hideRunnable, HIDE_GRACE_MS)
+        }
+    }
+
+    private fun handleOffer(offer: Offer) {
         if (hidePending) {
             handler.removeCallbacks(hideRunnable)
             hidePending = false
@@ -132,9 +241,8 @@ class RadarService : AccessibilityService() {
         overlay.showCard(eval, prefs)
 
         // Garantia: o cartão não fica preso na tela.
-        handler.removeCallbacks(hideRunnable)
-        hidePending = true
-        handler.postDelayed(hideRunnable, MAX_CARD_MS)
+        handler.removeCallbacks(maxCardRunnable)
+        handler.postDelayed(maxCardRunnable, MAX_CARD_MS)
 
         val now = System.currentTimeMillis()
         if (prefs.logOffers && (sig != lastLoggedSig || now - lastLoggedAt > 60_000)) {
