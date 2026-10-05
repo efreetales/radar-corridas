@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Radar Corridas</string>
+    <string name="acc_desc">Lê o valor, a distância e o tempo das ofertas de corrida da Uber e da 99 e mostra na tela se a corrida compensa. O Radar Corridas só lê a oferta: ele nunca aceita nem recusa corridas por você.</string>
+</resources>

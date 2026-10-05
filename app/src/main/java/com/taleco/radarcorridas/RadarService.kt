@@ -1,0 +1,219 @@
+package com.taleco.radarcorridas
+
+import android.accessibilityservice.AccessibilityService
+import android.os.Handler
+import android.os.Looper
+import android.view.accessibility.AccessibilityEvent
+import android.view.accessibility.AccessibilityNodeInfo
+
+/**
+ * Serviço de acessibilidade: observa a tela da Uber/99, lê a oferta e mostra o cartão.
+ * Ele só LÊ a tela. Não toca em nada e nunca aceita corridas.
+ */
+class RadarService : AccessibilityService() {
+
+    companion object {
+        @Volatile
+        var instance: RadarService? = null
+            private set
+
+        /** Pacote do app -> nome curto mostrado no cartão. */
+        val TARGETS = mapOf(
+            "com.ubercab.driver" to "UBER",
+            "com.app99.driver" to "99",
+            "com.taxis99" to "99"
+        )
+
+        private const val SCAN_DELAY_MS = 150L
+        private const val HIDE_GRACE_MS = 1200L
+        private const val MAX_CARD_MS = 30_000L
+        private const val MAX_NODES = 800
+    }
+
+    private lateinit var prefs: Prefs
+    private lateinit var overlay: OverlayManager
+    private val handler = Handler(Looper.getMainLooper())
+
+    private var scanPending = false
+    private var hidePending = false
+    private var lastSig: String? = null
+    private var lastLoggedSig: String? = null
+    private var lastLoggedAt = 0L
+    private var lastDiag: String? = null
+
+    private val scanRunnable = Runnable {
+        scanPending = false
+        scan()
+    }
+
+    private val hideRunnable = Runnable {
+        hidePending = false
+        overlay.hideCard()
+        lastSig = null
+    }
+
+    override fun onServiceConnected() {
+        super.onServiceConnected()
+        prefs = Prefs(this)
+        overlay = OverlayManager(this)
+        instance = this
+        refreshBubble()
+    }
+
+    override fun onAccessibilityEvent(event: AccessibilityEvent?) {
+        if (event == null || instance == null) return
+        val pkg = event.packageName?.toString()
+        if (pkg in TARGETS || event.eventType == AccessibilityEvent.TYPE_WINDOWS_CHANGED) {
+            scheduleScan()
+        } else if (event.eventType == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED &&
+            pkg != null && pkg != packageName && overlay.isCardShowing
+        ) {
+            // O motorista trocou de app: confere se a oferta ainda está na tela.
+            scheduleScan()
+        }
+    }
+
+    override fun onInterrupt() {}
+
+    override fun onUnbind(intent: android.content.Intent?): Boolean {
+        cleanup()
+        return super.onUnbind(intent)
+    }
+
+    override fun onDestroy() {
+        cleanup()
+        super.onDestroy()
+    }
+
+    private fun cleanup() {
+        handler.removeCallbacksAndMessages(null)
+        if (instance === this) instance = null
+        if (::overlay.isInitialized) {
+            overlay.hideCard()
+            overlay.hideBubble()
+        }
+    }
+
+    private fun scheduleScan() {
+        if (scanPending) return
+        scanPending = true
+        handler.postDelayed(scanRunnable, SCAN_DELAY_MS)
+    }
+
+    private fun scan() {
+        val screens = collectTargetTexts()
+
+        if (prefs.diagnostic) writeDiagnostic(screens)
+
+        var offer: Offer? = null
+        for ((app, texts) in screens) {
+            offer = OfferParser.parse(app, texts)
+            if (offer != null) break
+        }
+
+        if (offer == null) {
+            if (overlay.isCardShowing && !hidePending) {
+                hidePending = true
+                handler.postDelayed(hideRunnable, HIDE_GRACE_MS)
+            }
+            return
+        }
+
+        if (hidePending) {
+            handler.removeCallbacks(hideRunnable)
+            hidePending = false
+        }
+
+        val sig = offer.signature()
+        if (sig == lastSig && overlay.isCardShowing) return
+        lastSig = sig
+
+        val eval = Evaluator.evaluate(offer, prefs)
+        overlay.showCard(eval, prefs)
+
+        // Garantia: o cartão não fica preso na tela.
+        handler.removeCallbacks(hideRunnable)
+        hidePending = true
+        handler.postDelayed(hideRunnable, MAX_CARD_MS)
+
+        val now = System.currentTimeMillis()
+        if (prefs.logOffers && (sig != lastLoggedSig || now - lastLoggedAt > 60_000)) {
+            OfferLog.append(this, eval)
+            lastLoggedSig = sig
+            lastLoggedAt = now
+        }
+    }
+
+    /** Lê os textos de todas as janelas da Uber/99 que estão na tela. */
+    private fun collectTargetTexts(): List<Pair<String, List<String>>> {
+        val roots = mutableListOf<AccessibilityNodeInfo>()
+        try {
+            windows?.forEach { w -> w.root?.let { roots.add(it) } }
+        } catch (_: Exception) {
+        }
+        if (roots.isEmpty()) {
+            try {
+                rootInActiveWindow?.let { roots.add(it) }
+            } catch (_: Exception) {
+            }
+        }
+
+        val result = mutableListOf<Pair<String, List<String>>>()
+        for (root in roots) {
+            val pkg = root.packageName?.toString() ?: continue
+            val app = TARGETS[pkg] ?: continue
+            val texts = mutableListOf<String>()
+            walk(root, texts, 0)
+            result.add(app to texts)
+        }
+        return result
+    }
+
+    private fun walk(node: AccessibilityNodeInfo, out: MutableList<String>, depth: Int) {
+        if (depth > 40 || out.size > MAX_NODES) return
+        val text = node.text?.toString()
+        val desc = node.contentDescription?.toString()
+        when {
+            !text.isNullOrBlank() -> out.add(text)
+            !desc.isNullOrBlank() -> out.add(desc)
+        }
+        for (i in 0 until node.childCount) {
+            val child: AccessibilityNodeInfo = (try { node.getChild(i) } catch (_: Exception) { null }) ?: continue
+            walk(child, out, depth + 1)
+        }
+    }
+
+    /** Modo diagnóstico: registra o que foi lido, para ajustar a leitura depois. */
+    private fun writeDiagnostic(screens: List<Pair<String, List<String>>>) {
+        val packages: String = (try {
+            windows?.mapNotNull { it.root?.packageName?.toString() }?.distinct()?.joinToString(", ")
+        } catch (_: Exception) {
+            null
+        }) ?: "?"
+        val body = if (screens.isEmpty()) {
+            "(nenhuma tela da Uber/99 encontrada)"
+        } else {
+            screens.joinToString("\n") { (app, texts) -> "$app: " + texts.joinToString(" | ") }
+        }
+        val dump = "janelas: $packages\n$body"
+        if (dump == lastDiag) return
+        lastDiag = dump
+        OfferLog.appendDiag(this, dump)
+    }
+
+    // ---- Chamado pela tela de configuração ----
+
+    fun refreshBubble() {
+        if (!::overlay.isInitialized) return
+        if (prefs.showBubble) overlay.showBubble(prefs) else overlay.hideBubble()
+    }
+
+    fun showTestCard() {
+        if (!::overlay.isInitialized) return
+        val eval = Evaluator.evaluate(Offer.sample(), prefs)
+        overlay.showCard(eval, prefs)
+        handler.removeCallbacks(hideRunnable)
+        hidePending = true
+        handler.postDelayed(hideRunnable, 6000)
+    }
+}
