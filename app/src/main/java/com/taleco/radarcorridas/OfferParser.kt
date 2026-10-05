@@ -28,7 +28,7 @@ object OfferParser {
 
     // Erros comuns da leitura por imagem: "R$" lido como "RS", "R5" ou "R §".
     private val OCR_CURRENCY = Regex("""(?<![A-Za-z])R\s?[S5§]\s?(?=\d)""")
-    private val ONLY_CURRENCY = Regex("""^R\s?[$S5§]$""")
+    private val ONLY_CURRENCY = Regex("^R\\s?[\$S5§]\$")
     private val ONLY_AMOUNT = Regex("""^\d{1,3}(?:\.\d{3})*,\d{2}$""")
 
     /** Limpa os textos e junta "R$" e "22,02" quando a leitura os separa em duas linhas. */

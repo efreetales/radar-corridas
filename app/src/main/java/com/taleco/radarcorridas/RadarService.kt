@@ -50,19 +50,19 @@ class RadarService : AccessibilityService() {
     private var lastLoggedAt = 0L
     private var lastDiag: String? = null
 
-    private val scanRunnable = Runnable {
+    private val scanRunnable: Runnable = Runnable {
         scanPending = false
         scan()
     }
 
-    private val hideRunnable = Runnable {
+    private val hideRunnable: Runnable = Runnable {
         hidePending = false
         handler.removeCallbacks(maxCardRunnable)
         overlay.hideCard()
         lastSig = null
     }
 
-    private val maxCardRunnable = Runnable {
+    private val maxCardRunnable: Runnable = Runnable {
         handler.removeCallbacks(hideRunnable)
         hidePending = false
         overlay.hideCard()
@@ -76,7 +76,7 @@ class RadarService : AccessibilityService() {
     private var watchPending = false
     private var lastImageDiag: String? = null
 
-    private val watchRunnable = Runnable {
+    private val watchRunnable: Runnable = Runnable {
         watchPending = false
         scheduleScan()
     }
