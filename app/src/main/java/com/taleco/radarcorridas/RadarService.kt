@@ -8,7 +8,10 @@ import android.os.Build
 import android.os.Handler
 import android.view.Display
 import android.os.Looper
+import android.os.PowerManager
+import android.os.SystemClock
 import android.view.accessibility.AccessibilityEvent
+import java.util.concurrent.Executors
 import android.view.accessibility.AccessibilityNodeInfo
 
 /**
@@ -29,7 +32,14 @@ class RadarService : AccessibilityService() {
             "com.taxis99" to "99"
         )
 
+        /** Tela nova (ex.: oferta abrindo): lê rápido. */
         private const val SCAN_DELAY_MS = 150L
+        /**
+         * Mudanças dentro da mesma tela (o mapa se mexendo, o relógio...) chegam o tempo todo.
+         * Cada leitura faz a Uber responder "o que está na tela", então lemos no máximo
+         * uma vez a cada 700 ms nesse caso, para não deixar a Uber lenta.
+         */
+        private const val CONTENT_SCAN_INTERVAL_MS = 700L
         private const val HIDE_GRACE_MS = 1200L
         private const val MAX_CARD_MS = 30_000L
         private const val MAX_NODES = 800
@@ -37,14 +47,27 @@ class RadarService : AccessibilityService() {
         /** Abaixo disso, consideramos que o app escondeu o texto da tela. */
         private const val MIN_VISIBLE_TEXTS = 3
         private const val IMAGE_READ_INTERVAL_MS = 1000L
+        /** Depois dos primeiros segundos (ou com o cartão já na tela), lê a imagem com menos pressa. */
+        private const val IMAGE_READ_SLOW_INTERVAL_MS = 2500L
+        private const val IMAGE_FAST_PHASE_MS = 6_000L
         private const val MAX_HIDDEN_READ_MS = 25_000L
+        /** A imagem é reduzida para esta largura antes da leitura: bem mais leve e o texto continua legível. */
+        private const val IMAGE_MAX_WIDTH = 720
     }
+
+    /** Trabalho pesado com a imagem da tela fica fora da thread principal. */
+    private val imageExecutor = Executors.newSingleThreadExecutor()
+    private var powerManager: PowerManager? = null
+    private var lastScanAt = 0L
+
+    private fun screenOn(): Boolean = try { powerManager?.isInteractive ?: true } catch (_: Exception) { true }
 
     private lateinit var prefs: Prefs
     private lateinit var overlay: OverlayManager
     private val handler = Handler(Looper.getMainLooper())
 
     private var scanPending = false
+    private var scanPendingUrgent = false
     private var hidePending = false
     private var lastSig: String? = null
     private var lastLoggedSig: String? = null
@@ -83,47 +106,72 @@ class RadarService : AccessibilityService() {
         scheduleScan()
     }
 
-    /** Enquanto a tela da Uber estiver "vazia", continua olhando a cada segundo. */
+    /**
+     * Intervalo entre leituras da imagem: rápido logo que a tela "some" (é quando a oferta aparece),
+     * mais devagar depois, ou quando o cartão já está mostrando a oferta.
+     */
+    private fun imageInterval(): Long {
+        val hiddenFor = if (hiddenSince == 0L) 0L else System.currentTimeMillis() - hiddenSince
+        return if (overlay.isCardShowing || hiddenFor > IMAGE_FAST_PHASE_MS) IMAGE_READ_SLOW_INTERVAL_MS
+        else IMAGE_READ_INTERVAL_MS
+    }
+
+    /** Enquanto a tela da Uber estiver "vazia", continua olhando de tempos em tempos. */
     private fun keepWatchingHiddenScreen() {
         if (watchPending) return
         watchPending = true
-        handler.postDelayed(watchRunnable, IMAGE_READ_INTERVAL_MS)
+        handler.postDelayed(watchRunnable, imageInterval())
+    }
+
+    /** Converte a captura num bitmap comum e reduz o tamanho. Roda fora da thread principal. */
+    private fun toSmallBitmap(result: ScreenshotResult): Bitmap? {
+        var hw: Bitmap? = null
+        try {
+            hw = Bitmap.wrapHardwareBuffer(result.hardwareBuffer, result.colorSpace) ?: return null
+            val full: Bitmap = hw.copy(Bitmap.Config.ARGB_8888, false) ?: return null
+            if (full.width <= IMAGE_MAX_WIDTH) return full
+            val h = (full.height.toLong() * IMAGE_MAX_WIDTH / full.width).toInt()
+            val small = Bitmap.createScaledBitmap(full, IMAGE_MAX_WIDTH, h, true)
+            if (small !== full) full.recycle()
+            return small
+        } catch (e: Exception) {
+            return null
+        } finally {
+            hw?.recycle()
+            try { result.hardwareBuffer.close() } catch (_: Exception) {}
+        }
     }
 
     private fun requestImageRead(app: String) {
         val now = System.currentTimeMillis()
-        if (imageReadBusy || now - lastImageReadAt < IMAGE_READ_INTERVAL_MS) return
+        if (imageReadBusy || now - lastImageReadAt < imageInterval()) return
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) return
         imageReadBusy = true
         lastImageReadAt = now
         try {
-            takeScreenshot(Display.DEFAULT_DISPLAY, mainExecutor, object : TakeScreenshotCallback {
+            takeScreenshot(Display.DEFAULT_DISPLAY, imageExecutor, object : TakeScreenshotCallback {
                 override fun onSuccess(result: ScreenshotResult) {
-                    val bitmap: Bitmap? = try {
-                        val hw = Bitmap.wrapHardwareBuffer(result.hardwareBuffer, result.colorSpace)
-                        val copy = hw?.copy(Bitmap.Config.ARGB_8888, false)
-                        hw?.recycle()
-                        copy
-                    } catch (e: Exception) {
-                        null
-                    } finally {
-                        try { result.hardwareBuffer.close() } catch (_: Exception) {}
-                    }
-                    if (bitmap == null) {
-                        imageReadBusy = false
-                        if (prefs.diagnostic) OfferLog.appendDiag(this@RadarService, "IMAGEM: falha ao converter a captura")
-                        return
-                    }
-                    ScreenReader.read(bitmap) { lines ->
-                        bitmap.recycle()
-                        imageReadBusy = false
-                        onImageText(app, lines)
+                    // Estamos fora da thread principal aqui.
+                    val bitmap = toSmallBitmap(result)
+                    handler.post {
+                        if (bitmap == null) {
+                            imageReadBusy = false
+                            if (prefs.diagnostic) OfferLog.appendDiag(this@RadarService, "IMAGEM: falha ao converter a captura")
+                            return@post
+                        }
+                        ScreenReader.read(bitmap) { lines ->
+                            bitmap.recycle()
+                            imageReadBusy = false
+                            onImageText(app, lines)
+                        }
                     }
                 }
 
                 override fun onFailure(errorCode: Int) {
-                    imageReadBusy = false
-                    if (prefs.diagnostic) OfferLog.appendDiag(this@RadarService, "IMAGEM: captura recusada (código $errorCode)")
+                    handler.post {
+                        imageReadBusy = false
+                        if (prefs.diagnostic) OfferLog.appendDiag(this@RadarService, "IMAGEM: captura recusada (código $errorCode)")
+                    }
                 }
             })
         } catch (e: Exception) {
@@ -157,6 +205,7 @@ class RadarService : AccessibilityService() {
         super.onServiceConnected()
         prefs = Prefs(this)
         overlay = OverlayManager(this)
+        powerManager = getSystemService(PowerManager::class.java)
         instance = this
         refreshBubble()
     }
@@ -164,7 +213,11 @@ class RadarService : AccessibilityService() {
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {
         if (event == null || instance == null) return
         val pkg = event.packageName?.toString()
-        if (pkg in TARGETS || event.eventType == AccessibilityEvent.TYPE_WINDOWS_CHANGED) {
+        if (pkg in TARGETS) {
+            // Mudança pequena dentro da mesma tela (mapa, relógio): lê com calma.
+            // Tela nova: lê rápido, porque pode ser uma oferta chegando.
+            scheduleScan(urgent = event.eventType != AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED)
+        } else if (event.eventType == AccessibilityEvent.TYPE_WINDOWS_CHANGED) {
             scheduleScan()
         } else if (event.eventType == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED &&
             pkg != null && pkg != packageName && overlay.isCardShowing
@@ -183,11 +236,14 @@ class RadarService : AccessibilityService() {
 
     override fun onDestroy() {
         cleanup()
+        imageExecutor.shutdown()
         super.onDestroy()
     }
 
     private fun cleanup() {
         handler.removeCallbacksAndMessages(null)
+        scanPending = false
+        watchPending = false
         try { TripTracker.shutdown(this) } catch (_: Exception) {}
         if (instance === this) instance = null
         if (::overlay.isInitialized) {
@@ -196,13 +252,30 @@ class RadarService : AccessibilityService() {
         }
     }
 
-    private fun scheduleScan() {
-        if (scanPending) return
+    private fun scheduleScan(urgent: Boolean = true) {
+        if (scanPending) {
+            // Já tem uma leitura "calma" marcada, mas chegou tela nova: antecipa.
+            if (!urgent || scanPendingUrgent) return
+            handler.removeCallbacks(scanRunnable)
+        }
+        scanPendingUrgent = urgent
+        val delay = if (urgent) {
+            SCAN_DELAY_MS
+        } else {
+            val sinceLast = SystemClock.uptimeMillis() - lastScanAt
+            (CONTENT_SCAN_INTERVAL_MS - sinceLast).coerceAtLeast(SCAN_DELAY_MS)
+        }
         scanPending = true
-        handler.postDelayed(scanRunnable, SCAN_DELAY_MS)
+        handler.postDelayed(scanRunnable, delay)
     }
 
     private fun scan() {
+        lastScanAt = SystemClock.uptimeMillis()
+        // Tela do celular apagada: não há oferta para mostrar, não gasta nada.
+        if (!screenOn()) {
+            handleNoOffer()
+            return
+        }
         val screens = collectTargetTexts()
 
         if (prefs.diagnostic) writeDiagnostic(screens)
