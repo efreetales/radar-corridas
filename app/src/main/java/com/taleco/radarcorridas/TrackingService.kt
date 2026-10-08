@@ -19,7 +19,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 
 /**
- * Serviço que liga o GPS só durante uma corrida aceita.
+ * Serviço que liga o GPS durante uma corrida aceita e/ou para o alerta de radares.
  * Mostra uma notificação fixa enquanto grava o percurso (exigência do Android).
  */
 class TrackingService : Service(), LocationListener {
@@ -28,7 +28,13 @@ class TrackingService : Service(), LocationListener {
         private const val CHANNEL = "percurso"
         private const val NOTIF_ID = 42
 
-        /** Quem recebe cada ponto do GPS (o TripTracker). */
+        /** Motivos para o GPS estar ligado. */
+        const val CORRIDA = "corrida"
+        const val RADARES = "radares"
+
+        private val reasons: MutableSet<String> = java.util.Collections.synchronizedSet(mutableSetOf<String>())
+
+        /** Quem recebe cada ponto do GPS durante a corrida (o TripTracker). */
         @Volatile
         var onPoint: ((Location) -> Unit)? = null
 
@@ -36,15 +42,28 @@ class TrackingService : Service(), LocationListener {
         var running = false
             private set
 
-        fun start(ctx: Context): Boolean = try {
-            ContextCompat.startForegroundService(ctx, Intent(ctx, TrackingService::class.java))
-            true
-        } catch (e: Exception) {
-            false
+        fun start(ctx: Context, reason: String): Boolean {
+            reasons.add(reason)
+            return try {
+                ContextCompat.startForegroundService(ctx, Intent(ctx, TrackingService::class.java))
+                true
+            } catch (e: Exception) {
+                reasons.remove(reason)
+                false
+            }
         }
 
-        fun stop(ctx: Context) {
-            try { ctx.stopService(Intent(ctx, TrackingService::class.java)) } catch (_: Exception) {}
+        fun stop(ctx: Context, reason: String) {
+            reasons.remove(reason)
+            try {
+                if (reasons.isEmpty()) {
+                    ctx.stopService(Intent(ctx, TrackingService::class.java))
+                } else if (running) {
+                    // Ainda há outro motivo: só atualiza o aviso e a frequência do GPS.
+                    ContextCompat.startForegroundService(ctx, Intent(ctx, TrackingService::class.java))
+                }
+            } catch (_: Exception) {
+            }
         }
     }
 
@@ -57,7 +76,7 @@ class TrackingService : Service(), LocationListener {
         val notification: Notification = NotificationCompat.Builder(this, CHANNEL)
             .setSmallIcon(R.drawable.ic_stat_radar)
             .setContentTitle("Radar Corridas")
-            .setContentText("Registrando o percurso da corrida")
+            .setContentText(statusText())
             .setOngoing(true)
             .setSilent(true)
             .build()
@@ -72,20 +91,43 @@ class TrackingService : Service(), LocationListener {
             stopSelf()
             return START_NOT_STICKY
         }
+        if (reasons.isEmpty()) {
+            stopSelf()
+            return START_NOT_STICKY
+        }
         running = true
         startUpdates()
         return START_NOT_STICKY
     }
 
+    private fun statusText(): String {
+        val r = reasons.toSet()
+        return when {
+            CORRIDA in r && RADARES in r -> "Registrando a corrida · alerta de radares ligado"
+            CORRIDA in r -> "Registrando o percurso da corrida"
+            else -> "Alerta de radares ligado"
+        }
+    }
+
+    /** Intervalo atual do GPS: 1 s com alerta de radar (precisa da velocidade exata), 3 s só com corrida. */
+    private var currentFast: Boolean? = null
+
     @SuppressLint("MissingPermission")
     private fun startUpdates() {
-        if (lm != null) return
+        val fast = RADARES in reasons
+        if (lm != null && currentFast == fast) return
         val manager = getSystemService(LocationManager::class.java) ?: return
+        try { lm?.removeUpdates(this) } catch (_: Exception) {}
         lm = manager
+        currentFast = fast
         try {
-            manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 3000L, 10f, this, Looper.getMainLooper())
+            if (fast) {
+                manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000L, 0f, this, Looper.getMainLooper())
+            } else {
+                manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 3000L, 10f, this, Looper.getMainLooper())
+            }
         } catch (e: Exception) {
-            OfferLog.appendDiag(this, "PERCURSO: GPS indisponível (${e.message})")
+            OfferLog.appendDiag(this, "GPS indisponível (${e.message})")
         }
         try {
             manager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000L, 20f, this, Looper.getMainLooper())
@@ -95,6 +137,7 @@ class TrackingService : Service(), LocationListener {
 
     override fun onLocationChanged(location: Location) {
         onPoint?.invoke(location)
+        SpeedWatch.onLocation(this, location)
     }
 
     // Necessários em versões antigas do Android.
@@ -106,7 +149,9 @@ class TrackingService : Service(), LocationListener {
     override fun onDestroy() {
         try { lm?.removeUpdates(this) } catch (_: Exception) {}
         lm = null
+        currentFast = null
         running = false
+        reasons.clear()
         super.onDestroy()
     }
 

@@ -86,6 +86,15 @@ class Prefs(context: Context) {
         get() = sp.getBoolean("registrar_corridas", true)
         set(v) = sp.edit().putBoolean("registrar_corridas", v).apply()
 
+    // Radares de velocidade
+    var speedAlerts: Boolean
+        get() = sp.getBoolean("alerta_radares", true)
+        set(v) = sp.edit().putBoolean("alerta_radares", v).apply()
+
+    var speedSound: Boolean
+        get() = sp.getBoolean("som_radares", true)
+        set(v) = sp.edit().putBoolean("som_radares", v).apply()
+
     // Aparência
     var position: CardPosition
         get() = CardPosition.values().getOrElse(sp.getInt("posicao", 0)) { CardPosition.TOPO }

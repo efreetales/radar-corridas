@@ -15,6 +15,7 @@ object Colors {
     val RED = Color.parseColor("#E5484D")
     val YELLOW = Color.parseColor("#F5C518")
     val GREEN = Color.parseColor("#3DD68C")
+    val GREEN_DARK = Color.parseColor("#1F7A4D")
     val ACCENT = Color.parseColor("#2FD3A6")
     val BG = Color.parseColor("#0D1117")
     val SURFACE = Color.parseColor("#161B22")

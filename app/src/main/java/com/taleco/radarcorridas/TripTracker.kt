@@ -144,7 +144,7 @@ object TripTracker {
         Geo.geocode(ctx, offer.destination) { t.destination = it }
 
         TrackingService.onPoint = { loc -> onLocation(loc) }
-        if (!TrackingService.start(ctx)) {
+        if (!TrackingService.start(ctx, TrackingService.CORRIDA)) {
             OfferLog.appendDiag(ctx, "CORRIDA $id: não foi possível ligar o GPS")
         }
     }
@@ -154,6 +154,8 @@ object TripTracker {
         if (loc.hasAccuracy() && loc.accuracy > MIN_ACCURACY_M) return
         val here = Geo.of(loc)
         val prev = t.points.lastOrNull()
+        // Com o alerta de radar o GPS manda um ponto por segundo; para o percurso, 1 a cada 3 s basta.
+        if (prev != null && loc.time - prev.time < 2_500L) return
         val stepKm = if (prev == null) 0.0 else Geo.meters(LatLng(prev.lat, prev.lng), here) / 1000.0
 
         when (phase) {
@@ -194,7 +196,7 @@ object TripTracker {
         trip = null
         setPhase(Phase.LIVRE)
         TrackingService.onPoint = null
-        TrackingService.stop(ctx)
+        TrackingService.stop(ctx, TrackingService.CORRIDA)
         val endedAt = System.currentTimeMillis()
         val status = when {
             reason != null -> "interrompida ($reason)"

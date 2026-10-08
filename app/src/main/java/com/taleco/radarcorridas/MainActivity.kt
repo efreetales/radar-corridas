@@ -73,6 +73,7 @@ class MainActivity : AppCompatActivity() {
         buildCosts(col)
         buildAppearance(col)
         buildTrips(col)
+        buildSpeed(col)
         buildData(col)
 
         val version = try {
@@ -91,6 +92,7 @@ class MainActivity : AppCompatActivity() {
         updateStatus()
         updateCount()
         updateTripChecklist()
+        updateSpeedInfo()
         refreshPreview()
     }
 
@@ -307,10 +309,10 @@ class MainActivity : AppCompatActivity() {
         ))
         countText = text("", 14f, Colors.TEXT).apply { setPadding(0, dp(8), 0, 0) }
         card.addView(countText)
-        card.addView(outlinedButton("Exportar dados (ofertas, corridas e rotas)").apply {
+        card.addView(outlinedButton("Exportar dados (ofertas, corridas, rotas e radares)").apply {
             setOnClickListener {
                 val ctx = this@MainActivity
-                val files = listOf(OfferLog.offersFile(ctx), TripLog.tripsFile(ctx), TripLog.routesFile(ctx))
+                val files = listOf(OfferLog.offersFile(ctx), TripLog.tripsFile(ctx), TripLog.routesFile(ctx), PassLog.file(ctx))
                 if (!OfferLog.shareAll(ctx, files, "Dados — Radar Corridas")) toast("Nenhum dado salvo ainda")
             }
         }, matchWrap(top = 6))
@@ -438,6 +440,96 @@ class MainActivity : AppCompatActivity() {
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         updateTripChecklist()
+    }
+
+    // ---------- Radares de velocidade ----------
+
+    private lateinit var speedInfo: TextView
+    private lateinit var finesText: TextView
+
+    private fun buildSpeed(col: LinearLayout) {
+        val card = section(col, "Radares de velocidade")
+        card.addView(SwitchMaterial(this).apply {
+            text = "Avisar radares e velocidade"
+            setTextColor(Colors.TEXT)
+            isChecked = prefs.speedAlerts
+            setOnCheckedChangeListener { _, checked ->
+                prefs.speedAlerts = checked
+                if (!checked) SpeedWatch.stop(this@MainActivity)
+                else if (SpeedCams.isStale(this@MainActivity)) updateCams()
+            }
+        }, matchWrap())
+        card.addView(text(
+            "Com a Uber ou a 99 aberta, o GPS fica ligado. Ao chegar perto de um radar, aparece no topo da tela " +
+                "a placa com o limite e a sua velocidade: verde (ok), amarelo (acima do limite, mas dentro da tolerância) " +
+                "ou vermelho (multa), com bipe. Depois do radar, se passou da tolerância, chega uma notificação de possível multa.",
+            12f, Colors.MUTED
+        ))
+        card.addView(SwitchMaterial(this).apply {
+            text = "Bipe sonoro"
+            setTextColor(Colors.TEXT)
+            isChecked = prefs.speedSound
+            setOnCheckedChangeListener { _, checked -> prefs.speedSound = checked }
+        }, matchWrap(top = 6))
+
+        speedInfo = text("", 14f, Colors.TEXT).apply { setPadding(0, dp(10), 0, 0) }
+        card.addView(speedInfo)
+        card.addView(outlinedButton("Atualizar lista de radares").apply {
+            setOnClickListener { updateCams() }
+        }, matchWrap(top = 6))
+        card.addView(outlinedButton("Testar aviso de radar").apply {
+            setOnClickListener {
+                if (RadarService.instance == null) toast("Ative a leitura de ofertas primeiro")
+                else SpeedWatch.demo(this@MainActivity)
+            }
+        }, matchWrap(top = 4))
+
+        card.addView(text("Possíveis multas recentes", 15f, Colors.TEXT, bold = true).apply { setPadding(0, dp(14), 0, 0) })
+        finesText = text("", 13f, Colors.TEXT).apply { setPadding(0, dp(4), 0, 0) }
+        card.addView(finesText)
+
+        card.addView(text(
+            "A velocidade vem do GPS e a lista de radares vem do OpenStreetMap (mapa colaborativo): pode faltar algum radar " +
+                "ou o limite estar desatualizado. Usa as permissões de localização da seção acima. " +
+                "Para saber das multas oficiais, ative o SNE no app Carteira Digital de Trânsito.",
+            12f, Colors.MUTED
+        ).apply { setPadding(0, dp(10), 0, 0) })
+        updateSpeedInfo()
+    }
+
+    private fun updateCams() {
+        if (SpeedCams.downloading) {
+            toast("Já estou baixando a lista")
+            return
+        }
+        speedInfo.text = "Baixando a lista de radares… (pode levar 1 ou 2 minutos)"
+        SpeedCams.download(this) { n, err ->
+            if (n != null) toast("$n radares carregados") else toast("Não consegui baixar agora. Tente com internet boa.")
+            if (err != null && n == null) speedInfo.text = "Falha ao baixar a lista ($err)"
+            else updateSpeedInfo()
+        }
+    }
+
+    private fun updateSpeedInfo() {
+        if (!::speedInfo.isInitialized) return
+        if (SpeedCams.count == 0) SpeedCams.load(this)
+        if (!SpeedCams.downloading) {
+            val at = SpeedCams.updatedAt(this)
+            speedInfo.text = if (SpeedCams.count == 0) {
+                "Lista de radares ainda não baixada"
+            } else {
+                val date = java.text.SimpleDateFormat("dd/MM/yyyy", PT_BR).format(java.util.Date(at))
+                "${SpeedCams.count} radares na Grande SP · atualizada em $date" +
+                    (if (SpeedWatch.active) "\nAlerta ativo agora" else "")
+            }
+        }
+        val fines = PassLog.recentFines(this)
+        val total = PassLog.count(this)
+        finesText.text = if (fines.isEmpty()) {
+            if (total == 0) "Nenhuma passagem por radar registrada ainda." else "Nenhuma nas $total passagens registradas. 👍"
+        } else {
+            fines.joinToString("\n") { "⚠️ $it" }
+        }
     }
 
     private fun updateCostSummary() {

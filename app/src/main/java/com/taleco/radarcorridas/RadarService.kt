@@ -159,11 +159,14 @@ class RadarService : AccessibilityService() {
         overlay = OverlayManager(this)
         instance = this
         refreshBubble()
+        SpeedCams.load(this)
+        if (prefs.speedAlerts && SpeedCams.isStale(this)) SpeedCams.download(this)
     }
 
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {
         if (event == null || instance == null) return
         val pkg = event.packageName?.toString()
+        if (pkg in TARGETS) SpeedWatch.onRideAppSeen(this, prefs)
         if (pkg in TARGETS || event.eventType == AccessibilityEvent.TYPE_WINDOWS_CHANGED) {
             scheduleScan()
         } else if (event.eventType == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED &&
@@ -189,10 +192,12 @@ class RadarService : AccessibilityService() {
     private fun cleanup() {
         handler.removeCallbacksAndMessages(null)
         try { TripTracker.shutdown(this) } catch (_: Exception) {}
+        try { SpeedWatch.stop(this) } catch (_: Exception) {}
         if (instance === this) instance = null
         if (::overlay.isInitialized) {
             overlay.hideCard()
             overlay.hideBubble()
+            overlay.hideSpeed()
         }
     }
 
@@ -341,6 +346,14 @@ class RadarService : AccessibilityService() {
     fun refreshBubble() {
         if (!::overlay.isInitialized) return
         if (prefs.showBubble) overlay.showBubble(prefs) else overlay.hideBubble()
+    }
+
+    fun showSpeedBanner(b: SpeedBanner) {
+        if (::overlay.isInitialized) overlay.showSpeed(b)
+    }
+
+    fun hideSpeedBanner() {
+        if (::overlay.isInitialized) overlay.hideSpeed()
     }
 
     fun showTestCard() {
