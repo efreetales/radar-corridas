@@ -294,22 +294,23 @@ class RadarService : AccessibilityService() {
         if (prefs.diagnostic) writeDiagnostic(screens)
 
         var offer: Offer? = null
+        var offerTexts: List<String>? = null
         for ((app, texts) in screens) {
             offer = OfferParser.parse(app, texts)
-            if (offer != null) break
+            if (offer != null) { offerTexts = texts; break }
         }
         val now = System.currentTimeMillis()
         if (offer != null) {
             hiddenSince = 0L
             handleOffer(offer)
-            TripTracker.onScreen(this, prefs, ScreenState.OFERTA, offer)
+            TripTracker.onScreen(this, prefs, ScreenState.OFERTA, offer, offerTexts)
             return
         }
 
         // A Uber esconde o texto da tela de oferta: a janela aparece vazia.
         // Nesse caso, lemos a oferta pela imagem da tela (por no máximo 25 s seguidos,
         // para não gastar bateria quando a tela escondida não é uma oferta).
-        val hidden = screens.firstOrNull { it.second.size < MIN_VISIBLE_TEXTS }
+        val hidden = screens.firstOrNull { looksHidden(it.first, it.second) }
         if (hidden != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             // O pouco texto que sobra na tela mudou: recomeça a leitura rápida.
             if (hidden.second != lastHiddenTexts) {
@@ -329,8 +330,23 @@ class RadarService : AccessibilityService() {
             screens.any { TripTracker.isHomeScreen(it.second) } -> ScreenState.INICIO
             else -> ScreenState.OUTRA
         }
-        TripTracker.onScreen(this, prefs, state, null)
+        // A janela principal da Uber é a que tem mais textos.
+        val mainTexts = screens.filter { it.first == "UBER" }.maxByOrNull { it.second.size }?.second
+        TripTracker.onScreen(this, prefs, state, null, mainTexts)
         handleNoOffer()
+    }
+
+    /**
+     * A tela da Uber está "escondida" (provável oferta na tela)?
+     * Além de quase vazia, na oferta em sequência a Uber esconde tudo e deixa só a faixa
+     * de navegação (rua, distância, endereço): poucos textos e sem os botões de sempre.
+     */
+    private fun looksHidden(app: String, texts: List<String>): Boolean {
+        if (texts.size < MIN_VISIBLE_TEXTS) return true
+        if (app != "UBER") return false
+        return texts.size <= 6 && texts.none {
+            it == "Recursos de segurança" || it == "Voltar" || it.startsWith("INICIAR") || it.startsWith("Preferências")
+        }
     }
 
     private fun handleNoOffer() {

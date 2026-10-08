@@ -2,8 +2,6 @@ package com.taleco.radarcorridas
 
 import android.content.Context
 import android.location.Location
-import android.os.Handler
-import android.os.Looper
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -19,39 +17,70 @@ enum class ScreenState {
 }
 
 /**
- * Acompanha a corrida depois que uma oferta some da tela:
- *  - se a tela inicial volta logo, a oferta foi recusada ou expirou;
- *  - se não volta, a corrida foi aceita: liga o GPS e mede cada fase.
+ * Acompanha cada corrida aceita lendo a própria tela da Uber, que mostra a fase da corrida:
+ *  - indo buscar:       "Encontro com Moises" + endereço completo do embarque
+ *  - no embarque:       "Aguardando usuário" / "Usuário notificado"
+ *  - com o passageiro:  "A caminho da última parada" / "Destino de Vitor" + endereço do destino
+ *  - próxima já aceita: "Retirada" (corrida em sequência)
+ *  - fim:               "Como foi a viagem?" ou a tela inicial ("Procurando viagens")
  *
- * Fases medidas pelo GPS, comparando com os endereços da oferta:
- *  aceite -> chegada ao embarque -> saída com o passageiro -> chegada ao destino -> fim (tela inicial de novo).
+ * O GPS fica ligado só durante a corrida, para medir os km de cada fase e marcar
+ * onde foi o embarque e o desembarque (usado depois no mapa de calor).
  */
 object TripTracker {
 
-    private const val DECISION_MS = 4_000L        // tempo sem a tela inicial para considerar "aceita"
-    private const val PICKUP_RADIUS_M = 120.0     // chegou ao embarque
-    private const val LEAVE_PICKUP_M = 250.0      // saiu do embarque com o passageiro
-    private const val DROPOFF_RADIUS_M = 150.0    // chegou ao destino
     private const val MAX_TRIP_MS = 3 * 60 * 60 * 1000L
     private const val MIN_ACCURACY_M = 60f
-    /** Depois de chegar ao destino, encerra a corrida (e desliga o GPS) se a tela inicial não voltar. */
-    private const val AFTER_DROPOFF_MS = 3 * 60 * 1000L
     /** Movimentos menores que isso são tremida do GPS, não deslocamento. */
     private const val MIN_STEP_M = 8.0
-    /** Sem endereço de embarque: andou isso tudo com a corrida aberta, então ela aconteceu. */
-    private const val NO_ADDRESS_MIN_KM = 1.0
-    private const val NO_ADDRESS_MIN_MS = 4 * 60 * 1000L
+    /** Oferta lida há mais tempo que isso não é a da corrida que começou. */
+    private const val OFFER_MAX_AGE_MS = 120_000L
+    /** A tela inicial precisa ficar esse tempo na tela para encerrar a corrida (evita piscadas). */
+    private const val HOME_CONFIRM_MS = 3_000L
 
     private val HOME_MARKERS = listOf("Procurando viagens", "Você está online", "Você está offline")
+    private val PICKUP_MARKERS = listOf("Encontro com ", "Aguardando usuário", "Usuário notificado", "Você encontrou ", "Embarque em ")
+    private val WAITING_MARKERS = listOf("Aguardando usuário", "Usuário notificado", "O usuário poderá ser cobrado")
+    private val RIDING_MARKERS = listOf("A caminho da primeira parada", "A caminho da última parada", "A caminho da próxima parada", "Destino de ")
+    private val END_MARKERS = listOf("Como foi a viagem?", "Avaliar usuário")
+    /**
+     * Endereço completo na tela, em duas linhas:
+     *  "Rua Carlos Comenale, 96 - Bela Vista" + "São Paulo - SP, 01332-030"
+     *  "Alameda Eduardo Prado, 150" + "- Campos Elíseos, São Paulo - SP"
+     */
+    private val CITY_LINE = Regex(""".+ - [A-Z]{2}(, \d{5}-\d{3})?$""")
+
+    private fun hasAny(texts: List<String>, markers: List<String>) =
+        texts.any { t -> markers.any { m -> t.startsWith(m) } }
+
+    /** A tela mostra uma corrida em andamento. */
+    fun isTripScreen(texts: List<String>): Boolean =
+        hasAny(texts, PICKUP_MARKERS) || hasAny(texts, RIDING_MARKERS) || texts.any { it == "Contato" }
 
     fun isHomeScreen(texts: List<String>): Boolean =
-        texts.any { t -> HOME_MARKERS.any { m -> t.contains(m, ignoreCase = true) } }
+        !isTripScreen(texts) && texts.any { t -> HOME_MARKERS.any { m -> t.contains(m, ignoreCase = true) } }
 
-    private enum class Phase { LIVRE, OFERTA, A_CAMINHO, NO_EMBARQUE, EM_VIAGEM }
+    private fun fullAddress(texts: List<String>, ignore: String? = null): String? {
+        for (i in 1 until texts.size) {
+            val city = texts[i]
+            val street = texts[i - 1]
+            if (!CITY_LINE.matches(city) || !(street.contains(" - ") || street.any { it.isDigit() })) continue
+            val full = if (city.startsWith("- ")) "$street $city" else "$street, $city"
+            if (full != ignore) return full
+        }
+        return null
+    }
+
+    /** Destino da corrida anterior: na corrida em sequência ele ainda aparece por alguns segundos. */
+    private var previousDest: String? = null
+
+    private enum class Phase { LIVRE, A_CAMINHO, NO_EMBARQUE, EM_VIAGEM }
 
     private class Point(val time: Long, val lat: Double, val lng: Double, val phase: Phase)
 
-    private class Trip(val id: String, val offer: Offer, val acceptedAt: Long) {
+    private class Trip(val id: String, val offer: Offer?, val acceptedAt: Long) {
+        var originText: String? = null
+        var destText: String? = null
         var origin: LatLng? = null
         var destination: LatLng? = null
         var arrivedPickupAt: Long? = null
@@ -60,134 +89,123 @@ object TripTracker {
         val points = mutableListOf<Point>()
         var kmToPickup = 0.0
         var kmTrip = 0.0
-        var kmAfter = 0.0
         var lastGpsAt = 0L
     }
 
-    private val handler = Handler(Looper.getMainLooper())
     private var phase = Phase.LIVRE
-    private var lastOffer: Offer? = null
-    private var offerGoneAt = 0L
     private var trip: Trip? = null
-    /**
-     * Oferta que apareceu durante uma corrida (a Uber manda a próxima antes do desembarque).
-     * Se depois de deixar o passageiro a tela inicial não voltar, é porque ela foi aceita.
-     */
+    private var lastOffer: Offer? = null
+    private var lastOfferAt = 0L
+    /** Última oferta lida durante uma corrida: se a Uber passar direto para outro embarque, é dela. */
     private var nextOffer: Offer? = null
-    private var appContext: Context? = null
-
-    private val tick = object : Runnable {
-        override fun run() {
-            checkTimeouts()
-            if (phase != Phase.LIVRE) handler.postDelayed(this, 2_000L)
-        }
-    }
+    private var homeSince = 0L
 
     val isOnTrip: Boolean get() = trip != null
 
-    /** Chamado a cada leitura da tela. */
-    fun onScreen(ctx: Context, prefs: Prefs, state: ScreenState, offer: Offer?) {
-        appContext = ctx.applicationContext
+    /**
+     * Chamado a cada leitura da tela.
+     * [texts] são os textos da janela da Uber (null quando a leitura foi pela imagem).
+     */
+    fun onScreen(ctx: Context, prefs: Prefs, state: ScreenState, offer: Offer?, texts: List<String>? = null) {
         if (!prefs.trackTrips) {
-            if (trip != null) finish(ctx, "registro desligado")
-            phase = Phase.LIVRE
+            if (trip != null) finish(ctx, "registro desligado", System.currentTimeMillis(), false)
             return
         }
         val now = System.currentTimeMillis()
 
-        when (phase) {
-            Phase.LIVRE -> if (state == ScreenState.OFERTA && offer != null) {
-                lastOffer = offer
-                offerGoneAt = 0L
-                setPhase(Phase.OFERTA)
-            }
-
-            Phase.OFERTA -> when (state) {
-                ScreenState.OFERTA -> {
-                    if (offer != null) lastOffer = offer
-                    offerGoneAt = 0L
-                }
-                ScreenState.INICIO -> {
-                    // Recusada ou expirada.
-                    lastOffer = null
-                    setPhase(Phase.LIVRE)
-                }
-                else -> {
-                    if (offerGoneAt == 0L) offerGoneAt = now
-                }
-            }
-
-            Phase.A_CAMINHO, Phase.NO_EMBARQUE, Phase.EM_VIAGEM -> {
-                if (state == ScreenState.INICIO) {
-                    nextOffer = null
-                    finish(ctx, null)
-                } else if (state == ScreenState.OFERTA && offer != null && trip?.arrivedDestAt != null) {
-                    // Já deixou o passageiro e chegou outra oferta: fecha esta corrida e acompanha a nova.
-                    nextOffer = null
-                    finish(ctx, null)
-                    lastOffer = offer
-                    offerGoneAt = 0L
-                    setPhase(Phase.OFERTA)
-                } else if (state == ScreenState.OFERTA && offer != null) {
-                    // Oferta da próxima corrida chegando no meio desta.
-                    nextOffer = offer
-                }
-            }
+        if (state == ScreenState.OFERTA && offer != null) {
+            lastOffer = offer
+            lastOfferAt = now
+            if (trip != null) nextOffer = offer
+            return
         }
-        checkTimeouts()
+        val t = texts ?: return
+        val cur = trip
+        val onTrip = isTripScreen(t)
+
+        if (cur == null) {
+            if (onTrip) {
+                val o = if (now - lastOfferAt <= OFFER_MAX_AGE_MS) lastOffer else null
+                lastOffer = null
+                val started = startTrip(ctx, o, now, gpsAlreadyOn = false)
+                update(ctx, started, t, now)
+            }
+            return
+        }
+
+        if (now - cur.acceptedAt > MAX_TRIP_MS) {
+            finish(ctx, "tempo máximo", now, false)
+            return
+        }
+        if (hasAny(t, END_MARKERS)) {
+            finish(ctx, null, now, false)
+            return
+        }
+        if (!onTrip) {
+            if (isHomeScreen(t)) {
+                if (homeSince == 0L) homeSince = now
+                if (now - homeSince >= HOME_CONFIRM_MS) finish(ctx, null, homeSince, false)
+            }
+            return
+        }
+        homeSince = 0L
+
+        // Corrida em sequência: estava com passageiro e a Uber já mostra o próximo embarque.
+        if (phase == Phase.EM_VIAGEM && hasAny(t, PICKUP_MARKERS)) {
+            val next = nextOffer
+            nextOffer = null
+            finish(ctx, null, now, keepGps = true)
+            OfferLog.appendDiag(ctx, "CORRIDA EM SEQUÊNCIA" + (next?.let { " (R$ ${it.price})" } ?: " (oferta não lida)"))
+            val started = startTrip(ctx, next, now, gpsAlreadyOn = true)
+            update(ctx, started, t, now)
+            return
+        }
+        update(ctx, cur, t, now)
     }
 
-    private fun checkTimeouts() {
-        val ctx = appContext ?: return
-        val now = System.currentTimeMillis()
-        if (phase == Phase.OFERTA && offerGoneAt > 0 && now - offerGoneAt >= DECISION_MS) {
-            val offer = lastOffer
-            if (offer != null) startTrip(ctx, offer, offerGoneAt) else setPhase(Phase.LIVRE)
-        }
-        val t = trip ?: return
-        val dropped = t.arrivedDestAt
+    /** Avança a fase da corrida conforme o que a Uber mostra. */
+    private fun update(ctx: Context, t: Trip, texts: List<String>, now: Long) {
+        val addr = fullAddress(texts, previousDest)
         when {
-            dropped != null && now - dropped > AFTER_DROPOFF_MS -> {
-                // A tela inicial não voltou depois do desembarque. Se chegou oferta durante a
-                // corrida, ela foi aceita (corrida em sequência): começa a registrar a nova.
-                val next = nextOffer
-                nextOffer = null
-                finish(ctx, null)
-                if (next != null) {
-                    OfferLog.appendDiag(ctx, "CORRIDA EM SEQUÊNCIA: oferta de R$ ${next.price} recebida durante a anterior")
-                    startTrip(ctx, next, dropped)
+            hasAny(texts, RIDING_MARKERS) -> {
+                if (t.leftPickupAt == null) {
+                    if (t.arrivedPickupAt == null) {
+                        t.arrivedPickupAt = now
+                        t.origin = lastPosition(ctx, t)
+                    }
+                    t.leftPickupAt = now
+                    phase = Phase.EM_VIAGEM
                 }
+                if (addr != null) t.destText = addr
             }
-            now - t.acceptedAt > MAX_TRIP_MS -> finish(ctx, "tempo máximo")
+            hasAny(texts, WAITING_MARKERS) -> {
+                if (t.arrivedPickupAt == null) {
+                    t.arrivedPickupAt = now
+                    t.origin = lastPosition(ctx, t)
+                    phase = Phase.NO_EMBARQUE
+                }
+                if (addr != null && t.originText == null) t.originText = addr
+            }
+            else -> if (phase == Phase.A_CAMINHO && addr != null) t.originText = addr
         }
     }
 
-    private fun setPhase(p: Phase) {
-        val wasIdle = phase == Phase.LIVRE
-        phase = p
-        if (wasIdle && p != Phase.LIVRE) {
-            handler.removeCallbacks(tick)
-            handler.postDelayed(tick, 2_000L)
-        }
-        if (p == Phase.LIVRE) handler.removeCallbacks(tick)
-    }
+    private fun lastPosition(ctx: Context, t: Trip): LatLng? =
+        t.points.lastOrNull()?.let { LatLng(it.lat, it.lng) } ?: Geo.lastKnown(ctx)
 
-    private fun startTrip(ctx: Context, offer: Offer, acceptedAt: Long) {
+    private fun startTrip(ctx: Context, offer: Offer?, acceptedAt: Long, gpsAlreadyOn: Boolean): Trip {
         val id = SimpleDateFormat("yyyyMMdd-HHmmss", Locale.US).format(Date(acceptedAt))
         val t = Trip(id, offer, acceptedAt)
         trip = t
-        lastOffer = null
-        setPhase(Phase.A_CAMINHO)
-        OfferLog.appendDiag(ctx, "CORRIDA $id: aceita (R$ ${offer.price}) — ligando o GPS")
-
-        val near = Geo.lastKnown(ctx)
-        Geo.geocode(ctx, offer.origin, near) { t.origin = it }
-        Geo.geocode(ctx, offer.destination, near) { t.destination = it }
-
+        phase = Phase.A_CAMINHO
+        homeSince = 0L
+        nextOffer = null
+        OfferLog.appendDiag(ctx, "CORRIDA $id: aceita" + (offer?.let { " (R$ ${it.price})" } ?: " (oferta não lida)"))
         TrackingService.onPoint = { loc -> onLocation(loc) }
-        if (!TrackingService.start(ctx)) {
+        if (!gpsAlreadyOn && !TrackingService.start(ctx)) {
             OfferLog.appendDiag(ctx, "CORRIDA $id: não foi possível ligar o GPS")
         }
+        return t
     }
 
     private fun onLocation(loc: Location) {
@@ -205,76 +223,43 @@ object TripTracker {
         val stepM = if (prev == null) 0.0 else Geo.meters(LatLng(prev.lat, prev.lng), here)
         if (prev != null && stepM < MIN_STEP_M) return
         val stepKm = stepM / 1000.0
-
         when (phase) {
-            Phase.A_CAMINHO -> {
-                t.kmToPickup += stepKm
-                val o = t.origin
-                val d = t.destination
-                if (o != null && Geo.meters(here, o) <= PICKUP_RADIUS_M) {
-                    t.arrivedPickupAt = loc.time
-                    phase = Phase.NO_EMBARQUE
-                } else if (o == null && d != null && t.kmToPickup > NO_ADDRESS_MIN_KM &&
-                    Geo.meters(here, d) <= DROPOFF_RADIUS_M
-                ) {
-                    // Sem o endereço de embarque, mas chegou ao destino: a corrida aconteceu.
-                    t.arrivedDestAt = loc.time
-                    phase = Phase.EM_VIAGEM
-                }
-            }
-            Phase.NO_EMBARQUE -> {
-                val o = t.origin
-                if (o != null && Geo.meters(here, o) > LEAVE_PICKUP_M) {
-                    t.leftPickupAt = loc.time
-                    phase = Phase.EM_VIAGEM
-                    t.kmTrip += stepKm
-                } else {
-                    t.kmToPickup += stepKm
-                }
-            }
-            Phase.EM_VIAGEM -> {
-                if (t.arrivedDestAt == null) {
-                    t.kmTrip += stepKm
-                    val d = t.destination
-                    if (d != null && Geo.meters(here, d) <= DROPOFF_RADIUS_M) t.arrivedDestAt = loc.time
-                } else {
-                    t.kmAfter += stepKm
-                }
-            }
+            Phase.A_CAMINHO, Phase.NO_EMBARQUE -> t.kmToPickup += stepKm
+            Phase.EM_VIAGEM -> t.kmTrip += stepKm
             else -> {}
         }
         t.points.add(Point(loc.time, here.lat, here.lng, phase))
     }
 
-    private fun finish(ctx: Context, reason: String?) {
+    private fun finish(ctx: Context, reason: String?, endedAt: Long, keepGps: Boolean) {
         val t = trip ?: return
         trip = null
-        setPhase(Phase.LIVRE)
-        TrackingService.onPoint = null
-        TrackingService.stop(ctx)
-        val endedAt = System.currentTimeMillis()
-        val movedKm = t.kmToPickup + t.kmTrip + t.kmAfter
+        phase = Phase.LIVRE
+        homeSince = 0L
+        if (!keepGps) {
+            TrackingService.onPoint = null
+            TrackingService.stop(ctx)
+        }
         val status = when {
             reason != null -> "interrompida ($reason)"
             t.leftPickupAt != null -> "concluída"
             t.arrivedPickupAt != null -> "cancelada no embarque"
-            t.arrivedDestAt != null -> "concluída (sem endereço de embarque)"
-            t.origin == null && movedKm >= NO_ADDRESS_MIN_KM && endedAtMs(t) - t.acceptedAt >= NO_ADDRESS_MIN_MS ->
-                "concluída (sem endereço de embarque)"
             else -> "cancelada antes do embarque"
         }
+        previousDest = t.destText
+        if (t.leftPickupAt != null) {
+            t.arrivedDestAt = endedAt
+            t.destination = lastPosition(ctx, t)
+        }
         TripLog.save(ctx, t.id, t.offer, t.acceptedAt, t.arrivedPickupAt, t.leftPickupAt, t.arrivedDestAt, endedAt,
-            t.kmToPickup, t.kmTrip, t.origin, t.destination, status,
+            t.kmToPickup, t.kmTrip, t.originText, t.destText, t.origin, t.destination, status,
             t.points.map { TripLog.RoutePoint(it.time, it.lat, it.lng, it.phase.name) })
         OfferLog.appendDiag(ctx, "CORRIDA ${t.id}: $status, ${t.points.size} pontos de GPS")
     }
 
-    /** Hora do último ponto de GPS (ou agora, se não houver). */
-    private fun endedAtMs(t: Trip): Long = t.points.lastOrNull()?.time ?: System.currentTimeMillis()
-
     /** Se o app reiniciar no meio da corrida, encerra o que estava aberto. */
     fun shutdown(ctx: Context) {
-        if (trip != null) finish(ctx, "Radar desligado")
+        if (trip != null) finish(ctx, "Radar desligado", System.currentTimeMillis(), false)
     }
 }
 
@@ -300,8 +285,9 @@ object TripLog {
     private fun mins(a: Long?, b: Long?): Double? = if (a == null || b == null || b < a) null else (b - a) / 60_000.0
 
     fun save(
-        ctx: Context, id: String, o: Offer, accepted: Long, arrivedPickup: Long?, leftPickup: Long?,
+        ctx: Context, id: String, o: Offer?, accepted: Long, arrivedPickup: Long?, leftPickup: Long?,
         arrivedDest: Long?, ended: Long, kmToPickup: Double, kmTrip: Double,
+        originText: String?, destText: String?,
         origin: LatLng?, dest: LatLng?, status: String, route: List<RoutePoint>
     ) {
         try {
@@ -309,13 +295,13 @@ object TripLog {
             if (!tf.exists()) tf.writeText(TRIPS_HEADER + "\n")
             val tripEnd = arrivedDest ?: ended
             val totalMin = mins(accepted, tripEnd)
-            val realPerHour = if (status.startsWith("concluída") && totalMin != null && totalMin > 0) o.price / (totalMin / 60.0) else null
+            val realPerHour = if (o != null && status.startsWith("concluída") && totalMin != null && totalMin > 0) o.price / (totalMin / 60.0) else null
             val line = listOf(
-                id, o.app, q(o.category), n(o.price), n(o.totalKm), n(o.totalMin),
+                id, o?.app ?: "UBER", q(o?.category), n(o?.price), n(o?.totalKm), n(o?.totalMin),
                 ts(accepted), ts(arrivedPickup), ts(leftPickup), ts(arrivedDest), ts(ended),
                 n(mins(accepted, arrivedPickup)), n(mins(arrivedPickup, leftPickup)), n(mins(leftPickup, tripEnd)), n(totalMin),
                 n(kmToPickup), n(kmTrip), n(realPerHour), q(status),
-                q(o.origin), q(o.destination), c(origin?.lat), c(origin?.lng), c(dest?.lat), c(dest?.lng)
+                q(originText ?: o?.origin), q(destText ?: o?.destination), c(origin?.lat), c(origin?.lng), c(dest?.lat), c(dest?.lng)
             ).joinToString(";")
             tf.appendText(line + "\n")
 
