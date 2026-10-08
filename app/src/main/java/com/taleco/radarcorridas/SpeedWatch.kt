@@ -10,8 +10,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
-import android.media.AudioManager
-import android.media.ToneGenerator
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
@@ -67,7 +65,6 @@ object SpeedWatch {
     private var speedAtMin = 0.0
     private var lastBeepAt = 0L
     private val recentlyPassed = HashMap<SpeedCam, Long>()
-    private var tone: ToneGenerator? = null
 
     private val idleCheck = object : Runnable {
         override fun run() {
@@ -159,7 +156,7 @@ object SpeedWatch {
                 maxNearKmh = 0.0
                 speedAtMin = kmh
                 handler.removeCallbacks(hideResult)
-                beep(ToneGenerator.TONE_PROP_BEEP, 150)
+                beep(Beeper.Kind.RADAR_A_FRENTE)
                 followTarget(ctx, loc, cam, kmh, heading)
             }
         }
@@ -245,9 +242,9 @@ object SpeedWatch {
         )
         val limit = cam.limit ?: return
         val now = System.currentTimeMillis()
-        if (kmh > limit && now - lastBeepAt > 1_500L) {
+        if (kmh > limit && now - lastBeepAt > 2_500L) {
             lastBeepAt = now
-            beep(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD, 400)
+            beep(Beeper.Kind.ACIMA)
         }
     }
 
@@ -275,7 +272,7 @@ object SpeedWatch {
         handler.postDelayed(hideResult, RESULT_SHOW_MS)
 
         if (limit != null && kmh > toleratedUpTo(limit)) {
-            beep(ToneGenerator.TONE_CDMA_ABBR_ALERT, 600)
+            beep(Beeper.Kind.MULTA)
             notifyFine(ctx, cam, kmh, limit)
         }
     }
@@ -321,15 +318,10 @@ object SpeedWatch {
         }
     }
 
-    private fun beep(toneType: Int, ms: Int) {
-        val prefs = appContext?.let { Prefs(it) } ?: return
-        if (!prefs.speedSound) return
-        try {
-            val t = tone ?: ToneGenerator(AudioManager.STREAM_NOTIFICATION, 100).also { tone = it }
-            t.startTone(toneType, ms)
-        } catch (_: Exception) {
-            tone = null
-        }
+    private fun beep(kind: Beeper.Kind) {
+        val ctx = appContext ?: return
+        if (!Prefs(ctx).speedSound) return
+        Beeper.play(ctx, kind)
     }
 
     // ---------- Teste pela tela de configuração ----------
@@ -346,8 +338,9 @@ object SpeedWatch {
         steps.forEachIndexed { i, b ->
             handler.postDelayed({
                 s.showSpeedBanner(b)
-                if (i == 2) beep(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD, 400)
-                if (i == 3) beep(ToneGenerator.TONE_CDMA_ABBR_ALERT, 600)
+                if (i == 0) beep(Beeper.Kind.RADAR_A_FRENTE)
+                if (i == 2) beep(Beeper.Kind.ACIMA)
+                if (i == 3) beep(Beeper.Kind.MULTA)
             }, i * 1500L)
         }
         handler.postDelayed({ if (target == null) s.hideSpeedBanner() }, steps.size * 1500L + 3000L)

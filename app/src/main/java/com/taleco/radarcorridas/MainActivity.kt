@@ -466,7 +466,7 @@ class MainActivity : AppCompatActivity() {
             12f, Colors.MUTED
         ))
         card.addView(SwitchMaterial(this).apply {
-            text = "Bipe sonoro"
+            text = "Bipe sonoro (volume de mídia; sai no som do carro se conectado)"
             setTextColor(Colors.TEXT)
             isChecked = prefs.speedSound
             setOnCheckedChangeListener { _, checked -> prefs.speedSound = checked }
