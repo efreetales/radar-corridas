@@ -69,6 +69,11 @@ object TripTracker {
     private var lastOffer: Offer? = null
     private var offerGoneAt = 0L
     private var trip: Trip? = null
+    /**
+     * Oferta que apareceu durante uma corrida (a Uber manda a próxima antes do desembarque).
+     * Se depois de deixar o passageiro a tela inicial não voltar, é porque ela foi aceita.
+     */
+    private var nextOffer: Offer? = null
     private var appContext: Context? = null
 
     private val tick = object : Runnable {
@@ -114,13 +119,18 @@ object TripTracker {
 
             Phase.A_CAMINHO, Phase.NO_EMBARQUE, Phase.EM_VIAGEM -> {
                 if (state == ScreenState.INICIO) {
+                    nextOffer = null
                     finish(ctx, null)
                 } else if (state == ScreenState.OFERTA && offer != null && trip?.arrivedDestAt != null) {
                     // Já deixou o passageiro e chegou outra oferta: fecha esta corrida e acompanha a nova.
+                    nextOffer = null
                     finish(ctx, null)
                     lastOffer = offer
                     offerGoneAt = 0L
                     setPhase(Phase.OFERTA)
+                } else if (state == ScreenState.OFERTA && offer != null) {
+                    // Oferta da próxima corrida chegando no meio desta.
+                    nextOffer = offer
                 }
             }
         }
@@ -137,7 +147,17 @@ object TripTracker {
         val t = trip ?: return
         val dropped = t.arrivedDestAt
         when {
-            dropped != null && now - dropped > AFTER_DROPOFF_MS -> finish(ctx, null)
+            dropped != null && now - dropped > AFTER_DROPOFF_MS -> {
+                // A tela inicial não voltou depois do desembarque. Se chegou oferta durante a
+                // corrida, ela foi aceita (corrida em sequência): começa a registrar a nova.
+                val next = nextOffer
+                nextOffer = null
+                finish(ctx, null)
+                if (next != null) {
+                    OfferLog.appendDiag(ctx, "CORRIDA EM SEQUÊNCIA: oferta de R$ ${next.price} recebida durante a anterior")
+                    startTrip(ctx, next, dropped)
+                }
+            }
             now - t.acceptedAt > MAX_TRIP_MS -> finish(ctx, "tempo máximo")
         }
     }
