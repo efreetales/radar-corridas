@@ -255,6 +255,7 @@ object TripTracker {
             t.kmToPickup, t.kmTrip, t.originText, t.destText, t.origin, t.destination, status,
             t.points.map { TripLog.RoutePoint(it.time, it.lat, it.lng, it.phase.name) })
         OfferLog.appendDiag(ctx, "CORRIDA ${t.id}: $status, ${t.points.size} pontos de GPS")
+        CloudSync.syncNow(ctx)
     }
 
     /** Se o app reiniciar no meio da corrida, encerra o que estava aberto. */

@@ -315,6 +315,30 @@ class MainActivity : AppCompatActivity() {
             }
         }, matchWrap(top = 6))
 
+        val cloud = SwitchMaterial(this).apply {
+            text = "Enviar para a nuvem"
+            setTextColor(Colors.TEXT)
+            isChecked = CloudSync.enabled(this@MainActivity)
+        }
+        card.addView(cloud, matchWrap(top = 16))
+        card.addView(text(
+            "Manda sozinho, a cada 3 minutos, as ofertas, corridas, rotas e o diagnóstico para o seu banco na nuvem " +
+                "(Supabase). Fica todo o histórico guardado, sem precisar exportar. Sem internet, envia depois.",
+            12f, Colors.MUTED
+        ))
+        val cloudStatus = text(CloudSync.status(this), 13f, Colors.TEXT).apply { setPadding(0, dp(6), 0, 0) }
+        card.addView(cloudStatus)
+        cloud.setOnCheckedChangeListener { _, checked ->
+            CloudSync.setEnabled(this@MainActivity, checked)
+            cloudStatus.text = CloudSync.status(this@MainActivity)
+        }
+        card.addView(outlinedButton("Enviar agora").apply {
+            setOnClickListener {
+                cloudStatus.text = "Enviando…"
+                CloudSync.syncNow(this@MainActivity) { cloudStatus.text = CloudSync.status(this@MainActivity) }
+            }
+        }, matchWrap(top = 6))
+
         val diag = SwitchMaterial(this).apply {
             text = "Modo diagnóstico"
             setTextColor(Colors.TEXT)

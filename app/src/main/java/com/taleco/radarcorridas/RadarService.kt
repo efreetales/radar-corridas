@@ -109,6 +109,14 @@ class RadarService : AccessibilityService() {
     private var lastImageDiagAt = 0L
     private var hiddenSince = 0L
 
+    /** Envia os dados para a nuvem de tempos em tempos. */
+    private val syncRunnable: Runnable = object : Runnable {
+        override fun run() {
+            CloudSync.syncNow(this@RadarService)
+            handler.postDelayed(this, CloudSync.INTERVAL_MS)
+        }
+    }
+
     private val watchRunnable: Runnable = Runnable {
         watchPending = false
         scheduleScan()
@@ -225,6 +233,7 @@ class RadarService : AccessibilityService() {
         powerManager = getSystemService(PowerManager::class.java)
         instance = this
         refreshBubble()
+        handler.postDelayed(syncRunnable, 20_000L)
     }
 
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {
