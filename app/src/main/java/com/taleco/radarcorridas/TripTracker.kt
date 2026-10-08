@@ -34,6 +34,13 @@ object TripTracker {
     private const val DROPOFF_RADIUS_M = 150.0    // chegou ao destino
     private const val MAX_TRIP_MS = 3 * 60 * 60 * 1000L
     private const val MIN_ACCURACY_M = 60f
+    /** Depois de chegar ao destino, encerra a corrida (e desliga o GPS) se a tela inicial não voltar. */
+    private const val AFTER_DROPOFF_MS = 3 * 60 * 1000L
+    /** Movimentos menores que isso são tremida do GPS, não deslocamento. */
+    private const val MIN_STEP_M = 8.0
+    /** Sem endereço de embarque: andou isso tudo com a corrida aberta, então ela aconteceu. */
+    private const val NO_ADDRESS_MIN_KM = 1.0
+    private const val NO_ADDRESS_MIN_MS = 4 * 60 * 1000L
 
     private val HOME_MARKERS = listOf("Procurando viagens", "Você está online", "Você está offline")
 
@@ -54,6 +61,7 @@ object TripTracker {
         var kmToPickup = 0.0
         var kmTrip = 0.0
         var kmAfter = 0.0
+        var lastGpsAt = 0L
     }
 
     private val handler = Handler(Looper.getMainLooper())
@@ -105,7 +113,15 @@ object TripTracker {
             }
 
             Phase.A_CAMINHO, Phase.NO_EMBARQUE, Phase.EM_VIAGEM -> {
-                if (state == ScreenState.INICIO) finish(ctx, null)
+                if (state == ScreenState.INICIO) {
+                    finish(ctx, null)
+                } else if (state == ScreenState.OFERTA && offer != null && trip?.arrivedDestAt != null) {
+                    // Já deixou o passageiro e chegou outra oferta: fecha esta corrida e acompanha a nova.
+                    finish(ctx, null)
+                    lastOffer = offer
+                    offerGoneAt = 0L
+                    setPhase(Phase.OFERTA)
+                }
             }
         }
         checkTimeouts()
@@ -118,8 +134,12 @@ object TripTracker {
             val offer = lastOffer
             if (offer != null) startTrip(ctx, offer, offerGoneAt) else setPhase(Phase.LIVRE)
         }
-        val t = trip
-        if (t != null && now - t.acceptedAt > MAX_TRIP_MS) finish(ctx, "tempo máximo")
+        val t = trip ?: return
+        val dropped = t.arrivedDestAt
+        when {
+            dropped != null && now - dropped > AFTER_DROPOFF_MS -> finish(ctx, null)
+            now - t.acceptedAt > MAX_TRIP_MS -> finish(ctx, "tempo máximo")
+        }
     }
 
     private fun setPhase(p: Phase) {
@@ -140,8 +160,9 @@ object TripTracker {
         setPhase(Phase.A_CAMINHO)
         OfferLog.appendDiag(ctx, "CORRIDA $id: aceita (R$ ${offer.price}) — ligando o GPS")
 
-        Geo.geocode(ctx, offer.origin) { t.origin = it }
-        Geo.geocode(ctx, offer.destination) { t.destination = it }
+        val near = Geo.lastKnown(ctx)
+        Geo.geocode(ctx, offer.origin, near) { t.origin = it }
+        Geo.geocode(ctx, offer.destination, near) { t.destination = it }
 
         TrackingService.onPoint = { loc -> onLocation(loc) }
         if (!TrackingService.start(ctx)) {
@@ -152,17 +173,33 @@ object TripTracker {
     private fun onLocation(loc: Location) {
         val t = trip ?: return
         if (loc.hasAccuracy() && loc.accuracy > MIN_ACCURACY_M) return
+        // A posição pela rede "pula" e infla os km: só é usada quando o GPS está sem sinal.
+        val now = System.currentTimeMillis()
+        if (loc.provider == android.location.LocationManager.GPS_PROVIDER) {
+            t.lastGpsAt = now
+        } else if (now - t.lastGpsAt < 15_000L) {
+            return
+        }
         val here = Geo.of(loc)
         val prev = t.points.lastOrNull()
-        val stepKm = if (prev == null) 0.0 else Geo.meters(LatLng(prev.lat, prev.lng), here) / 1000.0
+        val stepM = if (prev == null) 0.0 else Geo.meters(LatLng(prev.lat, prev.lng), here)
+        if (prev != null && stepM < MIN_STEP_M) return
+        val stepKm = stepM / 1000.0
 
         when (phase) {
             Phase.A_CAMINHO -> {
                 t.kmToPickup += stepKm
                 val o = t.origin
+                val d = t.destination
                 if (o != null && Geo.meters(here, o) <= PICKUP_RADIUS_M) {
                     t.arrivedPickupAt = loc.time
                     phase = Phase.NO_EMBARQUE
+                } else if (o == null && d != null && t.kmToPickup > NO_ADDRESS_MIN_KM &&
+                    Geo.meters(here, d) <= DROPOFF_RADIUS_M
+                ) {
+                    // Sem o endereço de embarque, mas chegou ao destino: a corrida aconteceu.
+                    t.arrivedDestAt = loc.time
+                    phase = Phase.EM_VIAGEM
                 }
             }
             Phase.NO_EMBARQUE -> {
@@ -196,10 +233,14 @@ object TripTracker {
         TrackingService.onPoint = null
         TrackingService.stop(ctx)
         val endedAt = System.currentTimeMillis()
+        val movedKm = t.kmToPickup + t.kmTrip + t.kmAfter
         val status = when {
             reason != null -> "interrompida ($reason)"
             t.leftPickupAt != null -> "concluída"
             t.arrivedPickupAt != null -> "cancelada no embarque"
+            t.arrivedDestAt != null -> "concluída (sem endereço de embarque)"
+            t.origin == null && movedKm >= NO_ADDRESS_MIN_KM && endedAtMs(t) - t.acceptedAt >= NO_ADDRESS_MIN_MS ->
+                "concluída (sem endereço de embarque)"
             else -> "cancelada antes do embarque"
         }
         TripLog.save(ctx, t.id, t.offer, t.acceptedAt, t.arrivedPickupAt, t.leftPickupAt, t.arrivedDestAt, endedAt,
@@ -207,6 +248,9 @@ object TripTracker {
             t.points.map { TripLog.RoutePoint(it.time, it.lat, it.lng, it.phase.name) })
         OfferLog.appendDiag(ctx, "CORRIDA ${t.id}: $status, ${t.points.size} pontos de GPS")
     }
+
+    /** Hora do último ponto de GPS (ou agora, se não houver). */
+    private fun endedAtMs(t: Trip): Long = t.points.lastOrNull()?.time ?: System.currentTimeMillis()
 
     /** Se o app reiniciar no meio da corrida, encerra o que estava aberto. */
     fun shutdown(ctx: Context) {
@@ -245,7 +289,7 @@ object TripLog {
             if (!tf.exists()) tf.writeText(TRIPS_HEADER + "\n")
             val tripEnd = arrivedDest ?: ended
             val totalMin = mins(accepted, tripEnd)
-            val realPerHour = if (status == "concluída" && totalMin != null && totalMin > 0) o.price / (totalMin / 60.0) else null
+            val realPerHour = if (status.startsWith("concluída") && totalMin != null && totalMin > 0) o.price / (totalMin / 60.0) else null
             val line = listOf(
                 id, o.app, q(o.category), n(o.price), n(o.totalKm), n(o.totalMin),
                 ts(accepted), ts(arrivedPickup), ts(leftPickup), ts(arrivedDest), ts(ended),

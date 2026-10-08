@@ -51,6 +51,11 @@ class RadarService : AccessibilityService() {
         private const val IMAGE_READ_SLOW_INTERVAL_MS = 2500L
         private const val IMAGE_FAST_PHASE_MS = 6_000L
         private const val MAX_HIDDEN_READ_MS = 25_000L
+        /**
+         * Depois da janela de 25 s, a tela "escondida" continua sendo conferida, só que com calma.
+         * Antes o Radar parava de olhar de vez e perdia a próxima oferta que chegasse nessa tela.
+         */
+        private const val IMAGE_READ_IDLE_INTERVAL_MS = 4000L
         /** A imagem é reduzida para esta largura antes da leitura: bem mais leve e o texto continua legível. */
         private const val IMAGE_MAX_WIDTH = 720
     }
@@ -112,9 +117,15 @@ class RadarService : AccessibilityService() {
      */
     private fun imageInterval(): Long {
         val hiddenFor = if (hiddenSince == 0L) 0L else System.currentTimeMillis() - hiddenSince
-        return if (overlay.isCardShowing || hiddenFor > IMAGE_FAST_PHASE_MS) IMAGE_READ_SLOW_INTERVAL_MS
-        else IMAGE_READ_INTERVAL_MS
+        return when {
+            hiddenFor > MAX_HIDDEN_READ_MS -> IMAGE_READ_IDLE_INTERVAL_MS
+            overlay.isCardShowing || hiddenFor > IMAGE_FAST_PHASE_MS -> IMAGE_READ_SLOW_INTERVAL_MS
+            else -> IMAGE_READ_INTERVAL_MS
+        }
     }
+
+    /** Textos da última tela escondida: se mudarem, algo novo apareceu (pode ser uma oferta). */
+    private var lastHiddenTexts: List<String>? = null
 
     /** Enquanto a tela da Uber estiver "vazia", continua olhando de tempos em tempos. */
     private fun keepWatchingHiddenScreen() {
@@ -214,6 +225,8 @@ class RadarService : AccessibilityService() {
         if (event == null || instance == null) return
         val pkg = event.packageName?.toString()
         if (pkg in TARGETS) {
+            // Tela nova da Uber: recomeça a leitura rápida (pode ser uma oferta chegando).
+            if (event.eventType != AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED) hiddenSince = 0L
             // Mudança pequena dentro da mesma tela (mapa, relógio): lê com calma.
             // Tela nova: lê rápido, porque pode ser uma oferta chegando.
             scheduleScan(urgent = event.eventType != AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED)
@@ -298,16 +311,18 @@ class RadarService : AccessibilityService() {
         // para não gastar bateria quando a tela escondida não é uma oferta).
         val hidden = screens.firstOrNull { it.second.size < MIN_VISIBLE_TEXTS }
         if (hidden != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            if (hiddenSince == 0L) hiddenSince = now
-            if (now - hiddenSince <= MAX_HIDDEN_READ_MS) {
-                requestImageRead(hidden.first)
-                keepWatchingHiddenScreen()
-            } else {
-                handleNoOffer()
+            // O pouco texto que sobra na tela mudou: recomeça a leitura rápida.
+            if (hidden.second != lastHiddenTexts) {
+                lastHiddenTexts = hidden.second
+                hiddenSince = 0L
             }
+            if (hiddenSince == 0L) hiddenSince = now
+            requestImageRead(hidden.first)
+            keepWatchingHiddenScreen()
             return
         }
         hiddenSince = 0L
+        lastHiddenTexts = null
 
         val state = when {
             screens.isEmpty() -> ScreenState.FORA
@@ -346,7 +361,7 @@ class RadarService : AccessibilityService() {
         if (prefs.logOffers && (sig != lastLoggedSig || now - lastLoggedAt > 60_000)) {
             val driverAt = Geo.lastKnown(this)
             val ctx = this
-            Geo.geocode(this, offer.origin) { originAt -> OfferLog.append(ctx, eval, driverAt, originAt) }
+            Geo.geocode(this, offer.origin, driverAt) { originAt -> OfferLog.append(ctx, eval, driverAt, originAt) }
             lastLoggedSig = sig
             lastLoggedAt = now
         }

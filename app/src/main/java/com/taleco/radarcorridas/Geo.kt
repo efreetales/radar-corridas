@@ -33,18 +33,41 @@ object Geo {
      * Transforma um endereço da oferta em coordenadas, sem travar a tela.
      * O resultado volta na thread principal (null se não encontrar).
      */
-    fun geocode(ctx: Context, address: String?, onDone: (LatLng?) -> Unit) {
-        if (address.isNullOrBlank() || !Geocoder.isPresent()) {
+    /** Endereço lido pela metade às vezes cai em outro estado: resultado mais longe que isso é descartado. */
+    private const val MAX_GEOCODE_KM = 40.0
+    /** Área de busca ao redor de onde o motorista está (em graus, ~0,4° ≈ 45 km). */
+    private const val SEARCH_BOX_DEG = 0.4
+
+    fun geocode(ctx: Context, address: String?, near: LatLng?, onDone: (LatLng?) -> Unit) {
+        val clean = address?.trim()?.trimEnd(',')
+        // Textos curtos demais ("D", "ER", "Prt") são erros de leitura, não endereços.
+        if (clean == null || clean.count { it.isLetter() } < 6 || !Geocoder.isPresent()) {
             onDone(null)
             return
         }
         val app = ctx.applicationContext
         Thread {
             val result: LatLng? = try {
-                val query = if (address.contains("Brasil", ignoreCase = true)) address else "$address, Brasil"
+                val query = if (clean.contains("Brasil", ignoreCase = true)) clean else "$clean, Brasil"
+                val geocoder = Geocoder(app, PT_BR)
                 @Suppress("DEPRECATION")
-                val list = Geocoder(app, PT_BR).getFromLocationName(query, 1)
-                list?.firstOrNull()?.let { LatLng(it.latitude, it.longitude) }
+                val list = if (near != null) {
+                    geocoder.getFromLocationName(
+                        query, 1,
+                        near.lat - SEARCH_BOX_DEG, near.lng - SEARCH_BOX_DEG,
+                        near.lat + SEARCH_BOX_DEG, near.lng + SEARCH_BOX_DEG
+                    )
+                } else {
+                    geocoder.getFromLocationName(query, 1)
+                }
+                val found = list?.firstOrNull()?.let { LatLng(it.latitude, it.longitude) }
+                when {
+                    found == null -> null
+                    near != null && meters(near, found) > MAX_GEOCODE_KM * 1000 -> null
+                    // Sem saber onde o motorista está, ao menos descarta o "centro do Brasil".
+                    near == null && meters(LatLng(-14.235, -51.925), found) < 1000 -> null
+                    else -> found
+                }
             } catch (e: Exception) {
                 null
             }
