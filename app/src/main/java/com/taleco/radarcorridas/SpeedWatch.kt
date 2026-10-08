@@ -25,7 +25,14 @@ import kotlin.math.ceil
 import kotlin.math.roundToInt
 
 /** O que o aviso de radar mostra na tela. */
-class SpeedBanner(val limit: Int?, val speedKmh: Int, val line: String, val color: Int)
+class SpeedBanner(
+    val limit: Int?,
+    val speedKmh: Int,
+    val line: String,
+    val color: Int,
+    val distanceM: Int? = null,   // metros até o radar (null depois de passar)
+    val progress: Float = 0f      // 0 = acabou de avistar o radar, 1 = em cima dele
+)
 
 /**
  * Alerta de radar:
@@ -64,6 +71,8 @@ object SpeedWatch {
     private var maxNearKmh = 0.0
     private var speedAtMin = 0.0
     private var lastBeepAt = 0L
+    private var startDist = LOOKAHEAD_M
+    private var dismissedCam: SpeedCam? = null
     private val recentlyPassed = HashMap<SpeedCam, Long>()
 
     private val idleCheck = object : Runnable {
@@ -155,6 +164,7 @@ object SpeedWatch {
                 minDist = Double.MAX_VALUE
                 maxNearKmh = 0.0
                 speedAtMin = kmh
+                startDist = loc.distanceTo(camLocation(cam)).toDouble().coerceAtLeast(50.0)
                 handler.removeCallbacks(hideResult)
                 beep(Beeper.Kind.RADAR_A_FRENTE)
                 followTarget(ctx, loc, cam, kmh, heading)
@@ -211,7 +221,8 @@ object SpeedWatch {
             gaveUp -> {
                 recentlyPassed[cam] = System.currentTimeMillis()
                 clearTarget()
-                RadarService.instance?.hideSpeedBanner()
+                if (dismissedCam === cam) dismissedCam = null
+                else RadarService.instance?.hideSpeedBanner()
             }
             else -> showApproach(cam, kmh, d)
         }
@@ -233,12 +244,22 @@ object SpeedWatch {
         else -> Colors.GREEN_DARK
     }
 
+    /** Fecha o aviso do radar atual (o botão ✕). Ele volta no próximo radar. */
+    fun dismiss() {
+        target?.let { dismissedCam = it }
+        handler.removeCallbacks(hideResult)
+        RadarService.instance?.hideSpeedBanner()
+    }
+
+    private fun roundDist(d: Double): Int = if (d >= 100) (d / 10).roundToInt() * 10 else d.roundToInt()
+
     private fun showApproach(cam: SpeedCam, kmhD: Double, d: Double) {
+        if (cam === dismissedCam) return
         val kmh = kmhD.roundToInt()
-        val dist = if (d >= 100) "${(d / 10).roundToInt() * 10} m" else "${d.roundToInt()} m"
-        val where = if (cam.name.isNotBlank()) " · ${cam.name}" else ""
+        val where = cam.name.ifBlank { "Radar de velocidade" }
+        val progress = (1.0 - d / startDist).coerceIn(0.0, 1.0).toFloat()
         RadarService.instance?.showSpeedBanner(
-            SpeedBanner(cam.limit, kmh, "Radar a $dist$where", colorFor(cam.limit, kmh))
+            SpeedBanner(cam.limit, kmh, where, colorFor(cam.limit, kmh), roundDist(d), progress)
         )
         val limit = cam.limit ?: return
         val now = System.currentTimeMillis()
@@ -267,9 +288,13 @@ object SpeedWatch {
             kmh > limit -> "Passou a $kmh no limite de $limit (tolera até ${toleratedUpTo(limit)})"
             else -> "✓ Passou a $kmh no limite de $limit"
         }
-        RadarService.instance?.showSpeedBanner(SpeedBanner(limit, kmh, line, colorFor(limit, kmh)))
-        handler.removeCallbacks(hideResult)
-        handler.postDelayed(hideResult, RESULT_SHOW_MS)
+        val wasDismissed = dismissedCam === cam
+        dismissedCam = null
+        if (!wasDismissed) {
+            RadarService.instance?.showSpeedBanner(SpeedBanner(limit, kmh, line, colorFor(limit, kmh), null, 1f))
+            handler.removeCallbacks(hideResult)
+            handler.postDelayed(hideResult, RESULT_SHOW_MS)
+        }
 
         if (limit != null && kmh > toleratedUpTo(limit)) {
             beep(Beeper.Kind.MULTA)
@@ -330,20 +355,22 @@ object SpeedWatch {
         appContext = ctx.applicationContext
         val s = RadarService.instance ?: return
         val steps = listOf(
-            SpeedBanner(50, 48, "Radar a 300 m · Av. Exemplo", Colors.GREEN_DARK),
-            SpeedBanner(50, 55, "Radar a 180 m · Av. Exemplo", Colors.YELLOW),
-            SpeedBanner(50, 63, "Radar a 60 m · Av. Exemplo", Colors.RED),
-            SpeedBanner(50, 63, "⚠️ Provável multa: 63 no limite de 50", Colors.RED)
+            SpeedBanner(50, 48, "Av. Exemplo", Colors.GREEN_DARK, 380, 0.05f),
+            SpeedBanner(50, 49, "Av. Exemplo", Colors.GREEN_DARK, 300, 0.25f),
+            SpeedBanner(50, 55, "Av. Exemplo", Colors.YELLOW, 200, 0.5f),
+            SpeedBanner(50, 63, "Av. Exemplo", Colors.RED, 100, 0.75f),
+            SpeedBanner(50, 63, "Av. Exemplo", Colors.RED, 30, 0.93f),
+            SpeedBanner(50, 63, "⚠️ Provável multa: 63 no limite de 50", Colors.RED, null, 1f)
         )
         steps.forEachIndexed { i, b ->
             handler.postDelayed({
                 s.showSpeedBanner(b)
                 if (i == 0) beep(Beeper.Kind.RADAR_A_FRENTE)
-                if (i == 2) beep(Beeper.Kind.ACIMA)
-                if (i == 3) beep(Beeper.Kind.MULTA)
-            }, i * 1500L)
+                if (i == 3) beep(Beeper.Kind.ACIMA)
+                if (i == 5) beep(Beeper.Kind.MULTA)
+            }, i * 1200L)
         }
-        handler.postDelayed({ if (target == null) s.hideSpeedBanner() }, steps.size * 1500L + 3000L)
+        handler.postDelayed({ if (target == null) s.hideSpeedBanner() }, steps.size * 1200L + 3000L)
     }
 }
 

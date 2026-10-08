@@ -5,7 +5,9 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.PixelFormat
 import android.graphics.Typeface
+import android.graphics.drawable.ClipDrawable
 import android.graphics.drawable.GradientDrawable
+import android.graphics.drawable.LayerDrawable
 import android.view.Gravity
 import android.view.MotionEvent
 import android.view.View
@@ -30,6 +32,12 @@ class OverlayManager(private val service: AccessibilityService) {
     private var speedSign: TextView? = null
     private var speedValue: TextView? = null
     private var speedLine: TextView? = null
+    private var speedDist: TextView? = null
+    private var speedDistUnit: TextView? = null
+    private var speedClose: TextView? = null
+    private var speedBase: GradientDrawable? = null
+    private var speedFillShape: GradientDrawable? = null
+    private var speedFill: ClipDrawable? = null
 
     val isCardShowing: Boolean get() = card != null
 
@@ -72,15 +80,27 @@ class OverlayManager(private val service: AccessibilityService) {
     /** Mostra (ou atualiza) o aviso de radar no topo da tela. */
     fun showSpeed(b: SpeedBanner) {
         if (speedView == null) createSpeedView()
-        val root = speedView ?: return
+        if (speedView == null) return
         val dark = b.color == Colors.YELLOW
         val fg = if (dark) Color.parseColor("#111111") else Color.WHITE
-        (root.background as? GradientDrawable)?.setColor(b.color)
+        speedBase?.setColor(b.color)
+        speedFillShape?.setColor(darker(b.color))
+        speedFill?.level = (b.progress.coerceIn(0f, 1f) * 10_000).toInt()
         speedSign?.text = b.limit?.toString() ?: "?"
         speedValue?.text = "${b.speedKmh} km/h"
         speedValue?.setTextColor(fg)
         speedLine?.text = b.line
         speedLine?.setTextColor(fg)
+        speedDist?.setTextColor(fg)
+        speedDistUnit?.setTextColor(fg)
+        speedClose?.setTextColor(fg)
+        if (b.distanceM != null) {
+            speedDist?.text = b.distanceM.toString()
+            speedDistUnit?.text = "metros"
+        } else {
+            speedDist?.text = ""
+            speedDistUnit?.text = ""
+        }
     }
 
     fun hideSpeed() {
@@ -89,17 +109,31 @@ class OverlayManager(private val service: AccessibilityService) {
         speedSign = null
         speedValue = null
         speedLine = null
+        speedDist = null
+        speedDistUnit = null
+        speedClose = null
+        speedBase = null
+        speedFillShape = null
+        speedFill = null
+    }
+
+    /** Mesma cor, uns 35% mais escura: é o "preenchimento" que avança até o radar. */
+    private fun darker(c: Int): Int {
+        val f = 0.65f
+        return Color.rgb((Color.red(c) * f).toInt(), (Color.green(c) * f).toInt(), (Color.blue(c) * f).toInt())
     }
 
     private fun createSpeedView() {
+        val radius = service.dp(18).toFloat()
+        val base = GradientDrawable().apply { cornerRadius = radius; setColor(Colors.SURFACE_2) }
+        val fillShape = GradientDrawable().apply { cornerRadius = radius; setColor(Colors.SURFACE) }
+        val fill = ClipDrawable(fillShape, Gravity.START, ClipDrawable.HORIZONTAL).apply { level = 0 }
+
         val root = LinearLayout(service).apply {
             orientation = LinearLayout.HORIZONTAL
             gravity = Gravity.CENTER_VERTICAL
-            setPadding(service.dp(10), service.dp(8), service.dp(16), service.dp(8))
-            background = GradientDrawable().apply {
-                cornerRadius = service.dp(18).toFloat()
-                setColor(Colors.SURFACE_2)
-            }
+            setPadding(service.dp(10), service.dp(8), service.dp(4), service.dp(8))
+            background = LayerDrawable(arrayOf(base, fill))
             elevation = service.dp(6).toFloat()
         }
         // Placa de limite de velocidade: círculo branco com borda vermelha
@@ -115,29 +149,68 @@ class OverlayManager(private val service: AccessibilityService) {
                 setStroke(service.dp(5), Color.parseColor("#D62828"))
             }
         }
-        root.addView(sign, LinearLayout.LayoutParams(size, size).apply { rightMargin = service.dp(12) })
+        root.addView(sign, LinearLayout.LayoutParams(size, size).apply { rightMargin = service.dp(10) })
+
+        // Meio: velocidade e nome da rua
         val col = LinearLayout(service).apply { orientation = LinearLayout.VERTICAL }
         val value = TextView(service).apply {
-            textSize = 28f
+            textSize = 24f
             typeface = Typeface.DEFAULT_BOLD
             setTextColor(Color.WHITE)
+            maxLines = 1
         }
         val line = TextView(service).apply {
-            textSize = 14f
+            textSize = 13f
             setTextColor(Color.WHITE)
             maxLines = 2
-            maxWidth = service.dp(240)
         }
         col.addView(value)
         col.addView(line)
-        root.addView(col)
+        root.addView(col, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f))
 
+        // Direita: distância até o radar, bem grande
+        val distCol = LinearLayout(service).apply {
+            orientation = LinearLayout.VERTICAL
+            gravity = Gravity.CENTER
+        }
+        val dist = TextView(service).apply {
+            textSize = 38f
+            typeface = Typeface.DEFAULT_BOLD
+            setTextColor(Color.WHITE)
+            gravity = Gravity.CENTER
+            includeFontPadding = false
+            maxLines = 1
+        }
+        val distUnit = TextView(service).apply {
+            textSize = 12f
+            setTextColor(Color.WHITE)
+            gravity = Gravity.CENTER
+        }
+        distCol.addView(dist)
+        distCol.addView(distUnit)
+        root.addView(distCol, LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT
+        ).apply { leftMargin = service.dp(8) })
+
+        // Botão fechar
+        val close = TextView(service).apply {
+            text = "✕"
+            textSize = 20f
+            typeface = Typeface.DEFAULT_BOLD
+            setTextColor(Color.WHITE)
+            gravity = Gravity.CENTER
+            setOnClickListener { SpeedWatch.dismiss() }
+        }
+        root.addView(close, LinearLayout.LayoutParams(service.dp(44), service.dp(54)))
+
+        val width = service.resources.displayMetrics.widthPixels - service.dp(24)
         val lp = WindowManager.LayoutParams(
-            WindowManager.LayoutParams.WRAP_CONTENT,
+            width,
             WindowManager.LayoutParams.WRAP_CONTENT,
             WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY,
+            // Só o próprio aviso recebe toque (para o ✕); o resto da tela continua normal.
             WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
-                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE or
+                WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL or
                 WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN,
             PixelFormat.TRANSLUCENT
         )
@@ -149,6 +222,12 @@ class OverlayManager(private val service: AccessibilityService) {
             speedSign = sign
             speedValue = value
             speedLine = line
+            speedDist = dist
+            speedDistUnit = distUnit
+            speedClose = close
+            speedBase = base
+            speedFillShape = fillShape
+            speedFill = fill
         } catch (e: Exception) {
             speedView = null
         }
