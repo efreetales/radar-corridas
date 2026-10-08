@@ -112,6 +112,7 @@ class RadarService : AccessibilityService() {
     /** Envia os dados para a nuvem de tempos em tempos. */
     private val syncRunnable: Runnable = object : Runnable {
         override fun run() {
+            Trajeto.tick(this@RadarService, prefs)
             CloudSync.syncNow(this@RadarService)
             handler.postDelayed(this, CloudSync.INTERVAL_MS)
         }
@@ -348,6 +349,7 @@ class RadarService : AccessibilityService() {
         // A janela principal da Uber é a que tem mais textos.
         val mainTexts = screens.filter { it.first == "UBER" }.maxByOrNull { it.second.size }?.second
         TripTracker.onScreen(this, prefs, state, null, mainTexts)
+        if (mainTexts != null) Trajeto.onUberScreen(this, prefs, mainTexts)
         handleNoOffer()
     }
 
@@ -392,7 +394,11 @@ class RadarService : AccessibilityService() {
         if (prefs.logOffers && (sig != lastLoggedSig || now - lastLoggedAt > 60_000)) {
             val driverAt = Geo.lastKnown(this)
             val ctx = this
-            Geo.geocode(this, offer.origin, driverAt) { originAt -> OfferLog.append(ctx, eval, driverAt, originAt) }
+            Geo.geocode(this, offer.origin, driverAt) { originAt ->
+                Geo.geocode(ctx, offer.destination, driverAt) { destAt ->
+                    OfferLog.append(ctx, eval, driverAt, originAt, destAt)
+                }
+            }
             lastLoggedSig = sig
             lastLoggedAt = now
         }

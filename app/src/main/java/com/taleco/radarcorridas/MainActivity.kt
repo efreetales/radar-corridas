@@ -410,6 +410,22 @@ class MainActivity : AppCompatActivity() {
             setOnCheckedChangeListener { _, checked -> prefs.trackTrips = checked }
         }
         card.addView(sw, matchWrap())
+        val route = SwitchMaterial(this).apply {
+            text = "Registrar o trajeto do turno"
+            setTextColor(Colors.TEXT)
+            isChecked = prefs.trackRoute
+            setOnCheckedChangeListener { _, checked ->
+                prefs.trackRoute = checked
+                TrackingService.sync(this@MainActivity, prefs)
+            }
+        }
+        card.addView(route, matchWrap(top = 8))
+        card.addView(text(
+            "Enquanto você está online, grava por onde passou, onde ficou parado e a velocidade, " +
+                "também quando está sem passageiro. Usa as posições que a Uber já pede ao GPS, sem gastar bateria a mais. " +
+                "É o que permite o mapa de calor de onde vale a pena esperar.",
+            12f, Colors.MUTED
+        ))
         card.addView(text(
             "Quando você aceita uma corrida, o Radar liga o GPS e grava o percurso e os tempos: " +
                 "do aceite até chegar ao passageiro, a espera, a viagem até o destino. " +

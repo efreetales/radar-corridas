@@ -39,7 +39,8 @@ object CloudSync {
     private val NUMERIC = setOf(
         "valor", "km_total", "min_total", "km_busca", "min_busca", "km_viagem", "min_viagem", "nota",
         "rs_km", "rs_hora", "lucro", "km_oferta", "min_oferta", "min_ate_embarque", "min_espera_passageiro",
-        "min_total", "km_ate_embarque", "rs_hora_real"
+        "min_total", "km_ate_embarque", "rs_hora_real", "velocidade_kmh", "altitude_m", "precisao_m", "rumo",
+        "km", "minutos", "dinamico", "duracao_min"
     )
     private val COORD = setOf(
         "motorista_lat", "motorista_lng", "origem_lat", "origem_lng", "destino_lat", "destino_lng", "lat", "lng"
@@ -51,7 +52,7 @@ object CloudSync {
         "radar_ofertas",
         setOf("data_hora", "app", "categoria", "valor", "km_total", "min_total", "km_busca", "min_busca", "km_viagem",
             "min_viagem", "nota", "rs_km", "rs_hora", "lucro", "veredito", "origem", "destino",
-            "motorista_lat", "motorista_lng", "origem_lat", "origem_lng")
+            "motorista_lat", "motorista_lng", "origem_lat", "origem_lng", "destino_lat", "destino_lng")
     )
     private val CORRIDAS = Table(
         "radar_corridas",
@@ -61,6 +62,16 @@ object CloudSync {
             "origem_lat", "origem_lng", "destino_lat", "destino_lng")
     )
     private val ROTAS = Table("radar_rotas", setOf("id", "data_hora", "lat", "lng", "fase"))
+    private val TRAJETO = Table(
+        "radar_trajeto",
+        setOf("data_hora", "lat", "lng", "velocidade_kmh", "altitude_m", "precisao_m", "rumo", "estado", "corrida_id", "fonte")
+    )
+    private val EVENTOS = Table("radar_eventos", setOf("data_hora", "tipo", "valor", "km", "minutos", "detalhe", "lat", "lng"))
+    private val GANHOS = Table(
+        "radar_ganhos",
+        setOf("data_rotulo", "hora", "data_hora_estimada", "valor", "aumentou", "dinamico", "categoria",
+            "duracao_min", "km", "origem", "destino")
+    )
 
     private val executor = Executors.newSingleThreadExecutor()
     private val main = Handler(Looper.getMainLooper())
@@ -100,6 +111,9 @@ object CloudSync {
                 syncCsv(app, OfferLog.offersFile(app), OFERTAS)
                 syncCsv(app, TripLog.tripsFile(app), CORRIDAS)
                 syncCsv(app, TripLog.routesFile(app), ROTAS)
+                syncCsv(app, Trajeto.trackFile(app), TRAJETO)
+                syncCsv(app, Trajeto.eventsFile(app), EVENTOS)
+                syncCsv(app, Trajeto.earningsFile(app), GANHOS)
                 for (f in OfferLog.diagFiles(app)) syncDiag(app, f)
                 sp(app).edit().putLong("ultimo_ok", System.currentTimeMillis()).remove("ultimo_erro").apply()
                 true
@@ -129,13 +143,23 @@ object CloudSync {
         RandomAccessFile(f, "r").use { raf ->
             val len = raf.length()
             if (from >= len) return "" to from
-            val size = minOf(len - from, maxBytes.toLong()).toInt()
+            var start = from
+            // Segurança: se "from" caiu no meio de uma linha (o arquivo mudou), pula até a próxima.
+            if (start > 0) {
+                raf.seek(start - 1)
+                if (raf.read() != '\n'.code) {
+                    while (start < len && raf.read() != '\n'.code) start++
+                    start++
+                    if (start >= len) return "" to from
+                }
+            }
+            val size = minOf(len - start, maxBytes.toLong()).toInt()
             val buf = ByteArray(size)
-            raf.seek(from)
+            raf.seek(start)
             raf.readFully(buf)
             val lastNl = buf.lastIndexOf('\n'.code.toByte())
             if (lastNl < 0) return "" to from
-            return String(buf, 0, lastNl + 1, Charsets.UTF_8) to (from + lastNl + 1)
+            return String(buf, 0, lastNl + 1, Charsets.UTF_8) to (start + lastNl + 1)
         }
     }
 

@@ -86,6 +86,11 @@ class Prefs(context: Context) {
         get() = sp.getBoolean("registrar_corridas", true)
         set(v) = sp.edit().putBoolean("registrar_corridas", v).apply()
 
+    /** Enquanto online, grava o trajeto do turno inteiro (posição "de carona", sem gastar bateria). */
+    var trackRoute: Boolean
+        get() = sp.getBoolean("registrar_trajeto", true)
+        set(v) = sp.edit().putBoolean("registrar_trajeto", v).apply()
+
     // Aparência
     var position: CardPosition
         get() = CardPosition.values().getOrElse(sp.getInt("posicao", 0)) { CardPosition.TOPO }

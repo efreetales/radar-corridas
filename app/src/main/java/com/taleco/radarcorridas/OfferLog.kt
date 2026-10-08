@@ -15,7 +15,7 @@ object OfferLog {
 
     private const val HEADER =
         "data_hora;app;categoria;valor;km_total;min_total;km_busca;min_busca;km_viagem;min_viagem;nota;rs_km;rs_hora;lucro;veredito;origem;destino;" +
-            "motorista_lat;motorista_lng;origem_lat;origem_lng"
+            "motorista_lat;motorista_lng;origem_lat;origem_lng;destino_lat;destino_lng"
     /**
      * Cada arquivo de diagnóstico vai até ~4 MB. Ao encher, vira "diagnostico_anterior.txt"
      * e começa um novo: assim cabe uma jornada inteira (8 a 9 horas) somando os dois.
@@ -42,12 +42,21 @@ object OfferLog {
         if (f.exists()) {
             val first = try { f.bufferedReader().use { it.readLine() } } catch (_: Exception) { null }
             if (first == HEADER) return
+            if (first != null && HEADER.startsWith(first)) {
+                // Versão anterior só tinha menos colunas no fim: troca só o cabeçalho e mantém as linhas.
+                try {
+                    val rest = f.readText().substringAfter('\n', "")
+                    f.writeText(HEADER + "\n" + rest)
+                    return
+                } catch (_: Exception) {
+                }
+            }
             f.renameTo(File(f.parentFile, "ofertas_antigas.csv"))
         }
         f.writeText(HEADER + "\n")
     }
 
-    fun append(ctx: Context, eval: Evaluation, driverAt: LatLng? = null, originAt: LatLng? = null) {
+    fun append(ctx: Context, eval: Evaluation, driverAt: LatLng? = null, originAt: LatLng? = null, destAt: LatLng? = null) {
         try {
             val o = eval.offer
             val f = offersFile(ctx)
@@ -58,7 +67,7 @@ object OfferLog {
                 now(), o.app, q(o.category), n(o.price), n(o.totalKm), n(o.totalMin),
                 n(o.pickupKm), n(o.pickupMin), n(o.tripKm), n(o.tripMin), n(o.rating),
                 n(perKm), n(perHour), n(eval.profit), eval.overall.name, q(o.origin), q(o.destination),
-                c(driverAt?.lat), c(driverAt?.lng), c(originAt?.lat), c(originAt?.lng)
+                c(driverAt?.lat), c(driverAt?.lng), c(originAt?.lat), c(originAt?.lng), c(destAt?.lat), c(destAt?.lng)
             ).joinToString(";")
             f.appendText(line + "\n")
         } catch (_: Exception) {

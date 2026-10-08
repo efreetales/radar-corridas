@@ -101,6 +101,24 @@ object TripTracker {
     private var homeSince = 0L
 
     val isOnTrip: Boolean get() = trip != null
+    val currentPhase: String get() = phase.name
+    val currentTripId: String? get() = trip?.id
+    /** Última corrida encerrada: o valor final aparece na tela inicial logo depois. */
+    @Volatile var lastFinishedTripId: String? = null
+        private set
+
+    /** Quando a oferta atual apareceu pela primeira vez (para ligar o resultado à oferta). */
+    private var offerFirstAt = 0L
+    private var nextOfferFirstAt = 0L
+    private var prefsRef: Prefs? = null
+
+    private fun sameOffer(a: Offer?, b: Offer?) =
+        a != null && b != null && a.app == b.app && kotlin.math.abs(a.price - b.price) < 0.01
+
+    /** A oferta saiu de cena sem virar corrida. */
+    private fun dropOffer(ctx: Context, o: Offer?, firstAt: Long) {
+        if (o != null) Trajeto.offerOutcome(ctx, o, firstAt, false, Geo.lastKnown(ctx))
+    }
 
     /**
      * Chamado a cada leitura da tela.
@@ -112,11 +130,23 @@ object TripTracker {
             return
         }
         val now = System.currentTimeMillis()
+        prefsRef = prefs
 
         if (state == ScreenState.OFERTA && offer != null) {
-            lastOffer = offer
-            lastOfferAt = now
-            if (trip != null) nextOffer = offer
+            if (trip != null) {
+                if (!sameOffer(nextOffer, offer)) {
+                    dropOffer(ctx, nextOffer, nextOfferFirstAt)
+                    nextOfferFirstAt = now
+                }
+                nextOffer = offer
+            } else {
+                if (!sameOffer(lastOffer, offer)) {
+                    dropOffer(ctx, lastOffer, offerFirstAt)
+                    offerFirstAt = now
+                }
+                lastOffer = offer
+                lastOfferAt = now
+            }
             return
         }
         val t = texts ?: return
@@ -126,9 +156,14 @@ object TripTracker {
         if (cur == null) {
             if (onTrip) {
                 val o = if (now - lastOfferAt <= OFFER_MAX_AGE_MS) lastOffer else null
+                if (o != null) Trajeto.offerOutcome(ctx, o, offerFirstAt, true, Geo.lastKnown(ctx))
                 lastOffer = null
                 val started = startTrip(ctx, o, now, gpsAlreadyOn = false)
                 update(ctx, started, t, now)
+            } else if (lastOffer != null && now - lastOfferAt > 30_000L) {
+                // A oferta sumiu e nenhuma corrida começou: recusada ou expirou.
+                dropOffer(ctx, lastOffer, offerFirstAt)
+                lastOffer = null
             }
             return
         }
@@ -154,6 +189,7 @@ object TripTracker {
         if (phase == Phase.EM_VIAGEM && hasAny(t, PICKUP_MARKERS)) {
             val next = nextOffer
             nextOffer = null
+            if (next != null) Trajeto.offerOutcome(ctx, next, nextOfferFirstAt, true, Geo.lastKnown(ctx))
             finish(ctx, null, now, keepGps = true)
             OfferLog.appendDiag(ctx, "CORRIDA EM SEQUÊNCIA" + (next?.let { " (R$ ${it.price})" } ?: " (oferta não lida)"))
             val started = startTrip(ctx, next, now, gpsAlreadyOn = true)
@@ -202,9 +238,7 @@ object TripTracker {
         nextOffer = null
         OfferLog.appendDiag(ctx, "CORRIDA $id: aceita" + (offer?.let { " (R$ ${it.price})" } ?: " (oferta não lida)"))
         TrackingService.onPoint = { loc -> onLocation(loc) }
-        if (!gpsAlreadyOn && !TrackingService.start(ctx)) {
-            OfferLog.appendDiag(ctx, "CORRIDA $id: não foi possível ligar o GPS")
-        }
+        if (!gpsAlreadyOn) prefsRef?.let { TrackingService.sync(ctx, it) }
         return t
     }
 
@@ -236,9 +270,13 @@ object TripTracker {
         trip = null
         phase = Phase.LIVRE
         homeSince = 0L
+        lastFinishedTripId = t.id
         if (!keepGps) {
+            // Oferta recebida durante a corrida que não virou a próxima corrida.
+            dropOffer(ctx, nextOffer, nextOfferFirstAt)
+            nextOffer = null
             TrackingService.onPoint = null
-            TrackingService.stop(ctx)
+            prefsRef?.let { TrackingService.sync(ctx, it) } ?: TrackingService.stop(ctx)
         }
         val status = when {
             reason != null -> "interrompida ($reason)"
