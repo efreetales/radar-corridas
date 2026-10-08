@@ -199,9 +199,47 @@ class OverlayManager(private val service: AccessibilityService) {
             typeface = Typeface.DEFAULT_BOLD
             setTextColor(Color.WHITE)
             gravity = Gravity.CENTER
-            setOnClickListener { SpeedWatch.dismiss() }
         }
         root.addView(close, LinearLayout.LayoutParams(service.dp(44), service.dp(54)))
+
+        // Fechar fácil: um toque em qualquer lugar do aviso, ou arrastar para o lado.
+        val slop = ViewConfiguration.get(service).scaledTouchSlop
+        val swipeDistance = service.dp(80)
+        var downX = 0f
+        var moved = false
+        root.setOnTouchListener { v, ev ->
+            when (ev.actionMasked) {
+                MotionEvent.ACTION_DOWN -> {
+                    downX = ev.rawX
+                    moved = false
+                    true
+                }
+                MotionEvent.ACTION_MOVE -> {
+                    val dx = ev.rawX - downX
+                    if (abs(dx) > slop) moved = true
+                    v.translationX = dx
+                    v.alpha = (1f - abs(dx) / (v.width.coerceAtLeast(1) * 0.8f)).coerceIn(0.2f, 1f)
+                    true
+                }
+                MotionEvent.ACTION_UP -> {
+                    val dx = ev.rawX - downX
+                    if (!moved || abs(dx) > swipeDistance) {
+                        // toque simples ou arrasto longo: fecha
+                        v.animate().translationX(if (dx < 0) -v.width.toFloat() else v.width.toFloat())
+                            .alpha(0f).setDuration(150).withEndAction { SpeedWatch.dismiss() }.start()
+                    } else {
+                        // arrasto curto: volta para o lugar
+                        v.animate().translationX(0f).alpha(1f).setDuration(150).start()
+                    }
+                    true
+                }
+                MotionEvent.ACTION_CANCEL -> {
+                    v.animate().translationX(0f).alpha(1f).setDuration(150).start()
+                    true
+                }
+                else -> false
+            }
+        }
 
         val width = service.resources.displayMetrics.widthPixels - service.dp(24)
         val lp = WindowManager.LayoutParams(
