@@ -16,10 +16,16 @@ object OfferLog {
     private const val HEADER =
         "data_hora;app;categoria;valor;km_total;min_total;km_busca;min_busca;km_viagem;min_viagem;nota;rs_km;rs_hora;lucro;veredito;origem;destino;" +
             "motorista_lat;motorista_lng;origem_lat;origem_lng"
-    private const val DIAG_MAX_BYTES = 800_000L
+    /**
+     * Cada arquivo de diagnóstico vai até ~4 MB. Ao encher, vira "diagnostico_anterior.txt"
+     * e começa um novo: assim cabe uma jornada inteira (8 a 9 horas) somando os dois.
+     */
+    private const val DIAG_MAX_BYTES = 4_000_000L
 
     fun offersFile(ctx: Context) = File(ctx.filesDir, "ofertas.csv")
     fun diagFile(ctx: Context) = File(ctx.filesDir, "diagnostico.txt")
+    fun diagPrevFile(ctx: Context) = File(ctx.filesDir, "diagnostico_anterior.txt")
+    fun diagFiles(ctx: Context) = listOf(diagPrevFile(ctx), diagFile(ctx))
 
     private fun now(): String = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", PT_BR).format(Date())
 
@@ -62,7 +68,11 @@ object OfferLog {
     fun appendDiag(ctx: Context, text: String) {
         try {
             val f = diagFile(ctx)
-            if (f.exists() && f.length() > DIAG_MAX_BYTES) f.writeText("")
+            if (f.exists() && f.length() > DIAG_MAX_BYTES) {
+                val prev = diagPrevFile(ctx)
+                prev.delete()
+                if (!f.renameTo(prev)) f.writeText("")
+            }
             f.appendText("[" + now() + "]\n" + text + "\n\n")
         } catch (_: Exception) {
         }
@@ -79,12 +89,12 @@ object OfferLog {
     }
 
     /** Envia vários arquivos de uma vez (ofertas, corridas e rotas). */
-    fun shareAll(ctx: Context, files: List<File>, title: String): Boolean {
+    fun shareAll(ctx: Context, files: List<File>, title: String, mime: String = "text/csv"): Boolean {
         val existing = files.filter { it.exists() && it.length() > 0L }
         if (existing.isEmpty()) return false
         val uris = ArrayList(existing.map { FileProvider.getUriForFile(ctx, ctx.packageName + ".files", it) })
         val send = Intent(Intent.ACTION_SEND_MULTIPLE)
-            .setType("text/csv")
+            .setType(mime)
             .putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris)
             .putExtra(Intent.EXTRA_SUBJECT, title)
             .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)

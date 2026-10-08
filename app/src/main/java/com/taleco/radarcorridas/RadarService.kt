@@ -43,6 +43,7 @@ class RadarService : AccessibilityService() {
         private const val HIDE_GRACE_MS = 1200L
         private const val MAX_CARD_MS = 30_000L
         private const val MAX_NODES = 800
+        private val DIGITS = Regex("\\d")
 
         /** Abaixo disso, consideramos que o app escondeu o texto da tela. */
         private const val MIN_VISIBLE_TEXTS = 3
@@ -78,6 +79,7 @@ class RadarService : AccessibilityService() {
     private var lastLoggedSig: String? = null
     private var lastLoggedAt = 0L
     private var lastDiag: String? = null
+    private var lastDiagAt = 0L
 
     private val scanRunnable: Runnable = Runnable {
         scanPending = false
@@ -104,6 +106,7 @@ class RadarService : AccessibilityService() {
     private var lastImageReadAt = 0L
     private var watchPending = false
     private var lastImageDiag: String? = null
+    private var lastImageDiagAt = 0L
     private var hiddenSince = 0L
 
     private val watchRunnable: Runnable = Runnable {
@@ -198,8 +201,11 @@ class RadarService : AccessibilityService() {
             val summary = if (offer == null) "nenhuma oferta reconhecida" else
                 String.format(PT_BR, "oferta R$ %.2f, %.1f km, %.0f min", offer.price, offer.totalKm, offer.totalMin)
             val dump = "IMAGEM $app ($summary): " + lines.joinToString(" | ")
-            if (dump != lastImageDiag) {
+            // Leituras sem oferta (mapa) só a cada 15 s, para o arquivo não encher à toa.
+            val now = System.currentTimeMillis()
+            if (dump != lastImageDiag && (offer != null || now - lastImageDiagAt > 15_000L)) {
                 lastImageDiag = dump
+                lastImageDiagAt = now
                 OfferLog.appendDiag(this, dump)
             }
         }
@@ -435,8 +441,13 @@ class RadarService : AccessibilityService() {
             screens.joinToString("\n") { (app, texts) -> "$app: " + texts.joinToString(" | ") }
         }
         val dump = "janelas: $packages\n$body"
-        if (dump == lastDiag) return
-        lastDiag = dump
+        // Se só mudaram números (distância, contagem regressiva), não grava de novo,
+        // a não ser que já tenha passado 1 minuto. Isso deixa o arquivo ~60% menor.
+        val shape = dump.replace(DIGITS, "")
+        val now = System.currentTimeMillis()
+        if (shape == lastDiag && now - lastDiagAt < 60_000L) return
+        lastDiag = shape
+        lastDiagAt = now
         OfferLog.appendDiag(this, dump)
     }
 

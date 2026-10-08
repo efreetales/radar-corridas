@@ -328,14 +328,14 @@ class MainActivity : AppCompatActivity() {
         ))
         card.addView(outlinedButton("Enviar diagnóstico").apply {
             setOnClickListener {
-                if (!OfferLog.share(this@MainActivity, OfferLog.diagFile(this@MainActivity), "text/plain", "Diagnóstico — Radar Corridas")) {
+                if (!OfferLog.shareAll(this@MainActivity, OfferLog.diagFiles(this@MainActivity), "Diagnóstico — Radar Corridas", "text/plain")) {
                     toast("O diagnóstico está vazio")
                 }
             }
         }, matchWrap(top = 6))
         card.addView(outlinedButton("Limpar diagnóstico").apply {
             setOnClickListener {
-                OfferLog.diagFile(this@MainActivity).delete()
+                OfferLog.diagFiles(this@MainActivity).forEach { it.delete() }
                 toast("Diagnóstico apagado")
             }
         }, matchWrap(top = 4))
