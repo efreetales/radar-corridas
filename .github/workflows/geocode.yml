@@ -1,0 +1,21 @@
+name: Localizar eventos
+on:
+  push:
+    branches: [eventos]
+    paths: [eventos.json]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  geo:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: eventos }
+      - run: python3 tools/geocode.py | tee geocode_log.txt
+      - run: |
+          git config user.name "radar-bot"
+          git config user.email "radar-bot@users.noreply.github.com"
+          git add eventos.json geocode_log.txt
+          git diff --cached --quiet || git commit -m "Eventos: coordenadas (OpenStreetMap)"
+          git push

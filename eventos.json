@@ -206,7 +206,7 @@
   {
    "nome": "Casuarina",
    "local": "Dois-Dois",
-   "endereco": "Dois-Dois, Campos Elíseos, São Paulo",
+   "endereco": "Alameda Dino Bueno, 711, Campos Elíseos, São Paulo",
    "tipo": "show",
    "inicio": "20:00",
    "fim_estimado": "23:30",
@@ -266,7 +266,7 @@
   {
    "nome": "Eliminadorzinho + Nevoara",
    "local": "Picles",
-   "endereco": "Picles, Pinheiros, São Paulo",
+   "endereco": "Rua Cardeal Arcoverde, 1838, Pinheiros, São Paulo",
    "tipo": "show",
    "inicio": "20:00",
    "fim_estimado": "23:00",
@@ -326,7 +326,7 @@
   {
    "nome": "Não Religião + Skamoondongos",
    "local": "La Iglesia",
-   "endereco": "La Iglesia, Pinheiros, São Paulo",
+   "endereco": "Rua João Moura, 515, Pinheiros, São Paulo",
    "tipo": "show",
    "inicio": "19:00",
    "fim_estimado": "22:30",
@@ -336,7 +336,7 @@
   {
    "nome": "Passarim",
    "local": "Bona Casa de Música",
-   "endereco": "Bona Casa de Música, Vila Madalena, São Paulo",
+   "endereco": "Rua Álvaro Anes, 43, Pinheiros, São Paulo",
    "tipo": "show",
    "inicio": "21:00",
    "fim_estimado": "23:00",
@@ -366,7 +366,7 @@
   {
    "nome": "Silvero + The Baggios",
    "local": "Instituto Brasileiro de Teatro",
-   "endereco": "Instituto Brasileiro de Teatro, Sé, São Paulo",
+   "endereco": "Avenida Brigadeiro Luís Antônio, 277, Bela Vista, São Paulo",
    "tipo": "show",
    "inicio": "21:30",
    "fim_estimado": "23:30",
@@ -416,7 +416,7 @@
   {
    "nome": "Horney + The Zasters + Zagüaraz + Pyro",
    "local": "Casa AlgoHits",
-   "endereco": "Casa AlgoHits, Vila Madalena, São Paulo",
+   "endereco": "Rua Patizal, 38, Vila Madalena, São Paulo",
    "tipo": "show",
    "inicio": "21:00",
    "fim_estimado": "00:00",
@@ -426,7 +426,7 @@
   {
    "nome": "Orange Disaster + Giallos",
    "local": "Mamãe Bar",
-   "endereco": "Mamãe Bar, Barra Funda, São Paulo",
+   "endereco": "Rua Lopes Chaves, 391, Barra Funda, São Paulo",
    "tipo": "show",
    "inicio": "19:00",
    "fim_estimado": "22:30",
@@ -436,7 +436,7 @@
   {
    "nome": "Kelly Lua",
    "local": "Alvenaria Espaço Cultural",
-   "endereco": "Alvenaria Espaço Cultural, Perdizes, São Paulo",
+   "endereco": "Rua Turiassu, 799, Perdizes, São Paulo",
    "tipo": "show",
    "inicio": "20:00",
    "fim_estimado": "21:40",
@@ -456,7 +456,7 @@
   {
    "nome": "Rebobinights 11 Anos – Summer Eletro Bichas",
    "local": "Komplexo Tempo",
-   "endereco": "Komplexo Tempo, São Paulo",
+   "endereco": "Avenida Henry Ford, 511, Mooca, São Paulo",
    "tipo": "balada",
    "inicio": "22:00",
    "fim_estimado": "04:00",
@@ -466,7 +466,7 @@
   {
    "nome": "Buraconcreta",
    "local": "Estúdio Lâmina",
-   "endereco": "Estúdio Lâmina, São Paulo",
+   "endereco": "Avenida São João, 108, Centro, São Paulo",
    "tipo": "festa",
    "inicio": "21:00",
    "fim_estimado": "02:00",
@@ -476,7 +476,7 @@
   {
    "nome": "Paz, Amor e Grave com MC Soffia",
    "local": "Terraço Baronesa",
-   "endereco": "Baronesa, São Paulo",
+   "endereco": "Rua Formosa, 51, Centro, São Paulo",
    "tipo": "festa",
    "inicio": "23:00",
    "fim_estimado": "04:00",
@@ -496,7 +496,7 @@
   {
    "nome": "High-Hit – Círio de Nazaré",
    "local": "Funilaria Bixiga",
-   "endereco": "Funilaria, Bixiga, Bela Vista, São Paulo",
+   "endereco": "Rua Rui Barbosa, 572, Bela Vista, São Paulo",
    "tipo": "balada",
    "inicio": "22:30",
    "fim_estimado": "04:00",
@@ -526,7 +526,7 @@
   {
    "nome": "O Pente no Mundo Pensante",
    "local": "Mundo Pensante",
-   "endereco": "Mundo Pensante, Bela Vista, São Paulo",
+   "endereco": "Rua Treze de Maio, 830, Bela Vista, São Paulo",
    "tipo": "festa",
    "inicio": "21:00",
    "fim_estimado": "03:00",
@@ -556,7 +556,7 @@
   {
    "nome": "Venom: Wor$t Party in $ão Paulo",
    "local": "Bar do Netão",
-   "endereco": "Bar do Netão, São Paulo",
+   "endereco": "Rua Augusta, 584, Consolação, São Paulo",
    "tipo": "festa",
    "inicio": "23:00",
    "fim_estimado": "04:00",
@@ -566,7 +566,7 @@
   {
    "nome": "Pop Sleazy: Halloween Night",
    "local": "Casa da Luz – Espaço Cultural",
-   "endereco": "Casa da Luz, Luz, São Paulo",
+   "endereco": "Rua Mauá, 512, Luz, São Paulo",
    "tipo": "balada",
    "inicio": "23:00",
    "fim_estimado": "04:00",
@@ -576,7 +576,7 @@
   {
    "nome": "Aquecimento Zig Festival",
    "local": "Zigduplex",
-   "endereco": "Zigduplex, São Paulo",
+   "endereco": "Rua Araújo, 155, República, São Paulo",
    "tipo": "balada",
    "inicio": "23:30",
    "fim_estimado": "05:00",
@@ -596,7 +596,7 @@
   {
    "nome": "Cr1a Club",
    "local": "Cr1a Club",
-   "endereco": "Bela Vista, São Paulo",
+   "endereco": "Rua São Domingos, 251, Bela Vista, São Paulo",
    "tipo": "festa",
    "inicio": "18:00",
    "fim_estimado": "23:00",
@@ -636,7 +636,7 @@
   {
    "nome": "Baile do Gato com Cacau Chuu & Th4ys!",
    "local": "Kat Klub",
-   "endereco": "Kat Klub, São Paulo",
+   "endereco": "Rua Augusta, 609, Consolação, São Paulo",
    "tipo": "balada",
    "inicio": "22:00",
    "fim_estimado": "04:00",
@@ -656,7 +656,7 @@
   {
    "nome": "Club Bambina",
    "local": "Carmem Bar",
-   "endereco": "Carmem Bar, São Paulo",
+   "endereco": "Rua Silva Pinto, 429, Bom Retiro, São Paulo",
    "tipo": "festa",
    "inicio": "22:00",
    "fim_estimado": "03:00",
@@ -666,7 +666,7 @@
   {
    "nome": "Heartbreak Party | Open Bar",
    "local": "Clube Outs",
-   "endereco": "Clube Outs, Rua Augusta, Consolação, São Paulo",
+   "endereco": "Rua Augusta, 486, Consolação, São Paulo",
    "tipo": "balada",
    "inicio": "22:00",
    "fim_estimado": "04:00",
