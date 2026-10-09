@@ -16,7 +16,7 @@ jobs:
       - name: Extrair
         run: |
           mkdir -p out
-          python tools/cet_discover.py > out/log.txt 2>&1 || echo "FALHOU" >> out/log.txt
+          python tools/cet_radares.py > out/log.txt 2>&1 || echo "FALHOU" >> out/log.txt
       - name: Publicar no ramo cet-dados
         run: |
           git config user.name "radar-bot"
