@@ -13,7 +13,7 @@ class MapActivity : AppCompatActivity() {
 
     /** Entrega ao mapa os arquivos de dados guardados no celular. */
     inner class Bridge {
-        private val allowed = setOf("ofertas.csv", "corridas.csv", "rotas.csv", "passagens_radar.csv", "valetas.csv", "pontos.json")
+        private val allowed = setOf("ofertas.csv", "corridas.csv", "rotas.csv", "passagens_radar.csv", "valetas.csv", "pontos.json", "eventos_hoje.json")
 
         @JavascriptInterface
         fun file(name: String): String {
@@ -32,7 +32,20 @@ class MapActivity : AppCompatActivity() {
         web.settings.javaScriptEnabled = true
         web.settings.domStorageEnabled = true
         web.settings.userAgentString = web.settings.userAgentString + " RadarCorridas/1.0"
-        web.webViewClient = WebViewClient()
+        web.webViewClient = object : WebViewClient() {
+            // Links do mapa (ex.: "Ir com Waze") abrem fora, no app certo
+            override fun shouldOverrideUrlLoading(view: WebView?, request: android.webkit.WebResourceRequest?): Boolean {
+                val url = request?.url ?: return false
+                if (url.host?.contains("waze.com") == true) {
+                    val lat = url.getQueryParameter("ll")?.split(",")
+                    if (lat != null && lat.size == 2) {
+                        Nav.waze(this@MapActivity, lat[0].toDouble(), lat[1].toDouble())
+                        return true
+                    }
+                }
+                return false
+            }
+        }
         web.addJavascriptInterface(Bridge(), "Radar")
         setContentView(web)
         // Carrega com um endereço https "de mentira": os servidores de mapa recusam páginas sem origem (file://)

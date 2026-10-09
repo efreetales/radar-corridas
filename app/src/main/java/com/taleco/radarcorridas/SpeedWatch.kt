@@ -127,7 +127,8 @@ object SpeedWatch {
     fun onRideAppSeen(ctx: Context, prefs: Prefs) {
         appContext = ctx.applicationContext
         lastRideAppAt = System.currentTimeMillis()
-        if (!prefs.speedAlerts && !prefs.valetaAlerts && !prefs.valetaAuto && !prefs.spotAlerts) {
+        if (prefs.eventAlerts) Events.refresh(ctx)
+        if (!prefs.speedAlerts && !prefs.valetaAlerts && !prefs.valetaAuto && !prefs.spotAlerts && !prefs.eventAlerts) {
             if (active) stop(ctx)
             return
         }

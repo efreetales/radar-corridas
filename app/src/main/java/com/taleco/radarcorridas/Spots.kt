@@ -25,7 +25,8 @@ class Spot(
     var startMin: Int,
     var endMin: Int,
     var radiusM: Int,
-    var enabled: Boolean
+    var enabled: Boolean,
+    val event: CityEvent? = null   // preenchido quando o "ponto" é um evento do dia
 ) {
     /** Está no horário agora? */
     fun activeAt(cal: Calendar): Boolean {
@@ -142,7 +143,7 @@ object SpotMatch {
         val maxM = Prefs(ctx).spotStarKm * 1000.0
         val cal = Calendar.getInstance().apply { add(Calendar.MINUTE, arriveInMin.toInt()) }
         var best: Pair<Spot, Double>? = null
-        for (s in Spots.all(ctx)) {
+        for (s in Spots.all(ctx) + Events.spots(ctx)) {
             if (!s.activeAt(cal)) continue
             val d = Geo.meters(dest, LatLng(s.lat, s.lng))
             if (d <= maxM && (best == null || d < best.second)) best = s to d
@@ -151,7 +152,10 @@ object SpotMatch {
     }
 
     fun note(s: Spot, d: Double): String =
-        String.format(PT_BR, "★ Destino a %.1f km de %s · bom até %s", d / 1000.0, s.name, Spot.hhmm(s.endMin))
+        if (s.event != null)
+            String.format(PT_BR, "★ Destino a %.1f km de %s · saída ~%s", d / 1000.0, s.name, Spot.hhmm(s.event.endMin))
+        else
+            String.format(PT_BR, "★ Destino a %.1f km de %s · bom até %s", d / 1000.0, s.name, Spot.hhmm(s.endMin))
 }
 
 /**
@@ -163,6 +167,7 @@ object SpotWatch {
     private const val SHOW_MS = 10_000L
     private const val REARM_MS = 45 * 60_000L
     private val PURPLE = 0xFF6741D9.toInt()
+    private val PINK = 0xFFC2255C.toInt()
 
     private val handler = Handler(Looper.getMainLooper())
     private var lastCheck = 0L
@@ -186,11 +191,12 @@ object SpotWatch {
         val now = System.currentTimeMillis()
         if (now - lastCheck < 5_000L) return
         lastCheck = now
-        if (!Prefs(ctx).spotAlerts) return
+        val p = Prefs(ctx)
+        if (!p.spotAlerts && !p.eventAlerts) return
         val cal = Calendar.getInstance()
         var best: Spot? = null
         var bestD = Double.MAX_VALUE
-        for (s in Spots.all(ctx)) {
+        for (s in (if (p.spotAlerts) Spots.all(ctx) else emptyList()) + Events.spots(ctx)) {
             val d = loc.distanceTo(Location("p").apply { latitude = s.lat; longitude = s.lng }).toDouble()
             if (d > s.radiusM * 1.3) leftSince.add(s.id)
             if (!s.activeAt(cal) || d > s.radiusM) continue
@@ -219,7 +225,10 @@ object SpotWatch {
         val (dist, unit) = if (d >= 1000) String.format(PT_BR, "%.1f", d / 1000) to "km" else "${(d / 10).roundToInt() * 10}" to "metros"
         RadarService.instance?.showSpeedBanner(
             SpeedBanner(
-                null, kmh.roundToInt(), "Bom até ${Spot.hhmm(s.endMin)} · toque para ir com o Waze", PURPLE,
+                null, kmh.roundToInt(),
+                if (s.event != null) "Saída do público ~${Spot.hhmm(s.event.endMin)} · toque para ir com o Waze"
+                else "Bom até ${Spot.hhmm(s.endMin)} · toque para ir com o Waze",
+                if (s.event != null) PINK else PURPLE,
                 null, (1.0 - d / s.radiusM).coerceIn(0.0, 1.0).toFloat(),
                 sign = "★", title = s.name, distText = dist, distUnit = unit
             )

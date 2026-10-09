@@ -58,6 +58,7 @@ class MainActivity : AppCompatActivity() {
         "Radares de velocidade" to Page("Radares", R.drawable.ic_speed, "Aviso, bipe e distância"),
         "Valetas e buracos" to Page("Valetas", R.drawable.ic_warning, "Marcar e avisar"),
         "Meus pontos bons" to Page("Pontos bons", R.drawable.ic_star, "Lugares e horários"),
+        "Eventos de hoje" to Page("Eventos", R.drawable.ic_event, "Saídas de teatros, shows e jogos"),
         "Custos do carro" to Page("Custos", R.drawable.ic_fuel, "Combustível e aluguel"),
         "Corridas e percurso" to Page("Corridas", R.drawable.ic_car, "Registro e permissões"),
         "Aparência" to Page("Aparência", R.drawable.ic_palette, "Posição e botão R"),
@@ -99,6 +100,7 @@ class MainActivity : AppCompatActivity() {
         buildSpeed(dummy)
         buildHazards(dummy)
         buildSpots(dummy)
+        buildEvents(dummy)
         buildData(dummy)
         tallAll(statusCard)
         for (pg in pages.values) tallAll(pg.body)
@@ -266,6 +268,7 @@ class MainActivity : AppCompatActivity() {
         updateSpeedInfo()
         updateHazardInfo()
         refreshSpots()
+        refreshEvents()
         refreshPreview()
     }
 
@@ -765,6 +768,86 @@ class MainActivity : AppCompatActivity() {
             12f, Colors.MUTED
         ).apply { setPadding(0, dp(10), 0, 0) })
         updateSpeedInfo()
+    }
+
+    // ---------- Eventos de hoje ----------
+
+    private lateinit var eventsList: LinearLayout
+    private lateinit var eventsInfo: TextView
+
+    private fun buildEvents(col: LinearLayout) {
+        val card = section(col, "Eventos de hoje")
+        card.addView(text(
+            "Todo dia à tarde eu pesquiso os eventos de São Paulo (teatros, shows, jogos, SESCs, formaturas) e calculo o horário " +
+                "provável de saída do público. Com a Uber/99 aberta, quando você estiver perto de um evento perto da hora da saída, " +
+                "aparece um aviso rosa. A oferta também ganha ★ se o destino for perto de uma saída.",
+            12f, Colors.MUTED
+        ))
+        card.addView(SwitchMaterial(this).apply {
+            text = "Avisar saídas de eventos"
+            setTextColor(Colors.TEXT)
+            isChecked = prefs.eventAlerts
+            setOnCheckedChangeListener { _, c -> prefs.eventAlerts = c }
+        }, matchWrap(top = 8))
+        val radLbl = text("", 14f, Colors.TEXT).apply { setPadding(0, dp(10), 0, 0) }
+        fun setRad(v: Int) { radLbl.text = String.format(PT_BR, "Avisar a até %.1f km do evento", v / 1000f) }
+        setRad(prefs.eventRadiusM)
+        card.addView(radLbl)
+        val rad = Slider(this)
+        rad.valueFrom = 500f
+        rad.valueTo = 8000f
+        rad.stepSize = 500f
+        rad.value = (((prefs.eventRadiusM + 250) / 500) * 500).coerceIn(500, 8000).toFloat()
+        rad.setLabelFormatter { v -> String.format(PT_BR, "%.1f km", v / 1000f) }
+        rad.thumbTintList = ColorStateList.valueOf(Color.WHITE)
+        rad.addOnChangeListener { _, v, _ -> prefs.eventRadiusM = v.toInt(); setRad(v.toInt()) }
+        card.addView(rad, matchWrap())
+
+        eventsInfo = text("", 13f, Colors.MUTED).apply { setPadding(0, dp(8), 0, 0) }
+        card.addView(eventsInfo)
+        card.addView(outlinedButton("Atualizar agora").apply {
+            setOnClickListener {
+                eventsInfo.text = "Baixando a agenda…"
+                Events.refresh(this@MainActivity, force = true) { n ->
+                    toast(if (n == null) "Não consegui baixar a agenda" else "$n eventos na agenda")
+                    refreshEvents()
+                }
+            }
+        }, matchWrap(top = 6))
+        eventsList = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
+        card.addView(eventsList, matchWrap(top = 8))
+        refreshEvents()
+    }
+
+    private fun refreshEvents() {
+        if (!::eventsList.isInitialized) return
+        eventsList.removeAllViews()
+        val evs = Events.today(this).sortedBy { it.endMin }
+        val f = Events.file(this)
+        eventsInfo.text = if (!f.exists()) "Agenda ainda não baixada." else
+            "${evs.size} evento(s) hoje · atualizada às " + java.text.SimpleDateFormat("HH:mm", PT_BR).format(java.util.Date(f.lastModified()))
+        for (e in evs) {
+            val box = LinearLayout(this).apply {
+                orientation = LinearLayout.VERTICAL
+                setPadding(dp(12), dp(10), dp(12), dp(10))
+                background = rounded(Colors.SURFACE_2, 12f)
+            }
+            box.addView(text("${e.icon} ${e.name}", 15f, Colors.TEXT, bold = true))
+            val start = e.startMin?.let { "começa ${Spot.hhmm(it)} · " } ?: ""
+            val aud = e.audience?.let { " · ~$it pessoas" } ?: ""
+            box.addView(text("${e.place}\n${start}saída ~${Spot.hhmm(e.endMin)}$aud", 13f, Colors.MUTED))
+            if (e.lat != null && e.lng != null) {
+                box.addView(MaterialButton(this).apply {
+                    text = "Ir com Waze"
+                    isAllCaps = false
+                    makeTall(this)
+                    setOnClickListener { Nav.waze(this@MainActivity, e.lat!!, e.lng!!) }
+                }, matchWrap(top = 6))
+            } else {
+                box.addView(text("Endereço não localizado no mapa", 12f, Colors.YELLOW))
+            }
+            eventsList.addView(box, matchWrap(top = 8))
+        }
     }
 
     // ---------- Pontos bons ----------

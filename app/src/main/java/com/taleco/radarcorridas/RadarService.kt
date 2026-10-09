@@ -162,6 +162,7 @@ class RadarService : AccessibilityService() {
         instance = this
         refreshBubble()
         SpeedCams.load(this)
+        Events.load(this)
         if (prefs.speedAlerts && SpeedCams.isStale(this)) SpeedCams.download(this)
     }
 
