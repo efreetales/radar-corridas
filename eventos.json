@@ -793,6 +793,17 @@
    "fonte": "https://shotgun.live/pt-br/cities/sao-paulo",
    "lat": -23.551379,
    "lng": -46.650713
+  },
+  {
+   "nome": "Villa Só As Antigas – Edição Anos 2000",
+   "local": "Villa Country",
+   "endereco": "Avenida Francisco Matarazzo, 774, Água Branca, São Paulo",
+   "tipo": "festa",
+   "data": "2026-10-09",
+   "inicio": "20:00",
+   "fim_estimado": "03:00",
+   "publico_estimado": 3000,
+   "fonte": "https://www.ticket360.com.br/evento/34086/ingressos-para-villa-so-as-antigas-edicao-anos-2000"
   }
  ],
  "geocodificacao": {
