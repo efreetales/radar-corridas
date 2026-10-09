@@ -86,7 +86,11 @@ class OverlayManager(private val service: AccessibilityService) {
         speedBase?.setColor(b.color)
         speedFillShape?.setColor(darker(b.color))
         speedFill?.level = (b.progress.coerceIn(0f, 1f) * 10_000).toInt()
-        speedSign?.text = b.limit?.toString() ?: "?"
+        speedSign?.text = b.sign ?: b.limit?.toString() ?: "?"
+        speedSign?.textSize = if (b.sign != null) 26f else 20f
+        (speedSign?.background as? GradientDrawable)?.setStroke(
+            service.dp(5), if (b.sign != null) Color.parseColor("#E8590C") else Color.parseColor("#D62828")
+        )
         speedValue?.text = "${b.speedKmh} km/h"
         speedValue?.setTextColor(fg)
         speedLine?.text = b.line
@@ -226,7 +230,7 @@ class OverlayManager(private val service: AccessibilityService) {
                     if (!moved || abs(dx) > swipeDistance) {
                         // toque simples ou arrasto longo: fecha
                         v.animate().translationX(if (dx < 0) -v.width.toFloat() else v.width.toFloat())
-                            .alpha(0f).setDuration(150).withEndAction { SpeedWatch.dismiss() }.start()
+                            .alpha(0f).setDuration(150).withEndAction { HazardWatch.onBannerTap() }.start()
                     } else {
                         // arrasto curto: volta para o lugar
                         v.animate().translationX(0f).alpha(1f).setDuration(150).start()
@@ -304,18 +308,29 @@ class OverlayManager(private val service: AccessibilityService) {
         var touchX = 0f
         var touchY = 0f
         var moved = false
+        // Segurar o "R" por 0,6 s marca uma valeta.
+        var longFired = false
+        val longPress = Runnable {
+            longFired = true
+            HazardWatch.markManual(service)
+        }
         view.setOnTouchListener { v, ev ->
             when (ev.action) {
                 MotionEvent.ACTION_DOWN -> {
                     startX = lp.x; startY = lp.y
                     touchX = ev.rawX; touchY = ev.rawY
                     moved = false
+                    longFired = false
+                    v.postDelayed(longPress, 600L)
                     true
                 }
                 MotionEvent.ACTION_MOVE -> {
                     val dx = ev.rawX - touchX
                     val dy = ev.rawY - touchY
-                    if (abs(dx) > slop || abs(dy) > slop) moved = true
+                    if (abs(dx) > slop || abs(dy) > slop) {
+                        moved = true
+                        v.removeCallbacks(longPress)
+                    }
                     if (moved) {
                         lp.x = startX + dx.toInt()
                         lp.y = startY + dy.toInt()
@@ -324,10 +339,11 @@ class OverlayManager(private val service: AccessibilityService) {
                     true
                 }
                 MotionEvent.ACTION_UP -> {
+                    v.removeCallbacks(longPress)
                     if (moved) {
                         prefs.bubbleX = lp.x
                         prefs.bubbleY = lp.y
-                    } else {
+                    } else if (!longFired) {
                         openApp()
                     }
                     true

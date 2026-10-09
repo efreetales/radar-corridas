@@ -74,6 +74,7 @@ class MainActivity : AppCompatActivity() {
         buildAppearance(col)
         buildTrips(col)
         buildSpeed(col)
+        buildHazards(col)
         buildData(col)
 
         val version = try {
@@ -93,6 +94,7 @@ class MainActivity : AppCompatActivity() {
         updateCount()
         updateTripChecklist()
         updateSpeedInfo()
+        updateHazardInfo()
         refreshPreview()
     }
 
@@ -309,10 +311,10 @@ class MainActivity : AppCompatActivity() {
         ))
         countText = text("", 14f, Colors.TEXT).apply { setPadding(0, dp(8), 0, 0) }
         card.addView(countText)
-        card.addView(outlinedButton("Exportar dados (ofertas, corridas, rotas e radares)").apply {
+        card.addView(outlinedButton("Exportar dados (ofertas, corridas, rotas, radares e valetas)").apply {
             setOnClickListener {
                 val ctx = this@MainActivity
-                val files = listOf(OfferLog.offersFile(ctx), TripLog.tripsFile(ctx), TripLog.routesFile(ctx), PassLog.file(ctx))
+                val files = listOf(OfferLog.offersFile(ctx), TripLog.tripsFile(ctx), TripLog.routesFile(ctx), PassLog.file(ctx), Hazards.file(ctx))
                 if (!OfferLog.shareAll(ctx, files, "Dados — Radar Corridas")) toast("Nenhum dado salvo ainda")
             }
         }, matchWrap(top = 6))
@@ -495,6 +497,102 @@ class MainActivity : AppCompatActivity() {
             12f, Colors.MUTED
         ).apply { setPadding(0, dp(10), 0, 0) })
         updateSpeedInfo()
+    }
+
+    // ---------- Valetas ----------
+
+    private lateinit var hazardInfo: TextView
+
+    private fun buildHazards(col: LinearLayout) {
+        val card = section(col, "Valetas e buracos")
+        card.addView(text(
+            "Marque as valetas que o Waze não mostra. Da próxima vez que passar por ali, o Radar avisa com a distância, " +
+                "no mesmo aviso dos radares (em laranja).",
+            12f, Colors.MUTED
+        ))
+        card.addView(text(
+            "Como marcar sem olhar para o celular:\n" +
+                "• Aperte o volume − duas vezes rápido logo depois de passar pela valeta\n" +
+                "• Ou segure o botão \"R\" por meio segundo\n" +
+                "Aparece \"Valeta marcada\" com um bipe. Errou? Toque no aviso para desfazer.",
+            13f, Colors.TEXT
+        ).apply { setPadding(0, dp(10), 0, 0) })
+        card.addView(text(
+            "O volume só vira atalho enquanto a Uber/99 está aberta (GPS ligado). Fora disso, funciona normal. " +
+                "Depois de instalar esta versão, desligue e ligue de novo o Radar em Acessibilidade para liberar o atalho do volume.",
+            12f, Colors.MUTED
+        ).apply { setPadding(0, dp(6), 0, 0) })
+
+        card.addView(SwitchMaterial(this).apply {
+            text = "Avisar valetas marcadas"
+            setTextColor(Colors.TEXT)
+            isChecked = prefs.valetaAlerts
+            setOnCheckedChangeListener { _, checked -> prefs.valetaAlerts = checked }
+        }, matchWrap(top = 12))
+        card.addView(SwitchMaterial(this).apply {
+            text = "Marcar sozinho quando o carro der um solavanco forte"
+            setTextColor(Colors.TEXT)
+            isChecked = prefs.valetaAuto
+            setOnCheckedChangeListener { _, checked ->
+                prefs.valetaAuto = checked
+                if (checked && SpeedWatch.active) BumpDetector.start(this@MainActivity)
+                if (!checked) BumpDetector.stop()
+            }
+        }, matchWrap(top = 4))
+        card.addView(text(
+            "Usa o sensor de movimento do celular. Precisa do celular firme no suporte. Também pode marcar lombadas e buracos: " +
+                "se marcar algo errado, toque no aviso para desfazer.",
+            12f, Colors.MUTED
+        ))
+
+        val sensLabel = text("", 14f, Colors.TEXT).apply { setPadding(0, dp(10), 0, 0) }
+        card.addView(sensLabel)
+        fun setSens(v: Float) {
+            sensLabel.text = "Sensibilidade do solavanco: " + when {
+                v < 0.34f -> "baixa (só os fortes)"
+                v < 0.67f -> "média"
+                else -> "alta (qualquer tranco)"
+            }
+        }
+        setSens(prefs.valetaSensitivity)
+        val sens = Slider(this)
+        sens.valueFrom = 0f
+        sens.valueTo = 1f
+        sens.stepSize = 0f
+        sens.value = prefs.valetaSensitivity.coerceIn(0f, 1f)
+        sens.thumbTintList = ColorStateList.valueOf(Color.WHITE)
+        sens.addOnChangeListener { _, v, _ ->
+            prefs.valetaSensitivity = v
+            setSens(v)
+        }
+        card.addView(sens, matchWrap())
+
+        hazardInfo = text("", 14f, Colors.TEXT, bold = true).apply { setPadding(0, dp(6), 0, 0) }
+        card.addView(hazardInfo)
+        card.addView(outlinedButton("Testar aviso de valeta").apply {
+            setOnClickListener {
+                if (RadarService.instance == null) toast("Ative a leitura de ofertas primeiro")
+                else HazardWatch.demo(this@MainActivity)
+            }
+        }, matchWrap(top = 6))
+        card.addView(outlinedButton("Apagar a última valeta marcada").apply {
+            setOnClickListener {
+                toast(if (Hazards.deleteLast(this@MainActivity)) "Última valeta apagada" else "Nenhuma valeta marcada")
+                updateHazardInfo()
+            }
+        }, matchWrap(top = 4))
+        updateHazardInfo()
+    }
+
+    private fun updateHazardInfo() {
+        if (!::hazardInfo.isInitialized) return
+        val n = Hazards.count(this)
+        val auto = Hazards.autoCount(this)
+        hazardInfo.text = when (n) {
+            0 -> "Nenhuma valeta marcada ainda"
+            1 -> "1 valeta marcada" + (if (auto == 1) " (automática)" else "")
+            else -> "$n valetas marcadas" + (if (auto > 0) " ($auto automáticas)" else "")
+        }
     }
 
     private fun updateCams() {

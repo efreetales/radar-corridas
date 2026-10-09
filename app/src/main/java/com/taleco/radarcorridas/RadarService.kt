@@ -8,6 +8,8 @@ import android.os.Build
 import android.os.Handler
 import android.view.Display
 import android.os.Looper
+import android.media.AudioManager
+import android.view.KeyEvent
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
 
@@ -178,6 +180,43 @@ class RadarService : AccessibilityService() {
     }
 
     override fun onInterrupt() {}
+
+    // ---- Volume − duas vezes rápido = marcar valeta (só enquanto dirige com a Uber/99 aberta) ----
+
+    private var volPending = false
+    private val volumeDownRunnable: Runnable = Runnable {
+        volPending = false
+        // Foi só um toque: abaixa o volume normalmente.
+        try {
+            getSystemService(AudioManager::class.java)?.adjustSuggestedStreamVolume(
+                AudioManager.ADJUST_LOWER, AudioManager.USE_DEFAULT_STREAM_TYPE, AudioManager.FLAG_SHOW_UI
+            )
+        } catch (_: Exception) {
+        }
+    }
+
+    override fun onKeyEvent(event: KeyEvent?): Boolean {
+        if (event == null || event.keyCode != KeyEvent.KEYCODE_VOLUME_DOWN) return false
+        if (!::prefs.isInitialized || !SpeedWatch.active || !prefs.valetaAlerts) return false
+        if (event.action == KeyEvent.ACTION_DOWN) {
+            if (event.repeatCount > 0) {
+                // Segurando o botão: deixa o volume descer normalmente.
+                handler.removeCallbacks(volumeDownRunnable)
+                volPending = false
+                volumeDownRunnable.run()
+                return true
+            }
+            if (volPending) {
+                handler.removeCallbacks(volumeDownRunnable)
+                volPending = false
+                HazardWatch.markManual(this)
+            } else {
+                volPending = true
+                handler.postDelayed(volumeDownRunnable, 450L)
+            }
+        }
+        return true
+    }
 
     override fun onUnbind(intent: android.content.Intent?): Boolean {
         cleanup()

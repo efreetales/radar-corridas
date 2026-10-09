@@ -95,6 +95,20 @@ class Prefs(context: Context) {
         get() = sp.getBoolean("som_radares", true)
         set(v) = sp.edit().putBoolean("som_radares", v).apply()
 
+    // Valetas
+    var valetaAlerts: Boolean
+        get() = sp.getBoolean("alerta_valetas", true)
+        set(v) = sp.edit().putBoolean("alerta_valetas", v).apply()
+
+    var valetaAuto: Boolean
+        get() = sp.getBoolean("valetas_auto", true)
+        set(v) = sp.edit().putBoolean("valetas_auto", v).apply()
+
+    /** 0 = só solavancos muito fortes, 1 = qualquer solavanco. */
+    var valetaSensitivity: Float
+        get() = sp.getFloat("valetas_sensibilidade", 0.5f)
+        set(v) = sp.edit().putFloat("valetas_sensibilidade", v).apply()
+
     // Aparência
     var position: CardPosition
         get() = CardPosition.values().getOrElse(sp.getInt("posicao", 0)) { CardPosition.TOPO }

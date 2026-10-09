@@ -31,7 +31,8 @@ class SpeedBanner(
     val line: String,
     val color: Int,
     val distanceM: Int? = null,   // metros até o radar (null depois de passar)
-    val progress: Float = 0f      // 0 = acabou de avistar o radar, 1 = em cima dele
+    val progress: Float = 0f,     // 0 = acabou de avistar o radar, 1 = em cima dele
+    val sign: String? = null      // no lugar da placa de limite (ex.: "⚠" para valeta)
 )
 
 /**
@@ -96,7 +97,7 @@ object SpeedWatch {
     fun onRideAppSeen(ctx: Context, prefs: Prefs) {
         appContext = ctx.applicationContext
         lastRideAppAt = System.currentTimeMillis()
-        if (!prefs.speedAlerts) {
+        if (!prefs.speedAlerts && !prefs.valetaAlerts && !prefs.valetaAuto) {
             if (active) stop(ctx)
             return
         }
@@ -109,7 +110,6 @@ object SpeedWatch {
     private var warnedNoPermission = false
 
     private fun start(ctx: Context) {
-        if (SpeedCams.count == 0) return
         if (!hasLocation(ctx)) {
             if (!warnedNoPermission) OfferLog.appendDiag(ctx, "RADARES: sem permissão de localização")
             warnedNoPermission = true
@@ -117,6 +117,7 @@ object SpeedWatch {
         }
         active = TrackingService.start(ctx, TrackingService.RADARES)
         if (active) {
+            if (Prefs(ctx).valetaAuto) BumpDetector.start(ctx)
             handler.removeCallbacks(idleCheck)
             handler.postDelayed(idleCheck, 60_000L)
         }
@@ -129,6 +130,8 @@ object SpeedWatch {
         lastLoc = null
         lastHeading = null
         TrackingService.stop(ctx, TrackingService.RADARES)
+        BumpDetector.stop()
+        HazardWatch.reset()
         RadarService.instance?.hideSpeedBanner()
     }
 
@@ -155,10 +158,12 @@ object SpeedWatch {
         val now = System.currentTimeMillis()
         recentlyPassed.entries.removeAll { now - it.value > REPEAT_MS }
 
+        val radarOn = Prefs(ctx).speedAlerts
+        if (!radarOn && target != null) clearTarget()
         val t = target
         if (t != null) {
             followTarget(ctx, loc, t, kmh, heading)
-        } else if (heading != null && kmh >= MIN_SPEED_KMH) {
+        } else if (radarOn && heading != null && kmh >= MIN_SPEED_KMH) {
             findTarget(loc, heading)?.let { cam ->
                 target = cam
                 minDist = Double.MAX_VALUE
@@ -170,6 +175,10 @@ object SpeedWatch {
                 followTarget(ctx, loc, cam, kmh, heading)
             }
         }
+
+        // Valetas: aparecem quando não há radar na tela
+        val radarBusy = target != null && target !== dismissedCam
+        HazardWatch.onLocation(ctx, loc, kmh, heading, radarBusy)
     }
 
     private fun camLocation(c: SpeedCam) = Location("radar").apply {
