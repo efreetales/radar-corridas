@@ -1,20 +1,457 @@
 {
-  "gerado_em": "2026-10-09T05:10:00-03:00",
-  "data": "2026-10-09",
-  "observacao": "Horário de saída estimado: início + duração típica (musical ~2h40, peça ~1h30, stand-up ~1h30, concerto ~1h30).",
-  "eventos": [
-    {"nome": "Meu Filho é um Musical", "local": "Teatro Renault", "endereco": "Avenida Brigadeiro Luís Antônio, 411, República, São Paulo", "tipo": "musical", "inicio": "20:00", "fim_estimado": "22:40", "publico_estimado": 1500, "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/"},
-    {"nome": "Feliz Ano Velho – O Musical", "local": "Teatro Sabesp Frei Caneca", "endereco": "Rua Frei Caneca, 569, Consolação, São Paulo", "tipo": "musical", "inicio": "20:00", "fim_estimado": "22:30", "publico_estimado": 600, "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/"},
-    {"nome": "Os Últimos 5 Anos", "local": "Teatro Nair Bello (Shopping Frei Caneca)", "endereco": "Rua Frei Caneca, 569, Consolação, São Paulo", "tipo": "musical", "inicio": "20:00", "fim_estimado": "21:40", "publico_estimado": 200, "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/"},
-    {"nome": "Rita Lee, uma autobiografia musical", "local": "Teatro Porto", "endereco": "Alameda Barão de Piracicaba, 740, Campos Elíseos, São Paulo", "tipo": "musical", "inicio": "20:00", "fim_estimado": "22:30", "publico_estimado": 500, "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/"},
-    {"nome": "Meu Deus!", "local": "Teatro das Artes (Shopping Eldorado)", "endereco": "Avenida Rebouças, 3970, Pinheiros, São Paulo", "tipo": "teatro", "inicio": "20:00", "fim_estimado": "21:30", "publico_estimado": 750, "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/"},
-    {"nome": "O Céu da Língua (Gregorio Duvivier)", "local": "Espaço Unimed", "endereco": "Rua Tagipuru, 795, Barra Funda, São Paulo", "tipo": "teatro", "inicio": "21:00", "fim_estimado": "22:40", "publico_estimado": 3000, "fonte": "https://br.paipee.com/2026/10/09/exposicao-de-marilia-mendonca-e-pecas-com-duvivier-agitam-o-fim-de-semana-em-sp"},
-    {"nome": "Dois Papas", "local": "TUCA", "endereco": "Rua Monte Alegre, 1024, Perdizes, São Paulo", "tipo": "teatro", "inicio": "20:00", "fim_estimado": "21:40", "publico_estimado": 670, "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/"},
-    {"nome": "Eu Sou Minha Própria Mulher", "local": "Teatro FAAP", "endereco": "Rua Alagoas, 903, Higienópolis, São Paulo", "tipo": "teatro", "inicio": "20:00", "fim_estimado": "21:40", "publico_estimado": 500, "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/"},
-    {"nome": "Savannah Bay é Você", "local": "Itaú Cultural", "endereco": "Avenida Paulista, 149, Bela Vista, São Paulo", "tipo": "teatro", "inicio": "20:00", "fim_estimado": "21:30", "publico_estimado": 200, "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/"},
-    {"nome": "Arlequim, Servidor de Dois Patrões", "local": "Sesc Bom Retiro", "endereco": "Alameda Nothmann, 185, Campos Elíseos, São Paulo", "tipo": "teatro", "inicio": "20:00", "fim_estimado": "21:40", "publico_estimado": 300, "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/"},
-    {"nome": "MONSTRO – tenho sonhado com homens", "local": "Sesc Pompeia", "endereco": "Rua Clélia, 93, Pompeia, São Paulo", "tipo": "teatro", "inicio": "19:30", "fim_estimado": "21:00", "publico_estimado": 300, "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/"},
-    {"nome": "Satyrianas – leitura de O Menino Sem Espelho", "local": "Praça Roosevelt", "endereco": "Praça Franklin Roosevelt, Consolação, São Paulo", "tipo": "teatro", "inicio": "23:00", "fim_estimado": "00:10", "publico_estimado": null, "fonte": "https://br.paipee.com/2026/10/09/exposicao-de-marilia-mendonca-e-pecas-com-duvivier-agitam-o-fim-de-semana-em-sp"},
-    {"nome": "Osesp duas e trinta – música japonesa", "local": "Sala São Paulo", "endereco": "Praça Júlio Prestes, 16, Campos Elíseos, São Paulo", "tipo": "musica", "inicio": "14:30", "fim_estimado": "15:40", "publico_estimado": 1500, "fonte": "https://salasaopaulo.art.br/salasp/pt/programacao-ingressos"}
-  ]
+ "gerado_em": "2026-10-09T05:40:00-03:00",
+ "data": "2026-10-09",
+ "observacao": "Horário de saída estimado. Shows e baladas: Ao Vivo (newsletter), Rio Times, Shotgun; teatro: Catraca Livre.",
+ "eventos": [
+  {
+   "nome": "Meu Filho é um Musical",
+   "local": "Teatro Renault",
+   "endereco": "Avenida Brigadeiro Luís Antônio, 411, República, São Paulo",
+   "tipo": "musical",
+   "inicio": "20:00",
+   "fim_estimado": "22:40",
+   "publico_estimado": 1500,
+   "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/"
+  },
+  {
+   "nome": "Feliz Ano Velho – O Musical",
+   "local": "Teatro Sabesp Frei Caneca",
+   "endereco": "Rua Frei Caneca, 569, Consolação, São Paulo",
+   "tipo": "musical",
+   "inicio": "20:00",
+   "fim_estimado": "22:30",
+   "publico_estimado": 600,
+   "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/"
+  },
+  {
+   "nome": "Os Últimos 5 Anos",
+   "local": "Teatro Nair Bello (Shopping Frei Caneca)",
+   "endereco": "Rua Frei Caneca, 569, Consolação, São Paulo",
+   "tipo": "musical",
+   "inicio": "20:00",
+   "fim_estimado": "21:40",
+   "publico_estimado": 200,
+   "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/"
+  },
+  {
+   "nome": "Rita Lee, uma autobiografia musical",
+   "local": "Teatro Porto",
+   "endereco": "Alameda Barão de Piracicaba, 740, Campos Elíseos, São Paulo",
+   "tipo": "musical",
+   "inicio": "20:00",
+   "fim_estimado": "22:30",
+   "publico_estimado": 500,
+   "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/"
+  },
+  {
+   "nome": "Meu Deus!",
+   "local": "Teatro das Artes (Shopping Eldorado)",
+   "endereco": "Avenida Rebouças, 3970, Pinheiros, São Paulo",
+   "tipo": "teatro",
+   "inicio": "20:00",
+   "fim_estimado": "21:30",
+   "publico_estimado": 750,
+   "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/"
+  },
+  {
+   "nome": "O Céu da Língua (Gregorio Duvivier)",
+   "local": "Espaço Unimed",
+   "endereco": "Rua Tagipuru, 795, Barra Funda, São Paulo",
+   "tipo": "teatro",
+   "inicio": "21:00",
+   "fim_estimado": "22:40",
+   "publico_estimado": 3000,
+   "fonte": "https://br.paipee.com/2026/10/09/exposicao-de-marilia-mendonca-e-pecas-com-duvivier-agitam-o-fim-de-semana-em-sp"
+  },
+  {
+   "nome": "Dois Papas",
+   "local": "TUCA",
+   "endereco": "Rua Monte Alegre, 1024, Perdizes, São Paulo",
+   "tipo": "teatro",
+   "inicio": "20:00",
+   "fim_estimado": "21:40",
+   "publico_estimado": 670,
+   "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/"
+  },
+  {
+   "nome": "Eu Sou Minha Própria Mulher",
+   "local": "Teatro FAAP",
+   "endereco": "Rua Alagoas, 903, Higienópolis, São Paulo",
+   "tipo": "teatro",
+   "inicio": "20:00",
+   "fim_estimado": "21:40",
+   "publico_estimado": 500,
+   "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/"
+  },
+  {
+   "nome": "Savannah Bay é Você",
+   "local": "Itaú Cultural",
+   "endereco": "Avenida Paulista, 149, Bela Vista, São Paulo",
+   "tipo": "teatro",
+   "inicio": "20:00",
+   "fim_estimado": "21:30",
+   "publico_estimado": 200,
+   "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/"
+  },
+  {
+   "nome": "Arlequim, Servidor de Dois Patrões",
+   "local": "Sesc Bom Retiro",
+   "endereco": "Alameda Nothmann, 185, Campos Elíseos, São Paulo",
+   "tipo": "teatro",
+   "inicio": "20:00",
+   "fim_estimado": "21:40",
+   "publico_estimado": 300,
+   "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/"
+  },
+  {
+   "nome": "MONSTRO – tenho sonhado com homens",
+   "local": "Sesc Pompeia",
+   "endereco": "Rua Clélia, 93, Pompeia, São Paulo",
+   "tipo": "teatro",
+   "inicio": "19:30",
+   "fim_estimado": "21:00",
+   "publico_estimado": 300,
+   "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/"
+  },
+  {
+   "nome": "Satyrianas – leitura de O Menino Sem Espelho",
+   "local": "Praça Roosevelt",
+   "endereco": "Praça Franklin Roosevelt, Consolação, São Paulo",
+   "tipo": "teatro",
+   "inicio": "23:00",
+   "fim_estimado": "00:10",
+   "publico_estimado": null,
+   "fonte": "https://br.paipee.com/2026/10/09/exposicao-de-marilia-mendonca-e-pecas-com-duvivier-agitam-o-fim-de-semana-em-sp"
+  },
+  {
+   "nome": "Osesp duas e trinta – música japonesa",
+   "local": "Sala São Paulo",
+   "endereco": "Praça Júlio Prestes, 16, Campos Elíseos, São Paulo",
+   "tipo": "musica",
+   "inicio": "14:30",
+   "fim_estimado": "15:40",
+   "publico_estimado": 1500,
+   "fonte": "https://salasaopaulo.art.br/salasp/pt/programacao-ingressos"
+  },
+  {
+   "nome": "3030",
+   "local": "Casa Natura Musical",
+   "endereco": "Rua Artur de Azevedo, 2134, Pinheiros, São Paulo",
+   "tipo": "show",
+   "inicio": "21:00",
+   "fim_estimado": "23:00",
+   "publico_estimado": 900,
+   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210"
+  },
+  {
+   "nome": "Alessandro Penezzi & Alexandre Ribeiro",
+   "local": "Casa de Francisca",
+   "endereco": "Rua Quintino Bocaiúva, 22, Sé, São Paulo",
+   "tipo": "show",
+   "inicio": "22:00",
+   "fim_estimado": "23:40",
+   "publico_estimado": 150,
+   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210"
+  },
+  {
+   "nome": "Escafandristas",
+   "local": "Casa de Francisca",
+   "endereco": "Rua Quintino Bocaiúva, 22, Sé, São Paulo",
+   "tipo": "show",
+   "inicio": "22:00",
+   "fim_estimado": "23:40",
+   "publico_estimado": 200,
+   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210"
+  },
+  {
+   "nome": "Thalma de Freitas",
+   "local": "Casa de Francisca (Porão)",
+   "endereco": "Rua Quintino Bocaiúva, 22, Sé, São Paulo",
+   "tipo": "show",
+   "inicio": "23:00",
+   "fim_estimado": "00:30",
+   "publico_estimado": 100,
+   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210"
+  },
+  {
+   "nome": "Aurora Rules + Lex Level + Imortal Joe",
+   "local": "Hangar 110",
+   "endereco": "Rua Rodolfo Miranda, 110, Bom Retiro, São Paulo",
+   "tipo": "show",
+   "inicio": "19:00",
+   "fim_estimado": "22:30",
+   "publico_estimado": 500,
+   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210"
+  },
+  {
+   "nome": "Bruno Berle",
+   "local": "Sesc Pompeia (Teatro)",
+   "endereco": "Rua Clélia, 93, Pompeia, São Paulo",
+   "tipo": "show",
+   "inicio": "20:00",
+   "fim_estimado": "21:30",
+   "publico_estimado": 800,
+   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210"
+  },
+  {
+   "nome": "Davi Moraes, Armandinho, Dadi e convidados",
+   "local": "Sesc Pompeia (Comedoria)",
+   "endereco": "Rua Clélia, 93, Pompeia, São Paulo",
+   "tipo": "show",
+   "inicio": "21:00",
+   "fim_estimado": "23:00",
+   "publico_estimado": 800,
+   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210"
+  },
+  {
+   "nome": "Casuarina",
+   "local": "Dois-Dois",
+   "endereco": "Dois-Dois, Campos Elíseos, São Paulo",
+   "tipo": "show",
+   "inicio": "20:00",
+   "fim_estimado": "23:30",
+   "publico_estimado": 300,
+   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210"
+  },
+  {
+   "nome": "Simoninha – Alegria, Alegria",
+   "local": "Sesc Belenzinho (Comedoria)",
+   "endereco": "Rua Padre Adelino, 1000, Belenzinho, São Paulo",
+   "tipo": "show",
+   "inicio": "20:00",
+   "fim_estimado": "21:40",
+   "publico_estimado": 800,
+   "fonte": "https://riotimesonline.com/sao-paulo-nightlife-tonight-october-9-2026"
+  },
+  {
+   "nome": "Catto",
+   "local": "Sesc Belenzinho (Teatro)",
+   "endereco": "Rua Padre Adelino, 1000, Belenzinho, São Paulo",
+   "tipo": "show",
+   "inicio": "20:30",
+   "fim_estimado": "22:00",
+   "publico_estimado": 380,
+   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210"
+  },
+  {
+   "nome": "Congo Shock",
+   "local": "Tendal da Lapa",
+   "endereco": "Rua Constança, 72, Lapa, São Paulo",
+   "tipo": "show",
+   "inicio": "19:00",
+   "fim_estimado": "21:30",
+   "publico_estimado": 400,
+   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210"
+  },
+  {
+   "nome": "Dois Dobrado",
+   "local": "Canto da Ema",
+   "endereco": "Avenida Brigadeiro Faria Lima, 364, Pinheiros, São Paulo",
+   "tipo": "festa",
+   "inicio": "22:00",
+   "fim_estimado": "02:30",
+   "publico_estimado": 400,
+   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210"
+  },
+  {
+   "nome": "Douglas Germano",
+   "local": "Sesc Santo Amaro (Teatro)",
+   "endereco": "Rua Amador Bueno, 505, Santo Amaro, São Paulo",
+   "tipo": "show",
+   "inicio": "20:00",
+   "fim_estimado": "21:30",
+   "publico_estimado": 300,
+   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210"
+  },
+  {
+   "nome": "Eliminadorzinho + Nevoara",
+   "local": "Picles",
+   "endereco": "Picles, Pinheiros, São Paulo",
+   "tipo": "show",
+   "inicio": "20:00",
+   "fim_estimado": "23:00",
+   "publico_estimado": 200,
+   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210"
+  },
+  {
+   "nome": "Guizado + Os Originais do Sample",
+   "local": "Casa Slamb",
+   "endereco": "Casa Slamb, Pinheiros, São Paulo",
+   "tipo": "show",
+   "inicio": "20:00",
+   "fim_estimado": "22:30",
+   "publico_estimado": 300,
+   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210"
+  },
+  {
+   "nome": "Iseo & Dodosound",
+   "local": "Cine Joia",
+   "endereco": "Praça Carlos Gomes, 82, Liberdade, São Paulo",
+   "tipo": "show",
+   "inicio": "22:00",
+   "fim_estimado": "00:30",
+   "publico_estimado": 900,
+   "fonte": "https://riotimesonline.com/sao-paulo-nightlife-tonight-october-9-2026"
+  },
+  {
+   "nome": "Jay Vaquer / MIM + Polly Noise",
+   "local": "Casa Lab",
+   "endereco": "Casa Lab, Vila Mariana, São Paulo",
+   "tipo": "show",
+   "inicio": "20:00",
+   "fim_estimado": "23:30",
+   "publico_estimado": 300,
+   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210"
+  },
+  {
+   "nome": "João Bosco",
+   "local": "Teatro Bradesco",
+   "endereco": "Rua Palestra Itália, 500, Perdizes, São Paulo",
+   "tipo": "show",
+   "inicio": "21:00",
+   "fim_estimado": "22:40",
+   "publico_estimado": 1400,
+   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210"
+  },
+  {
+   "nome": "MC Taya + Chainsaw Kid + Isotopxs",
+   "local": "Casa Rockambole",
+   "endereco": "Rua Belmiro Braga, 119, Pinheiros, São Paulo",
+   "tipo": "show",
+   "inicio": "22:00",
+   "fim_estimado": "01:00",
+   "publico_estimado": 300,
+   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210"
+  },
+  {
+   "nome": "Não Religião + Skamoondongos",
+   "local": "La Iglesia",
+   "endereco": "La Iglesia, Pinheiros, São Paulo",
+   "tipo": "show",
+   "inicio": "19:00",
+   "fim_estimado": "22:30",
+   "publico_estimado": 250,
+   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210"
+  },
+  {
+   "nome": "Passarim",
+   "local": "Bona Casa de Música",
+   "endereco": "Bona Casa de Música, Vila Madalena, São Paulo",
+   "tipo": "show",
+   "inicio": "21:00",
+   "fim_estimado": "23:00",
+   "publico_estimado": 150,
+   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210"
+  },
+  {
+   "nome": "Samba do Divino",
+   "local": "Centro Cultural Vila Itororó",
+   "endereco": "Rua Pedroso, 238, Bela Vista, São Paulo",
+   "tipo": "show",
+   "inicio": "19:00",
+   "fim_estimado": "22:30",
+   "publico_estimado": 400,
+   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210"
+  },
+  {
+   "nome": "Sandra Pêra",
+   "local": "Centro Cultural São Paulo (Sala Jardel Filho)",
+   "endereco": "Rua Vergueiro, 1000, Paraíso, São Paulo",
+   "tipo": "show",
+   "inicio": "20:00",
+   "fim_estimado": "21:30",
+   "publico_estimado": 300,
+   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210"
+  },
+  {
+   "nome": "Silvero + The Baggios",
+   "local": "Instituto Brasileiro de Teatro",
+   "endereco": "Instituto Brasileiro de Teatro, Sé, São Paulo",
+   "tipo": "show",
+   "inicio": "21:30",
+   "fim_estimado": "23:30",
+   "publico_estimado": 200,
+   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210"
+  },
+  {
+   "nome": "Urias – CARRANCA",
+   "local": "Audio",
+   "endereco": "Avenida Francisco Matarazzo, 694, Água Branca, São Paulo",
+   "tipo": "show",
+   "inicio": "21:00",
+   "fim_estimado": "00:00",
+   "publico_estimado": 3000,
+   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210"
+  },
+  {
+   "nome": "Baile Démodé – O Melhor das Love Songs",
+   "local": "Blue Note São Paulo",
+   "endereco": "Avenida Paulista, 2073, Bela Vista, São Paulo",
+   "tipo": "show",
+   "inicio": "20:00",
+   "fim_estimado": "21:30",
+   "publico_estimado": 300,
+   "fonte": "https://riotimesonline.com/sao-paulo-nightlife-tonight-october-9-2026"
+  },
+  {
+   "nome": "Tren e Thiago Mendonça – tributo Legião Urbana",
+   "local": "Blue Note São Paulo",
+   "endereco": "Avenida Paulista, 2073, Bela Vista, São Paulo",
+   "tipo": "show",
+   "inicio": "22:30",
+   "fim_estimado": "00:00",
+   "publico_estimado": 300,
+   "fonte": "https://riotimesonline.com/sao-paulo-nightlife-tonight-october-9-2026"
+  },
+  {
+   "nome": "Criss Paiva (stand-up)",
+   "local": "My F Comedy Club",
+   "endereco": "Alameda Santos, 1518, Cerqueira César, São Paulo",
+   "tipo": "teatro",
+   "inicio": "20:00",
+   "fim_estimado": "21:30",
+   "publico_estimado": 150,
+   "fonte": "https://riotimesonline.com/sao-paulo-nightlife-tonight-october-9-2026"
+  },
+  {
+   "nome": "Horney + The Zasters + Zagüaraz + Pyro",
+   "local": "Casa AlgoHits",
+   "endereco": "Casa AlgoHits, Vila Madalena, São Paulo",
+   "tipo": "show",
+   "inicio": "21:00",
+   "fim_estimado": "00:00",
+   "publico_estimado": 200,
+   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210"
+  },
+  {
+   "nome": "Orange Disaster + Giallos",
+   "local": "Mamãe Bar",
+   "endereco": "Mamãe Bar, Barra Funda, São Paulo",
+   "tipo": "show",
+   "inicio": "19:00",
+   "fim_estimado": "22:30",
+   "publico_estimado": 150,
+   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210"
+  },
+  {
+   "nome": "Kelly Lua",
+   "local": "Alvenaria Espaço Cultural",
+   "endereco": "Alvenaria Espaço Cultural, Perdizes, São Paulo",
+   "tipo": "show",
+   "inicio": "20:00",
+   "fim_estimado": "21:40",
+   "publico_estimado": 100,
+   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210"
+  },
+  {
+   "nome": "Baile do Henry K",
+   "local": "Santo Antônio (Shotgun)",
+   "endereco": "Santo Antônio, São Paulo",
+   "tipo": "festa",
+   "inicio": "20:00",
+   "fim_estimado": "02:00",
+   "publico_estimado": null,
+   "fonte": "https://shotgun.live/pt-br/concerts/sao-paulo"
+  }
+ ]
 }
