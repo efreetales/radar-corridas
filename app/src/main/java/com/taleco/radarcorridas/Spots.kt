@@ -136,6 +136,24 @@ object Spots {
     }
 }
 
+/** Destino da oferta perto de um ponto bom no horário em que você chegaria lá. */
+object SpotMatch {
+    fun near(ctx: Context, dest: LatLng, arriveInMin: Double): Pair<Spot, Double>? {
+        val maxM = Prefs(ctx).spotStarKm * 1000.0
+        val cal = Calendar.getInstance().apply { add(Calendar.MINUTE, arriveInMin.toInt()) }
+        var best: Pair<Spot, Double>? = null
+        for (s in Spots.all(ctx)) {
+            if (!s.activeAt(cal)) continue
+            val d = Geo.meters(dest, LatLng(s.lat, s.lng))
+            if (d <= maxM && (best == null || d < best.second)) best = s to d
+        }
+        return best
+    }
+
+    fun note(s: Spot, d: Double): String =
+        String.format(PT_BR, "★ Destino a %.1f km de %s · bom até %s", d / 1000.0, s.name, Spot.hhmm(s.endMin))
+}
+
 /**
  * Avisa quando você está perto de um ponto bom no horário dele.
  * Usa o GPS que já fica ligado com a Uber/99 aberta.

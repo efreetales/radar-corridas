@@ -135,6 +135,11 @@ class Prefs(context: Context) {
         set(v) = sp.edit().putFloat("valetas_sensibilidade", v).apply()
 
     // Pontos bons
+    /** Estrela no cartão da oferta quando o destino fica a até X km de um ponto bom no horário. */
+    var spotStarKm: Float
+        get() = sp.getFloat("estrela_km", 6f)
+        set(v) = sp.edit().putFloat("estrela_km", v).apply()
+
     var spotAlerts: Boolean
         get() = sp.getBoolean("alerta_pontos", true)
         set(v) = sp.edit().putBoolean("alerta_pontos", v).apply()

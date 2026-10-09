@@ -115,6 +115,15 @@ object CardView {
             typeface = Typeface.DEFAULT_BOLD
             setPadding(0, ctx.dp(6), 0, 0)
         })
+        eval.spotNote?.let { note ->
+            root.addView(TextView(ctx).apply {
+                text = note
+                setTextColor(Color.parseColor("#C4B5FD"))
+                textSize = 15f
+                typeface = Typeface.DEFAULT_BOLD
+                setPadding(0, ctx.dp(6), 0, 0)
+            })
+        }
         return root
     }
 }

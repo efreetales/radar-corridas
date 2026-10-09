@@ -765,6 +765,25 @@ class MainActivity : AppCompatActivity() {
             isChecked = prefs.spotAlerts
             setOnCheckedChangeListener { _, checked -> prefs.spotAlerts = checked }
         }, matchWrap(top = 8))
+        val starLbl = text("", 14f, Colors.TEXT).apply { setPadding(0, dp(12), 0, 0) }
+        fun setStar(v: Float) {
+            starLbl.text = String.format(PT_BR, "★ na oferta quando o destino ficar a até %.0f km de um ponto no horário dele", v)
+        }
+        setStar(prefs.spotStarKm)
+        card.addView(starLbl)
+        val star = Slider(this)
+        star.valueFrom = 1f
+        star.valueTo = 15f
+        star.stepSize = 1f
+        star.value = prefs.spotStarKm.coerceIn(1f, 15f)
+        star.setLabelFormatter { v -> "${v.toInt()} km" }
+        star.thumbTintList = ColorStateList.valueOf(Color.WHITE)
+        star.addOnChangeListener { _, v, _ ->
+            prefs.spotStarKm = v
+            setStar(v)
+        }
+        card.addView(star, matchWrap())
+
         card.addView(MaterialButton(this).apply {
             text = "Adicionar ponto onde estou agora"
             isAllCaps = false

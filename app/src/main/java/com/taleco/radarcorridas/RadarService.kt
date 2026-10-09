@@ -328,6 +328,7 @@ class RadarService : AccessibilityService() {
 
         val eval = Evaluator.evaluate(offer, prefs)
         overlay.showCard(eval, prefs)
+        checkSpotStar(eval, sig)
 
         // Garantia: o cartão não fica preso na tela.
         handler.removeCallbacks(maxCardRunnable)
@@ -340,6 +341,32 @@ class RadarService : AccessibilityService() {
             Geo.geocode(this, offer.origin) { originAt -> OfferLog.append(ctx, eval, driverAt, originAt) }
             lastLoggedSig = sig
             lastLoggedAt = now
+        }
+    }
+
+    // ---- Estrela: destino perto de um ponto bom ----
+
+    private val destCache = HashMap<String, LatLng?>()
+
+    private fun checkSpotStar(eval: Evaluation, sig: String) {
+        val dest = eval.offer.destination ?: return
+        if (Spots.all(this).none { it.enabled }) return
+        val arrive = eval.offer.totalMin
+        val apply: (LatLng?) -> Unit = { at ->
+            if (at != null && lastSig == sig && overlay.isCardShowing) {
+                SpotMatch.near(this, at, arrive)?.let { (spot, d) ->
+                    overlay.showCard(eval.copy(spotNote = SpotMatch.note(spot, d)), prefs)
+                }
+            }
+        }
+        if (destCache.containsKey(dest)) {
+            apply(destCache[dest])
+            return
+        }
+        Geo.geocode(this, dest) { at ->
+            if (destCache.size > 200) destCache.clear()
+            destCache[dest] = at
+            apply(at)
         }
     }
 
