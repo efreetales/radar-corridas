@@ -1,0 +1,21 @@
+name: Radares CET
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 9 1 * *"
+permissions:
+  contents: write
+jobs:
+  cet:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Descobrir estrutura
+        run: python tools/cet_discover.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cet-out
+          path: out/
