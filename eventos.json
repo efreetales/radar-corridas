@@ -1,0 +1,20 @@
+{
+  "gerado_em": "2026-10-09T05:10:00-03:00",
+  "data": "2026-10-09",
+  "observacao": "Horário de saída estimado: início + duração típica (musical ~2h40, peça ~1h30, stand-up ~1h30, concerto ~1h30).",
+  "eventos": [
+    {"nome": "Meu Filho é um Musical", "local": "Teatro Renault", "endereco": "Avenida Brigadeiro Luís Antônio, 411, República, São Paulo", "tipo": "musical", "inicio": "20:00", "fim_estimado": "22:40", "publico_estimado": 1500, "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/"},
+    {"nome": "Feliz Ano Velho – O Musical", "local": "Teatro Sabesp Frei Caneca", "endereco": "Rua Frei Caneca, 569, Consolação, São Paulo", "tipo": "musical", "inicio": "20:00", "fim_estimado": "22:30", "publico_estimado": 600, "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/"},
+    {"nome": "Os Últimos 5 Anos", "local": "Teatro Nair Bello (Shopping Frei Caneca)", "endereco": "Rua Frei Caneca, 569, Consolação, São Paulo", "tipo": "musical", "inicio": "20:00", "fim_estimado": "21:40", "publico_estimado": 200, "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/"},
+    {"nome": "Rita Lee, uma autobiografia musical", "local": "Teatro Porto", "endereco": "Alameda Barão de Piracicaba, 740, Campos Elíseos, São Paulo", "tipo": "musical", "inicio": "20:00", "fim_estimado": "22:30", "publico_estimado": 500, "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/"},
+    {"nome": "Meu Deus!", "local": "Teatro das Artes (Shopping Eldorado)", "endereco": "Avenida Rebouças, 3970, Pinheiros, São Paulo", "tipo": "teatro", "inicio": "20:00", "fim_estimado": "21:30", "publico_estimado": 750, "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/"},
+    {"nome": "O Céu da Língua (Gregorio Duvivier)", "local": "Espaço Unimed", "endereco": "Rua Tagipuru, 795, Barra Funda, São Paulo", "tipo": "teatro", "inicio": "21:00", "fim_estimado": "22:40", "publico_estimado": 3000, "fonte": "https://br.paipee.com/2026/10/09/exposicao-de-marilia-mendonca-e-pecas-com-duvivier-agitam-o-fim-de-semana-em-sp"},
+    {"nome": "Dois Papas", "local": "TUCA", "endereco": "Rua Monte Alegre, 1024, Perdizes, São Paulo", "tipo": "teatro", "inicio": "20:00", "fim_estimado": "21:40", "publico_estimado": 670, "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/"},
+    {"nome": "Eu Sou Minha Própria Mulher", "local": "Teatro FAAP", "endereco": "Rua Alagoas, 903, Higienópolis, São Paulo", "tipo": "teatro", "inicio": "20:00", "fim_estimado": "21:40", "publico_estimado": 500, "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/"},
+    {"nome": "Savannah Bay é Você", "local": "Itaú Cultural", "endereco": "Avenida Paulista, 149, Bela Vista, São Paulo", "tipo": "teatro", "inicio": "20:00", "fim_estimado": "21:30", "publico_estimado": 200, "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/"},
+    {"nome": "Arlequim, Servidor de Dois Patrões", "local": "Sesc Bom Retiro", "endereco": "Alameda Nothmann, 185, Campos Elíseos, São Paulo", "tipo": "teatro", "inicio": "20:00", "fim_estimado": "21:40", "publico_estimado": 300, "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/"},
+    {"nome": "MONSTRO – tenho sonhado com homens", "local": "Sesc Pompeia", "endereco": "Rua Clélia, 93, Pompeia, São Paulo", "tipo": "teatro", "inicio": "19:30", "fim_estimado": "21:00", "publico_estimado": 300, "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/"},
+    {"nome": "Satyrianas – leitura de O Menino Sem Espelho", "local": "Praça Roosevelt", "endereco": "Praça Franklin Roosevelt, Consolação, São Paulo", "tipo": "teatro", "inicio": "23:00", "fim_estimado": "00:10", "publico_estimado": null, "fonte": "https://br.paipee.com/2026/10/09/exposicao-de-marilia-mendonca-e-pecas-com-duvivier-agitam-o-fim-de-semana-em-sp"},
+    {"nome": "Osesp duas e trinta – música japonesa", "local": "Sala São Paulo", "endereco": "Praça Júlio Prestes, 16, Campos Elíseos, São Paulo", "tipo": "musica", "inicio": "14:30", "fim_estimado": "15:40", "publico_estimado": 1500, "fonte": "https://salasaopaulo.art.br/salasp/pt/programacao-ingressos"}
+  ]
+}
