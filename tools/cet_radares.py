@@ -86,6 +86,16 @@ def num(v):
         return None
 
 
+def nice(desc):
+    """'AVENIDA JAGUARE (BAIRRO/CENTRO) X PRACA ...' -> 'Av. Jaguare (bairro/centro)'"""
+    d = desc.split(" X ")[0].strip().title()
+    for a, b in [("Avenida ", "Av. "), ("Rua ", "R. "), ("Estrada ", "Estr. "), ("Viaduto ", "Vd. "), ("Praca ", "Pç. "),
+                 (" De ", " de "), (" Da ", " da "), (" Do ", " do "), (" Dos ", " dos "), (" Das ", " das "), (" E ", " e ")]:
+        d = d.replace(a, b)
+    d = re.sub(r"\(([^)]*)\)", lambda m: "(" + m.group(1).lower() + ")", d)
+    return d
+
+
 kept = 0
 with open("out/radares_cet.tsv", "w", encoding="utf-8") as f:
     for r in out:
@@ -94,9 +104,12 @@ with open("out/radares_cet.tsv", "w", encoding="utf-8") as f:
             continue
         if r["DESATIVAÇÃO"]:
             continue  # desativado
-        lim = num(r["VELOCIDADE"])
-        lim = int(lim) if lim and 10 <= lim <= 130 else ""
-        desc = str(r["DESCRIÇÃO DO LOCAL"] or "").replace("\t", " ").replace("\n", " ").strip()
+        codes = [c.strip() for c in str(r["ENQUADRAMENTOS"] or "").split(",")]
+        if "V" not in codes:
+            continue  # não fiscaliza velocidade (só semáforo, faixa, rodízio…)
+        m = re.match(r"\s*(\d+)", str(r["VELOCIDADE"] or ""))
+        lim = int(m.group(1)) if m else ""  # "60/50 km/h": o 1º é o de carros
+        desc = nice(str(r["DESCRIÇÃO DO LOCAL"] or "")).replace("\t", " ").replace("\n", " ")
         f.write(f"{lat:.6f}\t{lng:.6f}\t{lim}\t\t{desc}\n")
         kept += 1
-print("ativos com coordenadas:", kept)
+print("radares de velocidade ativos:", kept)
