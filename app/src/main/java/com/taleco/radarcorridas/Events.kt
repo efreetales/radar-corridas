@@ -28,7 +28,8 @@ class CityEvent(
     val endMin: Int,
     val audience: Int?,
     var lat: Double?,
-    var lng: Double?
+    var lng: Double?,
+    val noPlace: Boolean = false   // a agenda não achou o endereço exato: não vai para o mapa
 ) {
     val icon: String get() = when (type.lowercase(Locale.ROOT)) {
         "teatro", "musical", "danca", "dança", "ópera", "opera" -> "🎭"
@@ -107,7 +108,8 @@ object Events {
                     o.optString("data").ifBlank { defaultDate }, hm(o.optString("inicio")), end,
                     if (o.has("publico_estimado") && !o.isNull("publico_estimado")) o.optInt("publico_estimado") else null,
                     if (o.has("lat") && !o.isNull("lat")) o.optDouble("lat") else null,
-                    if (o.has("lng") && !o.isNull("lng")) o.optDouble("lng") else null
+                    if (o.has("lng") && !o.isNull("lng")) o.optDouble("lng") else null,
+                    o.optBoolean("sem_local", false)
                 )
             )
         }
@@ -138,6 +140,8 @@ object Events {
                     // Localiza os que vieram sem coordenadas
                     for (e in events) {
                         if (e.lat != null && e.lng != null) continue
+                        // Só o bairro ou o nome do lugar: o celular cairia no meio do bairro. Melhor ficar fora do mapa.
+                        if (e.noPlace || !e.address.any { it.isDigit() }) continue
                         try {
                             val q = listOf(e.address, e.place).firstOrNull { it.isNotBlank() } ?: continue
                             @Suppress("DEPRECATION")
@@ -173,6 +177,7 @@ object Events {
             put("fim_estimado", Spot.hhmm(e.endMin))
             e.audience?.let { put("publico_estimado", it) }
             e.lat?.let { put("lat", it) }; e.lng?.let { put("lng", it) }
+            if (e.noPlace) put("sem_local", true)
             put("icone", e.icon)
         })
         root.put("eventos", arr)
