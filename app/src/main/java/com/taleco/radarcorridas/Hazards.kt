@@ -203,7 +203,7 @@ object HazardWatch {
     fun onLocation(ctx: Context, loc: Location, kmh: Double, heading: Float?, radarBusy: Boolean) {
         appContext = ctx.applicationContext
         history.addLast(loc)
-        while (history.size > 8) history.removeFirst()
+        while (history.size > 15) history.removeFirst()
         lastKmh = kmh
         if (heading != null) lastHeading = heading
 
@@ -286,7 +286,7 @@ object HazardWatch {
 
     // ---------- Marcar ----------
 
-    /** Posição de ~1,5 s atrás (você aperta logo depois de passar pela valeta). */
+    /** Posição de alguns segundos atrás (você aperta logo depois de passar pela valeta). Ajustável nas configurações. */
     private fun positionForMark(delayMs: Long): Location? {
         val now = System.currentTimeMillis()
         return history.lastOrNull { now - it.time >= delayMs } ?: history.lastOrNull()
@@ -295,7 +295,7 @@ object HazardWatch {
     /** Marcação manual (volume − duas vezes ou segurar o "R"). */
     fun markManual(ctx: Context) {
         appContext = ctx.applicationContext
-        val loc = positionForMark(1_500L)
+        val loc = positionForMark((Prefs(ctx).valetaDelaySec * 1000).toLong())
         if (loc == null || System.currentTimeMillis() - loc.time > 30_000L) {
             Beeper.play(ctx, Beeper.Kind.ERRO)
             RadarService.instance?.showSpeedBanner(

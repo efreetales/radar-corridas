@@ -523,6 +523,31 @@ class MainActivity : AppCompatActivity() {
             12f, Colors.MUTED
         ).apply { setPadding(0, dp(6), 0, 0) })
 
+        val delayLabel = text("", 14f, Colors.TEXT).apply { setPadding(0, dp(12), 0, 0) }
+        card.addView(delayLabel)
+        fun setDelay(v: Float) {
+            delayLabel.text = if (v == 0f) "Marcar no ponto exato do aperto"
+            else String.format(PT_BR, "Marcar onde o carro estava %.1f s antes do aperto", v)
+        }
+        setDelay(prefs.valetaDelaySec)
+        val delay = Slider(this)
+        delay.valueFrom = 0f
+        delay.valueTo = 5f
+        delay.stepSize = 0.5f
+        delay.value = (Math.round(prefs.valetaDelaySec * 2f) / 2f).coerceIn(0f, 5f)
+        delay.setLabelFormatter { v -> String.format(PT_BR, "%.1f s", v) }
+        delay.thumbTintList = ColorStateList.valueOf(Color.WHITE)
+        delay.addOnChangeListener { _, v, _ ->
+            prefs.valetaDelaySec = v
+            setDelay(v)
+        }
+        card.addView(delay, matchWrap())
+        card.addView(text(
+            "Vale para o volume − e para o botão \"R\". Se costuma apertar bem depois de passar, aumente. " +
+                "Se aperta antes, ao ver a valeta chegando, use 0.",
+            12f, Colors.MUTED
+        ))
+
         card.addView(SwitchMaterial(this).apply {
             text = "Avisar valetas marcadas"
             setTextColor(Colors.TEXT)

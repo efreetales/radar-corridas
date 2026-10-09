@@ -104,6 +104,11 @@ class Prefs(context: Context) {
         get() = sp.getBoolean("valetas_auto", true)
         set(v) = sp.edit().putBoolean("valetas_auto", v).apply()
 
+    /** Segundos entre passar pela valeta e apertar o botão (a marcação volta esse tempo no percurso). */
+    var valetaDelaySec: Float
+        get() = sp.getFloat("valetas_atraso", 1.5f)
+        set(v) = sp.edit().putFloat("valetas_atraso", v).apply()
+
     /** 0 = só solavancos muito fortes, 1 = qualquer solavanco. */
     var valetaSensitivity: Float
         get() = sp.getFloat("valetas_sensibilidade", 0.5f)
