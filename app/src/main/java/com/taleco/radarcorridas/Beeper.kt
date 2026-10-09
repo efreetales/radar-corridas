@@ -21,7 +21,7 @@ import kotlin.math.sin
  */
 object Beeper {
 
-    enum class Kind { RADAR_A_FRENTE, ACIMA, MULTA, VALETA, MARCADA, ERRO }
+    enum class Kind { RADAR_A_FRENTE, ACIMA, MULTA, VALETA, MARCADA, ERRO, PONTO }
 
     private const val RATE = 44_100
     private val main = Handler(Looper.getMainLooper())
@@ -41,6 +41,7 @@ object Beeper {
         Kind.VALETA -> listOf(520.0 to 200, 0.0 to 80, 520.0 to 200, 0.0 to 80, 390.0 to 320)
         Kind.MARCADA -> listOf(1050.0 to 90, 0.0 to 40, 1400.0 to 140)
         Kind.ERRO -> listOf(300.0 to 350)
+        Kind.PONTO -> listOf(660.0 to 140, 0.0 to 30, 880.0 to 140, 0.0 to 30, 1320.0 to 260)
     }
 
     fun play(ctx: Context, kind: Kind) {

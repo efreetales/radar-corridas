@@ -32,7 +32,10 @@ class SpeedBanner(
     val color: Int,
     val distanceM: Int? = null,   // metros até o radar (null depois de passar)
     val progress: Float = 0f,     // 0 = acabou de avistar o radar, 1 = em cima dele
-    val sign: String? = null      // no lugar da placa de limite (ex.: "⚠" para valeta)
+    val sign: String? = null,     // no lugar da placa de limite (ex.: "⚠" para valeta)
+    val title: String? = null,    // no lugar da velocidade (ex.: nome do ponto)
+    val distText: String? = null, // distância já formatada (ex.: "1,8")
+    val distUnit: String = "metros"
 )
 
 /**
@@ -97,7 +100,7 @@ object SpeedWatch {
     fun onRideAppSeen(ctx: Context, prefs: Prefs) {
         appContext = ctx.applicationContext
         lastRideAppAt = System.currentTimeMillis()
-        if (!prefs.speedAlerts && !prefs.valetaAlerts && !prefs.valetaAuto) {
+        if (!prefs.speedAlerts && !prefs.valetaAlerts && !prefs.valetaAuto && !prefs.spotAlerts) {
             if (active) stop(ctx)
             return
         }
@@ -179,6 +182,9 @@ object SpeedWatch {
         // Valetas: aparecem quando não há radar na tela
         val radarBusy = target != null && target !== dismissedCam
         HazardWatch.onLocation(ctx, loc, kmh, heading, radarBusy)
+
+        // Pontos bons: só quando não há radar nem valeta na tela
+        SpotWatch.onLocation(ctx, loc, kmh, radarBusy || HazardWatch.isShowing)
     }
 
     private fun camLocation(c: SpeedCam) = Location("radar").apply {

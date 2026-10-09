@@ -180,6 +180,7 @@ object HazardWatch {
     private var minDist = Double.MAX_VALUE
     private var startDist = LOOKAHEAD_M
     private var showing = false
+    val isShowing: Boolean get() = showing
     private var dismissed: Hazard? = null
     private val recentlyPassed = HashMap<Hazard, Long>()
 
@@ -351,6 +352,7 @@ object HazardWatch {
         }
         target?.let { dismissed = it }
         showing = false
+        SpotWatch.onBannerClosed()
         SpeedWatch.dismiss()
     }
 

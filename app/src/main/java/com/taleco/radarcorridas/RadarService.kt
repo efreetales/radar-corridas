@@ -388,10 +388,13 @@ class RadarService : AccessibilityService() {
     }
 
     fun showSpeedBanner(b: SpeedBanner) {
+        // Radar ou valeta passam na frente do aviso de ponto bom
+        if (b.sign != "★") SpotWatch.onBannerClosed()
         if (::overlay.isInitialized) overlay.showSpeed(b)
     }
 
     fun hideSpeedBanner() {
+        SpotWatch.onBannerClosed()
         if (::overlay.isInitialized) overlay.hideSpeed()
     }
 

@@ -75,6 +75,7 @@ class MainActivity : AppCompatActivity() {
         buildTrips(col)
         buildSpeed(col)
         buildHazards(col)
+        buildSpots(col)
         buildData(col)
 
         val version = try {
@@ -95,6 +96,7 @@ class MainActivity : AppCompatActivity() {
         updateTripChecklist()
         updateSpeedInfo()
         updateHazardInfo()
+        refreshSpots()
         refreshPreview()
     }
 
@@ -314,7 +316,7 @@ class MainActivity : AppCompatActivity() {
         card.addView(outlinedButton("Exportar dados (ofertas, corridas, rotas, radares e valetas)").apply {
             setOnClickListener {
                 val ctx = this@MainActivity
-                val files = listOf(OfferLog.offersFile(ctx), TripLog.tripsFile(ctx), TripLog.routesFile(ctx), PassLog.file(ctx), Hazards.file(ctx))
+                val files = listOf(OfferLog.offersFile(ctx), TripLog.tripsFile(ctx), TripLog.routesFile(ctx), PassLog.file(ctx), Hazards.file(ctx), Spots.file(ctx))
                 if (!OfferLog.shareAll(ctx, files, "Dados — Radar Corridas")) toast("Nenhum dado salvo ainda")
             }
         }, matchWrap(top = 6))
@@ -497,6 +499,260 @@ class MainActivity : AppCompatActivity() {
             12f, Colors.MUTED
         ).apply { setPadding(0, dp(10), 0, 0) })
         updateSpeedInfo()
+    }
+
+    // ---------- Pontos bons ----------
+
+    private lateinit var spotsList: LinearLayout
+
+    private fun buildSpots(col: LinearLayout) {
+        val card = section(col, "Meus pontos bons")
+        card.addView(text(
+            "Marque os lugares que você sabe que rendem em certos dias e horários (teatro, bar, igreja, faculdade…). " +
+                "Com a Uber/99 aberta, quando você estiver perto de um deles no horário, aparece um aviso roxo com a distância e um toque de sino.",
+            12f, Colors.MUTED
+        ))
+        card.addView(SwitchMaterial(this).apply {
+            text = "Avisar quando estiver perto"
+            setTextColor(Colors.TEXT)
+            isChecked = prefs.spotAlerts
+            setOnCheckedChangeListener { _, checked -> prefs.spotAlerts = checked }
+        }, matchWrap(top = 8))
+        card.addView(MaterialButton(this).apply {
+            text = "Adicionar ponto onde estou agora"
+            isAllCaps = false
+            setOnClickListener { addSpotHere() }
+        }, matchWrap(top = 8))
+        card.addView(outlinedButton("Adicionar por endereço").apply {
+            setOnClickListener { addSpotByAddress() }
+        }, matchWrap(top = 4))
+        card.addView(outlinedButton("Testar aviso de ponto").apply {
+            setOnClickListener {
+                if (RadarService.instance == null) toast("Ative a leitura de ofertas primeiro")
+                else SpotWatch.demo(this@MainActivity)
+            }
+        }, matchWrap(top = 4))
+        spotsList = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
+        card.addView(spotsList, matchWrap(top = 10))
+        refreshSpots()
+    }
+
+    private fun refreshSpots() {
+        if (!::spotsList.isInitialized) return
+        spotsList.removeAllViews()
+        val all = Spots.all(this)
+        if (all.isEmpty()) {
+            spotsList.addView(text("Nenhum ponto cadastrado ainda.", 13f, Colors.MUTED))
+            return
+        }
+        for (sp in all.sortedBy { it.startMin }) {
+            val box = LinearLayout(this).apply {
+                orientation = LinearLayout.VERTICAL
+                setPadding(dp(12), dp(10), dp(12), dp(10))
+                background = rounded(Colors.SURFACE_2, 12f)
+            }
+            val header = LinearLayout(this).apply {
+                orientation = LinearLayout.HORIZONTAL
+                gravity = Gravity.CENTER_VERTICAL
+            }
+            header.addView(text("★ " + sp.name, 16f, Colors.TEXT, bold = true),
+                LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f))
+            header.addView(SwitchMaterial(this).apply {
+                isChecked = sp.enabled
+                setOnCheckedChangeListener { _, c ->
+                    sp.enabled = c
+                    Spots.save(this@MainActivity)
+                }
+            })
+            box.addView(header)
+            val radius = if (sp.radiusM >= 1000) String.format(PT_BR, "%.1f km", sp.radiusM / 1000f) else "${sp.radiusM} m"
+            box.addView(text("${sp.daysText()} · ${sp.windowText()} · avisa a $radius", 13f, Colors.MUTED))
+            val row = LinearLayout(this).apply { orientation = LinearLayout.HORIZONTAL }
+            row.addView(outlinedButton("Editar").apply { setOnClickListener { editSpot(sp, isNew = false) } },
+                LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f).apply { rightMargin = dp(6) })
+            row.addView(outlinedButton("Apagar").apply {
+                setOnClickListener {
+                    androidx.appcompat.app.AlertDialog.Builder(this@MainActivity)
+                        .setTitle("Apagar \"${sp.name}\"?")
+                        .setPositiveButton("Apagar") { _, _ ->
+                            Spots.remove(this@MainActivity, sp)
+                            refreshSpots()
+                        }
+                        .setNegativeButton("Cancelar", null)
+                        .show()
+                }
+            }, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f))
+            box.addView(row, matchWrap(top = 4))
+            spotsList.addView(box, matchWrap(top = 8))
+        }
+    }
+
+    @android.annotation.SuppressLint("MissingPermission")
+    private fun addSpotHere() {
+        if (!hasLocation()) {
+            toast("Libere a localização na seção \"Corridas e percurso\"")
+            return
+        }
+        val recent = Geo.lastKnown(this)
+        if (recent != null) {
+            newSpotAt(recent.lat, recent.lng)
+            return
+        }
+        toast("Buscando sua localização…")
+        val lm = getSystemService(android.location.LocationManager::class.java) ?: return
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                lm.getCurrentLocation(android.location.LocationManager.GPS_PROVIDER, null, mainExecutor) { loc ->
+                    if (loc != null) newSpotAt(loc.latitude, loc.longitude) else toast("Não consegui pegar a localização. Tente perto da janela.")
+                }
+            } else {
+                @Suppress("DEPRECATION")
+                lm.requestSingleUpdate(android.location.LocationManager.GPS_PROVIDER, { loc ->
+                    newSpotAt(loc.latitude, loc.longitude)
+                }, mainLooper)
+            }
+        } catch (e: Exception) {
+            toast("Não consegui pegar a localização")
+        }
+    }
+
+    private fun addSpotByAddress() {
+        val input = EditText(this).apply {
+            hint = "Ex.: Teatro Renault, Av. Brigadeiro Luís Antônio 411"
+            setSingleLine(true)
+        }
+        val wrap = FrameLayout(this).apply {
+            setPadding(dp(20), dp(8), dp(20), 0)
+            addView(input)
+        }
+        androidx.appcompat.app.AlertDialog.Builder(this)
+            .setTitle("Endereço do ponto")
+            .setView(wrap)
+            .setPositiveButton("Buscar") { _, _ ->
+                val q = input.text.toString().trim()
+                if (q.isEmpty()) return@setPositiveButton
+                toast("Buscando…")
+                val query = if (q.contains("São Paulo", ignoreCase = true)) q else "$q, São Paulo"
+                Geo.geocode(this, query) { at ->
+                    if (at == null) toast("Endereço não encontrado. Tente com número e bairro.")
+                    else newSpotAt(at.lat, at.lng, q.substringBefore(",").take(40))
+                }
+            }
+            .setNegativeButton("Cancelar", null)
+            .show()
+    }
+
+    private fun newSpotAt(lat: Double, lng: Double, name: String = "") {
+        val sp = Spot(System.currentTimeMillis(), name, lat, lng, setOf(6, 7), 21 * 60 + 30, 23 * 60, 2000, true)
+        editSpot(sp, isNew = true)
+    }
+
+    private fun editSpot(sp: Spot, isNew: Boolean) {
+        val box = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(dp(20), dp(8), dp(20), 0)
+        }
+        box.addView(text("Nome", 13f, Colors.MUTED))
+        val nameIn = EditText(this).apply {
+            setText(sp.name)
+            hint = "Ex.: Teatro Renault"
+            setSingleLine(true)
+        }
+        box.addView(nameIn, matchWrap())
+
+        box.addView(text("Dias", 13f, Colors.MUTED).apply { setPadding(0, dp(10), 0, 0) })
+        val days = sp.days.toMutableSet()
+        val dayRow = LinearLayout(this).apply { orientation = LinearLayout.HORIZONTAL }
+        for (d in Spot.DAY_ORDER) {
+            val b = MaterialButton(this, null, com.google.android.material.R.attr.materialButtonOutlinedStyle).apply {
+                text = Spot.DAY_LETTER[d]
+                isAllCaps = false
+                minWidth = 0
+                minimumWidth = 0
+                setPadding(0, 0, 0, 0)
+                fun paint() {
+                    val on = d in days
+                    setBackgroundColor(if (on) Colors.ACCENT else Color.TRANSPARENT)
+                    setTextColor(if (on) Color.parseColor("#06231B") else Colors.ACCENT)
+                    strokeColor = ColorStateList.valueOf(Colors.ACCENT)
+                }
+                paint()
+                setOnClickListener {
+                    if (d in days) days.remove(d) else days.add(d)
+                    paint()
+                }
+            }
+            dayRow.addView(b, LinearLayout.LayoutParams(0, dp(44), 1f).apply { rightMargin = dp(3) })
+        }
+        box.addView(dayRow, matchWrap())
+
+        var start = sp.startMin
+        var end = sp.endMin
+        val timeRow = LinearLayout(this).apply { orientation = LinearLayout.HORIZONTAL }
+        val startBtn = outlinedButton("")
+        val endBtn = outlinedButton("")
+        fun paintTimes() {
+            startBtn.text = "Das " + Spot.hhmm(start)
+            endBtn.text = "Até " + Spot.hhmm(end)
+        }
+        paintTimes()
+        startBtn.setOnClickListener {
+            android.app.TimePickerDialog(this, { _, h, m -> start = h * 60 + m; paintTimes() }, start / 60, start % 60, true).show()
+        }
+        endBtn.setOnClickListener {
+            android.app.TimePickerDialog(this, { _, h, m -> end = h * 60 + m; paintTimes() }, end / 60, end % 60, true).show()
+        }
+        timeRow.addView(startBtn, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f).apply { rightMargin = dp(6) })
+        timeRow.addView(endBtn, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f))
+        box.addView(text("Horário bom", 13f, Colors.MUTED).apply { setPadding(0, dp(10), 0, 0) })
+        box.addView(timeRow, matchWrap())
+
+        box.addView(text("Avisar quando estiver a", 13f, Colors.MUTED).apply { setPadding(0, dp(10), 0, 0) })
+        val radii = listOf(500, 1000, 2000, 3000, 5000)
+        val radiusGroup = MaterialButtonToggleGroup(this).apply {
+            isSingleSelection = true
+            isSelectionRequired = true
+        }
+        val radiusIds = mutableMapOf<Int, Int>()
+        for (r in radii) {
+            val b = outlinedButton(if (r >= 1000) "${r / 1000} km" else "$r m").apply {
+                id = View.generateViewId()
+                minWidth = 0
+                minimumWidth = 0
+                setPadding(0, 0, 0, 0)
+            }
+            radiusIds[b.id] = r
+            radiusGroup.addView(b, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f))
+        }
+        val selected = radii.minByOrNull { kotlin.math.abs(it - sp.radiusM) } ?: 2000
+        radiusIds.entries.firstOrNull { it.value == selected }?.let { radiusGroup.check(it.key) }
+        box.addView(radiusGroup, matchWrap())
+
+        val scroll = ScrollView(this).apply { addView(box) }
+        androidx.appcompat.app.AlertDialog.Builder(this)
+            .setTitle(if (isNew) "Novo ponto bom" else "Editar ponto")
+            .setView(scroll)
+            .setPositiveButton("Salvar") { _, _ ->
+                val name = nameIn.text.toString().trim().ifEmpty { "Ponto bom" }
+                if (days.isEmpty()) {
+                    toast("Escolha pelo menos um dia")
+                    return@setPositiveButton
+                }
+                if (start == end) {
+                    toast("O horário de início e fim não pode ser igual")
+                    return@setPositiveButton
+                }
+                sp.name = name
+                sp.days = days.toSet()
+                sp.startMin = start
+                sp.endMin = end
+                sp.radiusM = radiusIds[radiusGroup.checkedButtonId] ?: 2000
+                if (isNew) Spots.add(this, sp) else Spots.save(this)
+                toast("Ponto salvo")
+                refreshSpots()
+            }
+            .setNegativeButton("Cancelar", null)
+            .show()
     }
 
     // ---------- Valetas ----------

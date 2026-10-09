@@ -114,6 +114,11 @@ class Prefs(context: Context) {
         get() = sp.getFloat("valetas_sensibilidade", 0.5f)
         set(v) = sp.edit().putFloat("valetas_sensibilidade", v).apply()
 
+    // Pontos bons
+    var spotAlerts: Boolean
+        get() = sp.getBoolean("alerta_pontos", true)
+        set(v) = sp.edit().putBoolean("alerta_pontos", v).apply()
+
     // Aparência
     var position: CardPosition
         get() = CardPosition.values().getOrElse(sp.getInt("posicao", 0)) { CardPosition.TOPO }

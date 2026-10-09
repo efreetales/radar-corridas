@@ -90,15 +90,18 @@ class OverlayManager(private val service: AccessibilityService) {
         (speedSign?.background as? GradientDrawable)?.setStroke(
             service.dp(5), if (b.sign != null) Color.parseColor("#E8590C") else Color.parseColor("#D62828")
         )
-        speedValue?.text = "${b.speedKmh} km/h"
+        speedValue?.text = b.title ?: "${b.speedKmh} km/h"
         speedValue?.setTextColor(fg)
         speedLine?.text = b.line
         speedLine?.setTextColor(fg)
         speedDist?.setTextColor(fg)
         speedDistUnit?.setTextColor(fg)
-        if (b.distanceM != null) {
+        if (b.distText != null) {
+            speedDist?.text = b.distText
+            speedDistUnit?.text = b.distUnit
+        } else if (b.distanceM != null) {
             speedDist?.text = b.distanceM.toString()
-            speedDistUnit?.text = "metros"
+            speedDistUnit?.text = b.distUnit
         } else {
             speedDist?.text = ""
             speedDistUnit?.text = ""
