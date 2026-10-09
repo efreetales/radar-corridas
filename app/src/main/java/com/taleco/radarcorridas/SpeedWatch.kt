@@ -206,7 +206,14 @@ object SpeedWatch {
             val d = loc.distanceTo(cl).toDouble()
             if (d > bestD) continue
             if (c.bearing != null && angleDiff(heading, c.bearing) > DIRECTION_TOLERANCE) continue
-            if (d > 30 && angleDiff(heading, (loc.bearingTo(cl) + 360f) % 360f) > AHEAD_TOLERANCE) continue
+            if (d > 30) {
+                val ang = angleDiff(heading, (loc.bearingTo(cl) + 360f) % 360f)
+                if (ang > AHEAD_TOLERANCE) continue
+                // Distância lateral do radar à sua linha de direção: evita pegar radar da rua paralela
+                // (ex.: Alameda Santos quando você está na Paulista, ~100 m ao lado).
+                val lateral = d * kotlin.math.sin(Math.toRadians(ang.toDouble()))
+                if (lateral > maxOf(30.0, d * 0.10)) continue
+            }
             best = c
             bestD = d
         }
@@ -223,8 +230,11 @@ object SpeedWatch {
         if (d <= NEAR_M && kmh > maxNearKmh) maxNearKmh = kmh
 
         val behind = heading != null && d > 15 && angleDiff(heading, (loc.bearingTo(cl) + 360f) % 360f) > 110f
+        // Radar ficou de lado (você entrou em outra rua, ou era de uma rua paralela): desiste dele
+        val sideways = heading != null && d > 60 &&
+            d * kotlin.math.sin(Math.toRadians(angleDiff(heading, (loc.bearingTo(cl) + 360f) % 360f).toDouble())) > maxOf(45.0, d * 0.15)
         val passed = minDist <= PASS_RADIUS_M && (d > minDist + 20 || behind)
-        val gaveUp = d > LOOKAHEAD_M + 150 || (minDist > PASS_RADIUS_M && (d > minDist + 60 || behind))
+        val gaveUp = d > LOOKAHEAD_M + 150 || sideways || (minDist > PASS_RADIUS_M && (d > minDist + 60 || behind))
 
         when {
             passed -> {

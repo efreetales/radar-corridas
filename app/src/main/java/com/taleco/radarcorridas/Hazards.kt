@@ -280,7 +280,11 @@ object HazardWatch {
             val d = loc.distanceTo(hl).toDouble()
             if (d > bestD) continue
             if (h.heading != null && angleDiff(heading, h.heading) > 60f) continue
-            if (d > 25 && angleDiff(heading, (loc.bearingTo(hl) + 360f) % 360f) > 40f) continue
+            if (d > 25) {
+                val ang = angleDiff(heading, (loc.bearingTo(hl) + 360f) % 360f)
+                if (ang > 40f) continue
+                if (d * kotlin.math.sin(Math.toRadians(ang.toDouble())) > maxOf(25.0, d * 0.10)) continue // rua paralela
+            }
             best = h
             bestD = d
         }
