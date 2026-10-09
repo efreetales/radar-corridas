@@ -30,6 +30,11 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".MapActivity"
+            android:exported="false"
+            android:label="Mapa" />
+
         <service
             android:name=".RadarService"
             android:exported="true"

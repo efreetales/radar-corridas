@@ -198,9 +198,15 @@ object TripTracker {
         TrackingService.onPoint = null
         TrackingService.stop(ctx, TrackingService.CORRIDA)
         val endedAt = System.currentTimeMillis()
+        // Quando o endereço da oferta não pôde ser localizado, as fases não são detectadas.
+        // Aí usamos o quanto o carro andou e o tempo: se bate com a corrida, ela foi feita.
+        val moved = t.kmToPickup + t.kmTrip + t.kmAfter
+        val minutes = (endedAt - t.acceptedAt) / 60_000.0
+        val looksDone = moved >= t.offer.totalKm * 0.6 && minutes >= t.offer.totalMin * 0.5
         val status = when {
             reason != null -> "interrompida ($reason)"
             t.leftPickupAt != null -> "concluída"
+            looksDone -> "concluída (estimada)"
             t.arrivedPickupAt != null -> "cancelada no embarque"
             else -> "cancelada antes do embarque"
         }
@@ -247,7 +253,7 @@ object TripLog {
             if (!tf.exists()) tf.writeText(TRIPS_HEADER + "\n")
             val tripEnd = arrivedDest ?: ended
             val totalMin = mins(accepted, tripEnd)
-            val realPerHour = if (status == "concluída" && totalMin != null && totalMin > 0) o.price / (totalMin / 60.0) else null
+            val realPerHour = if (status.startsWith("concluída") && totalMin != null && totalMin > 0) o.price / (totalMin / 60.0) else null
             val line = listOf(
                 id, o.app, q(o.category), n(o.price), n(o.totalKm), n(o.totalMin),
                 ts(accepted), ts(arrivedPickup), ts(leftPickup), ts(arrivedDest), ts(ended),

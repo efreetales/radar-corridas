@@ -134,6 +134,25 @@ class MainActivity : AppCompatActivity() {
         }, 0)
         col.addView(statusCard, matchWrap())
 
+        // Card do mapa, largura toda
+        val mapTile = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            gravity = Gravity.CENTER_VERTICAL
+            setPadding(dp(18), dp(18), dp(18), dp(18))
+            background = rounded(Colors.SURFACE, 20f)
+            minimumHeight = dp(96)
+        }
+        ripple(mapTile)
+        mapTile.addView(icon(R.drawable.ic_map, 34, Colors.ACCENT).apply {
+            layoutParams = LinearLayout.LayoutParams(dp(34), dp(34)).apply { rightMargin = dp(16) }
+        })
+        val mt = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
+        mt.addView(text("Mapa", 18f, Colors.TEXT, bold = true))
+        mt.addView(text("Calor das ofertas, percursos e melhores regiões", 12f, Colors.MUTED))
+        mapTile.addView(mt, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f))
+        mapTile.setOnClickListener { startActivity(Intent(this, MapActivity::class.java)) }
+        col.addView(mapTile, matchWrap(top = 12))
+
         // Grade de cards, 2 por linha
         val entries = pages.entries.toList()
         var i = 0

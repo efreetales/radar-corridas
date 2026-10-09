@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<style>
+  :root { --bg:#0D1117; --s1:#161B22; --s2:#21262D; --tx:#E6EDF3; --mu:#8B949E; --ac:#2FD3A6;
+          --red:#E5484D; --yel:#F5C518; --grn:#3DD68C; --pur:#9775FA; --org:#E8590C; }
+  * { box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  html,body { margin:0; height:100%; background:var(--bg); color:var(--tx); font-family:system-ui,Roboto,sans-serif; }
+  #app { display:flex; flex-direction:column; height:100%; }
+  .bar { padding:10px 12px 4px; background:var(--bg); }
+  .row { display:flex; gap:6px; overflow-x:auto; padding:3px 0; scrollbar-width:none; }
+  .row::-webkit-scrollbar { display:none; }
+  .lbl { color:var(--mu); font-size:12px; align-self:center; min-width:52px; }
+  .chip { flex:none; border:1px solid #30363D; background:var(--s1); color:var(--tx); border-radius:999px;
+          padding:7px 13px; font-size:13px; }
+  .chip.on { background:var(--ac); color:#06231B; border-color:var(--ac); font-weight:700; }
+  .chip.layer.on { background:#1d3b33; color:var(--ac); border-color:var(--ac); }
+  #map { flex:1; min-height:200px; }
+  #panel { background:var(--s1); border-top-left-radius:18px; border-top-right-radius:18px; max-height:42%;
+           overflow-y:auto; padding:10px 14px 18px; }
+  #grip { width:40px; height:4px; border-radius:2px; background:#30363D; margin:0 auto 8px; }
+  .stats { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
+  .st { background:var(--s2); border-radius:12px; padding:8px 10px; }
+  .st b { display:block; font-size:18px; }
+  .st span { color:var(--mu); font-size:11px; }
+  h3 { font-size:14px; margin:14px 0 6px; }
+  .reg { display:flex; align-items:center; gap:10px; background:var(--s2); border-radius:12px; padding:9px 11px; margin-bottom:6px; }
+  .reg .n { width:24px; height:24px; border-radius:50%; background:var(--ac); color:#06231B; font-weight:800;
+            display:flex; align-items:center; justify-content:center; font-size:13px; flex:none; }
+  .reg .t { flex:1; font-size:13px; }
+  .reg .t small { color:var(--mu); display:block; font-size:11px; }
+  .reg .v { font-weight:800; font-size:15px; }
+  .empty { color:var(--mu); font-size:13px; padding:6px 0; }
+  .leaflet-popup-content-wrapper, .leaflet-popup-tip { background:var(--s2); color:var(--tx); }
+  .leaflet-popup-content { font-size:13px; line-height:1.4; margin:10px 12px; }
+  .leaflet-container { background:#1b1f24; }
+  .legend { color:var(--mu); font-size:11px; margin-top:8px; line-height:1.6; }
+  .dot { display:inline-block; width:9px; height:9px; border-radius:50%; margin:0 3px 0 8px; vertical-align:middle; }
+</style>
+</head>
+<body>
+<div id="app">
+  <div class="bar">
+    <div class="row" id="per"><span class="lbl">Período</span></div>
+    <div class="row" id="dia"><span class="lbl">Dias</span></div>
+    <div class="row" id="hor"><span class="lbl">Horário</span></div>
+    <div class="row" id="lay"><span class="lbl">Mostrar</span></div>
+  </div>
+  <div id="map"></div>
+  <div id="panel"><div id="grip"></div><div id="out"></div></div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.heat/0.2.0/leaflet-heat.js"></script>
+<script>
+// ---------- dados (vêm do app) ----------
+function raw(name){ try { return (window.Radar && Radar.file(name)) || ""; } catch(e){ return ""; } }
+function parseCsv(text){
+  const lines = text.split(/\r?\n/).filter(l => l.trim());
+  if (!lines.length) return [];
+  const split = l => { const out=[]; let cur="", q=false;
+    for (const ch of l){ if (ch === '"') q=!q; else if (ch === ';' && !q){ out.push(cur); cur=""; } else cur+=ch; }
+    out.push(cur); return out; };
+  const head = split(lines[0]);
+  return lines.slice(1).map(l => { const v=split(l), o={}; head.forEach((h,i)=>o[h]=v[i]??""); return o; });
+}
+const num = s => { if (s===undefined||s===null||s==="") return null; const n=parseFloat(String(s).replace(",", ".")); return isNaN(n)?null:n; };
+const when = s => s ? new Date(s.replace(" ","T")) : null;
+const inSP = (la,lo) => la!=null && lo!=null && la>-24.3 && la<-23.1 && lo>-47.4 && lo<-46.0;
+const brl = v => "R$ " + v.toFixed(2).replace(".", ",");
+
+const offers = parseCsv(raw("ofertas.csv")).map(o => {
+  let la=num(o.origem_lat), lo=num(o.origem_lng), src="embarque";
+  if (!inSP(la,lo)) { la=num(o.motorista_lat); lo=num(o.motorista_lng); src="você"; }
+  return { t:when(o.data_hora), price:num(o.valor), km:num(o.km_total), min:num(o.min_total), rskm:num(o.rs_km),
+           rsh:num(o.rs_hora), v:o.veredito, cat:o.categoria, orig:o.origem, dest:o.destino, la, lo, src };
+}).filter(o => o.t && inSP(o.la,o.lo));
+const trips = parseCsv(raw("corridas.csv")).map(c => ({ id:c.id, t:when(c.aceite), price:num(c.valor), st:c.status,
+  rsh:num(c.rs_hora_real), wait:num(c.min_espera_passageiro), toPick:num(c.min_ate_embarque), total:num(c.min_total),
+  orig:c.origem, dest:c.destino })).filter(c => c.t);
+const routes = {};
+parseCsv(raw("rotas.csv")).forEach(p => { const la=num(p.lat), lo=num(p.lng); if (!inSP(la,lo)) return;
+  (routes[p.id] = routes[p.id] || []).push([la,lo,p.fase]); });
+const passes = parseCsv(raw("passagens_radar.csv")).map(p => ({ t:when(p.data_hora), via:p.via, lim:num(p.limite),
+  kmh:num(p.velocidade_gps), res:p.resultado, la:num(p.lat), lo:num(p.lng) })).filter(p => p.t && inSP(p.la,p.lo));
+const valetas = parseCsv(raw("valetas.csv")).map(v => ({ la:num(v.lat), lo:num(v.lng), n:num(v.vezes)||1, auto:v.origem==="auto" }))
+  .filter(v => inSP(v.la,v.lo));
+let spots = []; try { spots = JSON.parse(raw("pontos.json") || "[]"); } catch(e) {}
+
+// ---------- filtros ----------
+const st = { per:"tudo", dia:"todos", hor:"todos", lay:{calor:true, ofertas:true, percursos:true, radares:false, valetas:true, pontos:true} };
+const PER = [["7","7 dias"],["30","30 dias"],["tudo","Tudo"]];
+const DIA = [["todos","Todos"],["util","Seg–Sex"],["fds","Sáb–Dom"],["1","Seg"],["2","Ter"],["3","Qua"],["4","Qui"],["5","Sex"],["6","Sáb"],["0","Dom"]];
+const HOR = [["todos","Todos"],["6-12","6h–12h"],["12-18","12h–18h"],["18-24","18h–0h"],["0-6","0h–6h"]];
+const LAY = [["calor","🔥 Calor"],["ofertas","Ofertas"],["percursos","Percursos"],["radares","Radares"],["valetas","Valetas"],["pontos","★ Pontos"]];
+
+function ok(d){
+  if (!d) return false;
+  if (st.per !== "tudo" && (Date.now() - d) / 864e5 > +st.per) return false;
+  const wd = d.getDay();
+  if (st.dia === "util" && (wd === 0 || wd === 6)) return false;
+  if (st.dia === "fds" && !(wd === 0 || wd === 6)) return false;
+  if (/^\d$/.test(st.dia) && wd !== +st.dia) return false;
+  if (st.hor !== "todos") { const [a,b] = st.hor.split("-").map(Number); const h = d.getHours(); if (h < a || h >= b) return false; }
+  return true;
+}
+function chips(id, list, key){
+  const el = document.getElementById(id);
+  list.forEach(([v,l]) => { const b=document.createElement("button"); b.className="chip"+(id==="lay"?" layer":""); b.textContent=l;
+    b.onclick = () => { if (id==="lay") st.lay[v] = !st.lay[v]; else st[key] = v; render(); paint(); };
+    b.dataset.v = v; el.appendChild(b); });
+}
+function paint(){
+  [["per","per"],["dia","dia"],["hor","hor"]].forEach(([id,k]) =>
+    document.querySelectorAll("#"+id+" .chip").forEach(b => b.classList.toggle("on", b.dataset.v === st[k])));
+  document.querySelectorAll("#lay .chip").forEach(b => b.classList.toggle("on", !!st.lay[b.dataset.v]));
+}
+chips("per", PER, "per"); chips("dia", DIA, "dia"); chips("hor", HOR, "hor"); chips("lay", LAY);
+
+// ---------- mapa ----------
+const map = L.map("map", { zoomControl:false, attributionControl:true }).setView([-23.56, -46.65], 12);
+L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
+  { maxZoom:19, subdomains:"abcd", attribution:"© OpenStreetMap © CARTO" }).addTo(map);
+let group = L.layerGroup().addTo(map), heat = null;
+const vcol = v => v==="BOM" ? "#3DD68C" : v==="RUIM" ? "#E5484D" : "#F5C518";
+const phcol = { A_CAMINHO:"#6E7681", NO_EMBARQUE:"#F5C518", EM_VIAGEM:"#2FD3A6" };
+
+function render(){
+  group.clearLayers(); if (heat) { map.removeLayer(heat); heat = null; }
+  const of = offers.filter(o => ok(o.t));
+  const tr = trips.filter(c => ok(c.t));
+  const ps = passes.filter(p => ok(p.t));
+
+  if (st.lay.calor && of.length && L.heatLayer) {
+    const maxR = Math.max(...of.map(o => o.rsh || 0), 1);
+    heat = L.heatLayer(of.map(o => [o.la, o.lo, Math.max(0.25, (o.rsh || 0) / maxR)]),
+      { radius:28, blur:22, maxZoom:15, gradient:{0.3:"#1f6feb",0.55:"#2FD3A6",0.75:"#F5C518",1:"#E5484D"} }).addTo(map);
+  }
+  if (st.lay.ofertas) of.forEach(o => L.circleMarker([o.la,o.lo], { radius:6, color:"#0D1117", weight:1, fillColor:vcol(o.v), fillOpacity:.95 })
+    .bindPopup(`<b>${brl(o.price)}</b> · ${o.cat||""}<br>${o.km?.toFixed(1)} km · ${Math.round(o.min||0)} min<br>`+
+      `${o.rskm!=null?brl(o.rskm)+"/km":""} · ${o.rsh!=null?brl(o.rsh)+"/h":""}<br><small>${o.t.toLocaleString("pt-BR")}<br>`+
+      `${o.orig||""} → ${o.dest||""}<br>(posição: ${o.src})</small>`).addTo(group));
+  if (st.lay.percursos) tr.forEach(c => { const pts = routes[c.id]; if (!pts || pts.length < 2) return;
+    let seg = [pts[0]], ph = pts[0][2];
+    const flush = () => { if (seg.length > 1) L.polyline(seg.map(p => [p[0],p[1]]), { color:phcol[ph]||"#888", weight:4, opacity:.85 })
+      .bindPopup(`<b>${brl(c.price||0)}</b> · ${c.st}<br>${c.rsh!=null?brl(c.rsh)+"/h real":""}<br>`+
+        `até embarque: ${c.toPick!=null?c.toPick.toFixed(0)+" min":"?"} · espera: ${c.wait!=null?c.wait.toFixed(0)+" min":"?"}<br>`+
+        `<small>${c.t.toLocaleString("pt-BR")}<br>${c.orig||""} → ${c.dest||""}</small>`).addTo(group); };
+    for (const p of pts.slice(1)) { if (p[2] !== ph) { seg.push(p); flush(); seg = [p]; ph = p[2]; } else seg.push(p); }
+    flush(); });
+  if (st.lay.radares) ps.forEach(p => { const c = p.res.startsWith("provável") ? "#E5484D" : p.res.startsWith("acima") ? "#F5C518" : "#3DD68C";
+    L.circleMarker([p.la,p.lo], { radius:5, color:c, weight:2, fillOpacity:.2 })
+      .bindPopup(`<b>${p.via}</b><br>${p.kmh} km/h no limite de ${p.lim}<br>${p.res}<br><small>${p.t.toLocaleString("pt-BR")}</small>`).addTo(group); });
+  if (st.lay.valetas) valetas.forEach(v => L.marker([v.la,v.lo], { icon:L.divIcon({ className:"", iconSize:[18,18],
+      html:`<div style="font-size:16px;line-height:18px;text-align:center;color:#E8590C">▲</div>` }) })
+    .bindPopup(`Valeta${v.auto?" (solavanco automático)":""}<br>marcada ${v.n}x`).addTo(group));
+  if (st.lay.pontos) spots.forEach(s => { const days = ["dom","seg","ter","qua","qui","sex","sáb"];
+    const hh = m => String(Math.floor(m/60)%24).padStart(2,"0")+":"+String(m%60).padStart(2,"0");
+    L.circle([s.lat,s.lng], { radius:s.raio||2000, color:"#9775FA", weight:1, fillOpacity:.06 }).addTo(group);
+    L.marker([s.lat,s.lng], { icon:L.divIcon({ className:"", iconSize:[22,22],
+      html:`<div style="font-size:20px;line-height:22px;text-align:center;color:#9775FA">★</div>` }) })
+      .bindPopup(`<b>${s.nome}</b><br>${(s.dias||[]).map(d=>days[d-1]).join(", ")} · ${hh(s.inicio)}–${hh(s.fim)}`).addTo(group); });
+
+  // ---------- painel ----------
+  const done = tr.filter(c => (c.st||"").startsWith("concluída"));
+  const avg = a => a.length ? a.reduce((x,y)=>x+y,0)/a.length : null;
+  const good = of.filter(o => o.v === "BOM").length;
+  const rskm = avg(of.map(o=>o.rskm).filter(x=>x!=null));
+  const rsh = avg(done.map(c=>c.rsh).filter(x=>x!=null && x < 400));
+  const wait = avg(done.map(c=>c.wait).filter(x=>x!=null));
+  const earned = done.reduce((s,c)=>s+(c.price||0),0);
+  const box = (v,l) => `<div class="st"><b>${v}</b><span>${l}</span></div>`;
+  let html = `<div class="stats">` +
+    box(of.length, "ofertas") + box(of.length ? Math.round(100*good/of.length)+"%" : "–", "ofertas boas") +
+    box(rskm!=null ? brl(rskm) : "–", "R$/km médio") +
+    box(done.length, "corridas feitas") + box(rsh!=null ? brl(rsh).replace(",00","") : "–", "R$/h real") +
+    box(earned ? brl(earned).replace(",00","") : "–", "ganho (registrado)") + `</div>`;
+  if (wait != null) html += `<div class="legend">Espera média pelo passageiro: ${wait.toFixed(1)} min</div>`;
+
+  // Regiões: quadrados de ~1 km, ordenados pelo R$/h médio das ofertas
+  const cells = {};
+  of.forEach(o => { const k = Math.round(o.la/0.009)+":"+Math.round(o.lo/0.0098);
+    const c = cells[k] = cells[k] || { n:0, sum:0, good:0, la:0, lo:0, names:{} };
+    c.n++; c.sum += o.rsh||0; if (o.v==="BOM") c.good++; c.la += o.la; c.lo += o.lo;
+    const parts = (o.orig||"").split(",").map(x=>x.trim()).filter(x=>x.length>2 && !/s[aã]o paulo/i.test(x));
+    const b = parts[1] || parts[0]; if (b) c.names[b]=(c.names[b]||0)+1; });
+  const minN = of.length >= 40 ? 3 : 1;
+  const top = Object.values(cells).filter(c => c.n >= minN).map(c => ({ ...c, avg:c.sum/c.n, la:c.la/c.n, lo:c.lo/c.n,
+    name: Object.entries(c.names).sort((a,b)=>b[1]-a[1])[0]?.[0] || "Ofertas recebidas nesta região" })).sort((a,b)=>b.avg-a.avg).slice(0,6);
+  html += `<h3>Melhores regiões (R$/h médio das ofertas)</h3>`;
+  html += top.length ? top.map((c,i) => `<div class="reg" onclick="map.setView([${c.la},${c.lo}],15)"><div class="n">${i+1}</div>`+
+      `<div class="t">${c.name}<small>${c.n} oferta${c.n>1?"s":""} · ${Math.round(100*c.good/c.n)}% boas</small></div>`+
+      `<div class="v">${brl(c.avg).replace(",00","")}/h</div></div>`).join("")
+    : `<div class="empty">Sem ofertas nesse filtro.</div>`;
+  html += `<div class="legend">Percursos:<span class="dot" style="background:#6E7681"></span>indo buscar
+    <span class="dot" style="background:#F5C518"></span>esperando<span class="dot" style="background:#2FD3A6"></span>com passageiro<br>
+    Ofertas:<span class="dot" style="background:#3DD68C"></span>boa<span class="dot" style="background:#F5C518"></span>média
+    <span class="dot" style="background:#E5484D"></span>ruim · calor = onde aparecem ofertas (mais forte = R$/h maior)</div>`;
+  document.getElementById("out").innerHTML = html;
+}
+paint(); render();
+const all = offers.map(o=>[o.la,o.lo]).concat(Object.values(routes).flat().map(p=>[p[0],p[1]]));
+function fit(){ map.invalidateSize(); if (all.length > 1) map.fitBounds(L.latLngBounds(all), { padding:[24,24], maxZoom:14 }); }
+setTimeout(fit, 50); window.addEventListener("resize", () => map.invalidateSize());
+</script>
+</body>
+</html>

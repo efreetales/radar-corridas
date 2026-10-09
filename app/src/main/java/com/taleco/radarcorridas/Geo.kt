@@ -34,7 +34,9 @@ object Geo {
      * O resultado volta na thread principal (null se não encontrar).
      */
     fun geocode(ctx: Context, address: String?, onDone: (LatLng?) -> Unit) {
-        if (address.isNullOrBlank() || !Geocoder.isPresent()) {
+        // Endereço lido pela metade ("ER", "D", "Prt"...) não dá para localizar: melhor não arriscar
+        val letters = address?.count { it.isLetter() } ?: 0
+        if (address.isNullOrBlank() || letters < 6 || !Geocoder.isPresent()) {
             onDone(null)
             return
         }
@@ -45,6 +47,8 @@ object Geo {
                 @Suppress("DEPRECATION")
                 val list = Geocoder(app, PT_BR).getFromLocationName(query, 1)
                 list?.firstOrNull()?.let { LatLng(it.latitude, it.longitude) }
+                    // Só vale dentro da Grande SP (evita cair no meio do Brasil quando o endereço é incompleto)
+                    ?.takeIf { it.lat in -24.3..-23.1 && it.lng in -47.4..-46.0 }
             } catch (e: Exception) {
                 null
             }
