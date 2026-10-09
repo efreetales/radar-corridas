@@ -25,6 +25,32 @@ import kotlin.math.ceil
 import kotlin.math.roundToInt
 import kotlin.math.sin
 
+/**
+ * Limite de velocidade da via atual, lido da tela da Uber (o ícone "50 LIMITE" no mapa).
+ * É o limite da rua em que o GPS da Uber colocou você: serve para conferir se o radar escolhido é da mesma via.
+ */
+object UberRoad {
+    @Volatile
+    var limit: Int? = null
+        private set
+
+    @Volatile
+    private var at = 0L
+
+    fun update(texts: List<String>) {
+        val i = texts.indexOfFirst { it.trim().equals("LIMITE", ignoreCase = true) }
+        if (i <= 0) return
+        val v = texts[i - 1].trim().toIntOrNull() ?: return
+        if (v in 20..120) {
+            limit = v
+            at = System.currentTimeMillis()
+        }
+    }
+
+    /** Limite lido há poucos segundos (senão, não serve para conferir). */
+    fun fresh(maxAgeMs: Long = 8_000L): Int? = if (System.currentTimeMillis() - at <= maxAgeMs) limit else null
+}
+
 /** O que o aviso de radar mostra na tela. */
 class SpeedBanner(
     val limit: Int?,
@@ -238,6 +264,11 @@ object SpeedWatch {
             val d = loc.distanceTo(camLocation(c)).toDouble()
             if (d > bestD) continue
             if (!onSameRoad(c, loc, heading, d)) continue
+            // Confere com o limite que a Uber mostra para a sua via: diferença de 20 km/h ou mais
+            // (ex.: radar de 90 com você numa via de 50, ou radar de 50 com você na expressa a 90)
+            // quer dizer que o radar é de outra pista/rua.
+            val roadLimit = UberRoad.fresh()
+            if (roadLimit != null && c.limit != null && abs(c.limit!! - roadLimit) >= 20 && d > 40) continue
             best = c
             bestD = d
         }
@@ -255,7 +286,10 @@ object SpeedWatch {
 
         val behind = heading != null && d > 15 && angleDiff(heading, (loc.bearingTo(cl) + 360f) % 360f) > 110f
         // Radar ficou de lado (você entrou em outra rua/pista): desiste dele
-        val sideways = heading != null && d > 45 && minDist > PASS_RADIUS_M && !onSameRoad(cam, loc, heading, d)
+        val roadLimit = UberRoad.fresh()
+        val otherRoad = roadLimit != null && cam.limit != null && abs(cam.limit!! - roadLimit) >= 20
+        val sideways = d > 45 && minDist > PASS_RADIUS_M &&
+            (otherRoad || (heading != null && !onSameRoad(cam, loc, heading, d)))
         val gaveUp = d > LOOKAHEAD_M + 150 || sideways || (minDist > PASS_RADIUS_M && (d > minDist + 60 || behind))
 
         when {
@@ -291,6 +325,9 @@ object SpeedWatch {
         else -> Colors.GREEN_DARK
     }
 
+    /** Limite do radar; se a lista não tiver, usa o limite que a Uber mostra para a via. */
+    private fun limitOf(cam: SpeedCam): Int? = cam.limit ?: UberRoad.fresh(15_000L)
+
     /** Segurar o aviso: "este radar está errado". Some de vez e fica registrado para corrigir. */
     fun reportWrong(): Boolean {
         val ctx = appContext ?: return false
@@ -325,9 +362,9 @@ object SpeedWatch {
         val where = cam.name.ifBlank { if (cam.mine) "Radar marcado por você" else "Radar de velocidade" }
         val progress = (1.0 - d / startDist).coerceIn(0.0, 1.0).toFloat()
         RadarService.instance?.showSpeedBanner(
-            SpeedBanner(cam.limit, kmh, where, colorFor(cam.limit, kmh), roundDist(d), progress)
+            SpeedBanner(limitOf(cam), kmh, where, colorFor(limitOf(cam), kmh), roundDist(d), progress)
         )
-        val limit = cam.limit ?: return
+        val limit = limitOf(cam) ?: return
         val now = System.currentTimeMillis()
         if (kmh > limit && now - lastBeepAt > 2_500L) {
             lastBeepAt = now
@@ -339,7 +376,7 @@ object SpeedWatch {
 
     private fun onPassed(ctx: Context, cam: SpeedCam, kmhD: Double, loc: Location) {
         val kmh = kmhD.roundToInt()
-        val limit = cam.limit
+        val limit = limitOf(cam)
         val result = when {
             limit == null -> "limite desconhecido"
             kmh > toleratedUpTo(limit) -> "provável multa"

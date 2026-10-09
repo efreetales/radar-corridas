@@ -271,6 +271,7 @@ class RadarService : AccessibilityService() {
         if (prefs.diagnostic) writeDiagnostic(screens)
 
         var offer: Offer? = null
+        for ((_, texts) in screens) UberRoad.update(texts)
         for ((app, texts) in screens) {
             offer = OfferParser.parse(app, texts)
             if (offer != null) break
