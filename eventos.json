@@ -560,7 +560,9 @@
    "inicio": "21:00",
    "fim_estimado": "02:00",
    "publico_estimado": 200,
-   "fonte": "https://shotgun.live/pt-br/cities/sao-paulo"
+   "fonte": "https://shotgun.live/pt-br/cities/sao-paulo",
+   "lat": -23.545124,
+   "lng": -46.634953
   },
   {
    "nome": "Paz, Amor e Grave com MC Soffia",
@@ -582,7 +584,8 @@
    "inicio": "22:00",
    "fim_estimado": "03:00",
    "publico_estimado": 400,
-   "fonte": "https://shotgun.live/pt-br/cities/sao-paulo"
+   "fonte": "https://shotgun.live/pt-br/cities/sao-paulo",
+   "sem_local": true
   },
   {
    "nome": "High-Hit – Círio de Nazaré",
@@ -638,7 +641,8 @@
    "inicio": "22:00",
    "fim_estimado": "04:00",
    "publico_estimado": 500,
-   "fonte": "https://shotgun.live/pt-br/cities/sao-paulo"
+   "fonte": "https://shotgun.live/pt-br/cities/sao-paulo",
+   "sem_local": true
   },
   {
    "nome": "Love Miley Party: Bass Persuades",
@@ -792,7 +796,7 @@
   }
  ],
  "geocodificacao": {
-  "com_local": 56,
-  "sem_local": 11
+  "com_local": 54,
+  "sem_local": 13
  }
 }

@@ -1,68 +1,15 @@
-OK    Meu Filho é um Musical | Teatro Renault, 411, Avenida Brigadeiro Luís Antônio, Bela Vista, Repú
-OK    Feliz Ano Velho – O Musical | Frei Caneca Shopping, 569, Rua Frei Caneca, Consolação, São Paulo, Reg
-OK    Os Últimos 5 Anos | Frei Caneca Shopping, 569, Rua Frei Caneca, Consolação, São Paulo, Reg
-OK    Rita Lee, uma autobiografia musical | Alameda Barão de Piracicaba, Campos Elísios, Santa Cecília, São Paulo,
-OK    Meu Deus! | 3970, Avenida Rebouças, Jardim Europa, Pinheiros, São Paulo, Região Su
-OK    O Céu da Língua (Gregorio Duvivier) | Espaço Unimed, 795, Rua Tagipuru, Barra Funda, São Paulo, Região Sudes
-OK    Dois Papas | Teatro da Universidade Católica, 1024, Rua Monte Alegre, Perdizes, São
-OK    Eu Sou Minha Própria Mulher | Fundação Armando Alvares Penteado, 903, Rua Alagoas, Higienópolis, Con
-OK    Savannah Bay é Você | Avenida Paulista, Morro dos Ingleses, Bela Vista, São Paulo, Região Su
-OK    Arlequim, Servidor de Dois Patrões | SESC Bom Retiro, 185, Alameda Nothmann, Campos Elísios, Santa Cecília,
-OK    MONSTRO – tenho sonhado com homens | Sesc Pompéia, 93, Rua Clélia, Pompéia, Perdizes, São Paulo, Região Sud
-OK    Satyrianas – leitura de O Menino Sem Esp | Praça Franklin Roosevelt, Vila Buarque, República, São Paulo, Região S
-OK    Osesp duas e trinta – música japonesa | Sala São Paulo, 16, Praça Júlio Prestes, Campos Elísios, Santa Cecília
-OK    3030 | 2134, Rua Artur de Azevedo, Pinheiros, São Paulo, Região Sudeste, 0540
-OK    Alessandro Penezzi & Alexandre Ribeiro | Edifício Palacete Tereza Toledo Lara, 22, Rua Quintino Bocaiuva, Glicé
-OK    Escafandristas | Edifício Palacete Tereza Toledo Lara, 22, Rua Quintino Bocaiuva, Glicé
-OK    Thalma de Freitas | Edifício Palacete Tereza Toledo Lara, 22, Rua Quintino Bocaiuva, Glicé
-OK    Aurora Rules + Lex Level + Imortal Joe | 110, Rua Rodolfo Miranda, Vila Sá Barbosa, Bom Retiro, São Paulo, Regi
-OK    Bruno Berle | Sesc Pompéia, 93, Rua Clélia, Pompéia, Perdizes, São Paulo, Região Sud
-OK    Davi Moraes, Armandinho, Dadi e convidad | Sesc Pompéia, 93, Rua Clélia, Pompéia, Perdizes, São Paulo, Região Sud
-OK    Casuarina | 711, Alameda Dino Bueno, Campos Elísios, Santa Cecília, São Paulo, Reg
-OK    Simoninha – Alegria, Alegria | 1000, Rua Padre Adelino, Belém, São Paulo, Região Sudeste, 03303-000, 
-OK    Catto | 1000, Rua Padre Adelino, Belém, São Paulo, Região Sudeste, 03303-000, 
-OK    Congo Shock | Rua Constança, Água Branca, Lapa, São Paulo, Região Sudeste, 05065-010
-OK    Dois Dobrado | 364, Avenida Brigadeiro Faria Lima, Pinheiros, São Paulo, Região Sudes
-OK    Douglas Germano | SESC Santo Amaro, 505, Rua Amador Bueno, Santo Amaro, São Paulo, Regiã
-OK    Eliminadorzinho + Nevoara | 1838, Rua Cardeal Arcoverde, Pinheiros, São Paulo, Região Sudeste, 054
 FALHA Guizado + Os Originais do Sample | Casa Slamb, Pinheiros, São Paulo
-OK    Iseo & Dodosound | Cine Joia, 82, Praça Carlos Gomes, Glicério, Sé, São Paulo, Região Sud
 FALHA Jay Vaquer / MIM + Polly Noise | Casa Lab, Vila Mariana, São Paulo
-OK    João Bosco | Bourbon Shopping São Paulo, 500, Rua Palestra Itália, Pompéia, Barra F
-OK    MC Taya + Chainsaw Kid + Isotopxs | 119, Rua Belmiro Braga, Pinheiros, São Paulo, Região Sudeste, 05432-02
-OK    Não Religião + Skamoondongos | 515, Rua João Moura, Jardim Paulista, São Paulo, Região Sudeste, 05412
-OK    Passarim | 43, Rua Álvaro Anes, Pinheiros, São Paulo, Região Sudeste, 05421-010, 
-OK    Samba do Divino | 238, Rua Pedroso, Morro dos Ingleses, Bela Vista, São Paulo, Região Su
-OK    Sandra Pêra | Centro Cultural São Paulo, 1000, Rua Vergueiro, Paraíso, Liberdade, Sã
-OK    Silvero + The Baggios | Avenida Brigadeiro Luís Antônio, Morro dos Ingleses, Bela Vista, São P
-OK    Urias – CARRANCA | 694, Avenida Francisco Matarazzo, Barra Funda, São Paulo, Região Sudes
-OK    Baile Démodé – O Melhor das Love Songs | Teatro Youtube, 2073, Avenida Paulista, Cerqueira César, Bela Vista, S
-OK    Tren e Thiago Mendonça – tributo Legião  | Teatro Youtube, 2073, Avenida Paulista, Cerqueira César, Bela Vista, S
-OK    Criss Paiva (stand-up) | Alameda Santos, Cerqueira César, Jardim Paulista, São Paulo, Região Su
-OK    Horney + The Zasters + Zagüaraz + Pyro | 38, Rua Patizal, Vila Madalena, Pinheiros, São Paulo, Região Sudeste, 
-OK    Orange Disaster + Giallos | 391, Rua Lopes Chaves, Santa Cecília, São Paulo, Região Sudeste, 01154
-OK    Kelly Lua | 799, Rua Turiassu, Perdizes, São Paulo, Região Sudeste, 05005-001, Bra
 FALHA Baile do Henry K | Santo Antônio, São Paulo
-OK    Rebobinights 11 Anos – Summer Eletro Bic | 511, Avenida Henry Ford, Parque da Mooca, Mooca, São Paulo, Região Sud
-OK    Buraconcreta | Drogaria São Paulo, 29;35;37, Avenida João Batista, Centro, Osasco, Sã
-OK    Paz, Amor e Grave com MC Soffia | Consulado do Reino de Marrocos em São Paulo, 51, Rua Formosa, Repúblic
-OK    Pagodão Experience | Rua Dama da Noite, Vila Cardoso Franco, Sapopemba, São Paulo, Região S
-OK    High-Hit – Círio de Nazaré | Rua Rui Barbosa, Bixiga, Bela Vista, São Paulo, Região Sudeste, 01326-
+OK    Buraconcreta | Estúdio Lâmina, 108, sala 41, Avenida São João, Glicério, Sé, São Paul
+FALHA Pagodão Experience | Dama da Noite, São Paulo
 FALHA Drop Times: Mees Salomé | Café Hotel, São Paulo
 FALHA 10 Anos de Zona Oeste Guetto Posse | Zona Oeste, São Paulo
-OK    O Pente no Mundo Pensante | Mundo Pensante, 830, Rua Treze de Maio, Bixiga, Bela Vista, São Paulo,
-OK    Baile Profano no Home Club | Home Club, 357, Avenida Vereador Emílio Meneghini, Aricanduva, São Pau
+FALHA Baile Profano no Home Club | Home Club, Centro Histórico, São Paulo
 FALHA Love Miley Party: Bass Persuades | Bar Tarot, São Paulo
-OK    Venom: Wor$t Party in $ão Paulo | Bar Do Netão, 584, Rua Augusta, Higienópolis, Consolação, São Paulo, R
-OK    Pop Sleazy: Halloween Night | Rua Mauá, Bairro da Luz, Bom Retiro, São Paulo, Região Sudeste, 01028-
-OK    Aquecimento Zig Festival | Rua Araújo, Vila Buarque, República, São Paulo, Região Sudeste, 01046-
 FALHA Welcome To Our Neighborhood | Rockwheels Kustom Bar, Bela Vista, São Paulo
-OK    Cr1a Club | Rua São Domingos, Vila Buarque, República, São Paulo, Região Sudeste, 
 FALHA Site Of Grace 0800 | Pinheiros, São Paulo
 FALHA Bandas + Karaokê + Jam Session | Pinheiros, São Paulo
 FALHA Lékke – Novos Ventos (estreia) | São Paulo
-OK    Baile do Gato com Cacau Chuu & Th4ys! | Beco 203, 609, Rua Augusta, Higienópolis, Consolação, São Paulo, Regiã
 FALHA Dior Convida #5 | Artur Alvim, São Paulo
-OK    Club Bambina | 429, Rua Silva Pinto, Bairro da Luz, Bom Retiro, São Paulo, Região Sud
-OK    Heartbreak Party | Open Bar | Outs, 486, Rua Augusta, Higienópolis, Consolação, São Paulo, Região Su
-com local: 56  sem local: 11
+com local: 54  sem local: 13
