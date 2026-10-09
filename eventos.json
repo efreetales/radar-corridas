@@ -12,7 +12,10 @@
    "inicio": "11:00",
    "fim_estimado": "12:00",
    "publico_estimado": 450,
-   "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/"
+   "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/",
+   "lat": -23.569191,
+   "lng": -46.646877,
+   "local_aproximado": true
   },
   {
    "nome": "Brasil Game Show 2026 (1º dia)",
@@ -23,7 +26,9 @@
    "inicio": "13:00",
    "fim_estimado": "21:00",
    "publico_estimado": 50000,
-   "fonte": "https://gameoverdrive.com.br/bgs-2026-ingressos-horarios-atracoes-como-chegar/"
+   "fonte": "https://gameoverdrive.com.br/bgs-2026-ingressos-horarios-atracoes-como-chegar/",
+   "lat": -23.516492,
+   "lng": -46.645206
   },
   {
    "nome": "Osesp duas e trinta – música japonesa",
@@ -34,7 +39,9 @@
    "inicio": "14:30",
    "fim_estimado": "15:40",
    "publico_estimado": 1500,
-   "fonte": "https://salasaopaulo.art.br/salasp/pt/programacao-ingressos"
+   "fonte": "https://salasaopaulo.art.br/salasp/pt/programacao-ingressos",
+   "lat": -23.534215,
+   "lng": -46.639834
   },
   {
    "nome": "AniRap",
@@ -45,7 +52,9 @@
    "inicio": "15:00",
    "fim_estimado": "21:00",
    "publico_estimado": 1200,
-   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210"
+   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210",
+   "lat": -23.569344,
+   "lng": -46.69477
   },
   {
    "nome": "Cirque du Soleil – Alegría (sessão 16h)",
@@ -56,7 +65,10 @@
    "inicio": "16:00",
    "fim_estimado": "18:15",
    "publico_estimado": 2500,
-   "fonte": "https://catracalivre.com.br/agenda/espetaculo-alegria-um-novo-dia-do-cirque-du-soleil-parque-villa-lobos-sp/"
+   "fonte": "https://catracalivre.com.br/agenda/espetaculo-alegria-um-novo-dia-do-cirque-du-soleil-parque-villa-lobos-sp/",
+   "lat": -23.546226,
+   "lng": -46.716988,
+   "local_aproximado": true
   },
   {
    "nome": "Marrom, O Musical (sessão 16h)",
@@ -67,7 +79,9 @@
    "inicio": "16:00",
    "fim_estimado": "18:00",
    "publico_estimado": 800,
-   "fonte": "https://catracalivre.com.br/gira/marrom-o-musical-espetaculo-que-celebra-a-carreira-de-alcione-teatro-claro-sp/"
+   "fonte": "https://catracalivre.com.br/gira/marrom-o-musical-espetaculo-que-celebra-a-carreira-de-alcione-teatro-claro-sp/",
+   "lat": -23.595494,
+   "lng": -46.686732
   },
   {
    "nome": "Welcome To Our Neighborhood",
@@ -78,7 +92,9 @@
    "inicio": "18:00",
    "fim_estimado": "01:00",
    "publico_estimado": 150,
-   "fonte": "https://shotgun.live/pt-br/events/welcome-to-our-neighborhood"
+   "fonte": "https://shotgun.live/pt-br/events/welcome-to-our-neighborhood",
+   "lat": -23.556958,
+   "lng": -46.64567
   },
   {
    "nome": "Cr1a Club",
@@ -89,7 +105,10 @@
    "inicio": "18:00",
    "fim_estimado": "00:00",
    "publico_estimado": null,
-   "fonte": "https://shotgun.live/pt-br/cities/sao-paulo"
+   "fonte": "https://shotgun.live/pt-br/cities/sao-paulo",
+   "lat": -23.552863,
+   "lng": -46.645202,
+   "local_aproximado": true
   },
   {
    "nome": "Site Of Grace 0800",
@@ -100,7 +119,9 @@
    "inicio": "18:00",
    "fim_estimado": "02:00",
    "publico_estimado": null,
-   "fonte": "https://shotgun.live/pt-br/events/site-of-grace-0800"
+   "fonte": "https://shotgun.live/pt-br/events/site-of-grace-0800",
+   "lat": -23.559581,
+   "lng": -46.686653
   },
   {
    "nome": "Kyngaral no Boto – watch party King of Drag",
@@ -111,7 +132,10 @@
    "inicio": "18:00",
    "fim_estimado": "01:00",
    "publico_estimado": null,
-   "fonte": "https://roleentretenimento.com/agenda/kyngaral-no-boto-watch-party-de-king-of-drag-910"
+   "fonte": "https://roleentretenimento.com/agenda/kyngaral-no-boto-watch-party-de-king-of-drag-910",
+   "lat": -23.529412,
+   "lng": -46.652493,
+   "local_aproximado": true
   },
   {
    "nome": "O Diabo Veste Prada 2 – Open Air Brasil",
@@ -122,7 +146,10 @@
    "inicio": "18:30",
    "fim_estimado": "23:30",
    "publico_estimado": 3000,
-   "fonte": "https://www.sympla.com.br/evento/o-diabo-veste-prada-2-09-10-open-air-brasil-sao-paulo-nubank/3564158"
+   "fonte": "https://www.sympla.com.br/evento/o-diabo-veste-prada-2-09-10-open-air-brasil-sao-paulo-nubank/3564158",
+   "lat": -23.584985,
+   "lng": -46.695692,
+   "local_aproximado": true
   },
   {
    "nome": "Aurora Rules + Lex Level + Imortal Joe",
@@ -133,7 +160,9 @@
    "inicio": "19:00",
    "fim_estimado": "22:30",
    "publico_estimado": 500,
-   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210"
+   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210",
+   "lat": -23.52573,
+   "lng": -46.632306
   },
   {
    "nome": "Congo Shock",
@@ -144,7 +173,10 @@
    "inicio": "19:00",
    "fim_estimado": "21:30",
    "publico_estimado": 400,
-   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210"
+   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210",
+   "lat": -23.521788,
+   "lng": -46.696663,
+   "local_aproximado": true
   },
   {
    "nome": "Guizado + Os Originais do Sample",
@@ -155,7 +187,9 @@
    "inicio": "19:00",
    "fim_estimado": "22:00",
    "publico_estimado": 300,
-   "fonte": "https://www.sympla.com.br/evento/guizado-os-originais-do-sample-na-casa-slamb/3602775"
+   "fonte": "https://www.sympla.com.br/evento/guizado-os-originais-do-sample-na-casa-slamb/3602775",
+   "lat": -23.564961,
+   "lng": -46.683767
   },
   {
    "nome": "Não Religião + Skamoondongos",
@@ -166,7 +200,9 @@
    "inicio": "19:00",
    "fim_estimado": "22:30",
    "publico_estimado": 250,
-   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210"
+   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210",
+   "lat": -23.560807,
+   "lng": -46.67752
   },
   {
    "nome": "Samba do Divino",
@@ -177,7 +213,9 @@
    "inicio": "19:00",
    "fim_estimado": "22:30",
    "publico_estimado": 400,
-   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210"
+   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210",
+   "lat": -23.561434,
+   "lng": -46.640621
   },
   {
    "nome": "Orange Disaster + Giallos",
@@ -188,7 +226,9 @@
    "inicio": "19:00",
    "fim_estimado": "22:30",
    "publico_estimado": 150,
-   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210"
+   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210",
+   "lat": -23.529794,
+   "lng": -46.659112
   },
   {
    "nome": "Miraculous Ladybug: O Show Musical",
@@ -199,7 +239,9 @@
    "inicio": "19:00",
    "fim_estimado": "20:20",
    "publico_estimado": 400,
-   "fonte": "https://abcdoabc.com.br/evento/miraculous-ladybug-o-show-musical/"
+   "fonte": "https://abcdoabc.com.br/evento/miraculous-ladybug-o-show-musical/",
+   "lat": -23.551082,
+   "lng": -46.722143
   },
   {
    "nome": "Oula al'Saghir e Nahawand",
@@ -210,7 +252,10 @@
    "inicio": "19:00",
    "fim_estimado": "20:30",
    "publico_estimado": 200,
-   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210"
+   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210",
+   "lat": -23.488642,
+   "lng": -46.609684,
+   "local_aproximado": true
   },
   {
    "nome": "Trio Sambasonics",
@@ -221,7 +266,9 @@
    "inicio": "19:00",
    "fim_estimado": "20:30",
    "publico_estimado": 300,
-   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210"
+   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210",
+   "lat": -23.653449,
+   "lng": -46.712692
   },
   {
    "nome": "MONSTRO – tenho sonhado com homens",
@@ -232,7 +279,9 @@
    "inicio": "19:30",
    "fim_estimado": "21:00",
    "publico_estimado": 300,
-   "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/"
+   "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/",
+   "lat": -23.525809,
+   "lng": -46.683498
   },
   {
    "nome": "Meu Filho é um Musical",
@@ -243,7 +292,9 @@
    "inicio": "20:00",
    "fim_estimado": "22:40",
    "publico_estimado": 1500,
-   "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/"
+   "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/",
+   "lat": -23.554223,
+   "lng": -46.638248
   },
   {
    "nome": "Feliz Ano Velho – O Musical",
@@ -254,7 +305,9 @@
    "inicio": "20:00",
    "fim_estimado": "22:30",
    "publico_estimado": 600,
-   "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/"
+   "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/",
+   "lat": -23.554178,
+   "lng": -46.652419
   },
   {
    "nome": "Os Últimos 5 Anos",
@@ -265,7 +318,9 @@
    "inicio": "20:00",
    "fim_estimado": "21:40",
    "publico_estimado": 200,
-   "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/"
+   "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/",
+   "lat": -23.554178,
+   "lng": -46.652419
   },
   {
    "nome": "Rita Lee, uma autobiografia musical",
@@ -276,7 +331,10 @@
    "inicio": "20:00",
    "fim_estimado": "22:30",
    "publico_estimado": 500,
-   "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/"
+   "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/",
+   "lat": -23.530918,
+   "lng": -46.645219,
+   "local_aproximado": true
   },
   {
    "nome": "Meu Deus!",
@@ -287,7 +345,9 @@
    "inicio": "20:00",
    "fim_estimado": "21:30",
    "publico_estimado": 750,
-   "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/"
+   "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/",
+   "lat": -23.573703,
+   "lng": -46.695889
   },
   {
    "nome": "Dois Papas",
@@ -298,7 +358,9 @@
    "inicio": "20:00",
    "fim_estimado": "21:40",
    "publico_estimado": 670,
-   "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/"
+   "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/",
+   "lat": -23.538486,
+   "lng": -46.671361
   },
   {
    "nome": "Eu Sou Minha Própria Mulher",
@@ -309,7 +371,9 @@
    "inicio": "20:00",
    "fim_estimado": "21:40",
    "publico_estimado": 500,
-   "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/"
+   "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/",
+   "lat": -23.545108,
+   "lng": -46.66294
   },
   {
    "nome": "Savannah Bay é Você",
@@ -320,7 +384,10 @@
    "inicio": "20:00",
    "fim_estimado": "21:30",
    "publico_estimado": 200,
-   "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/"
+   "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/",
+   "lat": -23.568151,
+   "lng": -46.648245,
+   "local_aproximado": true
   },
   {
    "nome": "Arlequim, Servidor de Dois Patrões",
@@ -331,7 +398,9 @@
    "inicio": "20:00",
    "fim_estimado": "21:40",
    "publico_estimado": 300,
-   "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/"
+   "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/",
+   "lat": -23.531064,
+   "lng": -46.643259
   },
   {
    "nome": "Bruno Berle",
@@ -342,7 +411,9 @@
    "inicio": "20:00",
    "fim_estimado": "21:30",
    "publico_estimado": 800,
-   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210"
+   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210",
+   "lat": -23.525809,
+   "lng": -46.683498
   },
   {
    "nome": "Casuarina",
@@ -353,7 +424,9 @@
    "inicio": "20:00",
    "fim_estimado": "23:30",
    "publico_estimado": 300,
-   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210"
+   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210",
+   "lat": -23.528917,
+   "lng": -46.645464
   },
   {
    "nome": "Simoninha – Alegria, Alegria",
@@ -364,7 +437,9 @@
    "inicio": "20:00",
    "fim_estimado": "21:40",
    "publico_estimado": 800,
-   "fonte": "https://riotimesonline.com/sao-paulo-nightlife-tonight-october-9-2026"
+   "fonte": "https://riotimesonline.com/sao-paulo-nightlife-tonight-october-9-2026",
+   "lat": -23.544107,
+   "lng": -46.58451
   },
   {
    "nome": "Douglas Germano",
@@ -375,7 +450,9 @@
    "inicio": "20:00",
    "fim_estimado": "21:30",
    "publico_estimado": 300,
-   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210"
+   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210",
+   "lat": -23.653449,
+   "lng": -46.712692
   },
   {
    "nome": "Eliminadorzinho + Nevoara",
@@ -386,7 +463,9 @@
    "inicio": "20:00",
    "fim_estimado": "02:00",
    "publico_estimado": 200,
-   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210"
+   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210",
+   "lat": -23.561951,
+   "lng": -46.689006
   },
   {
    "nome": "Jay Vaquer / MIM + Polly Noise",
@@ -397,7 +476,9 @@
    "inicio": "20:00",
    "fim_estimado": "23:30",
    "publico_estimado": 300,
-   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210"
+   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210",
+   "lat": -23.599597,
+   "lng": -46.634571
   },
   {
    "nome": "Sandra Pêra",
@@ -408,7 +489,9 @@
    "inicio": "20:00",
    "fim_estimado": "21:30",
    "publico_estimado": 300,
-   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210"
+   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210",
+   "lat": -23.570642,
+   "lng": -46.640198
   },
   {
    "nome": "Baile Démodé – O Melhor das Love Songs",
@@ -419,7 +502,9 @@
    "inicio": "20:00",
    "fim_estimado": "21:30",
    "publico_estimado": 300,
-   "fonte": "https://riotimesonline.com/sao-paulo-nightlife-tonight-october-9-2026"
+   "fonte": "https://riotimesonline.com/sao-paulo-nightlife-tonight-october-9-2026",
+   "lat": -23.558887,
+   "lng": -46.65987
   },
   {
    "nome": "Criss Paiva (stand-up)",
@@ -430,7 +515,10 @@
    "inicio": "20:00",
    "fim_estimado": "21:30",
    "publico_estimado": 150,
-   "fonte": "https://riotimesonline.com/sao-paulo-nightlife-tonight-october-9-2026"
+   "fonte": "https://riotimesonline.com/sao-paulo-nightlife-tonight-october-9-2026",
+   "lat": -23.561296,
+   "lng": -46.658604,
+   "local_aproximado": true
   },
   {
    "nome": "Kelly Lua",
@@ -441,7 +529,9 @@
    "inicio": "20:00",
    "fim_estimado": "21:40",
    "publico_estimado": 100,
-   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210"
+   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210",
+   "lat": -23.532809,
+   "lng": -46.67083
   },
   {
    "nome": "Drop Times: Mees Salomé",
@@ -452,7 +542,9 @@
    "inicio": "20:00",
    "fim_estimado": "03:00",
    "publico_estimado": 300,
-   "fonte": "https://shotgun.live/pt-br/events/drop-times-presents-mees-salome"
+   "fonte": "https://shotgun.live/pt-br/events/drop-times-presents-mees-salome",
+   "lat": -23.592106,
+   "lng": -46.679475
   },
   {
    "nome": "Villa Só As Antigas – Edição Anos 2000",
@@ -463,7 +555,9 @@
    "inicio": "20:00",
    "fim_estimado": "03:00",
    "publico_estimado": 3000,
-   "fonte": "https://www.ticket360.com.br/evento/34086/ingressos-para-villa-so-as-antigas-edicao-anos-2000"
+   "fonte": "https://www.ticket360.com.br/evento/34086/ingressos-para-villa-so-as-antigas-edicao-anos-2000",
+   "lat": -23.528167,
+   "lng": -46.67019
   },
   {
    "nome": "Bofetada – Super Sexta Open Bar",
@@ -474,7 +568,10 @@
    "inicio": "20:00",
    "fim_estimado": "05:00",
    "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/bofetada---super-sexta-0910---open-bar-50__3605056"
+   "fonte": "https://www.sympla.com.br/bofetada---super-sexta-0910---open-bar-50__3605056",
+   "lat": -23.565121,
+   "lng": -46.661419,
+   "local_aproximado": true
   },
   {
    "nome": "Depois do Ato",
@@ -485,7 +582,9 @@
    "inicio": "20:00",
    "fim_estimado": "21:10",
    "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/depois-do-ato__3560782"
+   "fonte": "https://www.sympla.com.br/depois-do-ato__3560782",
+   "lat": -23.546815,
+   "lng": -46.646239
   },
   {
    "nome": "Os Nós Desafinados Sempre Tocam uma Nova Melodia",
@@ -496,7 +595,9 @@
    "inicio": "20:00",
    "fim_estimado": "22:00",
    "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/os-nos-desafinados-sempre-tocam-uma-nova-melodia--temporada-em-sp--ultimos-dias__3562721"
+   "fonte": "https://www.sympla.com.br/os-nos-desafinados-sempre-tocam-uma-nova-melodia--temporada-em-sp--ultimos-dias__3562721",
+   "lat": -23.53587,
+   "lng": -46.651124
   },
   {
    "nome": "A Porta Maldita – Animais + Baile do Peixe + Toni Barulhento",
@@ -507,7 +608,9 @@
    "inicio": "20:00",
    "fim_estimado": "02:00",
    "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/a-porta-maldita---animais--baile-do-peixe--toni-barulhento--chocobobby__3607692"
+   "fonte": "https://www.sympla.com.br/a-porta-maldita---animais--baile-do-peixe--toni-barulhento--chocobobby__3607692",
+   "lat": -23.558048,
+   "lng": -46.686836
   },
   {
    "nome": "Cirque du Soleil – Alegría (sessão 20h)",
@@ -518,7 +621,10 @@
    "inicio": "20:00",
    "fim_estimado": "22:15",
    "publico_estimado": 2500,
-   "fonte": "https://catracalivre.com.br/agenda/espetaculo-alegria-um-novo-dia-do-cirque-du-soleil-parque-villa-lobos-sp/"
+   "fonte": "https://catracalivre.com.br/agenda/espetaculo-alegria-um-novo-dia-do-cirque-du-soleil-parque-villa-lobos-sp/",
+   "lat": -23.546226,
+   "lng": -46.716988,
+   "local_aproximado": true
   },
   {
    "nome": "GIL – Andar com Fé (musical)",
@@ -529,7 +635,9 @@
    "inicio": "20:00",
    "fim_estimado": "22:20",
    "publico_estimado": 1100,
-   "fonte": "https://teatrosantander.com.br/en/program/gil-andar-com-fe.html"
+   "fonte": "https://teatrosantander.com.br/en/program/gil-andar-com-fe.html",
+   "lat": -23.590899,
+   "lng": -46.689525
   },
   {
    "nome": "Marrom, O Musical (sessão 20h)",
@@ -540,7 +648,9 @@
    "inicio": "20:00",
    "fim_estimado": "22:00",
    "publico_estimado": 800,
-   "fonte": "https://catracalivre.com.br/gira/marrom-o-musical-espetaculo-que-celebra-a-carreira-de-alcione-teatro-claro-sp/"
+   "fonte": "https://catracalivre.com.br/gira/marrom-o-musical-espetaculo-que-celebra-a-carreira-de-alcione-teatro-claro-sp/",
+   "lat": -23.595494,
+   "lng": -46.686732
   },
   {
    "nome": "Mimosa (performance)",
@@ -551,7 +661,10 @@
    "inicio": "20:00",
    "fim_estimado": "21:30",
    "publico_estimado": 100,
-   "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/"
+   "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/",
+   "lat": -23.569191,
+   "lng": -46.646877,
+   "local_aproximado": true
   },
   {
    "nome": "Catto",
@@ -562,7 +675,9 @@
    "inicio": "20:30",
    "fim_estimado": "22:00",
    "publico_estimado": 380,
-   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210"
+   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210",
+   "lat": -23.544107,
+   "lng": -46.58451
   },
   {
    "nome": "Abrace o Caos – stand-up Caos Parcial",
@@ -573,7 +688,9 @@
    "inicio": "20:30",
    "fim_estimado": "22:30",
    "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/abrace-o-caos-comedia-stand-up-com-caos-parcial/3576686"
+   "fonte": "https://www.sympla.com.br/evento/abrace-o-caos-comedia-stand-up-com-caos-parcial/3576686",
+   "lat": -23.554321,
+   "lng": -46.661534
   },
   {
    "nome": "O Céu da Língua (Gregorio Duvivier)",
@@ -584,7 +701,9 @@
    "inicio": "21:00",
    "fim_estimado": "22:40",
    "publico_estimado": 3000,
-   "fonte": "https://www.ticket360.com.br/evento/667/ingressos-para-gregorio-duvivier-o-ceu-da-lingua/composto"
+   "fonte": "https://www.ticket360.com.br/evento/667/ingressos-para-gregorio-duvivier-o-ceu-da-lingua/composto",
+   "lat": -23.528041,
+   "lng": -46.668013
   },
   {
    "nome": "3030",
@@ -595,7 +714,9 @@
    "inicio": "21:00",
    "fim_estimado": "23:00",
    "publico_estimado": 900,
-   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210"
+   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210",
+   "lat": -23.567934,
+   "lng": -46.690762
   },
   {
    "nome": "Davi Moraes, Armandinho, Dadi e convidados",
@@ -606,7 +727,9 @@
    "inicio": "21:00",
    "fim_estimado": "23:00",
    "publico_estimado": 800,
-   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210"
+   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210",
+   "lat": -23.525809,
+   "lng": -46.683498
   },
   {
    "nome": "João Bosco",
@@ -617,7 +740,9 @@
    "inicio": "21:00",
    "fim_estimado": "22:40",
    "publico_estimado": 1400,
-   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210"
+   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210",
+   "lat": -23.526647,
+   "lng": -46.680898
   },
   {
    "nome": "Passarim",
@@ -628,7 +753,9 @@
    "inicio": "21:00",
    "fim_estimado": "23:00",
    "publico_estimado": 150,
-   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210"
+   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210",
+   "lat": -23.563053,
+   "lng": -46.692615
   },
   {
    "nome": "Urias – CARRANCA",
@@ -639,7 +766,9 @@
    "inicio": "21:00",
    "fim_estimado": "00:00",
    "publico_estimado": 3000,
-   "fonte": "https://www.ticket360.com.br/evento/33942/ingressos-para-urias-carranca-1-ano"
+   "fonte": "https://www.ticket360.com.br/evento/33942/ingressos-para-urias-carranca-1-ano",
+   "lat": -23.528535,
+   "lng": -46.669524
   },
   {
    "nome": "Horney + The Zasters + Zagüaraz + Pyro",
@@ -650,7 +779,9 @@
    "inicio": "21:00",
    "fim_estimado": "00:00",
    "publico_estimado": 200,
-   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210"
+   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210",
+   "lat": -23.555287,
+   "lng": -46.6884
   },
   {
    "nome": "Buraconcreta",
@@ -661,7 +792,9 @@
    "inicio": "21:00",
    "fim_estimado": "04:00",
    "publico_estimado": 200,
-   "fonte": "https://shotgun.live/pt-br/cities/sao-paulo"
+   "fonte": "https://shotgun.live/pt-br/cities/sao-paulo",
+   "lat": -23.545124,
+   "lng": -46.634953
   },
   {
    "nome": "O Pente no Mundo Pensante",
@@ -672,7 +805,9 @@
    "inicio": "21:00",
    "fim_estimado": "03:00",
    "publico_estimado": 400,
-   "fonte": "https://shotgun.live/pt-br/cities/sao-paulo"
+   "fonte": "https://shotgun.live/pt-br/cities/sao-paulo",
+   "lat": -23.560563,
+   "lng": -46.646361
   },
   {
    "nome": "Bandas + Karaokê + Jam Session",
@@ -683,7 +818,9 @@
    "inicio": "21:00",
    "fim_estimado": "04:00",
    "publico_estimado": null,
-   "fonte": "https://shotgun.live/pt-br/events/bandas-karaoke-jam-session-09-10"
+   "fonte": "https://shotgun.live/pt-br/events/bandas-karaoke-jam-session-09-10",
+   "lat": -23.567587,
+   "lng": -46.694192
   },
   {
    "nome": "Getsemani",
@@ -694,7 +831,9 @@
    "inicio": "21:00",
    "fim_estimado": "23:00",
    "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/getsemani__3596174"
+   "fonte": "https://www.sympla.com.br/getsemani__3596174",
+   "lat": -23.553475,
+   "lng": -46.639126
   },
   {
    "nome": "Lékke – Novos Ventos (estreia)",
@@ -705,7 +844,9 @@
    "inicio": "21:10",
    "fim_estimado": "04:00",
    "publico_estimado": null,
-   "fonte": "https://shotgun.live/pt-br/events/lekke-novos-ventos-estreia"
+   "fonte": "https://shotgun.live/pt-br/events/lekke-novos-ventos-estreia",
+   "lat": -23.52232,
+   "lng": -46.537556
   },
   {
    "nome": "Silvero + The Baggios",
@@ -716,7 +857,10 @@
    "inicio": "21:30",
    "fim_estimado": "23:30",
    "publico_estimado": 200,
-   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210"
+   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210",
+   "lat": -23.567017,
+   "lng": -46.64866,
+   "local_aproximado": true
   },
   {
    "nome": "Alessandro Penezzi & Alexandre Ribeiro",
@@ -727,7 +871,9 @@
    "inicio": "22:00",
    "fim_estimado": "23:40",
    "publico_estimado": 150,
-   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210"
+   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210",
+   "lat": -23.548791,
+   "lng": -46.634851
   },
   {
    "nome": "Escafandristas",
@@ -738,7 +884,9 @@
    "inicio": "22:00",
    "fim_estimado": "23:40",
    "publico_estimado": 200,
-   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210"
+   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210",
+   "lat": -23.548791,
+   "lng": -46.634851
   },
   {
    "nome": "Dois Dobrado",
@@ -749,7 +897,9 @@
    "inicio": "22:00",
    "fim_estimado": "02:30",
    "publico_estimado": 400,
-   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210"
+   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210",
+   "lat": -23.561927,
+   "lng": -46.694819
   },
   {
    "nome": "Iseo & Dodosound",
@@ -760,7 +910,9 @@
    "inicio": "22:00",
    "fim_estimado": "00:30",
    "publico_estimado": 900,
-   "fonte": "https://www.sympla.com.br/evento/mucho-ciudad-sonora-apresenta-iseo-dodosound-esp-no-cine-joia/3454056"
+   "fonte": "https://www.sympla.com.br/evento/mucho-ciudad-sonora-apresenta-iseo-dodosound-esp-no-cine-joia/3454056",
+   "lat": -23.553308,
+   "lng": -46.635924
   },
   {
    "nome": "MC Taya + Chainsaw Kid + Isotopxs",
@@ -771,7 +923,9 @@
    "inicio": "22:00",
    "fim_estimado": "01:00",
    "publico_estimado": 300,
-   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210"
+   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210",
+   "lat": -23.559807,
+   "lng": -46.687431
   },
   {
    "nome": "Rebobinights 11 Anos – Summer Eletro Bichas",
@@ -782,7 +936,9 @@
    "inicio": "22:00",
    "fim_estimado": "04:00",
    "publico_estimado": 800,
-   "fonte": "https://shotgun.live/pt-br/cities/sao-paulo"
+   "fonte": "https://shotgun.live/pt-br/cities/sao-paulo",
+   "lat": -23.570908,
+   "lng": -46.60029
   },
   {
    "nome": "Pagodão Experience",
@@ -793,7 +949,9 @@
    "inicio": "22:00",
    "fim_estimado": "05:00",
    "publico_estimado": 400,
-   "fonte": "https://shotgun.live/pt-br/events/pagodao-experience"
+   "fonte": "https://shotgun.live/pt-br/events/pagodao-experience",
+   "lat": -23.554067,
+   "lng": -46.646851
   },
   {
    "nome": "Baile Profano no Home Club",
@@ -804,7 +962,9 @@
    "inicio": "22:00",
    "fim_estimado": "05:00",
    "publico_estimado": 500,
-   "fonte": "https://shotgun.live/pt-br/events/baile-profano-no-home-club"
+   "fonte": "https://shotgun.live/pt-br/events/baile-profano-no-home-club",
+   "lat": -23.546189,
+   "lng": -46.634418
   },
   {
    "nome": "Love Miley Party: Bass Persuades",
@@ -815,7 +975,9 @@
    "inicio": "22:00",
    "fim_estimado": "05:00",
    "publico_estimado": 200,
-   "fonte": "https://shotgun.live/pt-br/events/love-miley-party-bass-persuades"
+   "fonte": "https://shotgun.live/pt-br/events/love-miley-party-bass-persuades",
+   "lat": -23.559215,
+   "lng": -46.688025
   },
   {
    "nome": "Baile do Gato com Cacau Chuu & Th4ys!",
@@ -826,7 +988,9 @@
    "inicio": "22:00",
    "fim_estimado": "04:00",
    "publico_estimado": 300,
-   "fonte": "https://shotgun.live/pt-br/cities/sao-paulo"
+   "fonte": "https://shotgun.live/pt-br/cities/sao-paulo",
+   "lat": -23.551863,
+   "lng": -46.651757
   },
   {
    "nome": "Dior Convida #5",
@@ -837,7 +1001,10 @@
    "inicio": "22:00",
    "fim_estimado": "04:00",
    "publico_estimado": null,
-   "fonte": "https://shotgun.live/pt-br/events/dior-convida-5"
+   "fonte": "https://shotgun.live/pt-br/events/dior-convida-5",
+   "lat": -23.54074,
+   "lng": -46.484674,
+   "local_aproximado": true
   },
   {
    "nome": "Club Bambina",
@@ -848,7 +1015,9 @@
    "inicio": "22:00",
    "fim_estimado": "03:00",
    "publico_estimado": 200,
-   "fonte": "https://shotgun.live/pt-br/cities/sao-paulo"
+   "fonte": "https://shotgun.live/pt-br/cities/sao-paulo",
+   "lat": -23.527699,
+   "lng": -46.638779
   },
   {
    "nome": "Heartbreak Party | Open Bar",
@@ -859,7 +1028,9 @@
    "inicio": "22:00",
    "fim_estimado": "04:00",
    "publico_estimado": 500,
-   "fonte": "https://shotgun.live/pt-br/cities/sao-paulo"
+   "fonte": "https://shotgun.live/pt-br/cities/sao-paulo",
+   "lat": -23.551379,
+   "lng": -46.650713
   },
   {
    "nome": "Tren e Thiago Mendonça – tributo Legião Urbana",
@@ -870,7 +1041,9 @@
    "inicio": "22:30",
    "fim_estimado": "00:00",
    "publico_estimado": 300,
-   "fonte": "https://riotimesonline.com/sao-paulo-nightlife-tonight-october-9-2026"
+   "fonte": "https://riotimesonline.com/sao-paulo-nightlife-tonight-october-9-2026",
+   "lat": -23.558887,
+   "lng": -46.65987
   },
   {
    "nome": "High-Hit – Círio de Nazaré",
@@ -881,7 +1054,10 @@
    "inicio": "22:30",
    "fim_estimado": "04:00",
    "publico_estimado": 500,
-   "fonte": "https://shotgun.live/pt-br/cities/sao-paulo"
+   "fonte": "https://shotgun.live/pt-br/cities/sao-paulo",
+   "lat": -23.561335,
+   "lng": -46.645135,
+   "local_aproximado": true
   },
   {
    "nome": "Satyrianas – leitura de O Menino Sem Espelho",
@@ -892,7 +1068,9 @@
    "inicio": "23:00",
    "fim_estimado": "00:10",
    "publico_estimado": 10000,
-   "fonte": "https://br.paipee.com/2026/10/09/exposicao-de-marilia-mendonca-e-pecas-com-duvivier-agitam-o-fim-de-semana-em-sp"
+   "fonte": "https://br.paipee.com/2026/10/09/exposicao-de-marilia-mendonca-e-pecas-com-duvivier-agitam-o-fim-de-semana-em-sp",
+   "lat": -23.548102,
+   "lng": -46.646011
   },
   {
    "nome": "Thalma de Freitas",
@@ -903,7 +1081,9 @@
    "inicio": "23:00",
    "fim_estimado": "00:30",
    "publico_estimado": 100,
-   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210"
+   "fonte": "https://aovivo.substack.com/p/ao-vivo-shows-de-510-a-1210",
+   "lat": -23.548791,
+   "lng": -46.634851
   },
   {
    "nome": "Paz, Amor e Grave com MC Soffia",
@@ -914,7 +1094,9 @@
    "inicio": "23:00",
    "fim_estimado": "04:00",
    "publico_estimado": 300,
-   "fonte": "https://shotgun.live/pt-br/cities/sao-paulo"
+   "fonte": "https://shotgun.live/pt-br/cities/sao-paulo",
+   "lat": -23.547683,
+   "lng": -46.639083
   },
   {
    "nome": "Venom: Wor$t Party in $ão Paulo",
@@ -925,7 +1107,9 @@
    "inicio": "23:00",
    "fim_estimado": "04:00",
    "publico_estimado": 200,
-   "fonte": "https://shotgun.live/pt-br/cities/sao-paulo"
+   "fonte": "https://shotgun.live/pt-br/cities/sao-paulo",
+   "lat": -23.551653,
+   "lng": -46.651607
   },
   {
    "nome": "Pop Sleazy: Halloween Night",
@@ -936,7 +1120,10 @@
    "inicio": "23:00",
    "fim_estimado": "04:00",
    "publico_estimado": 400,
-   "fonte": "https://shotgun.live/pt-br/cities/sao-paulo"
+   "fonte": "https://shotgun.live/pt-br/cities/sao-paulo",
+   "lat": -23.535012,
+   "lng": -46.637101,
+   "local_aproximado": true
   },
   {
    "nome": "Aquecimento Zig Festival",
@@ -947,7 +1134,14 @@
    "inicio": "23:30",
    "fim_estimado": "05:00",
    "publico_estimado": 500,
-   "fonte": "https://shotgun.live/pt-br/cities/sao-paulo"
+   "fonte": "https://shotgun.live/pt-br/cities/sao-paulo",
+   "lat": -23.546675,
+   "lng": -46.645083,
+   "local_aproximado": true
   }
- ]
+ ],
+ "geocodificacao": {
+  "com_local": 86,
+  "sem_local": 0
+ }
 }
