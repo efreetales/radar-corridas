@@ -226,10 +226,18 @@ object SpeedCams {
         Thread {
             var result: Int? = null
             var error: String? = null
+            // 1) Lista oficial da CET (cidade de SP), extraída todo mês pelo GitHub
+            val cet: List<SpeedCam> = try {
+                fetchCet()
+            } catch (e: Exception) {
+                OfferLog.appendDiag(app, "RADARES: lista da CET indisponível (${e.message})")
+                emptyList()
+            }
+            // 2) OpenStreetMap: completa com o resto da Grande SP e dá o sentido das vias
             for (endpoint in ENDPOINTS) {
                 try {
                     val json = fetch(endpoint)
-                    val cams = parse(json)
+                    val cams = parse(json, cet)
                     if (cams.isEmpty()) {
                         error = "o mapa não retornou radares"
                         continue
@@ -243,10 +251,45 @@ object SpeedCams {
                     error = "${e.javaClass.simpleName}: ${e.message}"
                 }
             }
+            if (result == null && cet.isNotEmpty()) {
+                // Mapa fora do ar: usa só a lista da CET
+                save(app, cet)
+                setAll(cet)
+                result = cet.size
+                error = null
+            }
+            if (result != null) cetCount = cet.size
             downloading = false
             OfferLog.appendDiag(app, if (result != null) "RADARES: lista atualizada, $result radares" else "RADARES: falha ao baixar ($error)")
             main.post { onDone?.invoke(result, error) }
         }.start()
+    }
+
+    private const val CET_URL = "https://raw.githubusercontent.com/efreetales/radar-corridas/cet-dados/radares_cet.tsv"
+
+    /** Quantos radares vieram da CET no último download. */
+    @Volatile
+    var cetCount = 0
+        private set
+
+    private fun fetchCet(): List<SpeedCam> {
+        val conn = URL(CET_URL).openConnection() as HttpURLConnection
+        try {
+            conn.connectTimeout = 20_000
+            conn.readTimeout = 60_000
+            conn.setRequestProperty("User-Agent", "RadarCorridas/1.0 (Android)")
+            if (conn.responseCode != 200) throw IllegalStateException("resposta ${conn.responseCode}")
+            val text = conn.inputStream.bufferedReader().use { it.readText() }
+            return text.lines().mapNotNull { line ->
+                val p = line.split('\t')
+                if (p.size < 5) return@mapNotNull null
+                val lat = p[0].toDoubleOrNull() ?: return@mapNotNull null
+                val lng = p[1].toDoubleOrNull() ?: return@mapNotNull null
+                SpeedCam(lat, lng, p[2].toIntOrNull(), null, p[4].trim())
+            }
+        } finally {
+            conn.disconnect()
+        }
     }
 
     private fun fetch(endpoint: String): String {
@@ -281,7 +324,7 @@ object SpeedCams {
         return if (v.contains("mph", ignoreCase = true)) (n * 1.609).toInt() else n
     }
 
-    private fun parse(text: String): List<SpeedCam> {
+    private fun parse(text: String, cet: List<SpeedCam> = emptyList()): List<SpeedCam> {
         val elements = JSONObject(text).optJSONArray("elements") ?: return emptyList()
 
         class Node(val id: Long, val lat: Double, val lng: Double, val limit: Int?, val name: String)
@@ -365,7 +408,38 @@ object SpeedCams {
             if (out.any { abs(it.lat - n.lat) < 0.00012 && abs(it.lng - n.lng) < 0.00012 && it.bearing == bearing }) continue
             out.add(SpeedCam(n.lat, n.lng, limit, bearing, name))
         }
-        return out
+        if (cet.isEmpty()) return out
+
+        // Radares da CET: dados oficiais (limite certo). Pega o sentido da via no mapa quando ela é mão única.
+        val merged = ArrayList<SpeedCam>()
+        for (c in cet) {
+            var best: Seg? = null
+            var bestD = 35.0
+            for (dy in -1..1) for (dx in -1..1) {
+                val list = segGrid[key(c.lat + dy * CELL, c.lng + dx * CELL)] ?: continue
+                for (sg in list) {
+                    val d = distToSeg(c.lat, c.lng, sg)
+                    if (d < bestD) {
+                        bestD = d
+                        best = sg
+                    }
+                }
+            }
+            val b: Float? = best?.let { sg ->
+                when (sg.oneway) {
+                    1 -> bearing(sg.aLat, sg.aLng, sg.bLat, sg.bLng)
+                    -1 -> bearing(sg.bLat, sg.bLng, sg.aLat, sg.aLng)
+                    else -> null
+                }
+            }
+            merged.add(SpeedCam(c.lat, c.lng, c.limit ?: best?.limit, b, c.name))
+        }
+        // Do mapa colaborativo, só os que não estão na lista da CET (ex.: outras cidades, rodovias)
+        for (o in out) {
+            val dup = cet.any { abs(it.lat - o.lat) < 0.0004 && abs(it.lng - o.lng) < 0.0004 } // ~40 m
+            if (!dup) merged.add(o)
+        }
+        return merged
     }
 
     private fun save(ctx: Context, cams: List<SpeedCam>) {

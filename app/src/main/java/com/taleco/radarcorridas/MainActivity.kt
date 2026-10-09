@@ -564,8 +564,8 @@ class MainActivity : AppCompatActivity() {
         card.addView(finesText)
 
         card.addView(text(
-            "A velocidade vem do GPS e a lista de radares vem do OpenStreetMap (mapa colaborativo): pode faltar algum radar " +
-                "ou o limite estar desatualizado. Usa as permissões de localização da seção acima. " +
+            "A velocidade vem do GPS. Os radares da cidade de SP vêm da lista oficial da CET (atualizada todo mês); " +
+                "os de fora da cidade, do OpenStreetMap (mapa colaborativo), onde pode faltar algum. Usa as permissões de localização da seção acima. " +
                 "Para saber das multas oficiais, ative o SNE no app Carteira Digital de Trânsito.",
             12f, Colors.MUTED
         ).apply { setPadding(0, dp(10), 0, 0) })
@@ -969,7 +969,9 @@ class MainActivity : AppCompatActivity() {
                 "Lista de radares ainda não baixada"
             } else {
                 val date = java.text.SimpleDateFormat("dd/MM/yyyy", PT_BR).format(java.util.Date(at))
-                "${SpeedCams.count} radares na Grande SP · atualizada em $date" +
+                "${SpeedCams.count} radares na Grande SP" +
+                    (if (SpeedCams.cetCount > 0) " (${SpeedCams.cetCount} oficiais da CET)" else "") +
+                    " · atualizada em $date" +
                     (if (SpeedWatch.active) "\nAlerta ativo agora" else "")
             }
         }
