@@ -285,6 +285,7 @@ object SpeedWatch {
         if (d <= NEAR_M && kmh > maxNearKmh) maxNearKmh = kmh
 
         val behind = heading != null && d > 15 && angleDiff(heading, (loc.bearingTo(cl) + 360f) % 360f) > 110f
+        val passed = minDist <= PASS_RADIUS_M && (d > minDist + 20 || behind)
         // Radar ficou de lado (você entrou em outra rua/pista): desiste dele
         val roadLimit = UberRoad.fresh()
         val otherRoad = roadLimit != null && cam.limit != null && abs(cam.limit!! - roadLimit) >= 20
