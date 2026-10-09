@@ -803,11 +803,13 @@
    "inicio": "20:00",
    "fim_estimado": "03:00",
    "publico_estimado": 3000,
-   "fonte": "https://www.ticket360.com.br/evento/34086/ingressos-para-villa-so-as-antigas-edicao-anos-2000"
+   "fonte": "https://www.ticket360.com.br/evento/34086/ingressos-para-villa-so-as-antigas-edicao-anos-2000",
+   "lat": -23.528167,
+   "lng": -46.67019
   }
  ],
  "geocodificacao": {
-  "com_local": 54,
+  "com_local": 55,
   "sem_local": 13
  }
 }
