@@ -31,9 +31,12 @@ class MapActivity : AppCompatActivity() {
         web.setBackgroundColor(Colors.BG)
         web.settings.javaScriptEnabled = true
         web.settings.domStorageEnabled = true
+        web.settings.userAgentString = web.settings.userAgentString + " RadarCorridas/1.0"
         web.webViewClient = WebViewClient()
         web.addJavascriptInterface(Bridge(), "Radar")
         setContentView(web)
-        web.loadUrl("file:///android_asset/mapa.html")
+        // Carrega com um endereço https "de mentira": os servidores de mapa recusam páginas sem origem (file://)
+        val html = assets.open("mapa.html").bufferedReader().use { it.readText() }
+        web.loadDataWithBaseURL("https://radarcorridas.app/", html, "text/html", "utf-8", null)
     }
 }

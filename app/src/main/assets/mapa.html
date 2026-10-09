@@ -24,7 +24,7 @@
   #grip { width:40px; height:4px; border-radius:2px; background:#30363D; margin:0 auto 8px; }
   .stats { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
   .st { background:var(--s2); border-radius:12px; padding:8px 10px; }
-  .st b { display:block; font-size:18px; }
+  .st b { display:block; font-size:16px; white-space:nowrap; }
   .st span { color:var(--mu); font-size:11px; }
   h3 { font-size:14px; margin:14px 0 6px; }
   .reg { display:flex; align-items:center; gap:10px; background:var(--s2); border-radius:12px; padding:9px 11px; margin-bottom:6px; }
@@ -121,8 +121,14 @@ chips("per", PER, "per"); chips("dia", DIA, "dia"); chips("hor", HOR, "hor"); ch
 
 // ---------- mapa ----------
 const map = L.map("map", { zoomControl:false, attributionControl:true }).setView([-23.56, -46.65], 12);
-L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
-  { maxZoom:19, subdomains:"abcd", attribution:"© OpenStreetMap © CARTO" }).addTo(map);
+// Fundo escuro da Esri (não precisa de chave). Se falhar, cai para o mapa padrão do OpenStreetMap.
+const esri = "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/";
+const base = L.tileLayer(esri + "World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}",
+  { maxZoom:16, attribution:"© Esri, HERE, Garmin, © OpenStreetMap" }).addTo(map);
+const labels = L.tileLayer(esri + "World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}", { maxZoom:16 }).addTo(map);
+let fails = 0, switched = false;
+base.on("tileerror", () => { if (++fails > 4 && !switched) { switched = true; map.removeLayer(base); map.removeLayer(labels);
+  L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom:19, attribution:"© OpenStreetMap" }).addTo(map); } });
 let group = L.layerGroup().addTo(map), heat = null;
 const vcol = v => v==="BOM" ? "#3DD68C" : v==="RUIM" ? "#E5484D" : "#F5C518";
 const phcol = { A_CAMINHO:"#6E7681", NO_EMBARQUE:"#F5C518", EM_VIAGEM:"#2FD3A6" };
