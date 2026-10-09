@@ -202,23 +202,37 @@ class OverlayManager(private val service: AccessibilityService) {
         val swipeDistance = service.dp(80)
         var downX = 0f
         var moved = false
+        // Segurar o aviso de radar por 1 s: "radar errado" (some e não aparece mais)
+        var longDone = false
+        val longPress = Runnable {
+            if (SpeedWatch.reportWrong()) longDone = true
+        }
         root.setOnTouchListener { v, ev ->
             when (ev.actionMasked) {
                 MotionEvent.ACTION_DOWN -> {
                     downX = ev.rawX
                     moved = false
+                    longDone = false
+                    v.postDelayed(longPress, 1000L)
                     true
                 }
                 MotionEvent.ACTION_MOVE -> {
                     val dx = ev.rawX - downX
-                    if (abs(dx) > slop) moved = true
+                    if (abs(dx) > slop) {
+                        moved = true
+                        v.removeCallbacks(longPress)
+                    }
                     v.translationX = dx
                     v.alpha = (1f - abs(dx) / (v.width.coerceAtLeast(1) * 0.8f)).coerceIn(0.2f, 1f)
                     true
                 }
                 MotionEvent.ACTION_UP -> {
+                    v.removeCallbacks(longPress)
                     val dx = ev.rawX - downX
-                    if (!moved || abs(dx) > swipeDistance) {
+                    if (longDone) {
+                        v.translationX = 0f
+                        v.alpha = 1f
+                    } else if (!moved || abs(dx) > swipeDistance) {
                         // toque simples ou arrasto longo: fecha
                         v.animate().translationX(if (dx < 0) -v.width.toFloat() else v.width.toFloat())
                             .alpha(0f).setDuration(150).withEndAction { HazardWatch.onBannerTap() }.start()
@@ -229,6 +243,7 @@ class OverlayManager(private val service: AccessibilityService) {
                     true
                 }
                 MotionEvent.ACTION_CANCEL -> {
+                    v.removeCallbacks(longPress)
                     v.animate().translationX(0f).alpha(1f).setDuration(150).start()
                     true
                 }

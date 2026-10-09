@@ -96,20 +96,115 @@ def nice(desc):
     return d
 
 
+ROADS = ("^(motorway|trunk|primary|secondary|tertiary|unclassified|residential|living_street|service|"
+         "motorway_link|trunk_link|primary_link|secondary_link|tertiary_link)$")
+OVERPASS = ["https://overpass-api.de/api/interpreter", "https://overpass.kumi.systems/api/interpreter",
+            "https://maps.mail.ru/osm/tools/overpass/api/interpreter"]
+import math, time, urllib.parse
+
+
+def overpass_ways(points):
+    """Vias do mapa a até 35 m de cada ponto (em lotes)."""
+    ways = {}
+    for i in range(0, len(points), 150):
+        chunk = points[i:i + 150]
+        q = "[out:json][timeout:300];(" + "".join(
+            f'way(around:35,{la:.6f},{lo:.6f})["highway"~"{ROADS}"];' for la, lo in chunk) + ");out tags geom;"
+        for ep in OVERPASS:
+            try:
+                req = urllib.request.Request(ep, data=("data=" + urllib.parse.quote(q)).encode(),
+                                             headers={"User-Agent": "RadarCorridas/1.0 (github actions)"})
+                with urllib.request.urlopen(req, timeout=320) as r:
+                    for el in json.loads(r.read()).get("elements", []):
+                        if el.get("type") == "way" and el.get("geometry"):
+                            ways[el["id"]] = el
+                break
+            except Exception as ex:
+                print("overpass falhou", ep, ex)
+                time.sleep(5)
+        time.sleep(2)
+    return list(ways.values())
+
+
+def bearing(a_lat, a_lng, b_lat, b_lng):
+    c = math.cos(math.radians(a_lat))
+    return (math.degrees(math.atan2((b_lng - a_lng) * c, b_lat - a_lat)) + 360) % 360
+
+
+def dist_seg(lat, lng, a, b):
+    k = 111320.0
+    c = math.cos(math.radians(lat))
+    ax, ay = (a[1] - lng) * k * c, (a[0] - lat) * k
+    bx, by = (b[1] - lng) * k * c, (b[0] - lat) * k
+    dx, dy = bx - ax, by - ay
+    l2 = dx * dx + dy * dy
+    t = 0 if l2 == 0 else max(0, min(1, -(ax * dx + ay * dy) / l2))
+    return math.hypot(ax + t * dx, ay + t * dy)
+
+
+def norm(txt):
+    import unicodedata
+    t = unicodedata.normalize("NFD", txt or "").encode("ascii", "ignore").decode().lower()
+    for w in ["avenida ", "av. ", "av ", "rua ", "r. ", "estrada ", "estr. ", "alameda ", "al. ", "viaduto ", "ponte "]:
+        t = t.replace(w, "")
+    return re.sub(r"[^a-z0-9 ]", "", t).strip()
+
+
+cands = []
+for r in out:
+    lat, lng = num(r["LATITUDE"]), num(r["LONGITUDE"])
+    if lat is None or lng is None or not (-24.2 < lat < -23.2 and -47.2 < lng < -46.2):
+        continue
+    if r["DESATIVAÇÃO"]:
+        continue
+    codes = [c.strip() for c in str(r["ENQUADRAMENTOS"] or "").split(",")]
+    if "V" not in codes:
+        continue
+    cands.append((r, lat, lng))
+
+ways = overpass_ways([(la, lo) for _, la, lo in cands])
+print("vias do mapa:", len(ways))
+segs = []
+for w in ways:
+    g = w["geometry"]
+    tags = w.get("tags", {})
+    ow = tags.get("oneway", "")
+    hw = tags.get("highway", "")
+    oneway = -1 if ow == "-1" else 1 if ow in ("yes", "true", "1") or tags.get("junction") == "roundabout" or hw.startswith("motorway") else 0
+    for i in range(len(g) - 1):
+        segs.append(((g[i]["lat"], g[i]["lon"]), (g[i + 1]["lat"], g[i + 1]["lon"]), oneway, tags.get("name", ""), hw))
+
 kept = 0
+matched_name = 0
 with open("out/radares_cet.tsv", "w", encoding="utf-8") as f:
-    for r in out:
-        lat, lng = num(r["LATITUDE"]), num(r["LONGITUDE"])
-        if lat is None or lng is None or not (-24.2 < lat < -23.2 and -47.2 < lng < -46.2):
-            continue
-        if r["DESATIVAÇÃO"]:
-            continue  # desativado
-        codes = [c.strip() for c in str(r["ENQUADRAMENTOS"] or "").split(",")]
-        if "V" not in codes:
-            continue  # não fiscaliza velocidade (só semáforo, faixa, rodízio…)
+    for r, lat, lng in cands:
         m = re.match(r"\s*(\d+)", str(r["VELOCIDADE"] or ""))
-        lim = int(m.group(1)) if m else ""  # "60/50 km/h": o 1º é o de carros
+        lim = int(m.group(1)) if m else ""
         desc = nice(str(r["DESCRIÇÃO DO LOCAL"] or "")).replace("\t", " ").replace("\n", " ")
-        f.write(f"{lat:.6f}\t{lng:.6f}\t{lim}\t\t{desc}\n")
+        street = norm(str(r["DESCRIÇÃO DO LOCAL"] or "").split(" X ")[0].split("(")[0])
+        # Via do mapa mais próxima; prefere a que tem o mesmo nome da descrição da CET
+        best, best_score = None, 1e9
+        for a, b, ow, name, hw in segs:
+            if abs(a[0] - lat) > 0.001 or abs(a[1] - lng) > 0.001:
+                continue
+            d = dist_seg(lat, lng, a, b)
+            if d > 35:
+                continue
+            same = street and norm(name) and (norm(name) in street or street in norm(name))
+            score = d - (25 if same else 0)
+            if score < best_score:
+                best_score, best = score, (a, b, ow, name, same)
+        axis = bear = ""
+        if best:
+            a, b, ow, name, same = best
+            ax = bearing(a[0], a[1], b[0], b[1])
+            axis = f"{ax:.0f}"
+            if ow == 1:
+                bear = f"{ax:.0f}"
+            elif ow == -1:
+                bear = f"{(ax + 180) % 360:.0f}"
+            if same:
+                matched_name += 1
+        f.write(f"{lat:.6f}\t{lng:.6f}\t{lim}\t{bear}\t{desc}\t{axis}\n")
         kept += 1
-print("radares de velocidade ativos:", kept)
+print("radares de velocidade ativos:", kept, "| com via do mesmo nome:", matched_name)

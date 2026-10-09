@@ -23,6 +23,7 @@ import java.util.Locale
 import kotlin.math.abs
 import kotlin.math.ceil
 import kotlin.math.roundToInt
+import kotlin.math.sin
 
 /** O que o aviso de radar mostra na tela. */
 class SpeedBanner(
@@ -113,6 +114,7 @@ object SpeedWatch {
     private var warnedNoPermission = false
 
     private fun start(ctx: Context) {
+        SpeedCams.ensureHiddenLoaded(ctx)
         if (!hasLocation(ctx)) {
             if (!warnedNoPermission) OfferLog.appendDiag(ctx, "RADARES: sem permissão de localização")
             warnedNoPermission = true
@@ -197,23 +199,45 @@ object SpeedWatch {
         return if (d > 180f) 360f - d else d
     }
 
+    /**
+     * O radar está na mesma rua e no mesmo sentido que você, à frente?
+     * Com a direção da rua no ponto do radar (axis), mede a distância de você até a "linha" da rua:
+     * se passar de ~20 m, você está em outra pista/rua (ex.: pista local x expressa, rua paralela).
+     */
+    private fun onSameRoad(c: SpeedCam, loc: Location, heading: Float, d: Double): Boolean {
+        val cl = camLocation(c)
+        val toCam = (loc.bearingTo(cl) + 360f) % 360f
+        if (c.bearing != null && angleDiff(heading, c.bearing) > DIRECTION_TOLERANCE) return false
+        val axis = c.axis
+        if (axis != null) {
+            var dir = angleDiff(heading, axis)
+            if (c.bearing == null) dir = minOf(dir, 180f - dir) // mão dupla: vale nos dois sentidos da rua
+            if (dir > 35f) return false
+            if (d > 30 && angleDiff(heading, toCam) > 60f) return false // ficou para trás
+            var a = angleDiff(axis, toCam)
+            a = minOf(a, 180f - a)
+            val cross = d * sin(Math.toRadians(a.toDouble()))
+            val acc = if (loc.hasAccuracy()) loc.accuracy.toDouble().coerceAtMost(20.0) else 10.0
+            return d < 25 || cross <= 18.0 + acc / 2
+        }
+        if (d > 30) {
+            val ang = angleDiff(heading, toCam)
+            if (ang > AHEAD_TOLERANCE) return false
+            val lateral = d * sin(Math.toRadians(ang.toDouble()))
+            if (lateral > maxOf(30.0, d * 0.10)) return false
+        }
+        return true
+    }
+
     private fun findTarget(loc: Location, heading: Float): SpeedCam? {
         var best: SpeedCam? = null
         var bestD = LOOKAHEAD_M
         for (c in SpeedCams.nearby(loc.latitude, loc.longitude)) {
             if (recentlyPassed.containsKey(c)) continue
-            val cl = camLocation(c)
-            val d = loc.distanceTo(cl).toDouble()
+            if (SpeedCams.isHidden(c)) continue
+            val d = loc.distanceTo(camLocation(c)).toDouble()
             if (d > bestD) continue
-            if (c.bearing != null && angleDiff(heading, c.bearing) > DIRECTION_TOLERANCE) continue
-            if (d > 30) {
-                val ang = angleDiff(heading, (loc.bearingTo(cl) + 360f) % 360f)
-                if (ang > AHEAD_TOLERANCE) continue
-                // Distância lateral do radar à sua linha de direção: evita pegar radar da rua paralela
-                // (ex.: Alameda Santos quando você está na Paulista, ~100 m ao lado).
-                val lateral = d * kotlin.math.sin(Math.toRadians(ang.toDouble()))
-                if (lateral > maxOf(30.0, d * 0.10)) continue
-            }
+            if (!onSameRoad(c, loc, heading, d)) continue
             best = c
             bestD = d
         }
@@ -230,10 +254,8 @@ object SpeedWatch {
         if (d <= NEAR_M && kmh > maxNearKmh) maxNearKmh = kmh
 
         val behind = heading != null && d > 15 && angleDiff(heading, (loc.bearingTo(cl) + 360f) % 360f) > 110f
-        // Radar ficou de lado (você entrou em outra rua, ou era de uma rua paralela): desiste dele
-        val sideways = heading != null && d > 60 &&
-            d * kotlin.math.sin(Math.toRadians(angleDiff(heading, (loc.bearingTo(cl) + 360f) % 360f).toDouble())) > maxOf(45.0, d * 0.15)
-        val passed = minDist <= PASS_RADIUS_M && (d > minDist + 20 || behind)
+        // Radar ficou de lado (você entrou em outra rua/pista): desiste dele
+        val sideways = heading != null && d > 45 && minDist > PASS_RADIUS_M && !onSameRoad(cam, loc, heading, d)
         val gaveUp = d > LOOKAHEAD_M + 150 || sideways || (minDist > PASS_RADIUS_M && (d > minDist + 60 || behind))
 
         when {
@@ -267,6 +289,25 @@ object SpeedWatch {
         kmh > toleratedUpTo(limit) -> Colors.RED
         kmh > limit -> Colors.YELLOW
         else -> Colors.GREEN_DARK
+    }
+
+    /** Segurar o aviso: "este radar está errado". Some de vez e fica registrado para corrigir. */
+    fun reportWrong(): Boolean {
+        val ctx = appContext ?: return false
+        val cam = target ?: return false
+        val loc = lastLoc
+        SpeedCams.hide(ctx, cam, (loc?.speed ?: 0f).times(3.6f).roundToInt(),
+            loc?.latitude ?: 0.0, loc?.longitude ?: 0.0, lastHeading)
+        OfferLog.appendDiag(ctx, "RADARES: marcado como errado (${cam.name}, limite ${cam.limit})")
+        recentlyPassed[cam] = System.currentTimeMillis()
+        clearTarget()
+        Beeper.play(ctx, Beeper.Kind.MARCADA)
+        RadarService.instance?.showSpeedBanner(
+            SpeedBanner(null, 0, "Radar removido · não vai mais aparecer", Colors.SURFACE_2, null, 0f, sign = "✕", title = "Radar errado")
+        )
+        handler.removeCallbacks(hideResult)
+        handler.postDelayed(hideResult, 3_000L)
+        return true
     }
 
     /** Fecha o aviso do radar atual (o botão ✕). Ele volta no próximo radar. */

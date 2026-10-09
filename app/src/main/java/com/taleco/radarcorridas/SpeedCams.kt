@@ -26,7 +26,8 @@ class SpeedCam(
     val bearing: Float?,
     val name: String,
     val mine: Boolean = false,   // marcado por você (não veio do mapa)
-    val id: Long = 0L
+    val id: Long = 0L,
+    val axis: Float? = null      // direção da rua no ponto do radar (0–360), para saber se você está nela
 )
 
 /**
@@ -109,7 +110,7 @@ object SpeedCams {
                 if (p.size < 5) return@mapNotNull null
                 val lat = p[0].toDoubleOrNull() ?: return@mapNotNull null
                 val lng = p[1].toDoubleOrNull() ?: return@mapNotNull null
-                SpeedCam(lat, lng, p[2].toIntOrNull(), p[3].toFloatOrNull(), p[4])
+                SpeedCam(lat, lng, p[2].toIntOrNull(), p[3].toFloatOrNull(), p[4], axis = p.getOrNull(5)?.toFloatOrNull())
             }
             setAll(list)
         } catch (_: Exception) {
@@ -130,6 +131,57 @@ object SpeedCams {
         count = mapCams.size + userCams.size
     }
 
+    // ---------- Radares ocultos (você disse que estão errados) ----------
+
+    private const val HIDDEN_FILE = "radares_ocultos.txt"
+    private val hidden = HashSet<String>()
+    private var hiddenLoaded = false
+
+    private fun hkey(c: SpeedCam) = String.format(Locale.US, "%.5f,%.5f", c.lat, c.lng)
+
+    fun reportFile(ctx: Context) = File(ctx.filesDir, "radares_errados.csv")
+
+    @Synchronized
+    private fun loadHidden(ctx: Context) {
+        if (hiddenLoaded) return
+        hiddenLoaded = true
+        val f = File(ctx.filesDir, HIDDEN_FILE)
+        if (f.exists()) try { hidden.addAll(f.readLines().filter { it.isNotBlank() }) } catch (_: Exception) {}
+    }
+
+    fun isHidden(c: SpeedCam): Boolean = hiddenLoaded && hidden.contains(hkey(c))
+
+    fun hiddenCount(ctx: Context): Int {
+        loadHidden(ctx)
+        return hidden.size
+    }
+
+    /** "Radar errado": some do aviso e fica registrado para corrigir a lista depois. */
+    @Synchronized
+    fun hide(ctx: Context, c: SpeedCam, kmh: Int, lat: Double, lng: Double, heading: Float?) {
+        loadHidden(ctx)
+        hidden.add(hkey(c))
+        try {
+            File(ctx.filesDir, HIDDEN_FILE).writeText(hidden.joinToString("\n"))
+            val rf = reportFile(ctx)
+            if (!rf.exists()) rf.writeText("data_hora;radar_lat;radar_lng;radar_limite;radar_nome;voce_lat;voce_lng;voce_kmh;voce_direcao\n")
+            val ts = java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).format(java.util.Date())
+            rf.appendText(String.format(Locale.US, "%s;%.6f;%.6f;%s;\"%s\";%.6f;%.6f;%d;%s\n",
+                ts, c.lat, c.lng, c.limit?.toString() ?: "", c.name.replace("\"", "'"), lat, lng, kmh,
+                heading?.let { String.format(Locale.US, "%.0f", it) } ?: ""))
+        } catch (_: Exception) {
+        }
+    }
+
+    @Synchronized
+    fun unhideAll(ctx: Context) {
+        loadHidden(ctx)
+        hidden.clear()
+        try { File(ctx.filesDir, HIDDEN_FILE).delete() } catch (_: Exception) {}
+    }
+
+    fun ensureHiddenLoaded(ctx: Context) = loadHidden(ctx)
+
     // ---------- Radares marcados por você ----------
 
     fun userFile(ctx: Context) = File(ctx.filesDir, USER_FILE)
@@ -148,7 +200,7 @@ object SpeedCams {
                     SpeedCam(
                         p[1].toDoubleOrNull() ?: return@forEach, p[2].toDoubleOrNull() ?: return@forEach,
                         p[3].toIntOrNull(), p[4].toFloatOrNull(), p.getOrElse(5) { "" }, true,
-                        p[0].toLongOrNull() ?: 0L
+                        p[0].toLongOrNull() ?: 0L, axis = p[4].toFloatOrNull()
                     )
                 )
             }
@@ -182,7 +234,7 @@ object SpeedCams {
     @Synchronized
     fun addUser(ctx: Context, lat: Double, lng: Double, bearing: Float?, limit: Int?): SpeedCam {
         loadUser(ctx)
-        val c = SpeedCam(lat, lng, limit, bearing, "", true, System.currentTimeMillis())
+        val c = SpeedCam(lat, lng, limit, bearing, "", true, System.currentTimeMillis(), axis = bearing)
         userCams.add(c)
         saveUser(ctx)
         rebuild()
@@ -290,7 +342,7 @@ object SpeedCams {
                 if (p.size < 5) return@mapNotNull null
                 val lat = p[0].toDoubleOrNull() ?: return@mapNotNull null
                 val lng = p[1].toDoubleOrNull() ?: return@mapNotNull null
-                SpeedCam(lat, lng, p[2].toIntOrNull(), null, p[4].trim())
+                SpeedCam(lat, lng, p[2].toIntOrNull(), p[3].toFloatOrNull(), p[4].trim(), axis = p.getOrNull(5)?.toFloatOrNull())
             }
         } finally {
             conn.disconnect()
@@ -412,7 +464,8 @@ object SpeedCams {
             val name = best?.name?.takeIf { it.isNotBlank() } ?: n.name
             // Junta radares duplicados (mesmo ponto)
             if (out.any { abs(it.lat - n.lat) < 0.00012 && abs(it.lng - n.lng) < 0.00012 && it.bearing == bearing }) continue
-            val cam = SpeedCam(n.lat, n.lng, limit, bearing, name)
+            val axis = best?.let { sg -> bearing(sg.aLat, sg.aLng, sg.bLat, sg.bLng) }
+            val cam = SpeedCam(n.lat, n.lng, limit, bearing, name, axis = axis)
             out.add(cam)
             if (best?.highway?.startsWith("motorway") == true || best?.highway?.startsWith("trunk") == true) onRodovia.add(cam)
         }
@@ -440,7 +493,8 @@ object SpeedCams {
                     else -> null
                 }
             }
-            merged.add(SpeedCam(c.lat, c.lng, c.limit ?: best?.limit, b, c.name))
+            val ax = c.axis ?: best?.let { sg -> bearing(sg.aLat, sg.aLng, sg.bLat, sg.bLng) }
+            merged.add(SpeedCam(c.lat, c.lng, c.limit ?: best?.limit, c.bearing ?: b, c.name, axis = ax))
         }
         // Do mapa colaborativo, só o que a CET não cobre:
         //  - repetidos de um radar da CET (até ~40 m): fora, vale o da CET;
@@ -467,7 +521,8 @@ object SpeedCams {
             sb.append(String.format(Locale.US, "%.6f\t%.6f\t", c.lat, c.lng))
                 .append(c.limit?.toString() ?: "").append('\t')
                 .append(c.bearing?.let { String.format(Locale.US, "%.0f", it) } ?: "").append('\t')
-                .append(c.name.replace('\t', ' ').replace('\n', ' ')).append('\n')
+                .append(c.name.replace('\t', ' ').replace('\n', ' ')).append('\t')
+                .append(c.axis?.let { String.format(Locale.US, "%.0f", it) } ?: "").append('\n')
         }
         val tmp = File(ctx.filesDir, "$FILE.tmp")
         tmp.writeText(sb.toString())

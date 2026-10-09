@@ -316,7 +316,7 @@ class MainActivity : AppCompatActivity() {
         card.addView(outlinedButton("Exportar dados (ofertas, corridas, rotas, radares e valetas)").apply {
             setOnClickListener {
                 val ctx = this@MainActivity
-                val files = listOf(OfferLog.offersFile(ctx), TripLog.tripsFile(ctx), TripLog.routesFile(ctx), PassLog.file(ctx), Hazards.file(ctx), Spots.file(ctx))
+                val files = listOf(OfferLog.offersFile(ctx), TripLog.tripsFile(ctx), TripLog.routesFile(ctx), PassLog.file(ctx), Hazards.file(ctx), Spots.file(ctx), SpeedCams.reportFile(ctx))
                 if (!OfferLog.shareAll(ctx, files, "Dados — Radar Corridas")) toast("Nenhum dado salvo ainda")
             }
         }, matchWrap(top = 6))
@@ -451,6 +451,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var speedInfo: TextView
     private lateinit var finesText: TextView
     private lateinit var myCamsList: LinearLayout
+    private lateinit var hiddenText: TextView
 
     private fun refreshMyCams() {
         if (!::myCamsList.isInitialized) return
@@ -547,6 +548,22 @@ class MainActivity : AppCompatActivity() {
             setOnClickListener {
                 if (RadarService.instance == null) toast("Ative a leitura de ofertas primeiro")
                 else SpeedWatch.demo(this@MainActivity)
+            }
+        }, matchWrap(top = 4))
+
+        card.addView(text("Radar errado?", 15f, Colors.TEXT, bold = true).apply { setPadding(0, dp(14), 0, 0) })
+        card.addView(text(
+            "Se aparecer um radar que não existe, ou de outra pista, segure o aviso por 1 segundo. " +
+                "Ele some e não aparece mais, e fica anotado no arquivo de dados para corrigirmos a lista.",
+            12f, Colors.MUTED
+        ))
+        hiddenText = text("", 13f, Colors.TEXT).apply { setPadding(0, dp(4), 0, 0) }
+        card.addView(hiddenText)
+        card.addView(outlinedButton("Mostrar de novo os radares removidos").apply {
+            setOnClickListener {
+                SpeedCams.unhideAll(this@MainActivity)
+                toast("Radares removidos voltaram")
+                updateSpeedInfo()
             }
         }, matchWrap(top = 4))
 
@@ -976,6 +993,10 @@ class MainActivity : AppCompatActivity() {
             }
         }
         refreshMyCams()
+        if (::hiddenText.isInitialized) {
+            val h = SpeedCams.hiddenCount(this)
+            hiddenText.text = if (h == 0) "Nenhum radar removido." else "$h radar(es) removido(s) por você."
+        }
         val fines = PassLog.recentFines(this)
         val total = PassLog.count(this)
         finesText.text = if (fines.isEmpty()) {
