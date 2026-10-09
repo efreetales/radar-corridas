@@ -1,0 +1,867 @@
+-23.551777	-46.741093	50	224	Av. Jaguare (bairro/centro)	224
+-23.587067	-46.724136	50	150	Av. Jorge Joao Saad(bairro/centro)	150
+-23.660078	-46.769337	50	118	Estr. de Itapecerica (itapecerica/sp)	118
+-23.660063	-46.768917	50	294	Estr. de Itapecerica (sp/itapecerica)	294
+-23.648563	-46.759636	40	268	Estr. do Campo Limpo (campo limpo/marginal), Oposto Ao Numero 640	268
+-23.616768	-46.740795	40	4	Av. Doutor Guilherme Dumont Vilares (giovanni/morato), Numero 1093	4
+-23.589807	-46.701538	50	228	Pca Professor Meira de Vasconcellos (bairro/centro), A Menos 29M da Av Amarilis	228
+-23.591069	-46.694575	50	46	Tunel Sebastiao Camargo (morumbi/ibirapuera), A Menos 26,50 Metros do Emboque	46
+-23.595316	-46.715637	50		Av. Giovanni Gronchi (bairro/centro), A Menos 7,0 Metros do Numero 1065	290
+-23.607483	-46.712570	50		Av. Morumbi (francisco morato/ponte morumbi), Numero 4884	181
+-23.596459	-46.713593	50		Av. Giovanni Gronchi (centro/bairro), Oposto Ao Numero 705	324
+-23.630234	-46.770496	50	220	Estr. do Campo Limpo (centro/bairro), Numero 3677	220
+-23.630695	-46.770550	50	40	Estr. do Campo Limpo (bairro/centro), A Mais 35 Metros da R. Batista Crespo	40
+-23.574942	-46.765572	50	200	Av. Escola Politecnica (marginal pinheiros/raposo), Numero 5050	200
+-23.577813	-46.766667	50	48	Av. Escola Politecnica (raposo/marginal pinheiros), Numero 5173	48
+-23.565108	-46.754983	50	51	Av. Escola Politecnica (raposo/marginal pinheiros) A Mais 29M do Nr 3545	51
+-23.570133	-46.717827	50	245	Av. Corifeu de Azevedo Marques (centro/bairro), Numero 250	245
+-23.571402	-46.720348	50	65	Av Corifeu de Azevedo Marques (bairro/centro), A Mais 9,5M da R Padre Justino	65
+-23.561485	-46.711959	50	178	R. Alvarenga (centro/bairro), A Menos 28 Metros da R. Alexandre M. Machado	178
+-23.638232	-46.696909	50	209	Av. Santo Amaro (centro/bairro)	209
+-23.590131	-46.735876	50	67	Av Eliseu de Almeida (b/c), A Mais 95M da R Heitor dos Prazeres	67
+-23.648449	-46.758330	50	270	Estr. do Campo Limpo (centro/bairro)	270
+-23.572922	-46.704569	50	60	Av Professor Francisco Morato (b/c)	60
+-23.568173	-46.757382	50	226	Av Escola Politecnica(marginal/raposo)	226
+-23.558115	-46.748141	50	145	Av Corifeu de Azevedo Marques (b/c)	145
+-23.589302	-46.734348	50	246	Av. Eliseu de Almeida (centro/bairro), A Mais 6M da R. Dom Henrique Mourao	246
+-23.601145	-46.717088	50		Av. Padre Lebret (bairro/centro), Numero 714	262
+-23.622059	-46.697385	50	323	Av Roque Petroni Junior (diadema/marg pinheiros) Nr 1226	323
+-23.570666	-46.507046	50	316	Av. Rio das Pedras (bairro/centro), A Mais 18 Metros do Numero 2021	316
+-23.571322	-46.506523	50	145	Av Rio das Pedras (centro/bairro), A Mais 42 Metros da R Minerios Atomicos	145
+-23.534520	-46.602480	40	177	R. Marcos Arruda (bairro/centro)	177
+-23.545150	-46.574450	50	168	R. Tuiuti (vila maria/tatuape)	168
+-23.521953	-46.526930	50		Av. Amador Bueno da Veiga (centro/bairro), Numero 1968	112
+-23.570053	-46.529264	50		Av. Joao Xxiii (bairro/centro)	236
+-23.570447	-46.529863	50		Av. Joao Xxiii (centro/bairro)	238
+-23.602709	-46.482514	50	142	Av. Mateo Bei (centro/bairro), Numero 2372	142
+-23.527917	-46.551847	40	331	R Comendador Cantinho (bairro/centro)	331
+-23.509192	-46.549422	50	257	R Doutor Assis Ribeiro (bairro/centro), A Menos 120M da Av Gabriela Mistral	257
+-23.610990	-46.530828	40		R. Ana Clara (morais costa/oratorio), Numero 296 A	96
+-23.603155	-46.559413	40		R. Francisco Rebelo (sao lucas/vilacalifornia), Numero 314	60
+-23.502211	-46.458567	50	173	Av Jacu Pessego/N Trabalh (s mat/s mig), A Mais 22M da R Cel Manuel F de Souza	173
+-23.502746	-46.458631	50	167	Av Jacu Pessego/N. Trabalhad. (s. mig/s.mat) A Menos 378M da Tv Flor de Pessego	167
+-23.520593	-46.506399	50	91	Av. Calim Eid (centro/bairro), A Mais 13 Metros da R. Taru	91
+-23.519677	-46.509848	50	288	Av. Calim Eid (bairro/centro), Numero 269	288
+-23.500000	-46.524730	50	89	R Doutor Assis Ribeiro (centro/bairro)	89
+-23.492648	-46.388537	50	224	Av Marechal Tito (bairro/centro), Numero 6035	224
+-23.525219	-46.435331	50	69	Av. Jose Pinheiro Borges (centro/bairro), A Menos 300M da R. Bento Munhoz	69
+-23.514604	-46.519649	50	232	Av. Sao Miguel (bairro/centro)	232
+-23.556710	-46.600280	50	185	Av. Paes de Barros (centro/bairro), Numero 148	185
+-23.540559	-46.629194	50	312	Av. Mercurio (bairro/centro)	312
+-23.541650	-46.628158	50	23	Av do Estado (centro/bairro)	23
+-23.572381	-46.504570	50	173	Av. Aricanduva (centro/bairro)	173
+-23.550035	-46.534117	50	296	Av Conselheiro Carrao (bairro/centro)	296
+-23.550060	-46.534340	50	116	Av Conselheiro Carrao (centro/bairro)	116
+-23.564120	-46.596430	50	318	Av. Paes de Barros (bairro/centro), Numero 1025	318
+-23.593454	-46.583937	50	317	Av Dr Francisco Mesquita (santo andre/sao paulo), A Mais 140M da R Vl Prudente	317
+-23.549579	-46.605187	50	58	Av Alcantara Machado (centro/bairro), A Mais 18M da R Hipodromo	58
+-23.529064	-46.457001	50	346	Av Jacu Pessego/N Trabal (s mat/s mig) X R Montanhas	346
+-23.552469	-46.638103	50	117	R Maria Paula (bairro/centro)	117
+-23.522698	-46.456721	50	205	Av Jacu Pessego/Nova Trabal (a s/maua)A Mais 62M da Passarela P Duilio Liburdi	205
+-23.580648	-46.586816	50	174	Av. Paes de Barros (centro/bairro) , Numero 3420	174
+-23.572526	-46.446175	50	158	Av Jacu Pessego/Nova Trabalhadores (smig/s mat) A Menos 8M da R Iososuke Okaue	158
+-23.572097	-46.604353	50	177	Av do Estado (centro/bairro), A Menos 10 Metros da R Paulo Barbosa	177
+-23.552426	-46.618222	50	280	Av. Alcantara Machado (bairro/centro), A Menos 34 Metros da R. Placidina	280
+-23.563747	-46.611209	50	333	Av do Estado (bairro/centro)	333
+-23.610123	-46.560364	50	304	R Sao Raimundo (bairro/centro), A Mais 113M da R Simiao Fernandes	304
+-23.521986	-46.651331	50	152	Av Rudge (bairro/centro), A Mais 4,5M da R James Holland	152
+-23.490383	-46.463180	50	137	R Doutor Assis Ribeiro (penha/sao miguel), A Menos 137M da R Serra de Itaqueri	137
+-23.490027	-46.463481	50	319	R Doutor Assis Ribeiro (sao miguel/penha), Oposto Ao Numero 10170	319
+-23.542430	-46.639990	40	300	Av Sao Joao (centro/bairro)	300
+-23.579008	-46.497094	50	92	Av. Aricanduva (centro/bairro), A Mais 13 Metros da R. Funilandia	92
+-23.510348	-46.504422	50	281	Av. Sao Miguel (bairro/centro), Oposto Ao Numero 2768	281
+-23.510692	-46.507878	50	70	Av. Sao Miguel (centro/bairro), Numero 2384	70
+-23.538215	-46.456336	50	38	Av Jose Pinheiro Borges (centro/bairro), A Menos 18 Metros da R Itagimirim	38
+-23.537621	-46.455914	50	217	Av Jose Pinheiro Borges (bairro/centro), A Menos 19 Metros da R Itagimirim	217
+-23.524894	-46.435473	50	250	Av Jose Pinheiro Borges (bairro/centro), A Mais 370 Metros da R Coroa de Frade	250
+-23.536516	-46.607432	40	344	R. Joao Boemer (bairro/centro), Numero 296	344
+-23.536919	-46.633675	50	184	Av Prestes Maia (sant/aero), A Mais 13 M do N 913A	184
+-23.540629	-46.632312	40	79	R. Carlos de Sousa Nazare (se/bras), Numero 190	79
+-23.538255	-46.634701	40	196	R. Brigadeiro Tobias (bairro/centro),  Numero 541	196
+-23.549435	-46.632521	40	263	R. Venceslau Bras (parque dom pedro/se), Numero 66	263
+-23.539492	-46.632412	50	285	Av. Senador Queiros (bras/santa ifigenia), Numero 396	285
+-23.515558	-46.625373	50	182	Av Cruzeiro do Sul (centro/bairro), A Menos 64 Metros do Numero 548	182
+-23.549072	-46.525105	50	147	Av Aricanduva (centro/bairro), Pista Expressa, A Mais 163 Metros da R Manilha	147
+-23.599347	-46.530609	50	108	Av Prof Luiz Ignacio Anhaia Mello (c/b), A Menos 45M da R Nova Timboteua	108
+-23.599493	-46.529168	50	294	Av Prof Luiz Ignacio A Mello (b/c), A Menos 51,5M da R Santa Maria do Cambuca	294
+-23.574481	-46.587300	50	353	Av Paes de Barros (bairro/centro), Numero 2761	353
+-23.541641	-46.481019	50	279	Av Jose Pinheiro Borges (itaquera/penha), A Menos 10M do Acesso da R Boicora	279
+-23.544080	-46.593070	50	243	Av Alcantara Machado (bairro/centro), A Menos 28 Metros do Vd. Guadalajara	243
+-23.625352	-46.450555	50	2	Av Jacu-Pessego/N Trabalhadores (maua/a senna), A Menos 280M da Av Sapopemba	2
+-23.486615	-46.452815	50	5	Av Jacu Pessego/Nova Trabal (maua/as) A Menos 260M do Acesso A Rod Ayrton Senna	5
+-23.486252	-46.452984	50	183	Av Jacu-Pessego/N Trabalh (a senna/maua), A Mais 250M do Acesso da Rod A Senna	183
+-23.541816	-46.481158	50	100	Av Jose Pinheiro Borges (penha/itaquera), A Mais 147,5M do Vd. Milton Leao	100
+-23.532610	-46.632220	50	285	R Joao Teodoro (bras/luz)	285
+-23.553020	-46.602830	50	94	R dos Trilhos (c/b), A Menos 24M da R Visconde de Laguna	94
+-23.559804	-46.520020	50	316	Av Rio das Pedras (bairro/centro), Numero 203A	316
+-23.558164	-46.579115	50	74	R do Acre (centro/bairro), Numero 722	74
+-23.530001	-46.447944	50	215	Av Jose Pinheiro Borges (b/c), A  Mais 32M da R Alzira Livramento Marzagao	215
+-23.582217	-46.491551	50	149	Av Aricanduva (centro/bairro)	149
+-23.534450	-46.625100	50	10	Av do Estado (ipiranga/santana)	10
+-23.582228	-46.599777	50	182	Av do Estado (santana/ipiranga)	182
+-23.547680	-46.642610	50	167	Av Sao Luis (republica/se)	167
+-23.531950	-46.626150	50	154	Av do Estado (santana/ipiranga)	154
+-23.592540	-46.470970	50	273	Av Aricanduva (b/c),A Menos 1,385Km da Estr. da Fazenda do Carmo	273
+-23.563297	-46.508426	50	325	Av Aricanduva (b/c), A Menos 225M da R Fortuna de Minas	325
+-23.513470	-46.426040	50		Av Nordestina (itaim/guaianases)	298
+-23.513243	-46.426435	50		Av Nordestina (guaianases/itaim), A Mais 86M da R Parreira Brava	296
+-23.558761	-46.615631	50	118	Av do Estado (santana/ipiranga), A Menos 32M da R Dona Ana Neri	118
+-23.543140	-46.586119	50	78	Av Alcantara Machado (centro/bairro), Numero 4188	78
+-23.538870	-46.606380	40		Av Celso Garcia (bairro/centro), A Menos 26M da R Joao Boemer	81
+-23.541251	-46.613906	40		Av Rangel Pestana (bairro/centro), A Menos 22M da R Maria Marcolina	56
+-23.582770	-46.441988	50	359	Av Jacu-Pessego/N Trabalhadores (maua/a senna), A Mais 20M R Go Sugaya	359
+-23.524948	-46.698370	50	91	R. Clelia (bairro/centro), Numero 1607	91
+-23.524969	-46.691808	50	90	R. Clelia (bairro/centro), Numero 939	90
+-23.573201	-46.610979	50	175	Av. Dom Pedro I (mooca/ipiranga), Numero 920	175
+-23.573831	-46.610837	50	175	Av. Dom Pedro I (ipiranga/mooca), Numero 909	175
+-23.521961	-46.664373	50	99	Av. Marques de Sao Vicente (bairro/centro), Numero 425	99
+-23.515834	-46.687687	50	106	Av. Marques de Sao Vicente (bairro/centro), A Mais 80 Metros do Numero 2853	106
+-23.515672	-46.687682	50	287	Av. Marques de Sao Vicente (centro/bairro), Numero 2898	287
+-23.519383	-46.674269	50	285	Pca Pascoal Martins (centro/bairro), A Mais 40M da Av Marques de Sao Vicente	285
+-23.519665	-46.667334	50	8	Av. Ordem e Progresso (centro/bairro), Oposto Ao Numero 95	8
+-23.569218	-46.672242	50	136	Av. Brasil (pinheiros/ibirapuera)	136
+-23.526148	-46.676949	50	98	Av Francisco Matarazzo (centro/bairro)	98
+-23.519330	-46.674954	50	107	Pca Pascoal Martins (bairro/centro), A Mais 40 M da Av Marques de Sao Vicente	107
+-23.526939	-46.682712	50	214	Av. Pompeia (barra funda/pompeia), Oposto Numero 227	214
+-23.527174	-46.682719	50	33	Av. Pompeia (pompeia/barra funda), Numero 227	33
+-23.535622	-46.652461	50	121	Av. Sao Joao (bairro/centro), Numero 2097	121
+-23.592562	-46.648549	50	113	R. Sena Madureira (ibirapuera/vila mariana), Numero 1355	113
+-23.590451	-46.680885	50	74	Av Pr Juscelino Kubitschek (mg pin/ib)	74
+-23.588661	-46.676577	50	164	R Joao Cachoeira (pinheiros/itaim)	164
+-23.567924	-46.692944	50	141	Av. Brigadeiro Faria Lima (pinheiros/itaim), Numero 1134	141
+-23.569541	-46.659295	40	221	R. Pamplona (centro/bairro)	221
+-23.584193	-46.673242	40	253	R. Joaquim Floriano (centro/bairro)	253
+-23.548097	-46.657451	40	114	R. Sergipe (bairro/centro)	114
+-23.565439	-46.682452	40	66	R. dos Pinheiros (bairro/centro)	66
+-23.568458	-46.644031	50	353	Pç. Amadeu Amaral (centro/bairro)	353
+-23.565072	-46.690549	50	147	Av Pedroso de Morais (pinheiros/itaim)	147
+-23.554588	-46.648744	50	208	Av. Nove de Julho (centro/bairro)	208
+-23.572971	-46.645085	40	157	R. Cubatao (consolacao/paraiso)	157
+-23.537145	-46.722617	50	100	Av. Queiroz Filho (bairro/centro), Numero 313	100
+-23.529499	-46.667975	50	301	Av. Francisco Matarazzo (centro/bairro), Numero 524	301
+-23.529501	-46.668247	50	121	Av. Francisco Matarazzo (bairro/centro), Oposto Numero 524	121
+-23.526106	-46.676961	50	98	Av. Francisco Matarazzo (bairro/centro), Oposto Numero 1500	98
+-23.535401	-46.662626	50	24	Av. Pacaembu (barra funda/ pacaembu), Numero 1044	24
+-23.534408	-46.662018	50	25	Av. Pacaembu (pacaembu/barra funda), Numero 885	25
+-23.522390	-46.740953	50	13	Av Dr Gastao Vidigal (v leopoldina/marg tiete), A Mais 14 M da R Major Paladino	13
+-23.557217	-46.707205	50	342	Av Antonio Batuira (marg pinheiros/pca panam), A Menos 20 M da Av dos Semaneiros	342
+-23.590898	-46.681156	50	344	Av Brig. Faria Lima (itaim/pinheiros)	344
+-23.537105	-46.722246	50	279	Av. Queiroz Filho (centro/bairro), Oposto Ao Numero 313	279
+-23.562354	-46.681745	40	147	R Conego Eugenio Leite (bairro/centro)	147
+-23.550687	-46.675190	40	25	R Cardoso de Almeida (pacaembu/b funda), A Menos 131M da R Mons Alberto Pequeno	25
+-23.549747	-46.680627	50	96	R. Heitor Penteado (centro/bairro), A Mais 88 Metros do Vd. Doutor Arnaldo	96
+-23.519095	-46.709484	40	236	R. John Harrison (barra funda/lapa), Oposto Ao Numero 735	236
+-23.543423	-46.725380	50	294	Av Prof Fonseca Rodrigues (v. leopoldina/pinheiros), A Mais 267M da Pca Apecatu / Av Prof Fonseca Rodrigues (pinheiros/v. leopoldina), A Menos 26M da R Ubiracica	294
+-23.520221	-46.744848	40	264	R Major Paladino (v. dos remedios/lapa), A Mais 23M da Ponte dos Remedios	264
+-23.528181	-46.691795	40	91	R. Tito (lapa/perdizes), Numero 21	91
+-23.561330	-46.646003	50	175	Vd Armando Puglisi (paraiso/consolacao), Alt do N 911 da R Treze de Maio	175
+-23.541856	-46.663578	40	221	R. Engenheiro Edgar Egidio de Souza (santa cecilia/pacaembu), Numero 303	221
+-23.601916	-46.605517	40	86	Av. Doutor Gentil de Moura (centro/bairro), Numero 980	86
+-23.572008	-46.641827	50	356	R. Maestro Cardim (paraiso/liberdade), Numero 1251	356
+-23.584014	-46.613533	40	263	R. Engenheiro Ranulfo Pinheiro de Lima (ipiranga/vila mariana), Numero 74	263
+-23.589009	-46.610590	50	175	Av. Nazare (centro/bairro), Numero 588	175
+-23.596440	-46.609749	50	355	Av. Nazare (bairro/centro), Numero 1361	355
+-23.576033	-46.690307	40		Alameda Gabriel Monteiro da Silva (marginal pinheiros/centro), Numero 2453	60
+-23.537632	-46.690208	50	33	Av. Pompeia (pompeia/marginal tiete), Numero 1603	33
+-23.536937	-46.689836	50	213	Av Pompeia (marginal tiete/pompeia), Numero 1536	213
+-23.595626	-46.680055	50	164	Av. Brigadeiro Faria Lima (pinheiros/itaim), Numero 4532	164
+-23.602479	-46.602326	50	306	R. Bom Pastor (heliopolis/sacoma), Numero 3019	306
+-23.625404	-46.619299	50	343	Av. do Cursino (bairro/centro)	343
+-23.585113	-46.663886	50	187	Av. Republica do Libano (centro/bairro), Numero 528	187
+-23.626687	-46.634084	50	78	Av. Fagundes Filho (jabaquara/cursino), Numero 789	78
+-23.558772	-46.660881	50		R. Augusta (centro/bairro), Numero 1828	224
+-23.544584	-46.654187	40	292	Av. Higienopolis (centro/bairro), Numero 235	292
+-23.562456	-46.641463	40	284	R. Pedroso (liberdade/bela vista), Numero 258	284
+-23.546844	-46.676921	50	186	Av. Paulo Vi (perdizes/pinheiros) Numero 2022	186
+-23.567564	-46.695222	50	86	R. Teodoro Sampaio (bairro/centro), Numero 2883	86
+-23.511091	-46.705539	50	174	Av. Ermano Marchetti (bairro/centro) A Mais 150 Metros da Ponte do Piqueri	174
+-23.515267	-46.694489	50	270	Av. Ermano Marchetti (centro/bairro), A Mais 40 Metros da R. Cenno Sbrighi	270
+-23.515417	-46.695796	50	89	Av. Ermano Marchetti (bairro/centro), A Mais 38 Metros da R. do Curtume	89
+-23.511350	-46.705348	50	355	Av. Ermano Marchetti (centro/bairro) A Menos 160 Metros da Ponte do Piqueri	355
+-23.523111	-46.651157	50	268	R Norma Pieruccini Giannotti (b/c), A Menos 10M da Av Rudge	268
+-23.522785	-46.658057	50	280	R Norma Pieruccini Giannotti (centro/bairro), A Mais 80M da R James Holland	280
+-23.606269	-46.593888	50	135	Av Almirante Delamare (sp/s caetano do sul), A Menos 76M da R Conego Xavier	135
+-23.564629	-46.649351	40	221	Alameda Joaquim Eugenio de Lima (centro/bairro), Numero 286	221
+-23.564405	-46.654996	50	132	Alameda Santos (consolacao /paraiso), Numero 1293	132
+-23.551574	-46.711056	50	314	Av. Professor Fonseca Rodrigues (pinheiros/ceasa), Numero 224	314
+-23.548391	-46.715076	50	135	Av. Professor Fonseca Rodrigues (ceasa/pinheiros), Numero 787	135
+-23.578164	-46.662479	50	316	Av. Brasil (ibirapuera/pinheiros), Numero 126	316
+-23.605176	-46.657561	40	41	Alameda dos Nhambiquaras (bairro/centro), Numero 614	41
+-23.575418	-46.644875	40	246	R. Afonso de Freitas (centro/bairro), Numero 320	246
+-23.605443	-46.659323	40	221	Alameda dos Maracatins (centro/bairro), A Mais 7M da Av. Divino Salvador	221
+-23.536662	-46.732353	50	139	Av. Doutor Gastao Vidigal (marginal tiete/pinheiros), Oposto Ao Numero 2301	139
+-23.567040	-46.668423	40	311	R. Estados Unidos (ibirapuera/pinheiros), Numero 1470	311
+-23.584760	-46.682147	40	330	R. Iguatemi (itaim/pinheiros), Numero 192	330
+-23.583666	-46.677639	40	73	R. Tabapua (itaim/jardim paulista), Numero 711	73
+-23.579084	-46.685642	50	331	Av. Brigadeiro Faria Lima (itaim/pinheiros), Numero 2537	331
+-23.625611	-46.619387	40	164	Av. do Cursino (centro/bairro)	164
+-23.611600	-46.581484	50	293	Av. Almirante Delamare (sao caetano do sul/sao paulo), Numero 3031	293
+-23.610649	-46.595586	40		Estr. das Lagrimas (bairro/centro)	149
+-23.524112	-46.701960	40	14	R. Jeroaquara (centro/bairro)	14
+-23.597720	-46.600654	50	174	R. Silva Bueno (centro/bairro)	174
+-23.616765	-46.601752	50	193	Via Anchieta (sao paulo/santos)	193
+-23.614417	-46.600947	50	12	Via Anchieta (santos/sao paulo), Numero 1405	12
+-23.548556	-46.710427	40		Av Diogenes Ribeiro de Lima (lapa/pin)	128
+-23.568091	-46.692503	50	322	Av. Brigadeiro Faria Lima (itaim/pinheiros), Oposto Ao Numero 1134	322
+-23.555357	-46.662668	50	228	R. da Consolacao (centro/bairro)	228
+-23.552199	-46.665837	40	52	R Capivari (pacaembu/barra funda),  A Mais 28M da R Itaquera	52
+-23.565408	-46.697856	40	266	R Sumidouro (centro/bairro), Numero 250	266
+-23.524473	-46.683407	50	298	R. Carlos Vicari (centro/bairro), Numero 154	298
+-23.538435	-46.730436	50	321	Av Doutor Gastao Vidigal (pinheiros/vila leopoldina), Número 2571	321
+-23.570423	-46.698287	50	43	R Butanta (bairro/centro), Numero 370	43
+-23.543366	-46.732212	50	225	Av Queiroz Filho (centro/bairro), Numero 1700	225
+-23.543741	-46.732380	50	42	Av Queiroz Filho (bairro/centro), Oposto Ao Numero 1700	42
+-23.567332	-46.648847	50		Av Brigadeiro Luis Antonio (c/b)	28
+-23.523153	-46.687186	50	280	R Guaicurus (centro/bairro), Numero 175	280
+-23.518392	-46.679038	50	6	Av Nicolas Boer (pompeia/marginal tiete), Número 66	6
+-23.597777	-46.675565	50	247	Av Helio Pellegrino (centro/bairro), A Menos 60M da R Clodomiro Amazonas	247
+-23.578266	-46.662693	50	137	Av Brasil (pinheiros/ibirapuera), Numero 131	137
+-23.580101	-46.662090	50	235	R Manuel da Nobrega (centro/bairro), Numero 1920	235
+-23.580359	-46.662075	50	68	R Manuel da Nobrega (bairro/centro), Oposto Numero 1920	68
+-23.594756	-46.664758	50	161	Av Republica do Libano (centro/bairro), A Menos 52M Av Iv Centenario	161
+-23.542285	-46.647968	50	182	R Amaral Gurgel (santa cecilia /consolacao), Numero 58	182
+-23.569115	-46.671653	50		R. Colombia (bairro/centro), A Mais 32M da Av. Brasil	225
+-23.569102	-46.671727	50		R. Colombia (centro/bairro), A Menos  25M da Av. Brasil	225
+-23.587173	-46.674483	50	43	Compl Viário Trib de Justica do Est Sp (pin/ib) A Menos 107M do Emboque do Tunel	43
+-23.585172	-46.668749	50	276	Compl Viario Trib de Justica do Est Sp (ib/pin) A Menos 125M do Emboque do Tunel	276
+-23.591095	-46.687493	50	288	Tunel Presidente Janio Quadros (ibirap/pinh) A Menos 192M  do Emboque do Tunel	288
+-23.591209	-46.687403	50	108	Tunel Sebastiao Camargo (pinh/ibirap) A Mais 192M do Desemboque do Tunel	108
+-23.597195	-46.650867	60	184	Av Rubem Berta (santana/aeroporto), A Menos 34M do Vd. Pedro de Toledo	184
+-23.496879	-46.630977	40	357	R. Conego Manuel Vaz (centro/bairro),Numero 412	357
+-23.461367	-46.684138	40		Av. Deputado Cantidio Sampaio (bairro/centro), Numero 2145	166
+-23.447803	-46.702991	40		Av Dep Cantidio Sampaio, Bairro/Centro	340
+-23.499873	-46.608510	40		Av. Conceicao (bairro/centro), Numero 493	263
+-23.461025	-46.615519	50		Av Nova Cantareira (centro/bairro), A Menos 12M da R Conego Arnaldo Caiaffa	8
+-23.460596	-46.615607	50		Av. Nova Cantareira (bairro/centro), Numero 4601	8
+-23.515538	-46.647456	40	268	Av. Olavo Fontoura (santana/marginal), Numero 1800	268
+-23.507166	-46.646768	50	77	Av. Braz Leme (marginal/santana),Oposto Numero 1315	77
+-23.506822	-46.646854	50	257	Av. Braz Leme (santana/marginal),Numero 1315	257
+-23.487024	-46.646362	50	245	Av. Engenheiro Caetano Alvares (bairro/centro), Numero 4339	245
+-23.485622	-46.740222	50	128	Av. Mutinga (anhanguera/pirituba),Numero 1425	128
+-23.485320	-46.582887	40		Av Gustavo Adolfo (b/c), A Menos 14M da R Joao de Souto Maior	134
+-23.494993	-46.581426	40		Av. Conceicao (centro/bairro)	275
+-23.493561	-46.622973	40	346	R. Doutor Zuquim (centro/bairro), Numero 1340	346
+-23.479348	-46.662234	40		Av. Imirim (bairro/centro), Numero 3749	329
+-23.501416	-46.637650	40	164	R. Doutor Cesar (bairro/centro), A Menos 12M da R. Capitao Manuel Novais	164
+-23.410404	-46.776178	50		Estr. de Perus (anhanguera/perus), A Menos 20 Metros Numero 1600	186
+-23.508322	-46.732574	50	282	R. Inacio Luis da Costa (centro/bairro), Numero 1098	282
+-23.465291	-46.665733	50	71	R. Afonso Lopes Vieira (centro/bairro), Numero 458	71
+-23.465080	-46.665803	50	252	R. Afonso Lopes Vieira (bairro/centro), Numero 457	252
+-23.515662	-46.644207	40	84	Av. Olavo Fontoura (marginal/santana), Oposto Numero 1400	84
+-23.487312	-46.646242	50	61	Av. Engenheiro Caetano Alvares (centro/bairro), Numero 4358	61
+-23.484821	-46.723118	50	53	Av. Raimundo Pereira de Magalhaes (centro/bairro) , Numero 5374	53
+-23.484477	-46.723069	50	238	Av. Raimundo Pereira de Magalhaes (bairro/centro), Numero 5435	238
+-23.494989	-46.580979	40		Av. Conceicao (bairro/centro)	273
+-23.506042	-46.717349	50	309	Av. Raimundo Pereira de Magalhaes (centro/bairro), Numero 1652	309
+-23.479613	-46.707680	50	15	Av. Fuad Lutfalla (centro/bairro),Oposto Numero 1191	15
+-23.479561	-46.707898	50	194	Av. Fuad Lutfalla (bairro/centro),Numero 1191	194
+-23.402150	-46.720126	50		Av Raimundo P de Magalhaes (pirit/perus), A Menos 154M Alca de Acesso Rodoanel	228
+-23.504020	-46.631364	50	94	Av. Braz Leme (marginal/santana),Oposto Numero 2947	94
+-23.410362	-46.776224	50		Est de Perus (perus/anhang), Oposto Ao N 1600	186
+-23.545196	-46.692567	50		R. Heitor Penteado (centro/bairro), Numero 1528	124
+-23.537420	-46.654494	50		Av Angelica (higienopolis/barra funda), Numero 511	16
+-23.584813	-46.688206	50	222	Av. Cidade Jardim (centro/bairro), A Mais 85 Metros do Numero 924	222
+-23.598166	-46.747158	50	355	Av. Pirajussara (bairro/centro) A Menos 270M da R. Caminho do Engenho	355
+-23.598627	-46.740971	50	25	Av Professor Francisco Morato (bairro/centro) A Menos 70M da R David Matarasso	25
+-23.632445	-46.681445	50	307	Av. Professor Vicente Rao (diadema/marginal) Oposto Ao Numero 894	307
+-23.632242	-46.681786	50	307	Av. Professor Vicente Rao (marginal/diadema) Numero 860	307
+-23.637001	-46.693634	50	38	Av Vereador Jose Diniz (centro/bairro), A Mais 92M da R Americo Brasiliense	38
+-23.656115	-46.735889	40		Av. Maria Coelho de Aguiar (bairro/centro), Numero 1359/Av. Maria Coelho de Aguiar (centro/bairro), Numero 1368	3
+-23.622063	-46.759075	40	267	Estr. do Campo Limpo (vila sonia/campo limpo), Numero 5211/Estr. do Campo Limpo (campo limpo/vila sonia), Numero 5214	267
+-23.616856	-46.735775	40		R. Marechal Hastinfilo de Moura (mora to/giovanni), Numero 233/R. Marechal Hastinfilo de Moura (giovanni/morato), Oposto Ao Numero 233	56
+-23.582924	-46.749683	50		Av Engenheiro Heitor Antonio Eiras Garcia (butanta/raposo), Oposto Ao Nr 1927/Av. Engenheiro Heitor Antonio Eiras Garcia (raposo/butanta), Numero 1927	175
+-23.678408	-46.776909	40	81	R. Henrique Sam Mindlin (itapecerica/m boi), Numero 407/R. Henrique Sam Mindlin (m boi/itapecerica), Numero 408	81
+-23.633460	-46.730528	40		R. Jose Ramon Urtiza (giovanni/marginal pinheiros), Numero 660/R. Jose Ramon Urtiza (marginal pinheiros/giovanni), Numero 901	88
+-23.645851	-46.710109	50	285	Av. Joao Dias (centro/bairro), A Mais 24,7 Metros do Numero 966	285
+-23.645896	-46.710138	50	105	Av. Joao Dias (bairro/centro), A Mais 7,9 Metros da R. Barao do Rio Branco	105
+-23.638356	-46.697220	50	209	Av. Santo Amaro (centro/bairro), A Mais 28 Metros da R. Verbo Divino	209
+-23.653835	-46.759686	50	218	Estr. de Itapecerica (bairro/centro), Numero 2979	218
+-23.624994	-46.682121	50	40	Av. Vereador Jose Diniz (bairro/centro), A Mais 26M da R. Joaquim Nabuco	40
+-23.624788	-46.682434	50	221	Av Vereador Jose Diniz (centro/bairro)	221
+-23.583418	-46.714577	50	66	Av Prof Francisco Morato (bairro/centro), A Menos 20M da R Gal Sena de Vasconcelos	66
+-23.636858	-46.693810	50	218	Av Vereador Jose Diniz (bairro/centro), A Menos 70M da R Americo Brasiliense	218
+-23.687795	-46.771883	50	39	Estr. do M Boi Mirim (bairro/centro), A Menos 60 M da R Joao de Lima Bonfante	39
+-23.628256	-46.688562	50	33	Av. Santo Amaro (bairro/centro), Numero 5197	33
+-23.670276	-46.737921	50	71	Estr. do M Boi Mirim (bairro/centro)	71
+-23.667015	-46.725346	50	266	Av. Guarapiranga (centro/bairro), A Menos 178 Metros da Av. Guido Caloi	266
+-23.667185	-46.725268	50	86	Av. Guarapiranga (bairro/centro), Numero 1389	86
+-23.670045	-46.738018	50	251	Estr. do M Boi Mirim (c/b), A Mais 27 Metros do Numero 460	251
+-23.622215	-46.697502	50	143	Av Roque Petroni Junior (marg pinheiros/diadema) Nr 1089	143
+-23.621342	-46.733367	50		Av Giovanni Gronchi (bairro/centro), Numero 4855/Av Giovanni Gronchi (centro/bairro), A Menos 22 Metros do Numero 4864	7
+-23.667545	-46.785048	40		Av Felipe Carrillo Puerto (sao paulo/embu), Numero 220/Av Felipe Carrillo Puerto (embu/sao paulo), Numero 189	243
+-23.661270	-46.785660	40	271	Av Dom Rodrigo Sanches (embu/sao paulo), Oposto Ao Numero 650/Av Dom Rodrigo Sanches (sao paulo/embu), Numero 650	271
+-23.672470	-46.743230	50	245	Estr. do M Boi Mirim (centro/bairro), A Mais 34M do Nr 1060	245
+-23.621404	-46.503412	40	209	R. Antonio de Franca e Silva (c/b)	209
+-23.499665	-46.523095	50	251	R. Doutor Assis Ribeiro (bairro/centro), Oposto Ao Numero 3216	251
+-23.602235	-46.482769	50	322	Av. Mateo Bei (bairro/centro), Numero 2323	322
+-23.533390	-46.539985	50	73	Av Conde de Frontin (c/b), A Mais 40M da R Monsenhor Francisco de Paula	73
+-23.571812	-46.587584	50	183	Av. Paes de Barros (centro/bairro), Numero 2430	183
+-23.519016	-46.475862	50	351	Av Aguia de Haia (centro/bairro), A Menos 240 Metros da Estr. do Imperador	351
+-23.515639	-46.476635	50	173	Av Aguia de Haia (bairro/centro), A Menos 104M da Estr. de Mogi das Cruzes	173
+-23.518424	-46.474811	50	152	Estr. do Imperador (centro/bairro), Oposto Ao Numero 984	152
+-23.518496	-46.523573	50	33	Av. Sao Miguel (centro/bairro), Numero 474	33
+-23.587176	-46.516199	40	275	Av. da Barreira Grande (centro/bairro), Numero 2064/Av. da Barreira Grande (bairro/centro), Oposto Numero 2064	275
+-23.589092	-46.510182	40		Av. da Barreira Grande (centro/bairro), Numero 2832/Av. da Barreira Grande (bairro/centro), Numero 2905	305
+-23.598445	-46.553200	40		R. Costa Barros (centro/bairro), Numero 1448/R. Costa Barros (bairro/centro), Numero 1441	110
+-23.597467	-46.507820	40		R. Nova Brasilia (sapopemba/barreira grande), Numero 501/R. Nova Brasilia (barreira grande/sapopemba), Numero 510	95
+-23.612357	-46.523878	40		Av. do Oratorio (centro/bairro), Numero 6518/Av. do Oratorio (bairro/centro), Numero 6515	148
+-23.597440	-46.541156	40	325	Av. do Oratorio (centro/bairro), Numero 3232/Av. do Oratorio (bairro/centro), Numero 3191 A	325
+-23.586795	-46.534553	40		R. Solidonio Leite (centro/bairro), Oposto Numero 2563/R. Solidonio Leite (bairro/centro), Numero 2563	114
+-23.597264	-46.530653	40	253	Av. Vila Ema (centro/bairro), Oposto Numero 5475/Av. Vila Ema (bairro/centro), Numero 5475	253
+-23.590525	-46.572282	40		Av. Zelina (vila prudente/vila alpina), Numero 1212/Av. Zelina (vila alpina/vila prudente), Oposto Numero 1212	100
+-23.507520	-46.489473	50	86	Av Sao Miguel (centro/bairro), Numero 4560	86
+-23.544457	-46.447126	50	338	Av Jacu Pessego/Nova Trabalhadores (maua/ayrton senna), Numero 1923	338
+-23.561589	-46.445766	50	10	Av. Jacu Pessego/Nova Trabalhadores (maua/ayrton senna), Numero 385	10
+-23.561417	-46.446042	50	189	Av. Jacu Pessego/Nova Trabalhadores (ayrton senna/maua), Numero 394	189
+-23.535624	-46.493318	50	276	R Dr Luiz Ayres (b/c), A Mais 314M da R Maciel Monteiro	276
+-23.535655	-46.493724	50	96	R Dr Luiz Ayres (c/b), A Mais 162M da R Dr Pedro Mendes	96
+-23.598350	-46.461170	50	106	Av Ragueb Chohfi (b/c), A Mais 150 Metros da R Francisco de Melo Palheta	106
+-23.598520	-46.461210	50	106	Av Ragueb Chohfi (c/b), A Mais 130 Metros da R Maria Aparecida Custodio	106
+-23.536051	-46.553105	50	77	Av. Conde de Frontin (centro/bairro), A Menos 55 Metros da R. Pinhalzinho	77
+-23.535641	-46.552458	50	258	Av Conde de Frontin (bairro/centro), A Menos 325M do Acesso Ao Vd Antonio Abdo	258
+-23.498823	-46.465279	50	70	Av Sao Miguel (centro/bairro), A Menos 29 Metros da R Pau D Arco Roxo	70
+-23.573571	-46.445517	50	338	Av Jacu Pessego/N. Trabalhadores (s. mat/s.mig) A Menos 20M da R Jaime R Wright	338
+-23.587704	-46.442921	50	165	Av Jacu Pessego/N. Trabalhad. (s. mig/s. mat), A Mais 256M da Estr. dos Monos	165
+-23.549521	-46.642116	50	241	Av. Nove de Julho (centro/bairro), Numero 398	241
+-23.549752	-46.642271	50	62	Av. Nove de Julho (bairro/centro), Numero 399	62
+-23.522254	-46.540224	40	60	Av. Amador Bueno da Veiga (centro/bairro), Numero 486/Av. Amador Bueno da Veiga (bairro/centro), Numero 487	60
+-23.549502	-46.581080	40	322	Av. Alvaro Ramos (bairro/centro), Oposto Numero 1582/Av. Alvaro Ramos (centro/bairro), Numero 1582	322
+-23.580110	-46.487044	50	253	Av. Afonso de Sampaio e Sousa (bairro/centro), Numero 3074/Av. Afonso de Sampaio e Sousa (centro/bairro), Oposto Numero 3074	253
+-23.524049	-46.416077	40	110	R. Conego Antonio Manzi (nordestina/lageado), Numero 4A/R. Conego Antonio Manzi (lageado/nordestina), Numero 27	110
+-23.528040	-46.474286	40	350	Av. Aguia de Haia (sao miguel/radial), A Menos 6,50 Metros da R. Cuim/Av. Aguia de Haia (radial/são miguel), A Mais 21 Metros da R. Cuim	350
+-23.539326	-46.482758	40	76	Av. Aguia de Haia (sao miguel/radial), Oposto Numero 176/Av. Águia de Haia (radial/são miguel), Numero 176	76
+-23.532767	-46.448180	40	50	R. Augusto Carlos Bauman (centro/bairro), Oposto Numero 687C/R. Augusto Carlos Bauman (bairro/centro), Numero 687C	50
+-23.484673	-46.428358	40		Av Oliveira  Freire (sao miguel/guarulhos), Numero 732/Av Oliveira Freire (guarulhos/sao miguel), Numero 715	86
+-23.549309	-46.525075	50	147	Av. Aricanduva (centro/bairro), A Mais 123 Metros da R. Astarte	147
+-23.568105	-46.596214	40		R. Celso de Azevedo Marques (centro/bairro), Numero 196/R. Celso de Azevedo Marques (bairro/centro), Numero 193A	286
+-23.533515	-46.459594	40	301	Av. Campanella (bairro/centro), Número 1863/Av. Campanella (centro/bairro), Oposto Numero 1863	301
+-23.499234	-46.487386	40	192	Av. Boturussu (sao miguel/paranagua), Mais 2 Metros Numero 906/Av. Boturussu (paranagua/sao miguel), Numero 915	192
+-23.525264	-46.614425	40	113	Av. Bom Jardim (centro/bairro), Numero 275/Av. Bom Jardim (bairro/centro), Numero 220	113
+-23.506378	-46.531431	40		Av. Cangaiba (centro/bairro), Numero 2526/Av. Cangaiba (bairro/centro), Numero 2539	254
+-23.549724	-46.425822	40	351	R. Luis Mateus (iguatemi/sao miguel), Numero 675/R. Luis Mateus (sao miguel/iguatemi),  Numero 820	351
+-23.554295	-46.435097	40		R. Jardim Tamoio (guaianazes/itaquera)X R. Cristovão de Salamanca /R Jardim Tamoio (itaquera/guaianazes)	95
+-23.573798	-46.537784	40		Av. Montemagno (agua rasa/vila formosa), Numero 2926/Av. Montemagno (vila formosa/aguarasa), Numero 2927	104
+-23.527485	-46.501198	40		R. Itingucu (centro/bairro), Numero 1512/R. Itingucu (bairro/centro), Numero 1517	294
+-23.572614	-46.540797	40		Av. Renata (sapopemba/aricanduva), Numero 257/Av. Renata (aricanduva/sapopemba), Numero 258	14
+-23.575249	-46.529309	40		Av. Cipriano Rodrigues (centro/bairro), Numero 314/Av. Cipriano Rodrigues (bairro/centro), Oposto Numero 314	305
+-23.488045	-46.479484	40		Av. Paranagua (assis ribeiro/sao miguel), Oposto Numero 2070/Av. Paranagua (sao miguel/assis ribeiro), Numero 2070	184
+-23.496107	-46.507376	40		R. Olho D Agua do Borges (bairro/centro), Numero 94/R. Olho D Agua do Borges (centro/bairro), Numero 184	134
+-23.495244	-46.388460	40		R. Manuel Bueno da Fonseca (centro/bairro), Numero 120 A/R. Manuel Bueno da Fonseca (bairro/centro), Oposto Numero 120 A	151
+-23.522645	-46.399649	40		Estr. Dom Joao Nery (lageado/itaim paulista), Oposto Numero 3462/Estr. Dom Joao Nery (itaim paulista/lageado), Numero 3462	177
+-23.572035	-46.581632	40		R. do Oratorio (mooca/agua rasa), Oposto Numero 2853/R. do Oratorio (agua rasa/mooca), Numero 2853	37
+-23.528870	-46.441988	40		R. Damasio Pinto (centro/bairro), Numero 294/R. Damasio Pinto (bairro/centro), Oposto Numero 294	56
+-23.572650	-46.499644	40	280	Av. dos Latinos (centro/bairro), Oposto Numero 627/Av. dos Latinos (bairro/centro), Numero 627	280
+-23.542126	-46.418768	40		R. Salvador Gianetti (centro/bairro), Numero 386/R. Salvador Gianetti (bairro/centro)  Oposto Numero 386	281
+-23.501335	-46.391779	40	311	Av. Barao de Alagoas (centro/bairro), A Menos 22 Metros do Numero 832/Av. Barao de Alagoas (bairro/centro), A Menos 35 Metros R. Itajubi	311
+-23.556671	-46.411078	40	143	R. da Passagem Funda (guaianazes/iguatemi), Numero 518/R da Passagem Funda (iguatemi/guaianazes), A Menos 9 Metros R Professor Tadeu	143
+-23.535875	-46.416981	40		Av. Nordestina (sao miguel/lageado), Numero 6800/Av. Nordestina (lageado/sao miguel), Oposto Ao Numero 6800	351
+-23.556449	-46.449934	50		R. Sao Teodoro (centro/bairro), A Mais 23 Metros Numero 1198/R. Sao Teodoro (bairro/centro), A Mais 35 Metros R. Lagoa Tai Grande	91
+-23.550098	-46.445087	40	183	R. Sabbado D Angelo (iguatemi/sao miguel), Oposto Ao Numero 1980/R. Sabbado D Angelo (sao miguel/iguatemi), Numero 1980	183
+-23.560403	-46.408674	40		R. Fernao Carrilho (ferraz de vasconcelos/guaianazes), Numero 7B/R. Fernao Carrilho (guaianazes/ferrazde vasconcelos), Numero 109	77
+-23.536264	-46.403367	40		Estr. do Lageado Velho (centro/bairro), Numero 612/Estr. do Lageado Velho (bairro/centro), Numero 579	60
+-23.551443	-46.490737	40		Av. Waldemar Tietz (artur alvim/cidade lider), Numero 365/Av. Waldemar Tietz (cidade lider/artur  alvim), Numero 366	248
+-23.488637	-46.385263	40	231	Av. Marechal Tito (centro/bairro),  Oposto Numero 6765/Av. Marechal Tito (bairro/centro), Numero 6765	231
+-23.600307	-46.570837	40		R. Baia Grande (vila alpina/vila zelina), Numero 483/R. Baia Grande (vila zelina/vila alpina), Numero 472	173
+-23.536211	-46.642822	50	147	Pc Princesa Isabel (bairro/centro), A Menos 25 Metros da Av Duque de Caxias	147
+-23.552710	-46.618838	50	97	Av. Alcantara Machado (centro/bairro), Numero 638	97
+-23.540504	-46.575400	50	258	R Melo Freire (bairro/centro), A Mais 404 Metros do Vd. Carlos Ferraci	258
+-23.518491	-46.546338	40	14	Av Cangaiba (centro/bairro), Numero 142/Av Cangaiba (bairro/centro), Oposto Numero 142	14
+-23.544470	-46.593170	50	257	Av Alcantara Machado (c/b), A Mais 3M da R Siqueira Bueno	257
+-23.498692	-46.464944	50	70	Av Sao Miguel (bairro/centro), Numero 7469	70
+-23.531063	-46.520210	50	249	Av Antonio Estevao de Carvalho (b/c), Oposto Ao Nr 100	249
+-23.530540	-46.518460	50	62	Av Antonio Estevao de Carvalho (c/b), A Mais 133M da Pca Nossa S da Anunciacao	62
+-23.526453	-46.630918	50	50	Av Santos Dumont (c/b), A Menos 162 Metros da Av do Estado	50
+-23.525901	-46.631347	50	191	Av Santos Dumont (b/c), A Menos 20M da R Rodolfo Miranda	191
+-23.514166	-46.494363	50	92	Estr. de Mogi das Cruzes (centro/bairro), Numero 590	92
+-23.547860	-46.602600	50	238	Av Alcantara Machado (bairro/centro)	238
+-23.514893	-46.498155	50	248	Estr. de Mogi das Cruzes (bairro/centro) Numero 147	248
+-23.617685	-46.506590	40		R Luis Juliani (sao paulo/santo andre), Numero 528/R Luis Juliani (santo andre/sao paulo), Numero 515 A	229
+-23.531384	-46.533491	50	263	R Alvinopolis (b/c),A Menos 114 M da R Mirandinha	263
+-23.543830	-46.530640	50	296	Av Aricanduva (bairro/centro)	296
+-23.555261	-46.516799	50	327	Av Aricanduva (bairro/centro)	327
+-23.598739	-46.468317	50	65	Av Ragueb Chohfi (s mateus/tiradentes)	65
+-23.509379	-46.546763	50	94	R Doutor Assis Ribeiro (centro/bairro), Numero 414	94
+-23.574917	-46.502779	50	325	Av Aricanduva (bairro/centro), A Mais 65M da Av Matapi	325
+-23.540210	-46.467510	50	132	Av Jose Pinheiro Borges (c/b)	132
+-23.540220	-46.467510	50	132	Av Jose Pinheiro Borges (b/c)	132
+-23.486862	-46.437463	40		Av. Doutor Jose Artur Nova (sao paulo/guarulhos), Numero 800/Av. Doutor Jose Artur Nova (guarulhos/sao paulo), Oposto Numero 800	322
+-23.548021	-46.525475	50	320	Av Aricanduva (bairro/centro) A Menos 38 Metros da R. Arquiteto Heitor de Melo	320
+-23.540955	-46.613306	40		Av Rangel Pestana (centro/bairro), Numero 2338	56
+-23.567824	-46.462575	40	313	Av Osvaldo Pucci (cidade lider/jose bonifacio), A Mais 3M Oposto Numero 555/Av Osvaldo Pucci (jose bonifacio/cidade lider), A Menos 3M Numero 555	313
+-23.517656	-46.480701	50	98	Estr. de Mogi das Cruzes (centro/bairro), Numero 2120	98
+-23.537126	-46.593399	40		Av Celso Garcia (centro/bairro), Nr 1964 - A	83
+-23.537046	-46.592647	40		Av Celso Garcia (bairro/centro), A Mais 34M do Nr 2065	85
+-23.580438	-46.680908	50	272	Av. Nove de Julho (centro/bairro), Numero 5866	272
+-23.622142	-46.640063	50	191	Av. Jabaquara (centro/bairro), Numero 2046	191
+-23.522956	-46.659518	50	23	Av Dr Abraao Ribeiro (centro/bairro)	23
+-23.606817	-46.675894	50	18	Av. Santo Amaro (bairro/centro), Numero 2587	18
+-23.606093	-46.675778	50	199	Av. Santo Amaro (centro/bairro), Numero 2524	199
+-23.611508	-46.669724	50	218	Av. Ibirapuera (centro/bairro), Numero 3398	218
+-23.539848	-46.646463	50	11	Av. Duque de Caxias (centro/bairro), Numero 193	11
+-23.560376	-46.682221	50	57	R. Teodoro Sampaio (bairro/centro), Numero 1316	57
+-23.527648	-46.674229	50	238	Av Antartica (marginal tiete/pinheiros) A Mais 10 Metros do Vd. Antartica	238
+-23.609112	-46.667348	50	40	Av. Ibirapuera (bairro/centro)	40
+-23.595292	-46.673022	50	10	Av. Santo Amaro (bairro/centro)	10
+-23.590293	-46.681059	50	268	Av Pr Juscelino Kubitschek (ib/m pin)	268
+-23.601980	-46.660593	50	40	Av. Ibirapuera (bairro/centro)	40
+-23.542903	-46.706888	40		R. Doutor Alberto Seabra (lapa/pinheiros), Numero 959/R. Doutor Alberto Seabra (pinheiros/lapa), Numero 966	34
+-23.542360	-46.711560	50	9	Pç. Sao Marcos (lapa/pinheiros), A Mais 25 Metros da Av. Sao Gualter / Pç. Sao Marcos (pinheiros/lapa), A Mais 25 Metros da Av. Sao Gualter	9
+-23.574793	-46.668331	50	51	Av. Nove de Julho (centro/bairro), Numero 4364	51
+-23.574833	-46.668138	50	51	Av. Nove de Julho (bairro/centro), Numero 4325	51
+-23.559236	-46.654153	50	33	Av. Nove de Julho (bairro/centro), Numero 2029	33
+-23.558957	-46.654137	50	213	Av. Nove de Julho (centro/bairro), Numero 2054	213
+-23.571890	-46.697425	50	82	Av. Eusebio Matoso (bairro/centro), A Menos 5 Metros da R. Sao Columbano	82
+-23.571532	-46.695824	50	264	Av Eusebio Matoso (centro/bairro), A Mais 70 Metros da R Cardeal Arcoverde	264
+-23.559645	-46.670233	50	58	Av. Reboucas (bairro/centro), Numero 839	58
+-23.559352	-46.670081	50	240	Av. Reboucas (centro/bairro), Oposto Numero 839	240
+-23.567434	-46.683726	50	60	Av. Reboucas (bairro/centro), Numero 2485	60
+-23.567254	-46.683739	50	240	Av. Reboucas (centro/bairro), Numero 2472	240
+-23.529117	-46.738927	50	117	Av Dr Gastao Vidigal (m tiete/vl leop)	117
+-23.548415	-46.650250	50	70	R. da Consolacao (bairro/centro), Numero 927	70
+-23.538071	-46.708538	40		R. Cerro Cora (jaguare/lapa), Oposto Numero 1268 /  R. Cerro Cora (lapa/jaguare), Numero 1268	321
+-23.535703	-46.717757	40		R. Cerro Cora (jaguare/lapa), Numero 2375/R. Cerro Cora (lapa/jaguare), Numero 2384	260
+-23.602024	-46.660846	50	220	Av. Ibirapuera (centro/bairro), Numero 1994	220
+-23.569005	-46.661057	50	222	Av. Nove de Julho (centro/bairro), Numero 3384	222
+-23.558705	-46.660819	50		R. Augusta (bairro/centro), Numero 1801	224
+-23.582546	-46.685589	50	42	Av. Cidade Jardim (bairro/centro)	42
+-23.549374	-46.653184	50	238	R. da Consolacao (centro/bairro), Numero 1272	238
+-23.567307	-46.659174	50	41	Av. Nove de Julho (bairro/centro), Numero 3117	41
+-23.587871	-46.634476	50	352	Av Professor Noe Azevedo (jabaquara/vila mariana), A Mais 20M da R Dona Julia	352
+-23.554735	-46.668964	50	294	Av. Doutor Arnaldo (centro/bairro) A Mais 155 Metros da R. Major Natanael	294
+-23.553105	-46.673400	50	113	Av. Doutor Arnaldo (bairro/centro), Numero 925	113
+-23.566918	-46.617766	40	128	R. da Independencia (centro/bairro), Numero 480	128
+-23.579399	-46.624152	50	10	Av. Lins de Vasconcelos (vila mariana/cambuci), Numero 1807	10
+-23.564636	-46.652504	50	312	Av. Paulista (paraiso/consolacao), Numero 1106	312
+-23.566406	-46.650679	50	132	Av. Paulista (consolacao/paraiso), Numero 807	132
+-23.577322	-46.625276	50	191	Av. Lacerda Franco (cambuci/vila mariana) Numero 1680	191
+-23.545055	-46.692886	50		R. Heitor Penteado (bairro/centro), Numero 1529	124
+-23.581808	-46.666214	50		Av Brigadeiro Luis Antonio (centro/bairro), Oposto Ao Nr 4655	57
+-23.442189	-46.713084	40	38	R. Joao Amado Coutinho (jaragua/brasilandia), Numero 884/R. Joao Amado Coutinho (brasilandia/jaragua), Numero 883	38
+-23.464932	-46.599655	40	128	R. Manuel Gaya (tremembe/jacana), Numero 761/R. Manuel Gaya (jacana/tremembe), Oposto Numero 761	128
+-23.500530	-46.706408	50	354	Av. General Edgar Faco (centro/bairro), Numero 676	354
+-23.499697	-46.680444	40		Av. Clavasio Alves da Silva (centro/bairro), Numero 164/Av. Clavasio Alves da Silva (bairro/centro), Oposto Numero 164	
+-23.479949	-46.649995	40	143	R. Conselheiro Moreira de Barros (santana/mandaqui), Numero 3358/R. Conselheiro Moreira de Barros (mandaqui/santana), Oposto Numero 3358	143
+-23.483017	-46.646093	40	127	R. Conselheiro Moreira de Barros(santana/mandaqui), Numero 2832/R. Conselheiro Moreira de Barros (mandaqui/santana), Oposto Numero 2832	127
+-23.490569	-46.753224	40		R. Coronel Jose Rufino Freire (bairro/centro), Numero 261/R. Coronel Jose Rufino Freire (centro/bairro), Numero 252	285
+-23.508068	-46.750777	40	262	Av. Candido Portinari (centro/bairro), Numero 402/Av. Candido Portinari (bairro/centro), Oposto Numero 402	262
+-23.461870	-46.650743	40		Av. Peri Ronchetti (cachoeirinha/horto), Numero 475/Av. Peri Ronchetti (horto/cachoeirinha), Oposto Numero 475	55
+-23.468646	-46.643896	40		Av Parada Pinto (centro/bairro), Menos 5 Metros da R Casa Ilha da Madeira/Av Parada Pinto (bairro/centro), Mais 5 Metros da R Casa Ilha da Madeira	40
+-23.480406	-46.632242	40	157	R. Voluntarios da Patria (mandaqui/santana), Numero 4747/R. Voluntarios da Patria (santana/mandaqui), Oposto Numero 4747	157
+-23.497824	-46.615734	40		Av. Leoncio de Magalhaes (carandiru/agua fria), Oposto Numero 337/Av. Leoncio de Magalhaes (agua fria/carandiru), Numero 337	8
+-23.498318	-46.607380	40	92	R. Coronel Marcilio Franco (bairro/centro), Numero 305/R. Coronel Marcilio Franco (centro/bairro), Oposto Numero 305	92
+-23.502869	-46.666640	50	39	Av. Engenheiro Caetano Alvares (centro/bairro), Numero 1358	39
+-23.518516	-46.589728	50	36	Av. Guilherme Cotching (centro/bairro), Numero 1238	36
+-23.497266	-46.612284	50	27	Av. Luiz Dumont Villares (b/c)	27
+-23.496875	-46.612324	50	200	Av. Luiz Dumont Villares (c/b)	200
+-23.495919	-46.662004	50	223	Av Engenheiro Caetano Alvares (b/c)	223
+-23.483743	-46.602974	40		Av. General Ataliba Leonel (centro/bairro), Numero 3918/Av. General Ataliba Leonel (bairro/centro), Oposto Numero 3918	243
+-23.508228	-46.580539	40	22	Av. Cerejeiras (bairro/centro), A Menos 45 Metros do Numero 790/Av. Cerejeiras (centro/bairro), A Menos 15 Metros da R. Yoritomo	22
+-23.483499	-46.579763	40	333	Av. Jardim Japao (jardim brasil/vila nivi), Numero 770/Av. Jardim Japao (vila nivi/jardimbrasil), Oposto Numero 770	333
+-23.456969	-46.600350	40	290	R. Maria Amalia Lopes de Azevedo (jardim guapira/tremembe), Numero 2689/R. Maria Amalia Lopes de Azevedo (tremembe/jardim guapira), Oposto Numero 2689	290
+-23.511130	-46.606020	50	198	Av. Joaquina Ramalho (centro/bairro), Numero 570/Av. Joaquina Ramalho (bairro/centro), Numero 631	198
+-23.503556	-46.603398	50		Av. Joaquina Ramalho (centro/bairro), Numero 1500/Av. Joaquina Ramalho (bairro/centro), Numero 1511	207
+-23.439502	-46.721298	50	354	Av. Raimundo Pereira de Magalhaes(centro/bairro), Numero 11790/Av. Raimundo Pereira de Magalhaes(bairro/centro), Numero 11773	354
+-23.493878	-46.591713	40		Av. Ede (centro/bairro), Numero 634/Av. Ede (bairro/centro), Numero 651	33
+-23.475071	-46.591876	50		Av. Guapira (centro/bairro), Numero 1386/Av. Guapira (bairro/centro), Oposto Numero 1394	264
+-23.509586	-46.587589	40		R. Mere Amedea (marginal tiete/vila maria), Numero 476/R. Mere Amedea (vila maria/marginaltiete), Oposto Numero 476	195
+-23.469941	-46.617024	50		Av. Nova Cantareira (tremembe/aguafria), Numero 3541/Av. Nova Cantareira (agua fria/tremembe), Oposto Ao Numero 3541	20
+-23.475903	-46.612099	40		Av. Nova Cantareira (agua fria/tucuruvi), Numero 2511/Av. Nova Cantareira (tucuruvi/aguafria), Numero 2534	302
+-23.499167	-46.587676	40		R. Padre Saboia de Medeiros (jardim japao/vila maria) , Numero 299/R. Padre Saboia de Medeiros (vila maria/jardim japao), Numero 304	32
+-23.475918	-46.600093	50		Av Doutor Antonio Maria de Laet (bairro/centro), A Mais 30M da R Sao Nestor/Av Doutor Antonio Maria de Laet (centro/bairro), A Menos 30M da R Sao Nestor	227
+-23.488161	-46.675928	40		Av. Deputado Emilio Carlos (bairro/centro), Numero 2113/Av. Deputado Emilio Carlos (centro/bairro), Numero 2224	5
+-23.519158	-46.560655	50	331	Av. Educador Paulo Freire (penha/fernao dias), Numero 1100	331
+-23.509544	-46.670774	50	184	Av Engenheiro Caetano Alvares (b/c)	184
+-23.515507	-46.625056	50	1	Av. Cruzeiro do Sul (centro/bairro), Numero 1800	1
+-23.515238	-46.625304	50	182	Av. Cruzeiro do Sul (bairro/centro), Numero 1803	182
+-23.503842	-46.630506	50	274	Av. Braz Leme (bairro/centro)	274
+-23.506563	-46.615217	50	6	Av. Zaki Narchi (centro/bairro), Numero 1250	6
+-23.506545	-46.615415	50	185	Av. Zaki Narchi (bairro/centro), A Menos 34 Metros Numero 1207	185
+-23.516941	-46.584451	50	126	R. Curuca (vila guilherme/dutra)	126
+-23.515712	-46.594963	50	1	Av Nadir Dias de Figueiredo (mt/vg)	1
+-23.515439	-46.595162	50	182	Av Nadir Dias de Figueiredo (vg/dutra)	182
+-23.490934	-46.709990	50	352	Av. General Edgar Faco (centro/bairro), Numero 1754	352
+-23.495877	-46.708172	50	148	Av. General Edgar Faco (bairro/centro), Numero 1179	148
+-23.484112	-46.607456	50	209	Av Luiz D Villares (b/c), A Mais 39M Av M Eurico Gaspar Dutra	209
+-23.482256	-46.605092	50	75	Av Luiz Dumont Villares (c/b), A Menos 35M R Ariosto Cesar	75
+-23.490710	-46.610486	50	24	Av Luiz Dumont Villares (c/b), A Menos 35M R Francisco Lipi	24
+-23.503345	-46.619954	50	44	Av. General Ataliba Leonel (centro/bairro), Numero 768	44
+-23.502500	-46.618120	50	256	Av. General Ataliba Leonel (bairro/centro), Numero 1089	256
+-23.517848	-46.589423	50	216	Av. Guilherme Cotching (bairro/centro), Numero 1303	216
+-23.500203	-46.628933	50		R. Alfredo Pujol, (santana/casa verde), Numero 316	272
+-23.514144	-46.654429	50	70	R. Zanzibar (bairro/centro), Numero 125	70
+-23.471426	-46.640653	40		Av Ultramarino (santana/mandaqui), Numero 694/Av Ultramarino (mandaqui/santana), Oposto Numero 694	132
+-23.490637	-46.610650	50	203	Av Luiz Dumont Villares (b/c), A Menos 62M R Sargento Mor Ramalho	203
+-23.500254	-46.629572	50		R Alfredo Pujol (casa verde/santana),Numero 383	271
+-23.500136	-46.622327	40	1	R Doutor Zuquim (centro/bairro)	1
+-23.499611	-46.598713	40	204	Av Conceicao (centro/bairro), Oposto Numero 1539/Av Conceicao (bairro/centro), Numero 1539	204
+-23.470771	-46.605795	40	216	Av Coronel Sezefredo Fagundes (c/b), Numero 876/Av Coronel Sezefredo Fagundes (b/c), Numero 877	216
+-23.494017	-46.731071	40	144	Av Raimundo Pereira de Magalhaes (centro/bairro), A Menos 6M Numero 3840/Av Raimundo Pereira de Magalhaes (bairro/centro), A Menos 230M Numero 3101	144
+-23.480371	-46.567206	40	154	Av. Edu Chaves (jacana/edu chaves), Oposto Numero 1533/Av. Edu Chaves (edu chaves/jacana), Numero 1533	154
+-23.481620	-46.592858	40	117	Av. Gustavo Adolfo (tucuruvi/jardim brasil), Numero 686/Av. Gustavo Adolfo (jardim brasil/tucuruvi), Numero 683	117
+-23.476942	-46.620327	40		Av. Agua Fria (bairro/centro), Numero 1373/Av. Agua Fria (centro/bairro), Numero 1356	223
+-23.491565	-46.655881	50	42	Av Engenheiro Caetano Alvares (centro/bairro), Nr 3142	42
+-23.503242	-46.609540	40	301	R. Maria Candida (b/c), Numero 542	301
+-23.403164	-46.738880	40		R Antonio Jose Anacleto (caieiras/rodoanel), Oposto Numero 160/R Antonio Jose Anacleto (rodoanel/caieiras), Numero 160	163
+-23.503849	-46.624946	40	180	Av Cruzeiro do Sul (b/c)	180
+-23.526521	-46.682087	50	313	R. Palestra Italia (perdizes/lapa)	313
+-23.524430	-46.630340	50	304	Av do Estado (ipiranga/santana)	304
+-23.616986	-46.710405	50		Av Morumbi (marg pinheiros/francisco morato), A Mais 117M da R Leonor Quadros	
+-23.542374	-46.718967	50	351	Av. Padre Pereira de Andrade (pinheiros/lapa), Numero 575	351
+-23.541477	-46.719273	50	170	Av. Padre Pereira de Andrade (lapa/pinheiros), Oposto Ao Numero 519	170
+-23.570725	-46.675841	50	144	R. Groenlandia (pinheiros/itaim), Numero 1546	144
+-23.672996	-46.744144	50	68	Estr. do M Boi Mirim (bairro/centro), Numero 1211	68
+-23.616998	-46.710308	50		Av Morumbi (francisco morato/marginal pinheiros), A Menos 86M da R Heitor Portugal	
+-23.605822	-46.668005	40	41	Alameda Jauaperi (bairro/centro), Numero 1096	41
+-23.653548	-46.759562	50	219	Estr. de Itapecerica (centro/bairro) A Menos 55M da R. Joao Francisco Delmas	219
+-23.494657	-46.414193	50	103	Av Marechal Tito (centro/bairro)	103
+-23.546880	-46.599600	40	280	R Joao Tobias (bairro/centro)	280
+-23.563707	-46.678493	50	146	R Henrique Schaumann (pinheiros/jardins), Numero 81	146
+-23.582290	-46.561630	50	76	Av Prof Luiz Ignacio Anhaia Mello (centro/bairro), Oposto Ao Nr 3333	76
+-23.582080	-46.561830	50	256	Av Prof Luiz Ignacio Anhaia Mello (bairro/centro), Nr 3333	256
+-23.612590	-46.473199	50		Av Sapopemba (centro/bairro), A Menos 15 Metros do Numero 13958	313
+-23.583522	-46.534931	50		Av Sapopemba (bairro/centro), Numero 5905	326
+-23.622202	-46.465513	50		Av Sapopemba (bairro/centro), A Mais 54M da R Ilha do Cardoso	334
+-23.494996	-46.437623	40		Av Marechal Tito (centro/bairro), A Mais 30M da R Engenheiro Manuel Osorio	289
+-23.564778	-46.677263	50	311	Av Brasil (itaim/pinheiros), A Mais 28M da R Engenheiro Alcides Barbosa	311
+-23.583577	-46.534822	50		Av Sapopemba (centro/bairro), Oposto Numero 5905	324
+-23.612930	-46.491160	50	80	Av Sapopemba (centro/bairro), Oposto Ao Numero 12141	80
+-23.560939	-46.687155	50	237	R. Cardeal Arcoverde (centro/bairro), Numero 1636	237
+-23.563818	-46.668212	40	134	R. Oscar Freire (consolacao/paraiso), Numero 778	134
+-23.636585	-46.737011	50		Av. Giovanni Gronchi (bairro/centro), Numero 6701	178
+-23.675952	-46.752840	50	91	Estr. do M Boi Mirim (bairro/centro), Numero 2203	91
+-23.678770	-46.763164	50	46	Estr. do M Boi Mirim (b/c), A Menos 22M da R. Emilio Kerr	46
+-23.675628	-46.754431	50	284	Estr. do M Boi Mirim (centro/bairro), Numero 2420	284
+-23.557890	-46.515210	50	136	Av Aricanduva (c/b), A Mais 14M da R Dr Mariano Cursino de Moura	136
+-23.624399	-46.737390	50	166	Av Dr Guilherme Dumont Vilares (fco morato/giovanni) A Menos 55M da R Carapoana	166
+-23.553961	-46.675548	50	237	R. Cardeal Arcoverde (centro/bairro),Numero 226	237
+-23.580008	-46.492552	50	317	Av Aricanduva (b/c), A Mais 290M da Av Afonso de Sampaio e Sousa	317
+-23.572240	-46.603931	50	356	Av do Estado (bairro/centro), A Mais 401 Metros da R Guembe	356
+-23.530711	-46.448281	50	39	Av Jose Pinheiro Borges (centro/bairro), A Menos 60M da R Jose Bauman	39
+-23.556517	-46.660182	40	225	R. Haddock Lobo (centro/bairro), Numero 403	225
+-23.555947	-46.663092	50	43	R. da Consolacao (bairro/centro)	43
+-23.555847	-46.682011	50	42	Av. Paulo Vi (pinheiros/sumare), A Mais 35 Metros da R. Lisboa	42
+-23.573138	-46.737561	50	119	Av Corifeu de Azevedo Marques (bairro/centro), A Mais 190M da R Amorim Castro	119
+-23.608290	-46.725842	50	211	Av Giovanni Gronchi (c/b), A Menos 47M da R Antonio Julio dos Santos-Av. Giovanni Gronchi (b/c), Menos 20M da R. Pasquale Gallupi	211
+-23.586709	-46.693498	50	97	Av. dos Tajuras (bairro/centro), Numero 406	97
+-23.702368	-46.782980	40	50	Estr. do M Boi Mirim (centro/bairro), Numero 6880- Estr. do M Boi Mirim (bairro/centro), Oposto Ao Numero 6880	50
+-23.495870	-46.391622	50	242	Av Marechal Tito (bairro/centro), A Mais 2 Metros da R Antonio Nunes Pinto	242
+-23.521474	-46.525620	50	30	Av Sao Miguel (bairro/centro), Numero 105	30
+-23.539126	-46.675016	50	206	Av Sumare (perdizes/pinheiros), Numero 1130	206
+-23.547197	-46.647543	50	340	R Amaral Gurgel  (penha/lapa) A Menos 100M do N° 489	340
+-23.544470	-46.685300	40		R. Apinajes (pinheiros/perdizes), Oposto Ao Numero 1694 / R. Apinajes (perdizes/pinheiros), Numero 1694	213
+-23.614504	-46.470785	50	316	Av Sapopemba (bairro/centro), Numero 14331 A	316
+-23.494970	-46.437284	40		Av. Marechal Tito (bairro/centro), Numero 877	277
+-23.637819	-46.739292	50	108	Av Carlos Caldeira Filho (centro/bairro) A Mais 375M da Av Giovanni Gronchi / Av Carlos Caldeira Filho (bairro/centro), Numero 453	108
+-23.586698	-46.693497	50	97	Av. dos Tajuras (centro/bairro), A Menos 14 Metros do Numero 401	97
+-23.620232	-46.478256	50	2	Av Adelia Chohfi (maua/sao paulo) A Mais 27M da R Fortaleza de Paranaguá	2
+-23.494510	-46.624645	40	150	R Jose Debieux B/C, Nr 261	150
+-23.460275	-46.642959	40		Av Santa Ines C/B, Nr 3200	276
+-23.460390	-46.642978	40		Av Santa Ines B/C, Oposto Nr 3200	276
+-23.521113	-46.727263	40		R Guaipa B/C, Nr 489/R Guaipa C/B, Nr 486	268
+-23.550248	-46.665849	40		R Des Paulo Passalaqua (jd paulista/perdizes), A Menos 49M R Itacaranha	161
+-23.546859	-46.676752	50	5	Av Paulo Vi (pinheiros/perdizes), Oposto Ao Numero 2004	5
+-23.560409	-46.519568	50	136	Av Rio das Pedras (centro/bairro), Numero 280	136
+-23.538480	-46.565510	50	79	R Melo Freire (centro/bairro)	79
+-23.538974	-46.697459	40	357	R. Aurelia (pinheiros/lapa), Numero 1921 / R. Aurelia (lapa/pinheiros), Numero 1906	357
+-23.540351	-46.675475	50	25	Av Sumare (pinheiros/perdizes), Número 1231	25
+-23.507507	-46.489368	50	86	Av Sao Miguel (bairro/centro) Numero 6451	86
+-23.490568	-46.750601	50		Av Mutinga (piritu/anhang), Nr 2962 / Av Mutinga (anhang/piritu), Nr 2959	198
+-23.493809	-46.417353	50	272	Av Marechal Tito (bairro/centro), A Mais 191M do Vd da China	272
+-23.527822	-46.733893	40	140	Av Imperatriz Leopoldina C/B, Nr 609/ Av Imperatriz Leopoldina B/C, Oposto Nr 609	140
+-23.474870	-46.753940	50	322	Estr Turistica do Jaragua (anhang/jaragua), Nr 2500/ Estr Turistica do Jaragua (jaragua/anhang), Nr 2365	322
+-23.501308	-46.709851	50		Av Paula Ferreira B/C, Nr 1075	322
+-23.501381	-46.709786	50		Av Paula Ferreira C/B, Oposto Nr 1075	322
+-23.572771	-46.738224	50	119	Av Corifeu de Azevedo Marques (c/b) A Mais 92M da R Prof Gabriel St de Carvalho	119
+-23.546000	-46.750595	40		Av. Presidente Altino (jaguare/rio pequeno), Numero 1141 / Av. Presidente Altino (rio pequeno/jaguare), Numero 1138	156
+-23.554359	-46.680285	50	223	Av Paulo Vi (sumare/pinheiros), A Mais 135M da Pc Oswaldo Cruz de Souza Dias	223
+-23.489578	-46.717177	50		Av Paula Ferreira C/B, Nr 2642/  Av Paula Ferreira B/C, Oposto Nr 2642	296
+-23.636946	-46.737026	50		Av Giovanni Gronchi (centro/bairro), A Mais 45M da R. Caxe	177
+-23.524587	-46.707511	50	78	R. Barao de Jundiai (bairro/centro), Numero 272	78
+-23.555681	-46.635220	40	356	R Galvao Bueno B/C, Nr 18	356
+-23.552652	-46.741699	50	44	Av. Jaguare (centro/bairro)	44
+-23.587210	-46.591610	50	260	Vd. Grande Sao Paulo (vp/ip), A Mais 51M Av Prof Luiz Ignacio Anhaia Mello	260
+-23.678428	-46.772222	40	123	Av. Comendador Santanna (m boi/itapecerica), Numero 1371/Av. Comendador Santanna (itapecerica/m boi), Numero 1370	123
+-23.587153	-46.665768	50	129	Av Antonio Joaquim de Moura Andrade (marginal pinheiros/ibirapuera), Numero 175	129
+-23.555870	-46.666540	40	296	Tunel Noite Ilustrada (reboucas/dr arnaldo), A Mais 15M do Desemboque do Tunel	296
+-23.543487	-46.470386	50	77	Av S C Corinthians Paulista (c/b) A Menos 123M da Av Prof Eng Ardevan Machado (antiga r dr luiz ayres).	77
+-23.486023	-46.681119	50	40	Av Inajar de Souza (centro/bairro), A Mais 74M da R Inacio Leitao	40
+-23.485620	-46.681320	50	221	Av Inajar de Souza (b/c) A Mais 60M da R Simao de Toledo Castelhanos	221
+-23.499057	-46.685345	50	35	Av. Inajar de Souza (centro/bairro), Numero 736	35
+-23.498782	-46.685703	50	212	Av. Inajar de Souza (bairro/centro), A Mais 21M Numero 765	212
+-23.650143	-46.758719	50	46	Av Carlos Caldeira Filho (b/c)	46
+-23.597935	-46.522585	40		Av. Sapopemba (sao lucas/sapopemba), Numero 8066/Av. Sapopemba (sapopemba/sao lucas), Numero 8077 (antiga av. sapopemba, 8023 e oposto)	326
+-23.480776	-46.674098	50	223	Av Inajar de Souza (b/c), A Menos 61M  R Morato de Oliveira	223
+-23.448960	-46.721518	50	344	Av. Raimundo Pereira de Magalhaes (pirituba/perus), Numero 10662	344
+-23.449193	-46.721600	50	163	Av. Raimundo Pereira de Magalhaes (perus/pirituba), Numero 10535	163
+-23.504679	-46.718466	50	164	Av. Raimundo Pereira de Magalhaes(bairro/centro), Numero 2001	164
+-23.463958	-46.754087	50		Estr. Turistica do Jaragua (jarag/anhang), A Mais 30M da R Com Jose de Matos	69
+-23.464019	-46.754218	50		Estr. Turistica do Jaragua (anhang/jarag), A Menos 53M da R Com Jose de Matos	69
+-23.679847	-46.686833	50	230	Av. Interlagos (centro/bairro) A Mais 11 Metros da R. Geraldo Pacheco Valente	230
+-23.683132	-46.690544	50	40	Av. Interlagos (bairro/centro) A Menos 30 Metros da Av. Eng. Eusebio Stevaux	40
+-23.660467	-46.695190	50	291	Av. Nossa Senhora do Sabara (bairro/centro) Numero 421	291
+-23.660397	-46.695923	50	111	Av. Nossa Senhora do Sabara (c/b) A Mais 117M da R. Dr. Armando da Silva Prado	111
+-23.690418	-46.686520	50	321	R. Miguel Yunes (bairro/centro) A Menos 45 Metros da R. Tabare	321
+-23.690521	-46.686623	50	141	R. Miguel Yunes (centro/bairro) A Menos 170 Metros do Numero 343	141
+-23.678692	-46.706841	50	341	R. Olivia Guedes Penteado (bairro/centro) Oposto Ao Numero 1354	341
+-23.678820	-46.706776	50	341	R. Olivia Guedes Penteado (centro/bairro)  Numero 1354	341
+-23.674623	-46.712299	50	2	Av. Atlantica (bairro/centro) A Mais 91,5 Metros da Av. do Rio Bonito	2
+-23.695866	-46.715122	50	182	Av. Atlantica (centro/bairro) A Menos 12 Metros da R. Porto Artur	182
+-23.674379	-46.712315	50	2	Av. Atlantica (centro/bairro) Numero 1000	2
+-23.695768	-46.714737	50	2	Av. Atlantica (bairro/centro) A Menos 20,8 Metros do Numero 3771	2
+-23.739633	-46.702238	50	242	Av. Senador Teotonio Vilela (centro/bairro) Numero 4548	242
+-23.668690	-46.636050	50	154	Av Eng Armando de Arruda Pereira (centro/bairro), A Mais 65M da R das Vitaceas	154
+-23.668456	-46.635805	50	321	Av Eng Armando de Arruda Pereira (bairro/centro), Numero 5241	321
+-23.658489	-46.663792	50	139	Av. Vereador Joao de Luca (marginal/diadema) Nr 1790	139
+-23.658480	-46.663532	50	322	Av Vereador Joao de Luca (diad/marg) A Mais 20M da Tv Octavio de Abreu Sampaio	322
+-23.704859	-46.687420	50	205	Av. Jair Ribeiro da Silva (c/b)	205
+-23.705042	-46.687302	50	26	Av. Jair Ribeiro da Silva (b/c)	26
+-23.715164	-46.699042	40	199	Av. Senador Teotonio Vilela (centro/bairro), Oposto Ao Numero 1583	199
+-23.663698	-46.649928	40		Av. Rodrigues Montemor (bairro/centro), Numero 533/Av. Rodrigues Montemor (centro/bairro), Oposto Ao Numero 533	49
+-23.636086	-46.650806	40	228	Av. Pedro Bueno (bairro/centro), Numero 935/Av. Pedro Bueno (centro/bairro), Numero 826	228
+-23.671022	-46.696327	40	18	Av. Engenheiro Alberto Zagottis (centro/bairro), Oposto Ao Numero 387/Av. Engenheiro Alberto Zagottis (bairro/centro), Numero 349	18
+-23.690451	-46.643677	40		Av. Angelo Cristianini (centro/bairro), Oposto Ao Numero 1419/Av. Angelo Cristianini (bairro/centro), Numero 1419	15
+-23.649647	-46.642803	40	230	Av. Francisco de Paula Quintanilha Ribeiro (centro/bairro), Numero 280/Av. Francisco de Paula Quintanilha Ribeiro (bairro/centro), Oposto Ao Nr 280	230
+-23.709293	-46.703224	50	229	Av. Interlagos (centro/bairro), Numero 7250/Av. Interlagos (bairro/centro), Numero 7229	229
+-23.672201	-46.710064	40	335	R. Olivia Guedes Penteado (bairro/centro), Numero 573/R. Olivia Guedes Penteado (centro/bairro), Oposto Ao Numero 573	335
+-23.693445	-46.701553	40	357	Av. do Rio Bonito (interlagos/guarapiranga), Numero 2345/Av. do Rio Bonito (guarapiranga/interlagos), Oposto Ao Numero 2345	357
+-23.688852	-46.679890	50	321	Av. Nossa Senhora do Sabara (bairro/centro), Numero 4071	321
+-23.688969	-46.680065	50	142	Av. Nossa Senhora do Sabara (centro/bairro), A Mais 143,5M da R. Tabare	142
+-23.666721	-46.654865	50	297	Av. Cupece (diadema/marginal), A Menos 14M da R. Analia Maria de Jesus	297
+-23.676491	-46.641834	50	342	Av. Cupece (diadema/marginal), A Mais 26 Metros da R. Jose Virginio Simoes	342
+-23.712507	-46.709824	50	313	Av. Atlantica (bairro/centro), A Menos 18 Metros da R. Nicolau Magnoli	313
+-23.744596	-46.706833	50	13	Av. Senador Teotonio Vilela (bairro/centro), Numero 5351	13
+-23.764315	-46.716530	50	201	Av Senador Teotonio Vilela (centro/bairro), A Menos 10M da R Balneario S Jose	201
+-23.666117	-46.656654	50	115	Av. Cupece (marginal/diadema), Numero 2958	115
+-23.676089	-46.642113	50	158	Av. Cupece (marginal/diadema), A Mais 20 Metros do Numero 4820	158
+-23.753237	-46.688343	50	310	Av. Dona Belmira Marin (bairro/centro), A Menos 60 Metros do Numero 2672	310
+-23.753386	-46.688538	50	148	Av Dona Belmira Marin (centro/bairro) A Mais 60M da R Elisia Goncalves Barcelos	148
+-23.744190	-46.690865	50		Av Dona Belmira Marin (c/b), A Mais 322M da Av Antonio C Benjamin dos Santos	136
+-23.736961	-46.693668	50		Av Dona Belmira Marin (centro/bairro), A Mais 63 Metros da R Domenico Cimarosa	133
+-23.689676	-46.697541	50	15	Av. Interlagos (bairro/centro), Numero 5019	15
+-23.661284	-46.679459	50	172	Av Interlagos (centro/bairro), A Menos 24M da R Eng Allyrio Hugueney de Mattos	172
+-23.674202	-46.700005	50	323	Av das Nacoes Unidas (inter/c. branco)	323
+-23.623166	-46.651297	50	308	Av dos Bandeirantes (imigrantes/marginal), A Menos 68M da R Antonio Gomide	308
+-23.639511	-46.673410	50	220	Av. Washington Luis (centro/bairro), A Menos 19 Metros da Av. Doria	220
+-23.641060	-46.673302	50	329	Av Washington Luis (b/c), A Menos 9M da R Doutor Abelardo Vergueiro Cesar	329
+-23.629313	-46.640815	50	88	Av Affonso D Escragnolle Taunay (marg/imig), A Mais 54,5M do Vd Dante Delmanto	88
+-23.676740	-46.698616	60	142	Av das Nacoes Unidas (c branco/interlagos), Numero 22540	142
+-23.661044	-46.659536	40		R. Conde Moreira Lima (jabaquara/cidade ademar), Numero 382/R. Conde Moreira Lima (cidade ademar/jabaquara), Numero 395	241
+-23.735128	-46.695438	50		Av Dona Belmira Marin (bairro/centro)	136
+-23.599202	-46.685661	50	297	Av dos Bandeirantes, Pista Local (imig/marg), A Menos 28M da R Lourenco Marques	297
+-23.599546	-46.685856	50	121	Av dos Bandeirantes, Pista Local (marg/imigrant), A Mais 23M da R Porto Martins	121
+-23.572315	-46.700161	60	309	Marginal Pinheiros, Pt Expressa (interl/cb), A Menos 15M da Pte Eusebio Matoso	309
+-23.712714	-46.710094	50	133	Av Atlantica (c/b), A Mais 175 Metros da R Mario Martins de Almeida	133
+-23.703524	-46.644127	40	331	Estr. do Alvarenga (centro/bairro), Oposto Ao Numero 3565/Estr. do Alvarenga (bairro/centro), Numero 3565	331
+-23.732840	-46.698030	50	27	Av Senador Teotonio Vilela (b/c), A Menos 152M do Nr 3481	27
+-23.750320	-46.710320	50	213	Av Senador Teotonio Vilela (centro/bairro), Numero 5960	213
+-23.757180	-46.714150	50	32	Av Senador Teotonio Vilela (bairro/centro), Numero 6801	32
+-23.794828	-46.730359	40	348	Estr. Ecoturistica de Parelheiros/Av Sadamu Inoue (c/b), Nr 2666/Estr. Ecoturistica de Parelheiros/Av Sadamu Inoue (b/c), Oposto Ao Nr 2666	348
+-23.823135	-46.735170	40	324	Estr Ecoturistica de Parelheiros/Av Sadamu Inoue (c/b), Oposto Ao Nr 6291/Estr Ecoturistica de Parelheiros/Av Sadamu Inoue (b/c), Numero 6291	324
+-23.617650	-46.661420	50	117	Av dos Bandeirantes (marginal/imigrantes) A Mais 49 Metros da Av Washington Luis	117
+-23.646800	-46.631670	70	20	Rv dos Imigrantes (santos/sao paulo),A Menos 1186M da R Guaratu	20
+-23.647150	-46.632090	70	201	Rv dos Imigrantes (sao paulo/santos),A Menos 459M da R Itaguara	201
+-23.664350	-46.709640	50	329	Av das Nacoes Unidas (interlagos/c branco), A Mais 7M da Av Vitor Manzini	329
+-23.609812	-46.675688	50	146	Av dos Bandeirantes (marginal/imigrantes), A Menos 187 Metros do Numero 2040	146
+-23.609694	-46.675481	50	325	Av dos Bandeirantes (imigrantes/marginal) A Mais 181 Metros da R. Gaivota	325
+-23.599358	-46.685632	50	301	Av dos Bandeirantes, Pta Expressa (imig/marg) A Menos 72M da R Lourenco Marques	301
+-23.599479	-46.685704	50	120	Av dos Bandeirantes, Pista Expressa (marg/imig), A Mais 31M da R Porto Martins	120
+-23.618982	-46.658179	50	297	Av dos Bandeirantes (imigrantes/marginal), A Menos 30M da Al dos Guainumbis	297
+-23.614546	-46.668785	50	131	Av dos Bandeirantes (marg/imig), A Menos 71M da R Antonio de Macedo Soares	131
+-23.628456	-46.648151	50	160	Av dos Bandeirantes (marginal/imigrantes), A Menos 20M da Al dos Guaios	160
+-23.622191	-46.653330	50	125	Av dos Bandeirantes (marginal/imigrantes), Numero 5000	125
+-23.613862	-46.669260	50	311	Av dos Bandeirantes (imigrantes/marginal), A Mais 35 M da Alameda dos Jurupis	311
+-23.629412	-46.637521	50	275	Av Affonso D'Escragnolle Taunay (imig/marg), A Menos 390M do Vd Dante Delmanto	275
+-23.570068	-46.573703	50	188	Av Salim Farah Maluf (marginal tiete/vl prudente) A Mais 196M da R Fausto Cleva	188
+-23.535130	-46.583140	50	168	Av Salim Farah Maluf (m tiete/v prud)	168
+-23.535510	-46.582680	50	347	Av Salim Farah Maluf (v prud/m tiete)	347
+-23.579708	-46.572079	50	3	Av Salim Farah Maluf (bairro/centro)	3
+-23.579072	-46.572097	50	203	Av Salim Farah Maluf (marginal tiete/v. prudente), A Menos 20M da Av Vila Ema	203
+-23.549634	-46.578994	50	162	Av Salim Farah Maluf (marginal tiete/vprudente) A Menos 40M da R Florindo Bras	162
+-23.571414	-46.573071	50	314	Av Salim Farah Maluf (vila prudente/marginal tiete), A Mais 205M da R Rhone	314
+-23.549687	-46.578432	50	335	Av Salim Farah Maluf (vl prudente/marginal tiete), A Menos 152M do Numero 2211	335
+-23.562177	-46.576251	50	346	Av Salim Farah Maluf (v prudente/marg)	346
+-23.582975	-46.652612	50	227	Complexo Viario Ayrton Senna (c/b), A Mais 50 Metros da Av Vinte e Tres de Maio	227
+-23.589010	-46.597899	50	355	Av. Juntas Provisorias (anchieta/mooca), Numero 295	355
+-23.598543	-46.597541	50	192	Av. Juntas Provisorias (mooca/anchieta), Numero 1338	192
+-23.607526	-46.605952	50	198	Av. Presidente Tancredo Neves (anchieta/imigrantes), Numero 332	198
+-23.607733	-46.605783	50	16	Av. Presidente Tancredo Neves (imigrantes/anchieta), Oposto Numero 298	16
+-23.592805	-46.647494	50	294	R. Sena Madureira (vila mariana/ibirapuera), Numero 1484	294
+-23.593264	-46.629675	40	317	R. Vergueiro (ipiranga/vila mariana)	317
+-23.594968	-46.632029	40	114	R. Mauricio Francisco Klabin (vila mariana/ipiranga), Numero 422	114
+-23.561600	-46.626819	50	77	R. do Lavapes (centro/bairro), Numero 598	77
+-23.600445	-46.658282	50	311	Av. Indianopolis (jabaquara/ibirapuera), Oposto Ao Numero 46	311
+-23.581563	-46.658118	50	300	Av. Pedro Alvares Cabral (jabaquara/ibirapuera), Numero 201	300
+-23.604193	-46.651375	60	5	Av. Rubem Berta (aeroporto/santana), A Mais 70 Metros do Numero 1377	5
+-23.598356	-46.643738	40	275	R Pedro de Toledo (v mariana/ibirap)	275
+-23.628515	-46.625520	50	262	C. Viario Maria Maluf (ipiranga/jabaquara), A Mais 155M do Desemboque do Tunel	262
+-23.628607	-46.625309	50	82	C. Viario Maria Maluf (jabaquara/ipiranga), A Menos 122M do Emboque do Tunel	82
+-23.596313	-46.650471	50	4	Av. Professor Ascendino Reis (bairro/centro), Numero 603	4
+-23.625510	-46.628972	50	15	Av Prof Abraao de Morais (imig/ipiran)	15
+-23.615422	-46.627317	50	183	Av Prof Abraao de Morais (ipiran/imig)	183
+-23.586499	-46.635377	50	152	R. Vergueiro (centro/bairro)	152
+-23.586502	-46.654307	50	130	Av Pedro Alvares Cabral (c/b), A Menos 80M do Vd General Marcondes Salgado	130
+-23.610385	-46.655483	60	217	Av Moreira Guimaraes, Pista Expressa (santana/aeroporto), Numero 398	217
+-23.614856	-46.638339	50	12	Av Jabaquara (bairro/centro), Numero 1203	12
+-23.614344	-46.638428	50	192	Av Jabaquara (centro/bairro), Numero 1150	192
+-23.596920	-46.650470	50	4	Av Prof Ascendino Reis (centro/bairro), Numero 830	4
+-23.580833	-46.649424	60	231	Av Vinte e Tres de Maio (santana/aeroporto) A Menos 28M do Vd. Tutoia	231
+-23.594795	-46.621522	50	260	Av Dr Ricardo Jafet (ipiranga/imigrantes), A Menos 23M  do Vd. Saioa	260
+-23.626465	-46.617022	50	242	Complexo Viario Maria Maluf (anc/imigra), A Menos 25M do Emboque do Tunel	242
+-23.626752	-46.616954	50	59	Complexo Viario Maria Maluf (imig/anchi), A Mais 12M do Desemboque do Tunel	59
+-23.518245	-46.629584	50	279	Marginal Tiete, Pta Central (a. senna/c.branco) A Menos 28M Ponte das Bandeiras	279
+-23.587778	-46.664124	50	7	Av Republica do Libano (bairro/centro)	7
+-23.539761	-46.742752	60	135	Av Eng Billings (c. branco/interlagos), A Mais 22 Metros da R Barao de Antonina	135
+-23.647718	-46.727634	60	167	Av. Guido Caloi (castelo branco/interlagos), A Mais 72 Metros do Numero 25	167
+-23.556624	-46.716986	90	118	Marginal Pinheiros, Pta Expressa (c b/interlagos), A Mais 650M do Km 4,5 (usp)	118
+-23.624178	-46.704430	60	67	Av das Nacoes Unidas (interl/c. branco), A Mais 200M da R Eng Mesquita Sampaio	67
+-23.607336	-46.697427	90	13	Marginal Pinheiros, Pista Expressa (interlagos/c.branco), A Mais 103M do Km 12	13
+-23.624529	-46.706563	70	72	Marginal Pinheiros, Pista Expressa (interlagos/c.branco), A Menos 66M do Km 14	72
+-23.564281	-46.703316	60	340	Av Dra Ruth Cardoso/Av das Nacoes Unidas (interlagos/castelo branco), Nr 7203	340
+-23.539635	-46.742439	90	134	Marginal Pinheiros, Pista Expressa (c. branco/interlagos), A Menos 242M do Km 2	134
+-23.630262	-46.716732	90	221	Marginal Pinheiros (castelo branco/interlagos), Numero 16741	221
+-23.607539	-46.697187	60	15	Av. das Nacoes Unidas (interlagos/castelo branco), Numero 12399	15
+-23.566802	-46.704796	60	163	Av Magalhaes de Castro (castelo/interlagos), A Mais 10M da R Murtinho Nobre	163
+-23.613675	-46.701133	60	194	Av Magalhaes de Castro (castelo/interlagos), A Menos 50M da R Francisco Tramontano	194
+-23.617575	-46.701649	90	197	Marginal Pinheiros, Pista Expressa (c. branco/interlagos), A Mais 117M do Km 13	197
+-23.649532	-46.724220	60	324	Av. das Nacoes Unidas (interlagos/castelo branco), Numero 18001	324
+-23.649685	-46.724419	90	326	Marginal Pinheiros, Pta Expressa (interlagos/c. branco), A Mais 130M do Km 17,5	326
+-23.574598	-46.696880	60	320	R. Hungria (interlagos/castelo branco) A Menos 20 Metros da Av. Reboucas	320
+-23.574980	-46.699000	90	136	Marginal Pinheiros (castelo branco/interlagos) A Mais 214M da R Bento Frias	136
+-23.637755	-46.721282	90	42	Marginal Pinheiros, Pista Expressa (interlagos/c. branco) A Menos 19M do Km 16	42
+-23.534530	-46.746200	90	316	Marginal Pinheiros (interlagos/castelo branco), A Mais 1,7Km da Ponte Jaguare	316
+-23.557490	-46.711350	60	298	Av Dra Ruth Cardoso, Pista Central (interl/c branco), A Mais 8M do Km 5,5	298
+-23.557400	-46.711300	60	298	Av Dra Ruth Cardoso, Pista Local (inter/c branco) A Mais 155M Av dos Semaneiros	298
+-23.664920	-46.709370	60	136	Av das Nacoes Unidas (c branco/interlagos), A Menos 32M do N 20728	136
+-23.586290	-46.690630	60	358	Av das Nacoes Unidas, Pista Central (interlagos/c branco), A Menos 8M do Km 9,5	358
+-23.584038	-46.575926	50	66	Av Prof Luiz Ignacio Anhaia Mello (centro/bairro), Numero 1820	66
+-23.630294	-46.618011	40	331	Av. do Cursino (bairro/centro), Numero 3271 / Av. do Cursino (centro/bairro), Oposto Numero 3271	331
+-23.625601	-46.615109	40		R. Dom Vilares (anchieta/imigrantes)	263
+-23.594261	-46.661266	40	84	Av. Iv Centenario (bairro/centro), Numero 1105/Av. Iv Centenario (centro/bairro), Oposto Numero 1105	84
+-23.621953	-46.606493	40	261	R. Nossa Senhora da Saude (imigrantes/anchieta), Numero 1394/R. Nossa Senhora da Saude (anchieta/imigrantes), Numero 1387	261
+-23.645541	-46.607026	40	63	Av. Padre Arlindo Vieira (imigrantes/anchieta), Numero 3101/Av. Padre Arlindo Vieira(anchieta/imigrantes), Numero 3100	63
+-23.618088	-46.624679	40	104	R Ribeiro Lacerda (imigrantes/anchieta)	104
+-23.615233	-46.605292	40	271	R. Vergueiro (bairro/centro), Numero 8527/R. Vergueiro (centro/bairro), Oposto Numero 8527	271
+-23.580010	-46.616981	40	129	R. Coronel Diogo (ipiranga/cambuci), Oposto Ao Numero 1199/R. Coronel Diogo (cambuci/ipiranga), Numero 1199	129
+-23.620944	-46.647335	50	159	Av. Indianopolis (ibirapuera /jabaquara), Numero 2626	159
+-23.621294	-46.647045	50	339	Av. Indianopolis (jabaquara/ibirapuera), Numero 2645	339
+-23.569110	-46.622030	50	11	Av. Lins de Vasconcelos (vila mariana/cambuci), Numero 653	11
+-23.596683	-46.636575	50	1	R. Domingos de Morais (bairro/centro), Numero 2329	1
+-23.599998	-46.636766	50	181	R. Domingos de Morais (centro/bairro), Numero 2668	181
+-23.604953	-46.626039	50	21	Av Prof Abraao de Morais (jabaquara/ipiranga), Numero 37	21
+-23.625703	-46.629222	50	195	Av Prof Abraao de Morais (ipiranga/jabaquara), A Mais 9M da R Palermo	195
+-23.608978	-46.654052	50	41	Av Moreira Guimaraes (sant/aer), A Mais 40M da Av Divino Salvador	41
+-23.612180	-46.656730	50	41	Av Moreira Guimaraes (aeroporto/santana), Numero 699	41
+-23.562079	-46.640271	60	188	Av Vinte e Tres de Maio (santana/aeroporto) A Menos 47M do Vd Pedroso	188
+-23.562606	-46.639964	60	8	Av Vinte e Tres de Maio (aeroporto/santana) A Mais 15M do Vd Pedroso	8
+-23.580984	-46.649441	60	51	Av Vinte e Tres de Maio (aer/sant), A Mais 32M  do Vd. Tutoia	51
+-23.518880	-46.554885	60	355	Av Condessa Elisabeth de Robiano (c. branco/a. senna), Nr 5120	355
+-23.519234	-46.555256	90	3	Marginal Tiete, Pista Expressa (cb/as), A Menos 160M do Km 22	3
+-23.522990	-46.565165	60	247	Av Morvan Dias de Figueiredo (as/cb),A Menos 36M R. Dr. Vidal Reis	247
+-23.523280	-46.565120	90	251	Marginal Tiete, Pista Expressa (as/cb) , A Mais 93M do  Km 21	251
+-23.526766	-46.570951	90	73	Marginal Tiete, Pta Expressa (c branco/a senna) A Menos 40M Km 20	73
+-23.509200	-46.691830	90	102	Marginal Tiete, Pta Expressa (cb/as),A Menos 206M Pte Freguesia do O	102
+-23.515641	-46.667381	90	98	Marginal Tiete, Pista Expressa (cb/as), A Menos 55M Pte do Limao	98
+-23.517934	-46.650917	60	99	Av Pr Castelo Branco (cb/as), A Mais 255M Ponte da Casa Verde	99
+-23.513633	-46.674968	90	278	Marginal Tiete, Pista Expr (as/cb), A Menos 290M Pte Julio M. Neto	278
+-23.513091	-46.675735	60	278	Av Otaviano Alves de Lima (as/cb), A Menos 290M Pt Julio de M Neto	278
+-23.520757	-46.613207	60	307	Av Morvan Dias de Figueiredo (as/cb),A Mais 3M R Amazonas da Silva/Av Morvan Dias de Figueiredo (as/cb) Mais 78M R Amazonas da Silva-Fx Excl Onibus	307
+-23.526940	-46.598619	90	131	Marginal Tiete, Pta Expressa (cb/as) A Menos 167M da Pte Pr J. Quadros	131
+-23.527058	-46.598732	70	135	Marginal Tiete, Pta Central (cb/as), A Menos 167M da Pte Pr J. Quadros	135
+-23.526962	-46.595523	70	289	Marginal Tiete, Pta Central (as/cb) A Menos 75M da Pt Pr J Quadros	289
+-23.526780	-46.595455	60	289	Rodovia Presidente Dutra (as/cb), A Menos 75M da Pte Pr J Quadros	289
+-23.516948	-46.647446	60	276	Av Assis Chateaubriand (ayrton senna/castelo branco), Nr 1447	276
+-23.507573	-46.698770	90	265	Marginal Tiete, Pista Expressa (as/cb) A Mais 101 Metros Km 6,5	265
+-23.517236	-46.645490	70	278	Marginal Tiete, Pista Central (ayrtonsenna/castelo branco), Km 12	278
+-23.520861	-46.613586	90	309	Marginal Tiete, Pista Expressa (as/cb), A Menos 133M do Km 15	309
+-23.520656	-46.613607	70	310	Marginal Tiete, Pista Central (a. senna/castelo branco), A Menos 133M do Km 15	310
+-23.515080	-46.661681	70	279	Marginal Tiete, Pista Central (as/cb),A Mais 247M do Km 10,5	279
+-23.514581	-46.677062	70	98	Marginal Tiete, Pista Central (cb/as),A Mais 200M Ponte Julio M Neto	98
+-23.515366	-46.661717	90	277	Marginal Tiete, Pista Expressa (as/cb), A Mais 247 Metros Km 10,5	277
+-23.514916	-46.661640	60	278	Av Otaviano Alves de Lima (as/cb), Alt da Pca Prof Cesarino Junior	278
+-23.507259	-46.698228	70	265	Marginal Tiete, Pista Central (as/cb),A Mais 101M Km 6,5	265
+-23.507108	-46.698567	60	263	Av Otaviano Alves de Lima (as/cb), A Mais 32M R Leo R de Moraes	263
+-23.509363	-46.691865	70	85	Marginal Tiete, Pista Central (cb/as)A Menos 206M Pt Freguesia do O	85
+-23.513639	-46.722685	60	60	Av Embaixador Macedo Soares (cb/as), A Menos 1M da R Botocudos	60
+-23.517210	-46.736090	90	272	Marginal Tiete, Pta Expressa (ayrton senna/castelo branco), A Menos 67M Km 2	272
+-23.517470	-46.645510	90	278	Marginal Tiete, Pista Expressa (ayrton senna/castelo branco), Km 12	278
+-23.507650	-46.713110	70	275	Marginal Tiete, Pista Central (ayrton senna/castelo branco), A Mais 35M Km 5	275
+-23.516804	-46.731964	60	252	Av Marginal Direita do Tiete (ayrton senna/castelo branco), Numero 536	252
+-23.518569	-46.736218	60	91	Av Embaixador Macedo Soares (castelo branco/ayrton senna), Numero 8000	91
+-23.509367	-46.707016	90	86	Marginal Tiete, Pta Expressa (c branco/a senna), A Menos 119M da Ponte Piqueri	86
+-23.518449	-46.736394	70	94	Marginal Tiete, Pista Central (cb/as), A Mais 240M do Km 1,5	94
+-23.519314	-46.636826	70	90	Marginal Tiete, Pista Central (cb/a senna), A Mais 10M Pte Gov Orestes Quercia	90
+-23.530254	-46.594659	60	114	Av Condessa Elisabeth de Robiano (c branco/a senna), A Menos 60M Numero 320	114
+-23.528297	-46.595613	90	310	Marginal Tiete, Pista Expressa (as/cb), A Menos 161M da Pte Pr Janio Quadros	310
+-23.527218	-46.564917	60	75	Av Cdessa Elisabeth de Robiano (cb/as)	75
+-23.514859	-46.677097	60	102	Av Pr Castelo Branco (cb/as), A Mais 200 Metros Ponte Julio de Mesquita Neto	102
+-23.526874	-46.599320	60	132	Av Pres Castelo Branco (c. branco/a. senna), A Menos 55M Av Ariston Azevedo	132
+-23.509467	-46.710660	60	96	Av Embaixador Macedo Soares (cb/as) N 10001	96
+-23.514419	-46.677021	90	98	Marginal Tiete, Pista Expressa (cb/as), A Mais 200M Ponte Julio  de Mesquita  Neto	98
+-23.518253	-46.736451	90	92	Marginal Tiete, Pta Expressa (castelo branco/ayrton senna), A Mais 226M Km 1,5	92
+-23.518275	-46.647047	90	94	Marginal Tiete, Pta Expressa (castelo branco/ayrton senna), A Mais 225M Km 11,5	94
+-23.512848	-46.724438	90	236	Marginal Tiete, Pta Expressa (ayrton senna/castelo branco), A Mais 117M Km 3,5	236
+-23.593810	-46.694490	70	206	Marg Pinheiros (c branco/interlagos), A Mais 253M do Km 10	206
+-23.462771	-46.654171	50		Av. Mariana Caligiori Ronchetti (centro/bairro), Numero 202A	34
+-23.460056	-46.653989	50		Av. Mariana Caligiori Ronchetti (bairro/centro), A Menos 20M Numero 237	68
+-23.477554	-46.671425	50		Av Deputado Emilio Carlos (bairro/centro), A Menos 17M R Edson Andrade Silva	34
+-23.477731	-46.671424	50		Av Deputado Emilio Carlos (centro/bairro), A Mais 18M R Edson Andrade Silva	30
+-23.534113	-46.647975	40		Al Barao de Limeira (centro/bairro)	323
+-23.545047	-46.691048	50		Av. Pompeia (pompeia/barra funda )	3
+-23.519642	-46.722935	50	294	R. Monte Pascal (lapa/anhanguera), A Mais 17 Metros do Numero 300	294
+-23.519546	-46.723377	50	118	R. Monte Pascal (anhanguera/lapa), A Mais 29 Metros da R. Samuel Klabin	118
+-23.480105	-46.673330	50	16	Av Inajar de Souza (centro/bairro)	16
+-23.500494	-46.752927	40		Av. Mutinga (anhanguera/pirituba)	266
+-23.500454	-46.752718	40		Av. Mutinga (pirituba/anhanguera)	269
+-23.531174	-46.637630	40	286	R. Ribeiro de Lima (tiradentes/bom retiro), Numero 500	286
+-23.593199	-46.467964	50	95	Av Aricanduva(c/b), Numero 9254	95
+-23.558211	-46.615650	50	294	Av do Estado (ipiranga/santana) A Mais 53M da R Dona Ana Neri	294
+-23.557073	-46.474704	40	95	Av Lider (c/b) A Mais 43M da R Dias Coelho	95
+-23.513097	-46.525580	50	251	Av Gov Carvalho Pinto (itaquera/marginal tiete) Numero 2900	251
+-23.515115	-46.532294	50	85	Av Gov Carvalho Pinto (marginal tiete/itaquera) A Menos 66M R Mercedes Lopes	85
+-23.522684	-46.692237	50	269	R. Guaicurus (c/b), Numero 683	269
+-23.470790	-46.598268	40		Av Mazzei (c/b) N 1380/Av Mazzei (b/c) Oposto Ao N 1380	31
+-23.464923	-46.632593	40		Av Santa Ines (b/c) N 1781/Av Santa Ines (c/b) Oposto N 1781	278
+-23.549621	-46.682637	50	273	R Heitor Penteado (bairro/centro), A Mais 25M da R Cristiano Viana	273
+-23.402503	-46.726483	40		Av. Raimundo Pereira de Magalhaes(caieiras/perus), Numero 17999/Av. Raimundo Pereira de Magalhaes(perus/caieiras), Oposto Numero 17999	278
+-23.588629	-46.490268	50	341	Av Mateo Bei (b/c) A Mais 34M da R Simão Alvares Mousinho/Av Mateo Bei (c/b) A Menos 34M da R Simão Alvares Mousinho	341
+-23.557930	-46.571090	50		Av Regente Feijó (b/c) Número 715A	116
+-23.557766	-46.571582	40		Av Regente Feijo (c/b) Numero 710	116
+-23.598961	-46.579558	50	308	Av Dr Francisco Mesquita (s caetano/s paulo) A Mais 255M da R Ibitirama	308
+-23.555850	-46.596715	50	276	R. da Mooca (b/c)	276
+-23.554244	-46.485984	40	291	Av Itaquera (b/c) A Menos 406M da Av Sylvio Torres	291
+-23.550966	-46.496467	40	308	Av Itaquera (b/c), A Menos 50M da Av Conde Luiz Eduardo Matarazzo	308
+-23.585601	-46.584166	50	2	R Ibitirama (b/c) Número 389	2
+-23.565195	-46.622838	50	191	Av Lacerda Franco (centro/bairro)	191
+-23.659040	-46.652376	40		Av Benigno Carrera (bairro/centro) N.39	172
+-23.744023	-46.699711	40		Av Pref Paulo Lauro	162
+-23.434344	-46.719813	50	181	Av Raimundo Pereira de Magalhaes (c/b)	181
+-23.406614	-46.755584	40	83	Av Doutor Sylvio de Campos (anhanguera/caieiras), A Mais 6 Metros Numero 193	83
+-23.406284	-46.755303	40		Pç. Luis Neri (caieiras/anhanguera)	188
+-23.507512	-46.740417	50	275	R Inacio Luis da Costa (centro/bairro)	275
+-23.485543	-46.740006	50	308	Av. Mutinga (pirituba/anhanguera),Numero 1406	308
+-23.532142	-46.658321	50	301	Av General Olimpio da Silveira (c/b)	301
+-23.521999	-46.668283	50	39	Av Antartica (sumare/marginal tiete)	39
+-23.548631	-46.668768	40		R Des Paulo Passalaqua (perdizes/jd paulista), A Mais 49M R Itacaranha	192
+-23.495507	-46.644163	40		Av Imirim (c/b) N 924/Av Imirim (b/c) N 981	308
+-23.440874	-46.616184	40		Av Sen Jose Ermirio de Moraes (c/b) A Mais 80M do Km 3/Av Sen Jose Ermirio de Moraes (b/c) A Menos 80M do Km 3	359
+-23.440874	-46.616184	40		Av Sen Jose Ermirio de Moraes (c/b) N 1888/Av Sen Jose Ermirio de Moraes (b/c) Oposto N 1888	359
+-23.486966	-46.606673	40		Av Gal Ataliba Leonel (c/b) N 3238/Av Gal Ataliba Leonel (b/c) N 3353	239
+-23.488454	-46.637768	40		R Cons Moreira de Barros (b/c) N 1661/R Cons Moreira de Barros (c/b) N 1642	302
+-23.530564	-46.639220	40	333	R. Jose Paulino (centro/bairro), Numero 414	333
+-23.450040	-46.715563	40		R Ilha da Juventude (c/b) Oposto N 100/R Ilha da Juventude (b/c) N 80	273
+-23.416851	-46.781619	40		Es de Perus (c/b) N  130/Es de Perus (b/c) Oposto Ao N 130	230
+-23.536362	-46.686256	40		Av Prof Alfonso Bovero (centro/bairro)	123
+-23.420609	-46.754361	40		Est Sao Paulo-Jundiai (anhang/peus) A Menos 5M da Av Pavao/Est Sao Paulo-Jundiai (perus/anhang) A Menos 60M da Av Pavao	230
+-23.473222	-46.725398	40	41	R Comen Feiz Zarzur (c/b) N 1415	41
+-23.554970	-46.634297	40	176	R. da Gloria (centro/bairro), Numero 200	176
+-23.538295	-46.631025	40	106	R. Paula Sousa (santa ifigenia/bras), Numero 205	106
+-23.523260	-46.650300	50	332	Av Rudge (centro/bairro)	332
+-23.540236	-46.637887	40	146	R. Santa Ifigenia (bairro/centro), Numero 163	146
+-23.597727	-46.444641	50	356	Av Vp Jose Alencar G da Silva (maua/a senna) A Menos 302M da Av R Chohfi	356
+-23.597566	-46.444739	50	176	Av Vp Jose Alencar G da Silva (a senna/maua) A Mais 301M da Av R Chohfi	176
+-23.498074	-46.627417	30		R. Amaral Gama, C/B N 288 / R. Amaral Gama, B/C N 307	320
+-23.617030	-46.757391	50	30	Estr. do Campo Limpo (pça do campo limpo/lgo tabao)	30
+-23.523316	-46.611618	90	113	Marginal Tiete, Pta Expressa (cb/as),A Menos 31M da Ponte da Vila Guilherme	113
+-23.637184	-46.720408	60	41	Av das Nacoes Unidas (interlagos/c. branco), A Mais 30M da R Braganca Paulista	41
+-23.461850	-46.696359	40		Est Lazaro Amancio de Barros B/C N 885/Est Lazaro Amancio de Barros C/B N 866	169
+-23.649169	-46.676608	50	36	Av. Washington Luis (bairro/centro), A Menos 76M da R. Robelia	36
