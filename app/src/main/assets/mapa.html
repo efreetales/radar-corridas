@@ -134,7 +134,10 @@ const passes = parseCsv(raw("passagens_radar.csv")).map(p => ({ t:when(p.data_ho
 const valetas = parseCsv(raw("valetas.csv")).map(v => ({ la:num(v.lat), lo:num(v.lng), n:num(v.vezes)||1, auto:v.origem==="auto" }))
   .filter(v => inSP(v.la,v.lo));
 let spots = []; try { spots = JSON.parse(raw("pontos.json") || "[]"); } catch(e) {}
-let events = []; try { events = (JSON.parse(raw("eventos_hoje.json") || "{}").eventos || []).filter(e => inSP(e.lat, e.lng)); } catch(e) {}
+let events = [];
+function loadEvents(){ try { events = (JSON.parse(raw("eventos_hoje.json") || "{}").eventos || []).filter(e => inSP(e.lat, e.lng)); } catch(e) { events = []; } }
+loadEvents();
+window.reloadEvents = () => { loadEvents(); render(); };
 
 // ---------- filtros ----------
 const st = { per:"tudo", dia:"todos", hor:"todos", lay:{calor:true, ofertas:true, percursos:true, radares:false, valetas:true, pontos:true, eventos:true} };
@@ -172,8 +175,7 @@ function selects(id, list, key){
 function layers(){
   const el = document.getElementById("lay");
   LAY.forEach(([v,l]) => { const b=document.createElement("button"); b.className="chip"; b.innerHTML=l; b.dataset.v=v;
-    b.onclick = () => { st.lay[v] = !st.lay[v]; window.reloadEvents = () => { try { events = (JSON.parse(raw("eventos_hoje.json") || "{}").eventos || []).filter(e => inSP(e.lat, e.lng)); } catch(e) {} render(); };
-paint(); render(); }; el.appendChild(b); });
+    b.onclick = () => { st.lay[v] = !st.lay[v]; paint(); render(); }; el.appendChild(b); });
 }
 function paint(){ document.querySelectorAll("#lay .chip").forEach(b => b.classList.toggle("on", !!st.lay[b.dataset.v])); }
 
@@ -192,6 +194,7 @@ let group = L.layerGroup().addTo(map), heat = null;
 const vcol = v => v==="BOM" ? "#3DD68C" : v==="RUIM" ? "#E5484D" : "#F5C518";
 const phcol = { A_CAMINHO:"#6E7681", NO_EMBARQUE:"#F5C518", EM_VIAGEM:"#2FD3A6" };
 
+function safe(f){ try { f(); } catch(e) { console.log("mapa: " + e.message); } }
 function render(){
   group.clearLayers(); if (heat) { map.removeLayer(heat); heat = null; }
   const of = offers.filter(o => ok(o.t));
@@ -203,42 +206,37 @@ function render(){
   document.getElementById("scale").style.display = st.lay.calor && rs.length ? "flex" : "none";
   if (rs.length) { document.getElementById("smax").textContent = "R$ " + Math.round(Math.max(...rs));
                    document.getElementById("smin").textContent = "R$ " + Math.round(Math.min(...rs)); }
-  if (st.lay.calor && of.length && L.heatLayer) {
-    const maxR = Math.max(...rs, 1);
-    heat = L.heatLayer(of.map(o => [o.la, o.lo, Math.max(0.25, (o.rsh || 0) / maxR)]),
-      { radius:28, blur:22, maxZoom:15, gradient:{0.3:"#1f6feb",0.55:"#2FD3A6",0.75:"#F5C518",1:"#E5484D"} }).addTo(map);
-  }
-  if (st.lay.ofertas) of.forEach(o => L.circleMarker([o.la,o.lo], { radius:6, color:"#0D1117", weight:1, fillColor:vcol(o.v), fillOpacity:.95 })
+  if (st.lay.ofertas) of.forEach(o => safe(() => L.circleMarker([o.la,o.lo], { radius:6, color:"#0D1117", weight:1, fillColor:vcol(o.v), fillOpacity:.95 })
     .bindPopup(`<b>${brl(o.price||0)}</b> · ${o.cat||""}<br>${(o.km||0).toFixed(1)} km · ${Math.round(o.min||0)} min<br>`+
       `${o.rskm!=null?brl(o.rskm)+"/km":""} · ${o.rsh!=null?brl(o.rsh)+"/h":""}<br><small>${o.t.toLocaleString("pt-BR")}<br>`+
-      `${o.orig||""} → ${o.dest||""}<br>(posição: ${o.src})</small>`).addTo(group));
-  if (st.lay.percursos) tr.forEach(c => { const pts = routes[c.id]; if (!pts || pts.length < 2) return;
+      `${o.orig||""} → ${o.dest||""}<br>(posição: ${o.src})</small>`).addTo(group)));
+  if (st.lay.percursos) tr.forEach(c => safe(() => { const pts = routes[c.id]; if (!pts || pts.length < 2) return;
     let seg = [pts[0]], ph = pts[0][2];
     const flush = () => { if (seg.length > 1) L.polyline(seg.map(p => [p[0],p[1]]), { color:phcol[ph]||"#888", weight:4, opacity:.85 })
       .bindPopup(`<b>${brl(c.price||0)}</b> · ${c.st}<br>${c.rsh!=null?brl(c.rsh)+"/h real":""}<br>`+
         `até embarque: ${c.toPick!=null?c.toPick.toFixed(0)+" min":"?"} · espera: ${c.wait!=null?c.wait.toFixed(0)+" min":"?"}<br>`+
         `<small>${c.t.toLocaleString("pt-BR")}<br>${c.orig||""} → ${c.dest||""}</small>`).addTo(group); };
     for (const p of pts.slice(1)) { if (p[2] !== ph) { seg.push(p); flush(); seg = [p]; ph = p[2]; } else seg.push(p); }
-    flush(); });
-  if (st.lay.radares) ps.forEach(p => { const c = p.res.startsWith("provável") ? "#E5484D" : p.res.startsWith("acima") ? "#F5C518" : "#3DD68C";
+    flush(); }));
+  if (st.lay.radares) ps.forEach(p => safe(() => { const c = p.res.startsWith("provável") ? "#E5484D" : p.res.startsWith("acima") ? "#F5C518" : "#3DD68C";
     L.circleMarker([p.la,p.lo], { radius:5, color:c, weight:2, fillOpacity:.2 })
-      .bindPopup(`<b>${p.via}</b><br>${p.kmh} km/h no limite de ${p.lim}<br>${p.res}<br><small>${p.t.toLocaleString("pt-BR")}</small>`).addTo(group); });
-  if (st.lay.valetas) valetas.forEach(v => L.marker([v.la,v.lo], { icon:L.divIcon({ className:"", iconSize:[18,18],
+      .bindPopup(`<b>${p.via}</b><br>${p.kmh} km/h no limite de ${p.lim}<br>${p.res}<br><small>${p.t.toLocaleString("pt-BR")}</small>`).addTo(group); }));
+  if (st.lay.valetas) valetas.forEach(v => safe(() => L.marker([v.la,v.lo], { icon:L.divIcon({ className:"", iconSize:[18,18],
       html:`<div style="font-size:16px;line-height:18px;text-align:center;color:#E8590C">▲</div>` }) })
-    .bindPopup(`Valeta${v.auto?" (solavanco automático)":""}<br>marcada ${v.n}x`).addTo(group));
-  if (st.lay.pontos) spots.forEach(s => { const days = ["dom","seg","ter","qua","qui","sex","sáb"];
+    .bindPopup(`Valeta${v.auto?" (solavanco automático)":""}<br>marcada ${v.n}x`).addTo(group)));
+  if (st.lay.pontos) spots.forEach(s => safe(() => { const days = ["dom","seg","ter","qua","qui","sex","sáb"];
     const hh = m => String(Math.floor(m/60)%24).padStart(2,"0")+":"+String(m%60).padStart(2,"0");
     L.circle([s.lat,s.lng], { radius:s.raio||2000, color:"#9775FA", weight:1, fillOpacity:.06 }).addTo(group);
     L.marker([s.lat,s.lng], { icon:L.divIcon({ className:"", iconSize:[22,22],
       html:`<div style="font-size:20px;line-height:22px;text-align:center;color:#9775FA">★</div>` }) })
-      .bindPopup(`<b>${s.nome}</b><br>${(s.dias||[]).map(d=>days[d-1]).join(", ")} · ${hh(s.inicio)}–${hh(s.fim)}`).addTo(group); });
+      .bindPopup(`<b>${s.nome}</b><br>${(s.dias||[]).map(d=>days[d-1]).join(", ")} · ${hh(s.inicio)}–${hh(s.fim)}`).addTo(group); }));
 
   // Eventos de hoje (vale só para hoje, independente do filtro de período)
-  if (st.lay.eventos) events.forEach(e => {
+  if (st.lay.eventos) events.forEach(e => safe(() => {
     L.marker([e.lat,e.lng], { icon:L.divIcon({ className:"", iconSize:[30,30],
       html:`<div style="width:30px;height:30px;border-radius:50%;background:#C2255C;border:2px solid #fff;display:flex;align-items:center;justify-content:center;font-size:15px">${e.icone||"🎟"}</div>` }) })
       .bindPopup(`<b>${e.nome}</b><br>${e.local||""}<br>${e.inicio?"começa "+e.inicio+" · ":""}<b>saída ~${e.fim_estimado}</b>`+
-        `${e.publico_estimado?"<br>~"+e.publico_estimado+" pessoas":""}<br><a href="https://waze.com/ul?ll=${e.lat},${e.lng}&navigate=yes" style="color:#2FD3A6">Ir com Waze</a>`).addTo(group); });
+        `${e.publico_estimado?"<br>~"+e.publico_estimado+" pessoas":""}<br><a href="https://waze.com/ul?ll=${e.lat},${e.lng}&navigate=yes" style="color:#2FD3A6">Ir com Waze</a>`).addTo(group); }));
 
   // Números
   const done = tr.filter(c => (c.st||"").startsWith("concluída"));
@@ -281,6 +279,17 @@ function render(){
   if (st.lay.radares) lg.push(`Radares:<span class="dot" style="background:#3DD68C"></span>ok<span class="dot" style="background:#F5C518"></span>tolerância<span class="dot" style="background:#E5484D"></span>multa`);
   const le = document.getElementById("legend"); le.innerHTML = lg.join("<br>"); le.style.display = lg.length ? "block" : "none";
   document.getElementById("moreIn").innerHTML = html;
+
+  // Calor por último: se o mapa ainda não tem tamanho, o desenho do calor falha — e não pode levar o resto junto
+  if (st.lay.calor && of.length && L.heatLayer) {
+    const maxR = Math.max(...rs, 1);
+    const pts = of.map(o => [o.la, o.lo, Math.max(0.25, (o.rsh || 0) / maxR)]);
+    const add = () => { try {
+        heat = L.heatLayer(pts, { radius:28, blur:22, maxZoom:15, gradient:{0.3:"#1f6feb",0.55:"#2FD3A6",0.75:"#F5C518",1:"#E5484D"} }).addTo(map);
+      } catch(e) { heat = null; } };
+    const sz = map.getSize();
+    if (sz.x > 0 && sz.y > 0) add(); else setTimeout(() => { map.invalidateSize(); if (!heat) add(); }, 300);
+  }
 }
 
 // ---------- painel de baixo: toque ou arraste o puxador ----------
@@ -295,8 +304,13 @@ hd.addEventListener("pointerup", e => { if (y0 === null) return; const dy = e.cl
 selects("per", PER, "per"); selects("dia", DIA, "dia"); selects("hor", HOR, "hor"); layers();
 paint(); render();
 const all = offers.map(o=>[o.la,o.lo]).concat(Object.values(routes).flat().map(p=>[p[0],p[1]]));
-function fit(){ map.invalidateSize(); if (all.length > 1) map.fitBounds(L.latLngBounds(all), { paddingTopLeft:[20,30], paddingBottomRight:[70,30], maxZoom:14 }); }
+let fitted = false;
+function fit(){ map.invalidateSize(); const z = map.getSize(); if (!z.x || !z.y) return;
+  fitted = true; if (all.length > 1) map.fitBounds(L.latLngBounds(all), { paddingTopLeft:[20,30], paddingBottomRight:[70,30], maxZoom:14 }); }
 setTimeout(fit, 50); window.addEventListener("resize", () => map.invalidateSize());
+// Quando a tela termina de montar (o mapa ganha tamanho), enquadra e redesenha
+try { new ResizeObserver(() => { map.invalidateSize(); const z = map.getSize();
+  if (z.x && z.y && !fitted) { fit(); render(); } }).observe(document.getElementById("map")); } catch(e) {}
 </script>
 </body>
 </html>
