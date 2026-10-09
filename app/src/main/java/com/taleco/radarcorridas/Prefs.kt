@@ -86,6 +86,26 @@ class Prefs(context: Context) {
         get() = sp.getBoolean("registrar_corridas", true)
         set(v) = sp.edit().putBoolean("registrar_corridas", v).apply()
 
+    // Distância dos avisos (radar e valeta), conforme a sua velocidade
+    var alertDistSlow: Int   // até 50 km/h
+        get() = sp.getInt("dist_aviso_lento", 150)
+        set(v) = sp.edit().putInt("dist_aviso_lento", v).apply()
+
+    var alertDistMid: Int    // de 50 a 80 km/h
+        get() = sp.getInt("dist_aviso_medio", 200)
+        set(v) = sp.edit().putInt("dist_aviso_medio", v).apply()
+
+    var alertDistFast: Int   // 80 km/h ou mais
+        get() = sp.getInt("dist_aviso_rapido", 300)
+        set(v) = sp.edit().putInt("dist_aviso_rapido", v).apply()
+
+    /** A que distância avisar, dada a velocidade atual. */
+    fun alertDistance(kmh: Double): Double = when {
+        kmh <= 50.0 -> alertDistSlow
+        kmh < 80.0 -> alertDistMid
+        else -> alertDistFast
+    }.toDouble()
+
     // Radares de velocidade
     var speedAlerts: Boolean
         get() = sp.getBoolean("alerta_radares", true)

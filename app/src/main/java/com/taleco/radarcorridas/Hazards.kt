@@ -166,7 +166,7 @@ object Hazards {
  */
 object HazardWatch {
 
-    private const val LOOKAHEAD_M = 250.0
+    private const val LOOKAHEAD_M = 600.0
     private const val PASS_RADIUS_M = 30.0
     private const val MIN_SPEED_KMH = 8.0
     private const val REPEAT_MS = 2 * 60_000L
@@ -221,7 +221,7 @@ object HazardWatch {
 
         val t = target ?: run {
             if (heading == null || kmh < MIN_SPEED_KMH) return
-            val found = find(ctx, loc, heading) ?: return
+            val found = find(ctx, loc, heading, prefs.alertDistance(kmh)) ?: return
             target = found
             minDist = Double.MAX_VALUE
             startDist = loc.distanceTo(locOf(found)).toDouble().coerceAtLeast(40.0)
@@ -271,9 +271,9 @@ object HazardWatch {
         return if (d > 180f) 360f - d else d
     }
 
-    private fun find(ctx: Context, loc: Location, heading: Float): Hazard? {
+    private fun find(ctx: Context, loc: Location, heading: Float, lookahead: Double): Hazard? {
         var best: Hazard? = null
-        var bestD = LOOKAHEAD_M
+        var bestD = lookahead
         for (h in Hazards.all(ctx)) {
             if (recentlyPassed.containsKey(h)) continue
             val hl = locOf(h)

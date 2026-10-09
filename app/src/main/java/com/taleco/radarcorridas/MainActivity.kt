@@ -77,6 +77,7 @@ class MainActivity : AppCompatActivity() {
         buildHazards(col)
         buildSpots(col)
         buildData(col)
+        tallAll(col)
 
         val version = try {
             packageManager.getPackageInfo(packageName, 0).versionName
@@ -539,6 +540,15 @@ class MainActivity : AppCompatActivity() {
             setOnCheckedChangeListener { _, checked -> prefs.speedSound = checked }
         }, matchWrap(top = 6))
 
+        card.addView(text("Distância do aviso (radar e valeta)", 15f, Colors.TEXT, bold = true).apply { setPadding(0, dp(14), 0, 0) })
+        card.addView(text(
+            "O aviso aparece mais cedo quanto mais rápido você estiver.",
+            12f, Colors.MUTED
+        ))
+        card.addView(distanceSlider("Até 50 km/h", prefs.alertDistSlow) { prefs.alertDistSlow = it }, matchWrap(top = 6))
+        card.addView(distanceSlider("De 50 a 80 km/h", prefs.alertDistMid) { prefs.alertDistMid = it }, matchWrap(top = 2))
+        card.addView(distanceSlider("Acima de 80 km/h", prefs.alertDistFast) { prefs.alertDistFast = it }, matchWrap(top = 2))
+
         speedInfo = text("", 14f, Colors.TEXT).apply { setPadding(0, dp(10), 0, 0) }
         card.addView(speedInfo)
         card.addView(outlinedButton("Atualizar lista de radares").apply {
@@ -964,6 +974,27 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun distanceSlider(label: String, initial: Int, onChange: (Int) -> Unit): View {
+        val box = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
+        val lbl = text("", 14f, Colors.TEXT)
+        fun setLbl(v: Int) { lbl.text = "$label: avisar a $v m" }
+        setLbl(initial)
+        box.addView(lbl)
+        val sl = Slider(this)
+        sl.valueFrom = 50f
+        sl.valueTo = 600f
+        sl.stepSize = 25f
+        sl.value = ((initial / 25) * 25).coerceIn(50, 600).toFloat()
+        sl.setLabelFormatter { v -> "${v.toInt()} m" }
+        sl.thumbTintList = ColorStateList.valueOf(Color.WHITE)
+        sl.addOnChangeListener { _, v, _ ->
+            onChange(v.toInt())
+            setLbl(v.toInt())
+        }
+        box.addView(sl, matchWrap())
+        return box
+    }
+
     private fun updateCams() {
         if (SpeedCams.downloading) {
             toast("Já estou baixando a lista")
@@ -1075,15 +1106,91 @@ class MainActivity : AppCompatActivity() {
         return box
     }
 
+    /** Resumo de cada seção, mostrado embaixo do título quando ela está fechada. */
+    private val sectionHints = mapOf(
+        "Status" to "Leitura de ofertas e teste do cartão",
+        "Prévia do cartão" to "Como o cartão aparece na oferta",
+        "Cálculo de ganhos" to "Faixas de ruim / médio / bom",
+        "Custos do carro" to "Combustível, aluguel e outros custos",
+        "Aparência" to "Posição, opacidade e botão R",
+        "Corridas e percurso" to "Registro das corridas e permissões",
+        "Radares de velocidade" to "Aviso, bipe, distância e lista da CET",
+        "Valetas e buracos" to "Marcar valetas e solavancos",
+        "Meus pontos bons" to "Lugares que rendem em certos horários",
+        "Dados" to "Exportar dados e diagnóstico"
+    )
+
+    /**
+     * Seção em acordeão: o título abre e fecha o conteúdo.
+     * Lembra quais seções você deixou abertas.
+     */
     private fun section(parent: LinearLayout, title: String): LinearLayout {
+        val sp = getSharedPreferences("radar_ui", MODE_PRIVATE)
+        val key = "aberta_$title"
         val card = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
-            setPadding(dp(16), dp(16), dp(16), dp(16))
             background = rounded(Colors.SURFACE, 16f)
         }
-        card.addView(text(title, 19f, Colors.TEXT, bold = true).apply { setPadding(0, 0, 0, dp(8)) })
-        parent.addView(card, matchWrap(top = 16))
-        return card
+        val header = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            gravity = Gravity.CENTER_VERTICAL
+            setPadding(dp(16), dp(16), dp(12), dp(16))
+            minimumHeight = dp(64)
+            isClickable = true
+            isFocusable = true
+            val tv = android.util.TypedValue()
+            context.theme.resolveAttribute(android.R.attr.selectableItemBackground, tv, true)
+            foreground = ContextCompat.getDrawable(context, tv.resourceId)
+        }
+        val titles = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
+        titles.addView(text(title, 18f, Colors.TEXT, bold = true))
+        val hint = text(sectionHints[title] ?: "", 12f, Colors.MUTED)
+        titles.addView(hint)
+        header.addView(titles, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f))
+        val chevron = text("", 20f, Colors.ACCENT, bold = true).apply { setPadding(dp(8), 0, dp(4), 0) }
+        header.addView(chevron)
+        card.addView(header, matchWrap())
+
+        val body = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(dp(16), 0, dp(16), dp(16))
+        }
+        card.addView(body, matchWrap())
+
+        fun apply(open: Boolean) {
+            body.visibility = if (open) View.VISIBLE else View.GONE
+            chevron.text = if (open) "▴" else "▾"
+            hint.visibility = if (open || hint.text.isEmpty()) View.GONE else View.VISIBLE
+        }
+        apply(sp.getBoolean(key, title == "Status"))
+        header.setOnClickListener {
+            val open = body.visibility != View.VISIBLE
+            sp.edit().putBoolean(key, open).apply()
+            apply(open)
+        }
+        parent.addView(card, matchWrap(top = 12))
+        return body
+    }
+
+    /** Botões mais altos e fáceis de tocar. */
+    private fun makeTall(b: MaterialButton) {
+        b.minHeight = dp(52)
+        b.minimumHeight = dp(52)
+        b.insetTop = 0
+        b.insetBottom = 0
+        b.cornerRadius = dp(12)
+        b.textSize = 15f
+    }
+
+    /** Aplica o estilo alto a todos os botões da tela (menos os pequenos de dias/limites). */
+    private fun tallAll(v: View) {
+        if (v is MaterialButton) {
+            val inGroup = v.parent is MaterialButtonToggleGroup
+            val fixedSmall = (v.layoutParams?.height ?: 0) > 0
+            if (!inGroup && !fixedSmall) makeTall(v)
+            return
+        }
+        if (v is android.view.ViewGroup) for (i in 0 until v.childCount) tallAll(v.getChildAt(i))
     }
 
     private fun text(s: String, size: Float, color: Int, bold: Boolean = false) = TextView(this).apply {
@@ -1099,6 +1206,7 @@ class MainActivity : AppCompatActivity() {
             isAllCaps = false
             setTextColor(Colors.ACCENT)
             strokeColor = ColorStateList.valueOf(Colors.ACCENT)
+            makeTall(this)
         }
 
     private fun rounded(color: Int, radiusDp: Float) = GradientDrawable().apply {

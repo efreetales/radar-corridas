@@ -73,7 +73,7 @@ class SpeedBanner(
  */
 object SpeedWatch {
 
-    private const val LOOKAHEAD_M = 400.0        // começa a avisar a esta distância
+    private const val LOOKAHEAD_M = 600.0        // maior distância possível de aviso (a real vem das configurações)
     private const val PASS_RADIUS_M = 45.0       // passou "pelo" radar
     private const val NEAR_M = 50.0              // velocidade medida perto do radar
     private const val AHEAD_TOLERANCE = 45f      // radar à frente (graus)
@@ -195,7 +195,7 @@ object SpeedWatch {
         if (t != null) {
             followTarget(ctx, loc, t, kmh, heading)
         } else if (radarOn && heading != null && kmh >= MIN_SPEED_KMH) {
-            findTarget(loc, heading)?.let { cam ->
+            findTarget(loc, heading, Prefs(ctx).alertDistance(kmh))?.let { cam ->
                 target = cam
                 minDist = Double.MAX_VALUE
                 maxNearKmh = 0.0
@@ -255,9 +255,9 @@ object SpeedWatch {
         return true
     }
 
-    private fun findTarget(loc: Location, heading: Float): SpeedCam? {
+    private fun findTarget(loc: Location, heading: Float, lookahead: Double): SpeedCam? {
         var best: SpeedCam? = null
-        var bestD = LOOKAHEAD_M
+        var bestD = lookahead
         for (c in SpeedCams.nearby(loc.latitude, loc.longitude)) {
             if (recentlyPassed.containsKey(c)) continue
             if (SpeedCams.isHidden(c)) continue
