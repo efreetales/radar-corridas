@@ -181,38 +181,57 @@ class RadarService : AccessibilityService() {
 
     override fun onInterrupt() {}
 
-    // ---- Volume − duas vezes rápido = marcar valeta (só enquanto dirige com a Uber/99 aberta) ----
+    // ---- Atalhos do volume para marcar valeta / radar (só enquanto dirige com a Uber/99 aberta) ----
 
-    private var volPending = false
-    private val volumeDownRunnable: Runnable = Runnable {
-        volPending = false
-        // Foi só um toque: abaixa o volume normalmente.
+    private var volPending = 0 // tecla esperando o segundo toque (0 = nenhuma)
+    private val volumeRunnable: Runnable = Runnable {
+        val key = volPending
+        volPending = 0
+        // Foi só um toque: muda o volume normalmente.
+        adjustVolume(key)
+    }
+
+    private fun adjustVolume(key: Int) {
+        val dir = if (key == KeyEvent.KEYCODE_VOLUME_UP) AudioManager.ADJUST_RAISE else AudioManager.ADJUST_LOWER
         try {
             getSystemService(AudioManager::class.java)?.adjustSuggestedStreamVolume(
-                AudioManager.ADJUST_LOWER, AudioManager.USE_DEFAULT_STREAM_TYPE, AudioManager.FLAG_SHOW_UI
+                dir, AudioManager.USE_DEFAULT_STREAM_TYPE, AudioManager.FLAG_SHOW_UI
             )
         } catch (_: Exception) {
         }
     }
 
+    /**
+     * Enquanto a Uber/99 está aberta (GPS ligado):
+     *  volume − duas vezes rápido = marcar valeta
+     *  volume + duas vezes rápido = marcar radar que falta no mapa
+     */
     override fun onKeyEvent(event: KeyEvent?): Boolean {
-        if (event == null || event.keyCode != KeyEvent.KEYCODE_VOLUME_DOWN) return false
-        if (!::prefs.isInitialized || !SpeedWatch.active || !prefs.valetaAlerts) return false
+        if (event == null) return false
+        val key = event.keyCode
+        if (key != KeyEvent.KEYCODE_VOLUME_DOWN && key != KeyEvent.KEYCODE_VOLUME_UP) return false
+        if (!::prefs.isInitialized || !SpeedWatch.active) return false
+        if (key == KeyEvent.KEYCODE_VOLUME_DOWN && !prefs.valetaAlerts) return false
         if (event.action == KeyEvent.ACTION_DOWN) {
             if (event.repeatCount > 0) {
-                // Segurando o botão: deixa o volume descer normalmente.
-                handler.removeCallbacks(volumeDownRunnable)
-                volPending = false
-                volumeDownRunnable.run()
+                // Segurando o botão: deixa o volume mudar normalmente.
+                handler.removeCallbacks(volumeRunnable)
+                volPending = 0
+                adjustVolume(key)
                 return true
             }
-            if (volPending) {
-                handler.removeCallbacks(volumeDownRunnable)
-                volPending = false
-                HazardWatch.markManual(this)
+            if (volPending == key) {
+                handler.removeCallbacks(volumeRunnable)
+                volPending = 0
+                if (key == KeyEvent.KEYCODE_VOLUME_DOWN) HazardWatch.markManual(this) else HazardWatch.markRadar(this)
             } else {
-                volPending = true
-                handler.postDelayed(volumeDownRunnable, 450L)
+                if (volPending != 0) {
+                    // Apertou a outra tecla: aplica a primeira normalmente
+                    handler.removeCallbacks(volumeRunnable)
+                    adjustVolume(volPending)
+                }
+                volPending = key
+                handler.postDelayed(volumeRunnable, 450L)
             }
         }
         return true

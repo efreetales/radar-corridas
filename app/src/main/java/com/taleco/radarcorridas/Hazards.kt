@@ -190,6 +190,7 @@ object HazardWatch {
     private var lastHeading: Float? = null
 
     // Desfazer a última marcação
+    private var undoCam: SpeedCam? = null
     private var undoHazard: Hazard? = null
     private var undoWasNew = false
     private var undoUntil = 0L
@@ -197,6 +198,7 @@ object HazardWatch {
     private val hideBanner = Runnable {
         if (target == null || !showing) RadarService.instance?.hideSpeedBanner()
         undoHazard = null
+        undoCam = null
     }
 
     // ---------- GPS ----------
@@ -310,6 +312,32 @@ object HazardWatch {
         confirm(ctx, h, isNew, if (isNew) "✓ Valeta marcada · toque para desfazer" else "✓ Valeta confirmada (${h.count}x) · toque para desfazer")
     }
 
+    /** Marca um radar que faltava no mapa (volume + duas vezes). */
+    fun markRadar(ctx: Context) {
+        appContext = ctx.applicationContext
+        val loc = positionForMark((Prefs(ctx).valetaDelaySec * 1000).toLong())
+        if (loc == null || System.currentTimeMillis() - loc.time > 30_000L) {
+            Beeper.play(ctx, Beeper.Kind.ERRO)
+            RadarService.instance?.showSpeedBanner(
+                SpeedBanner(null, lastKmh.roundToInt(), "Sem GPS agora: abra a Uber/99 para marcar radares", Colors.SURFACE_2, sign = "📷")
+            )
+            handler.removeCallbacks(hideBanner)
+            handler.postDelayed(hideBanner, 3_000L)
+            return
+        }
+        val cam = SpeedCams.addUser(ctx, loc.latitude, loc.longitude, lastHeading, null)
+        if (Prefs(ctx).speedSound) Beeper.play(ctx, Beeper.Kind.MARCADA)
+        undoCam = cam
+        undoHazard = null
+        undoUntil = System.currentTimeMillis() + UNDO_MS
+        RadarService.instance?.showSpeedBanner(
+            SpeedBanner(null, lastKmh.roundToInt(), "✓ Radar marcado · defina o limite no app · toque para desfazer",
+                Colors.SURFACE_2, null, 1f, sign = "📷")
+        )
+        handler.removeCallbacks(hideBanner)
+        handler.postDelayed(hideBanner, UNDO_MS)
+    }
+
     /** Marcação automática pelo solavanco. */
     fun markAuto(ctx: Context) {
         val loc = history.lastOrNull() ?: return
@@ -321,6 +349,7 @@ object HazardWatch {
 
     private fun confirm(ctx: Context, h: Hazard, isNew: Boolean, text: String) {
         if (Prefs(ctx).speedSound) Beeper.play(ctx, Beeper.Kind.MARCADA)
+        undoCam = null
         undoHazard = h
         undoWasNew = isNew
         undoUntil = System.currentTimeMillis() + UNDO_MS
@@ -337,6 +366,18 @@ object HazardWatch {
     /** Toque no aviso: desfaz a marcação recente, ou fecha o aviso. */
     fun onBannerTap() {
         val ctx = appContext
+        val cam = undoCam
+        if (ctx != null && cam != null && System.currentTimeMillis() < undoUntil) {
+            SpeedCams.removeUser(ctx, cam)
+            undoCam = null
+            undoUntil = 0L
+            RadarService.instance?.showSpeedBanner(
+                SpeedBanner(null, lastKmh.roundToInt(), "Marcação desfeita", Colors.SURFACE_2, null, 0f, sign = "↺")
+            )
+            handler.removeCallbacks(hideBanner)
+            handler.postDelayed(hideBanner, 2_000L)
+            return
+        }
         val u = undoHazard
         if (ctx != null && u != null && System.currentTimeMillis() < undoUntil) {
             Hazards.unmark(ctx, u, undoWasNew)

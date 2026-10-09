@@ -271,7 +271,7 @@ object SpeedWatch {
     private fun showApproach(cam: SpeedCam, kmhD: Double, d: Double) {
         if (cam === dismissedCam) return
         val kmh = kmhD.roundToInt()
-        val where = cam.name.ifBlank { "Radar de velocidade" }
+        val where = cam.name.ifBlank { if (cam.mine) "Radar marcado por você" else "Radar de velocidade" }
         val progress = (1.0 - d / startDist).coerceIn(0.0, 1.0).toFloat()
         RadarService.instance?.showSpeedBanner(
             SpeedBanner(cam.limit, kmh, where, colorFor(cam.limit, kmh), roundDist(d), progress)

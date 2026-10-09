@@ -450,6 +450,68 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var speedInfo: TextView
     private lateinit var finesText: TextView
+    private lateinit var myCamsList: LinearLayout
+
+    private fun refreshMyCams() {
+        if (!::myCamsList.isInitialized) return
+        myCamsList.removeAllViews()
+        val mine = SpeedCams.userList(this)
+        if (mine.isEmpty()) {
+            myCamsList.addView(text("Nenhum radar marcado por você.", 13f, Colors.MUTED))
+            return
+        }
+        val fmt = java.text.SimpleDateFormat("dd/MM HH:mm", PT_BR)
+        for ((i, c) in mine.sortedByDescending { it.id }.withIndex()) {
+            val box = LinearLayout(this).apply {
+                orientation = LinearLayout.VERTICAL
+                setPadding(dp(12), dp(10), dp(12), dp(10))
+                background = rounded(Colors.SURFACE_2, 12f)
+            }
+            val title = "📷 Radar ${mine.size - i} · marcado em ${fmt.format(java.util.Date(c.id))}" +
+                (if (c.limit == null) " · sem limite definido" else " · ${c.limit} km/h")
+            box.addView(text(title, 14f, if (c.limit == null) Colors.YELLOW else Colors.TEXT, bold = true))
+            box.addView(text(String.format(java.util.Locale.US, "%.5f, %.5f", c.lat, c.lng), 11f, Colors.MUTED))
+            val group = MaterialButtonToggleGroup(this).apply {
+                isSingleSelection = true
+            }
+            val ids = mutableMapOf<Int, Int>()
+            for (lim in listOf(30, 40, 50, 60, 70, 80, 90)) {
+                val b = outlinedButton("$lim").apply {
+                    id = View.generateViewId()
+                    minWidth = 0
+                    minimumWidth = 0
+                    setPadding(0, 0, 0, 0)
+                }
+                ids[b.id] = lim
+                group.addView(b, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f))
+                if (c.limit == lim) group.check(b.id)
+            }
+            group.addOnButtonCheckedListener { _, id, checked ->
+                if (checked) {
+                    SpeedCams.setUserLimit(this, c, ids[id])
+                    refreshMyCams()
+                }
+            }
+            box.addView(group, matchWrap(top = 4))
+            box.addView(outlinedButton("Abrir no mapa").apply {
+                setOnClickListener {
+                    try {
+                        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("geo:${c.lat},${c.lng}?q=${c.lat},${c.lng}(Radar)")))
+                    } catch (_: Exception) {
+                        toast("Nenhum app de mapa encontrado")
+                    }
+                }
+            }, matchWrap(top = 2))
+            box.addView(outlinedButton("Apagar").apply {
+                setOnClickListener {
+                    SpeedCams.removeUser(this@MainActivity, c)
+                    refreshMyCams()
+                    updateSpeedInfo()
+                }
+            }, matchWrap(top = 2))
+            myCamsList.addView(box, matchWrap(top = 8))
+        }
+    }
 
     private fun buildSpeed(col: LinearLayout) {
         val card = section(col, "Radares de velocidade")
@@ -487,6 +549,15 @@ class MainActivity : AppCompatActivity() {
                 else SpeedWatch.demo(this@MainActivity)
             }
         }, matchWrap(top = 4))
+
+        card.addView(text("Faltou um radar no mapa?", 15f, Colors.TEXT, bold = true).apply { setPadding(0, dp(14), 0, 0) })
+        card.addView(text(
+            "Aperte o volume + duas vezes rápido logo depois de passar por ele (com a Uber/99 aberta). " +
+                "Depois, aqui embaixo, escolha o limite de velocidade dele. Da próxima vez, o Radar avisa como os outros.",
+            12f, Colors.MUTED
+        ))
+        myCamsList = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
+        card.addView(myCamsList, matchWrap(top = 6))
 
         card.addView(text("Possíveis multas recentes", 15f, Colors.TEXT, bold = true).apply { setPadding(0, dp(14), 0, 0) })
         finesText = text("", 13f, Colors.TEXT).apply { setPadding(0, dp(4), 0, 0) }
@@ -902,6 +973,7 @@ class MainActivity : AppCompatActivity() {
                     (if (SpeedWatch.active) "\nAlerta ativo agora" else "")
             }
         }
+        refreshMyCams()
         val fines = PassLog.recentFines(this)
         val total = PassLog.count(this)
         finesText.text = if (fines.isEmpty()) {

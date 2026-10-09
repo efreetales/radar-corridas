@@ -19,7 +19,15 @@ import kotlin.math.floor
  * limit = limite em km/h (null se não soubermos)
  * bearing = sentido da via em graus (null se a via for mão dupla: vale para os dois sentidos)
  */
-class SpeedCam(val lat: Double, val lng: Double, val limit: Int?, val bearing: Float?, val name: String)
+class SpeedCam(
+    val lat: Double,
+    val lng: Double,
+    var limit: Int?,
+    val bearing: Float?,
+    val name: String,
+    val mine: Boolean = false,   // marcado por você (não veio do mapa)
+    val id: Long = 0L
+)
 
 /**
  * Lista de radares da Grande São Paulo, baixada do OpenStreetMap (mapa colaborativo, gratuito).
@@ -57,8 +65,13 @@ object SpeedCams {
         out tags geom;
     """.trimIndent()
 
+    private const val USER_FILE = "meus_radares.tsv"
+
     @Volatile
     private var grid: Map<Long, List<SpeedCam>> = emptyMap()
+    private var mapCams: List<SpeedCam> = emptyList()
+    private val userCams = mutableListOf<SpeedCam>()
+    private var userLoaded = false
 
     @Volatile
     var count = 0
@@ -84,8 +97,12 @@ object SpeedCams {
 
     /** Lê a lista salva no celular. */
     fun load(ctx: Context) {
+        loadUser(ctx)
         val f = file(ctx)
-        if (!f.exists()) return
+        if (!f.exists()) {
+            setAll(emptyList())
+            return
+        }
         try {
             val list = f.readLines().mapNotNull { line ->
                 val p = line.split('\t')
@@ -100,10 +117,91 @@ object SpeedCams {
     }
 
     private fun setAll(list: List<SpeedCam>) {
+        mapCams = list
+        rebuild()
+    }
+
+    @Synchronized
+    private fun rebuild() {
         val g = HashMap<Long, MutableList<SpeedCam>>()
-        for (c in list) g.getOrPut(key(c.lat, c.lng)) { mutableListOf() }.add(c)
+        for (c in mapCams) g.getOrPut(key(c.lat, c.lng)) { mutableListOf() }.add(c)
+        for (c in userCams) g.getOrPut(key(c.lat, c.lng)) { mutableListOf() }.add(c)
         grid = g
-        count = list.size
+        count = mapCams.size + userCams.size
+    }
+
+    // ---------- Radares marcados por você ----------
+
+    fun userFile(ctx: Context) = File(ctx.filesDir, USER_FILE)
+
+    @Synchronized
+    private fun loadUser(ctx: Context) {
+        if (userLoaded) return
+        userLoaded = true
+        val f = userFile(ctx)
+        if (!f.exists()) return
+        try {
+            f.readLines().forEach { line ->
+                val p = line.split('\t')
+                if (p.size < 5) return@forEach
+                userCams.add(
+                    SpeedCam(
+                        p[1].toDoubleOrNull() ?: return@forEach, p[2].toDoubleOrNull() ?: return@forEach,
+                        p[3].toIntOrNull(), p[4].toFloatOrNull(), p.getOrElse(5) { "" }, true,
+                        p[0].toLongOrNull() ?: 0L
+                    )
+                )
+            }
+        } catch (_: Exception) {
+        }
+    }
+
+    @Synchronized
+    private fun saveUser(ctx: Context) {
+        try {
+            val sb = StringBuilder()
+            for (c in userCams) {
+                sb.append(c.id).append('\t')
+                    .append(String.format(Locale.US, "%.6f\t%.6f\t", c.lat, c.lng))
+                    .append(c.limit?.toString() ?: "").append('\t')
+                    .append(c.bearing?.let { String.format(Locale.US, "%.0f", it) } ?: "").append('\t')
+                    .append(c.name.replace('\t', ' ')).append('\n')
+            }
+            userFile(ctx).writeText(sb.toString())
+        } catch (_: Exception) {
+        }
+    }
+
+    @Synchronized
+    fun userList(ctx: Context): List<SpeedCam> {
+        loadUser(ctx)
+        return userCams.toList()
+    }
+
+    /** Marca um radar que faltava no mapa. O limite pode ser escolhido depois no app. */
+    @Synchronized
+    fun addUser(ctx: Context, lat: Double, lng: Double, bearing: Float?, limit: Int?): SpeedCam {
+        loadUser(ctx)
+        val c = SpeedCam(lat, lng, limit, bearing, "", true, System.currentTimeMillis())
+        userCams.add(c)
+        saveUser(ctx)
+        rebuild()
+        return c
+    }
+
+    @Synchronized
+    fun removeUser(ctx: Context, c: SpeedCam) {
+        loadUser(ctx)
+        userCams.removeAll { it.id == c.id }
+        saveUser(ctx)
+        rebuild()
+    }
+
+    @Synchronized
+    fun setUserLimit(ctx: Context, c: SpeedCam, limit: Int?) {
+        loadUser(ctx)
+        userCams.firstOrNull { it.id == c.id }?.limit = limit
+        saveUser(ctx)
     }
 
     /** Radares a até ~1 km do ponto. */
