@@ -830,6 +830,21 @@ class MainActivity : AppCompatActivity() {
                 }
             }, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f))
             box.addView(row, matchWrap(top = 4))
+            val go = LinearLayout(this).apply { orientation = LinearLayout.HORIZONTAL }
+            go.addView(MaterialButton(this).apply {
+                text = "Ir com Waze"
+                isAllCaps = false
+                makeTall(this)
+                setOnClickListener { Nav.waze(this@MainActivity, sp.lat, sp.lng) }
+            }, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f).apply { rightMargin = dp(6) })
+            go.addView(MaterialButton(this).apply {
+                text = "Ir com Uber"
+                isAllCaps = false
+                makeTall(this)
+                setBackgroundColor(Color.parseColor("#2A3441"))
+                setOnClickListener { Nav.uber(this@MainActivity, sp.lat, sp.lng, sp.name) }
+            }, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f))
+            box.addView(go, matchWrap(top = 4))
             spotsList.addView(box, matchWrap(top = 8))
         }
     }

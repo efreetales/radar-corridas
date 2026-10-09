@@ -369,6 +369,15 @@ object HazardWatch {
 
     /** Toque no aviso: desfaz a marcação recente, ou fecha o aviso. */
     fun onBannerTap() {
+        // Aviso de ponto bom: o toque abre o Waze até o ponto
+        val spot = SpotWatch.current
+        val svc = RadarService.instance
+        if (SpotWatch.showing && spot != null && svc != null && spot.id != 0L) {
+            SpotWatch.onBannerClosed()
+            svc.hideSpeedBanner()
+            Nav.waze(svc, spot.lat, spot.lng)
+            return
+        }
         val ctx = appContext
         val cam = undoCam
         if (ctx != null && cam != null && System.currentTimeMillis() < undoUntil) {

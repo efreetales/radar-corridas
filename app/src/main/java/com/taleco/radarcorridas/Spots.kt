@@ -191,11 +191,17 @@ object SpotWatch {
         show(ctx, s, bestD, kmh, beep = true)
     }
 
+    /** Ponto mostrado no aviso agora (o toque no aviso abre o Waze até ele). */
+    @Volatile
+    var current: Spot? = null
+        private set
+
     private fun show(ctx: Context, s: Spot, d: Double, kmh: Double, beep: Boolean) {
+        current = s
         val (dist, unit) = if (d >= 1000) String.format(PT_BR, "%.1f", d / 1000) to "km" else "${(d / 10).roundToInt() * 10}" to "metros"
         RadarService.instance?.showSpeedBanner(
             SpeedBanner(
-                null, kmh.roundToInt(), "Bom agora até ${Spot.hhmm(s.endMin)} · ${s.daysText()}", PURPLE,
+                null, kmh.roundToInt(), "Bom até ${Spot.hhmm(s.endMin)} · toque para ir com o Waze", PURPLE,
                 null, (1.0 - d / s.radiusM).coerceIn(0.0, 1.0).toFloat(),
                 sign = "★", title = s.name, distText = dist, distUnit = unit
             )
@@ -209,6 +215,7 @@ object SpotWatch {
     fun onBannerClosed() {
         handler.removeCallbacks(hide)
         showing = false
+        current = null
     }
 
     fun demo(ctx: Context) {
