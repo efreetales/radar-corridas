@@ -106,11 +106,14 @@ import math, time, urllib.parse
 def overpass_ways(points):
     """Vias do mapa a até 35 m de cada ponto (em lotes)."""
     ways = {}
-    for i in range(0, len(points), 150):
-        chunk = points[i:i + 150]
+    for i in range(0, len(points), 40):
+        chunk = points[i:i + 40]
         q = "[out:json][timeout:300];(" + "".join(
             f'way(around:35,{la:.6f},{lo:.6f})["highway"~"{ROADS}"];' for la, lo in chunk) + ");out tags geom;"
-        for ep in OVERPASS:
+        ok = False
+        for ep in OVERPASS * 3:
+            if ok:
+                break
             try:
                 req = urllib.request.Request(ep, data=("data=" + urllib.parse.quote(q)).encode(),
                                              headers={"User-Agent": "RadarCorridas/1.0 (github actions)"})
@@ -118,7 +121,7 @@ def overpass_ways(points):
                     for el in json.loads(r.read()).get("elements", []):
                         if el.get("type") == "way" and el.get("geometry"):
                             ways[el["id"]] = el
-                break
+                ok = True
             except Exception as ex:
                 print("overpass falhou", ep, ex)
                 time.sleep(5)
@@ -208,3 +211,4 @@ with open("out/radares_cet.tsv", "w", encoding="utf-8") as f:
         f.write(f"{lat:.6f}\t{lng:.6f}\t{lim}\t{bear}\t{desc}\t{axis}\n")
         kept += 1
 print("radares de velocidade ativos:", kept, "| com via do mesmo nome:", matched_name)
+print("com direção da via:", sum(1 for l in open("out/radares_cet.tsv", encoding="utf-8") if l.rstrip("\n").split("\t")[5]))
