@@ -1,5 +1,5 @@
 {
- "gerado_em": "2026-10-09T05:40:00-03:00",
+ "gerado_em": "2026-10-09T05:55:00-03:00",
  "data": "2026-10-09",
  "observacao": "Horário de saída estimado. Shows e baladas: Ao Vivo (newsletter), Rio Times, Shotgun; teatro: Catraca Livre.",
  "eventos": [
@@ -452,6 +452,226 @@
    "fim_estimado": "02:00",
    "publico_estimado": null,
    "fonte": "https://shotgun.live/pt-br/concerts/sao-paulo"
+  },
+  {
+   "nome": "Rebobinights 11 Anos – Summer Eletro Bichas",
+   "local": "Komplexo Tempo",
+   "endereco": "Komplexo Tempo, São Paulo",
+   "tipo": "balada",
+   "inicio": "22:00",
+   "fim_estimado": "04:00",
+   "publico_estimado": 800,
+   "fonte": "https://shotgun.live/pt-br/cities/sao-paulo"
+  },
+  {
+   "nome": "Buraconcreta",
+   "local": "Estúdio Lâmina",
+   "endereco": "Estúdio Lâmina, São Paulo",
+   "tipo": "festa",
+   "inicio": "21:00",
+   "fim_estimado": "02:00",
+   "publico_estimado": 200,
+   "fonte": "https://shotgun.live/pt-br/cities/sao-paulo"
+  },
+  {
+   "nome": "Paz, Amor e Grave com MC Soffia",
+   "local": "Terraço Baronesa",
+   "endereco": "Baronesa, São Paulo",
+   "tipo": "festa",
+   "inicio": "23:00",
+   "fim_estimado": "04:00",
+   "publico_estimado": 300,
+   "fonte": "https://shotgun.live/pt-br/cities/sao-paulo"
+  },
+  {
+   "nome": "Pagodão Experience",
+   "local": "Dama da Noite",
+   "endereco": "Dama da Noite, São Paulo",
+   "tipo": "festa",
+   "inicio": "22:00",
+   "fim_estimado": "03:00",
+   "publico_estimado": 400,
+   "fonte": "https://shotgun.live/pt-br/cities/sao-paulo"
+  },
+  {
+   "nome": "High-Hit – Círio de Nazaré",
+   "local": "Funilaria Bixiga",
+   "endereco": "Funilaria, Bixiga, Bela Vista, São Paulo",
+   "tipo": "balada",
+   "inicio": "22:30",
+   "fim_estimado": "04:00",
+   "publico_estimado": 500,
+   "fonte": "https://shotgun.live/pt-br/cities/sao-paulo"
+  },
+  {
+   "nome": "Drop Times: Mees Salomé",
+   "local": "Café Hotel no Mojo Society",
+   "endereco": "Café Hotel, São Paulo",
+   "tipo": "festa",
+   "inicio": "20:00",
+   "fim_estimado": "01:00",
+   "publico_estimado": 300,
+   "fonte": "https://shotgun.live/pt-br/cities/sao-paulo"
+  },
+  {
+   "nome": "10 Anos de Zona Oeste Guetto Posse",
+   "local": "São Paulo (Shotgun)",
+   "endereco": "Zona Oeste, São Paulo",
+   "tipo": "festa",
+   "inicio": "20:00",
+   "fim_estimado": "02:00",
+   "publico_estimado": null,
+   "fonte": "https://shotgun.live/pt-br/cities/sao-paulo"
+  },
+  {
+   "nome": "O Pente no Mundo Pensante",
+   "local": "Mundo Pensante",
+   "endereco": "Mundo Pensante, Bela Vista, São Paulo",
+   "tipo": "festa",
+   "inicio": "21:00",
+   "fim_estimado": "03:00",
+   "publico_estimado": 400,
+   "fonte": "https://shotgun.live/pt-br/cities/sao-paulo"
+  },
+  {
+   "nome": "Baile Profano no Home Club",
+   "local": "Home Club",
+   "endereco": "Home Club, Centro Histórico, São Paulo",
+   "tipo": "balada",
+   "inicio": "22:00",
+   "fim_estimado": "04:00",
+   "publico_estimado": 500,
+   "fonte": "https://shotgun.live/pt-br/cities/sao-paulo"
+  },
+  {
+   "nome": "Love Miley Party: Bass Persuades",
+   "local": "Bar Tarot",
+   "endereco": "Bar Tarot, São Paulo",
+   "tipo": "festa",
+   "inicio": "22:00",
+   "fim_estimado": "03:00",
+   "publico_estimado": 200,
+   "fonte": "https://shotgun.live/pt-br/cities/sao-paulo"
+  },
+  {
+   "nome": "Venom: Wor$t Party in $ão Paulo",
+   "local": "Bar do Netão",
+   "endereco": "Bar do Netão, São Paulo",
+   "tipo": "festa",
+   "inicio": "23:00",
+   "fim_estimado": "04:00",
+   "publico_estimado": 200,
+   "fonte": "https://shotgun.live/pt-br/cities/sao-paulo"
+  },
+  {
+   "nome": "Pop Sleazy: Halloween Night",
+   "local": "Casa da Luz – Espaço Cultural",
+   "endereco": "Casa da Luz, Luz, São Paulo",
+   "tipo": "balada",
+   "inicio": "23:00",
+   "fim_estimado": "04:00",
+   "publico_estimado": 400,
+   "fonte": "https://shotgun.live/pt-br/cities/sao-paulo"
+  },
+  {
+   "nome": "Aquecimento Zig Festival",
+   "local": "Zigduplex",
+   "endereco": "Zigduplex, São Paulo",
+   "tipo": "balada",
+   "inicio": "23:30",
+   "fim_estimado": "05:00",
+   "publico_estimado": 500,
+   "fonte": "https://shotgun.live/pt-br/cities/sao-paulo"
+  },
+  {
+   "nome": "Welcome To Our Neighborhood",
+   "local": "Rockwheels Kustom Bar",
+   "endereco": "Rockwheels Kustom Bar, Bela Vista, São Paulo",
+   "tipo": "festa",
+   "inicio": "18:00",
+   "fim_estimado": "23:00",
+   "publico_estimado": 150,
+   "fonte": "https://shotgun.live/pt-br/cities/sao-paulo"
+  },
+  {
+   "nome": "Cr1a Club",
+   "local": "Cr1a Club",
+   "endereco": "Bela Vista, São Paulo",
+   "tipo": "festa",
+   "inicio": "18:00",
+   "fim_estimado": "23:00",
+   "publico_estimado": null,
+   "fonte": "https://shotgun.live/pt-br/cities/sao-paulo"
+  },
+  {
+   "nome": "Site Of Grace 0800",
+   "local": "Pinheiros (Shotgun)",
+   "endereco": "Pinheiros, São Paulo",
+   "tipo": "festa",
+   "inicio": "18:00",
+   "fim_estimado": "23:00",
+   "publico_estimado": null,
+   "fonte": "https://shotgun.live/pt-br/cities/sao-paulo"
+  },
+  {
+   "nome": "Bandas + Karaokê + Jam Session",
+   "local": "Pinheiros (Shotgun)",
+   "endereco": "Pinheiros, São Paulo",
+   "tipo": "festa",
+   "inicio": "21:00",
+   "fim_estimado": "01:00",
+   "publico_estimado": null,
+   "fonte": "https://shotgun.live/pt-br/cities/sao-paulo"
+  },
+  {
+   "nome": "Lékke – Novos Ventos (estreia)",
+   "local": "São Paulo (Shotgun)",
+   "endereco": "São Paulo",
+   "tipo": "show",
+   "inicio": "21:10",
+   "fim_estimado": "23:30",
+   "publico_estimado": null,
+   "fonte": "https://shotgun.live/pt-br/cities/sao-paulo"
+  },
+  {
+   "nome": "Baile do Gato com Cacau Chuu & Th4ys!",
+   "local": "Kat Klub",
+   "endereco": "Kat Klub, São Paulo",
+   "tipo": "balada",
+   "inicio": "22:00",
+   "fim_estimado": "04:00",
+   "publico_estimado": 300,
+   "fonte": "https://shotgun.live/pt-br/cities/sao-paulo"
+  },
+  {
+   "nome": "Dior Convida #5",
+   "local": "Artur Alvim (Shotgun)",
+   "endereco": "Artur Alvim, São Paulo",
+   "tipo": "festa",
+   "inicio": "22:00",
+   "fim_estimado": "04:00",
+   "publico_estimado": null,
+   "fonte": "https://shotgun.live/pt-br/cities/sao-paulo"
+  },
+  {
+   "nome": "Club Bambina",
+   "local": "Carmem Bar",
+   "endereco": "Carmem Bar, São Paulo",
+   "tipo": "festa",
+   "inicio": "22:00",
+   "fim_estimado": "03:00",
+   "publico_estimado": 200,
+   "fonte": "https://shotgun.live/pt-br/cities/sao-paulo"
+  },
+  {
+   "nome": "Heartbreak Party | Open Bar",
+   "local": "Clube Outs",
+   "endereco": "Clube Outs, Rua Augusta, Consolação, São Paulo",
+   "tipo": "balada",
+   "inicio": "22:00",
+   "fim_estimado": "04:00",
+   "publico_estimado": 500,
+   "fonte": "https://shotgun.live/pt-br/cities/sao-paulo"
   }
  ]
 }
