@@ -1017,12 +1017,30 @@ class MainActivity : AppCompatActivity() {
                 val q = input.text.toString().trim()
                 if (q.isEmpty()) return@setPositiveButton
                 toast("Buscando…")
-                val query = if (q.contains("São Paulo", ignoreCase = true)) q else "$q, São Paulo"
-                Geo.geocode(this, query) { at ->
-                    if (at == null) toast("Endereço não encontrado. Tente com número e bairro.")
-                    else newSpotAt(at.lat, at.lng, q.substringBefore(",").take(40))
-                }
+                Geo.search(this, q) { places -> pickPlace(q, places) }
             }
+            .setNegativeButton("Cancelar", null)
+            .show()
+    }
+
+    /** Mostra o que a busca achou para o motorista confirmar antes de criar o ponto. */
+    private fun pickPlace(q: String, places: List<Geo.Place>) {
+        val name = q.substringBefore(",").trim().take(40)
+        if (places.isEmpty()) {
+            androidx.appcompat.app.AlertDialog.Builder(this)
+                .setTitle("Não encontrei \"$q\"")
+                .setMessage("Digite o endereço com rua, número e bairro (ex.: Rua Augusta, 609, Consolação). Você pode pôr o nome do lugar antes: \"$name, Rua …\".")
+                .setPositiveButton("Tentar de novo") { _, _ -> addSpotByAddress() }
+                .setNegativeButton("Cancelar", null)
+                .show()
+            return
+        }
+        val items = places.map { (if (it.exact) "" else "⚠ só a região: ") + it.label }.toTypedArray()
+        val anyExact = places.any { it.exact }
+        androidx.appcompat.app.AlertDialog.Builder(this)
+            .setTitle(if (anyExact) "Qual é o lugar?" else "Achei só a região, não o endereço")
+            .setItems(items) { _, i -> newSpotAt(places[i].at.lat, places[i].at.lng, name) }
+            .setNeutralButton("Digitar outro") { _, _ -> addSpotByAddress() }
             .setNegativeButton("Cancelar", null)
             .show()
     }
