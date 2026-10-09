@@ -34,10 +34,13 @@
   #mapwrap { flex:1; position:relative; min-height:160px; }
   #map { position:absolute; inset:0; }
   #legend { position:absolute; left:8px; bottom:26px; z-index:450; background:rgba(13,17,23,.8); border-radius:10px;
-            padding:6px 9px; font-size:10.5px; color:var(--tx); line-height:1.55; max-width:62%; }
-  #legend .dot { width:8px; height:8px; margin:0 3px 0 6px; }
-  #legend .dot:first-of-type { margin-left:0; }
-  #legend .ln { display:inline-block; width:14px; height:4px; border-radius:2px; vertical-align:middle; margin:0 3px 0 6px; }
+            padding:6px 9px; font-size:10.5px; color:var(--tx); line-height:1.55; max-width:calc(100% - 24px); }
+  #legend .row { display:grid; grid-template-columns:auto 1fr; column-gap:8px; align-items:baseline; }
+  #legend .row > b { font-weight:500; }
+  #legend .its { display:flex; flex-wrap:wrap; column-gap:9px; }
+  #legend .it { white-space:nowrap; }   /* símbolo e palavra nunca se separam */
+  #legend .dot { width:8px; height:8px; margin:0 3px 0 0; }
+  #legend .ln { display:inline-block; width:14px; height:4px; border-radius:2px; vertical-align:middle; margin:0 3px 0 0; }
   #scale { position:absolute; right:10px; top:50%; transform:translateY(-50%); z-index:450; display:flex; gap:6px;
            background:rgba(13,17,23,.8); border-radius:10px; padding:8px 8px 8px 6px; }
   #scale .grad { width:10px; border-radius:5px; background:linear-gradient(to top,#1f6feb,#2FD3A6 45%,#F5C518 70%,#E5484D); }
@@ -48,6 +51,7 @@
   #sheet { flex:none; position:relative; z-index:600; background:var(--s1); margin-top:-18px;
            border-top-left-radius:20px; border-top-right-radius:20px; box-shadow:0 -6px 24px rgba(0,0,0,.45); }
   #handle { padding:10px 16px 12px; touch-action:none; }
+  #sheet .stats { touch-action:none; }
   #grip { width:44px; height:5px; border-radius:3px; background:#3a424d; margin:0 auto 10px; }
   .peek { display:grid; grid-template-columns:0.9fr 0.8fr 1.5fr 0.9fr; gap:8px; }
   .peek div { min-width:0; }
@@ -76,6 +80,12 @@
   .leaflet-container { background:#1b1f24; }
   .leaflet-control-attribution { font-size:9px; background:rgba(13,17,23,.55) !important; color:#8B949E; }
   .leaflet-control-attribution a { color:#8B949E; }
+  .rgn { width:22px; height:22px; border-radius:50%; background:#2FD3A6; color:#06231B; font:800 12px/22px system-ui,sans-serif;
+         text-align:center; border:2px solid #0D1117; box-shadow:0 1px 4px rgba(0,0,0,.5); }
+  .rgn.sel { background:#fff; transform:scale(1.25); }
+  .leaflet-tooltip.rgtip { background:#0D1117; color:#E6EDF3; border:1px solid #2FD3A6; border-radius:8px; font:600 12px system-ui,sans-serif; padding:5px 8px; }
+  .leaflet-tooltip.rgtip:before { border-top-color:#2FD3A6; }
+  .reg .t small.w { color:#8B949E; }
 </style>
 </head>
 <body>
@@ -170,7 +180,7 @@ function selects(id, list, key){
   const el = document.getElementById(id);
   list.forEach(([v,l]) => { const o=document.createElement("option"); o.value=v; o.textContent=l; el.appendChild(o); });
   el.value = st[key];
-  el.onchange = () => { st[key] = el.value; render(); };
+  el.onchange = () => { st[key] = el.value; selReg = -1; render(); };
 }
 function layers(){
   const el = document.getElementById("lay");
@@ -194,6 +204,22 @@ let group = L.layerGroup().addTo(map), heat = null;
 const vcol = v => v==="BOM" ? "#3DD68C" : v==="RUIM" ? "#E5484D" : "#F5C518";
 const phcol = { A_CAMINHO:"#6E7681", NO_EMBARQUE:"#F5C518", EM_VIAGEM:"#2FD3A6" };
 
+let regs = [], selReg = -1;
+const regLayer = L.layerGroup().addTo(map);
+// Endereço da oferta (lido da tela da Uber): "Rua X, Bairro, São Paulo" -> rua e bairro
+const STREET = /^(r\.|rua|av\.?|avenida|al\.?|alameda|pç\.?|praça|pça\.?|tv\.?|travessa|estr\.?|estrada|rod\.?|rodovia|viaduto|largo|lgo\.?)\s/i;
+function fixOcr(t){ return t.replace(/S[äa]o\b/g,"São").replace(/^l(?=[a-zà-ú])/,"I").trim(); }
+function place(addr){
+  const parts = (addr||"").split(",").map(x => fixOcr(x)).filter(x => x.length >= 2 && !/^s[aã]o( paulo)?$/i.test(x) && !/^\d/.test(x));
+  let rua = null, bairro = null;
+  if (parts[0] && STREET.test(parts[0])) { rua = parts[0].replace(/^R\.\s/,"Rua ").replace(/^Av\.?\s/,"Av. "); bairro = parts[1] || null; }
+  else if (parts[0] && parts[0].split(" ").length >= 2 && !/ de$| do$| da$/.test(parts[0])) rua = parts[0]; // lugar conhecido (shopping, museu)
+  if (bairro && (bairro.length < 2 || / de$| do$| da$/.test(bairro) || /bernardo|santo andr|osasco|guarulhos|diadema/i.test(bairro))) bairro = null;
+  if (rua && / de$| do$| da$/.test(rua)) rua = null; // cortado na tela
+  return { rua, bairro };
+}
+function showRegion(i){ const c = regs[i]; if (!c) return; selReg = i; sheet(false); render();
+  map.fitBounds(c.bounds, { paddingTopLeft:[40,70], paddingBottomRight:[110,60], maxZoom:16 }); }
 function safe(f){ try { f(); } catch(e) { console.log("mapa: " + e.message); } }
 function render(){
   group.clearLayers(); if (heat) { map.removeLayer(heat); heat = null; }
@@ -258,26 +284,48 @@ function render(){
 
   // Regiões: quadrados de ~1 km, ordenados pelo R$/h médio das ofertas
   const cells = {};
-  of.forEach(o => { const k = Math.round(o.la/0.009)+":"+Math.round(o.lo/0.0098);
-    const c = cells[k] = cells[k] || { n:0, sum:0, good:0, la:0, lo:0, names:{} };
+  of.forEach(o => { const ka = Math.round(o.la/0.009), ko = Math.round(o.lo/0.0098), k = ka+":"+ko;
+    const c = cells[k] = cells[k] || { n:0, sum:0, good:0, la:0, lo:0, ka, ko, bairros:{}, ruas:{} };
     c.n++; c.sum += o.rsh||0; if (o.v==="BOM") c.good++; c.la += o.la; c.lo += o.lo;
-    const parts = (o.orig||"").split(",").map(x=>x.trim()).filter(x=>x.length>2 && !/s[aã]o paulo/i.test(x));
-    const nm = parts[1] || parts[0]; if (nm) c.names[nm]=(c.names[nm]||0)+1; });
+    const a = place(o.orig); if (a.bairro) c.bairros[a.bairro]=(c.bairros[a.bairro]||0)+1; if (a.rua) c.ruas[a.rua]=(c.ruas[a.rua]||0)+1; });
+  const best = o => Object.entries(o).sort((a,b)=>b[1]-a[1])[0]?.[0];
   const minN = of.length >= 40 ? 3 : 1;
-  const top = Object.values(cells).filter(c => c.n >= minN).map(c => ({ ...c, avg:c.sum/c.n, la:c.la/c.n, lo:c.lo/c.n,
-    name: Object.entries(c.names).sort((a,b)=>b[1]-a[1])[0]?.[0] || "Ofertas recebidas nesta região" }))
+  regs = Object.values(cells).filter(c => c.n >= minN).map(c => ({ ...c, avg:c.sum/c.n, la:c.la/c.n, lo:c.lo/c.n,
+      bairro: best(c.bairros), rua: best(c.ruas) }))
     .sort((a,b)=>b.avg-a.avg).slice(0,6);
+  // Sem bairro escrito nas ofertas da região: usa o bairro mais perto que apareceu em outras ofertas
+  regs.forEach(c => { if (c.bairro) return; let bd = 1e9, bn = null;
+    of.forEach(o => { const b = place(o.orig).bairro; if (!b) return; const d = Math.hypot(o.la-c.la, (o.lo-c.lo)*0.92);
+      if (d < bd) { bd = d; bn = b; } });
+    c.bairroPerto = bd < 0.03 ? bn : null; });
+  const title = c => c.bairro || c.rua || (c.bairroPerto ? "Perto de " + c.bairroPerto : "Região ");
+  const sub = c => (c.bairro && c.rua ? (STREET.test(c.rua) ? "perto da " : "perto do ") + c.rua + " · " : !c.bairro && c.bairroPerto && c.rua ? c.bairroPerto + " · " : "") +
+    `${c.n} oferta${c.n>1?"s":""} · ${Math.round(100*c.good/c.n)}% boas`;
+  regs.forEach((c,i) => { c.i = i; c.title = title(c) + (title(c) === "Região " ? (i+1) : ""); c.sub = sub(c);
+    c.bounds = [[(c.ka-0.5)*0.009, (c.ko-0.5)*0.0098], [(c.ka+0.5)*0.009, (c.ko+0.5)*0.0098]]; });
   html += `<h3>Melhores regiões (R$/h médio das ofertas)</h3>`;
-  html += top.length ? top.map((c,i) => `<div class="reg" onclick="sheet(false);map.setView([${c.la},${c.lo}],15)"><div class="n">${i+1}</div>`+
-      `<div class="t">${c.name}<small>${c.n} oferta${c.n>1?"s":""} · ${Math.round(100*c.good/c.n)}% boas</small></div>`+
+  html += regs.length ? regs.map((c,i) => `<div class="reg" onclick="showRegion(${i})"><div class="n">${i+1}</div>`+
+      `<div class="t">${c.title}<small class="w">${c.sub.split(" · ").map(x => `<span style="white-space:nowrap">${x}</span>`).join(" · ")}</small></div>`+
       `<div class="v">${brl(c.avg).replace(",00","")}/h</div></div>`).join("")
     : `<div class="empty">Sem ofertas nesse filtro.</div>`;
+  // Quadrados numerados das regiões no mapa
+  regLayer.clearLayers();
+  regs.forEach(c => { const sel = c.i === selReg;
+    L.rectangle(c.bounds, { color:"#2FD3A6", weight: sel ? 3 : 1.5, dashArray: sel ? null : "5 5", fillColor:"#2FD3A6",
+      fillOpacity: sel ? .12 : .03, interactive:false }).addTo(regLayer);
+    const m = L.marker([c.bounds[1][0], c.bounds[0][1]], { icon:L.divIcon({ className:"", iconSize:[22,22], iconAnchor:[4,4],
+      html:`<div class="rgn${sel?" sel":""}">${c.i+1}</div>` }), zIndexOffset: sel ? 1000 : 500 })
+      .on("click", () => showRegion(c.i)).addTo(regLayer);
+    if (sel) m.bindTooltip(`${c.i+1} · ${c.title} · ${brl(c.avg).replace(",00","")}/h`, { permanent:true, direction:"top",
+      offset:[7,-6], className:"rgtip" }).openTooltip(); });
   // Legenda fixa no mapa, só das camadas ligadas que têm cores
   const lg = [];
-  if (st.lay.ofertas) lg.push(`Ofertas:<span class="dot" style="background:#3DD68C"></span>boa<span class="dot" style="background:#F5C518"></span>média<span class="dot" style="background:#E5484D"></span>ruim`);
-  if (st.lay.percursos) lg.push(`Percursos:<span class="ln" style="background:#6E7681"></span>buscar<span class="ln" style="background:#F5C518"></span>espera<span class="ln" style="background:#2FD3A6"></span>viagem`);
-  if (st.lay.radares) lg.push(`Radares:<span class="dot" style="background:#3DD68C"></span>ok<span class="dot" style="background:#F5C518"></span>tolerância<span class="dot" style="background:#E5484D"></span>multa`);
-  const le = document.getElementById("legend"); le.innerHTML = lg.join("<br>"); le.style.display = lg.length ? "block" : "none";
+  const it = (cls, col, txt) => `<span class="it"><span class="${cls}" style="background:${col}"></span>${txt}</span>`;
+  const row = (name, items) => `<div class="row"><b>${name}</b><span class="its">${items.join("")}</span></div>`;
+  if (st.lay.ofertas) lg.push(row("Ofertas", [it("dot","#3DD68C","boa"), it("dot","#F5C518","média"), it("dot","#E5484D","ruim")]));
+  if (st.lay.percursos) lg.push(row("Percursos", [it("ln","#6E7681","buscar"), it("ln","#F5C518","espera"), it("ln","#2FD3A6","viagem")]));
+  if (st.lay.radares) lg.push(row("Radares", [it("dot","#3DD68C","ok"), it("dot","#F5C518","tolerância"), it("dot","#E5484D","multa")]));
+  const le = document.getElementById("legend"); le.innerHTML = lg.join(""); le.style.display = lg.length ? "block" : "none";
   document.getElementById("moreIn").innerHTML = html;
 
   // Calor por último: se o mapa ainda não tem tamanho, o desenho do calor falha — e não pode levar o resto junto
@@ -292,14 +340,23 @@ function render(){
   }
 }
 
-// ---------- painel de baixo: toque ou arraste o puxador ----------
+// ---------- painel de baixo: arraste em QUALQUER parte dele (ou toque no topo) ----------
 const sh = document.getElementById("sheet"), hd = document.getElementById("handle"), more = document.getElementById("more");
 function sheet(open){ sh.classList.toggle("open", open); }
 more.addEventListener("transitionend", () => map.invalidateSize());
-let y0 = null;
-hd.addEventListener("pointerdown", e => { y0 = e.clientY; hd.setPointerCapture(e.pointerId); });
-hd.addEventListener("pointerup", e => { if (y0 === null) return; const dy = e.clientY - y0; y0 = null;
-  if (Math.abs(dy) < 8) sheet(!sh.classList.contains("open")); else sheet(dy < 0); });
+hd.addEventListener("click", () => sheet(!sh.classList.contains("open")));
+// Arrastar para cima abre; para baixo fecha. Dentro da lista que rola, para baixo só fecha se a lista já está no começo.
+let g = null;
+sh.addEventListener("touchstart", e => { const t = e.touches[0];
+  g = { x:t.clientX, y:t.clientY, top: more.scrollTop <= 2, done:false }; }, { passive:true });
+sh.addEventListener("touchmove", e => { if (!g || g.done) return; const t = e.touches[0];
+  const dy = t.clientY - g.y, dx = t.clientX - g.x;
+  if (Math.abs(dy) < 35 || Math.abs(dy) < Math.abs(dx) * 1.5) return;
+  const open = sh.classList.contains("open");
+  if (dy < 0 && !open) { sheet(true); g.done = true; }
+  else if (dy > 0 && open && g.top && more.scrollTop <= 2) { sheet(false); g.done = true; }
+}, { passive:true });
+sh.addEventListener("touchend", () => { g = null; }, { passive:true });
 
 selects("per", PER, "per"); selects("dia", DIA, "dia"); selects("hor", HOR, "hor"); layers();
 paint(); render();
