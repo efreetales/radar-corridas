@@ -34,7 +34,6 @@ class OverlayManager(private val service: AccessibilityService) {
     private var speedLine: TextView? = null
     private var speedDist: TextView? = null
     private var speedDistUnit: TextView? = null
-    private var speedClose: TextView? = null
     private var speedBase: GradientDrawable? = null
     private var speedFillShape: GradientDrawable? = null
     private var speedFill: ClipDrawable? = null
@@ -97,7 +96,6 @@ class OverlayManager(private val service: AccessibilityService) {
         speedLine?.setTextColor(fg)
         speedDist?.setTextColor(fg)
         speedDistUnit?.setTextColor(fg)
-        speedClose?.setTextColor(fg)
         if (b.distanceM != null) {
             speedDist?.text = b.distanceM.toString()
             speedDistUnit?.text = "metros"
@@ -115,7 +113,6 @@ class OverlayManager(private val service: AccessibilityService) {
         speedLine = null
         speedDist = null
         speedDistUnit = null
-        speedClose = null
         speedBase = null
         speedFillShape = null
         speedFill = null
@@ -136,7 +133,7 @@ class OverlayManager(private val service: AccessibilityService) {
         val root = LinearLayout(service).apply {
             orientation = LinearLayout.HORIZONTAL
             gravity = Gravity.CENTER_VERTICAL
-            setPadding(service.dp(10), service.dp(8), service.dp(4), service.dp(8))
+            setPadding(service.dp(10), service.dp(8), service.dp(16), service.dp(8))
             background = LayerDrawable(arrayOf(base, fill))
             elevation = service.dp(6).toFloat()
         }
@@ -196,15 +193,6 @@ class OverlayManager(private val service: AccessibilityService) {
             LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT
         ).apply { leftMargin = service.dp(8) })
 
-        // Botão fechar
-        val close = TextView(service).apply {
-            text = "✕"
-            textSize = 20f
-            typeface = Typeface.DEFAULT_BOLD
-            setTextColor(Color.WHITE)
-            gravity = Gravity.CENTER
-        }
-        root.addView(close, LinearLayout.LayoutParams(service.dp(44), service.dp(54)))
 
         // Fechar fácil: um toque em qualquer lugar do aviso, ou arrastar para o lado.
         val slop = ViewConfiguration.get(service).scaledTouchSlop
@@ -266,7 +254,6 @@ class OverlayManager(private val service: AccessibilityService) {
             speedLine = line
             speedDist = dist
             speedDistUnit = distUnit
-            speedClose = close
             speedBase = base
             speedFillShape = fillShape
             speedFill = fill
