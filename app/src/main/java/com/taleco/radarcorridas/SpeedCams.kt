@@ -260,12 +260,17 @@ object SpeedCams {
             }
             if (result != null) cetCount = cet.size
             downloading = false
-            OfferLog.appendDiag(app, if (result != null) "RADARES: lista atualizada, $result radares" else "RADARES: falha ao baixar ($error)")
+            OfferLog.appendDiag(app, if (result != null) "RADARES: lista atualizada, $result radares ($cetCount da CET, $osmDiscarded do mapa descartados)" else "RADARES: falha ao baixar ($error)")
             main.post { onDone?.invoke(result, error) }
         }.start()
     }
 
     private const val CET_URL = "https://raw.githubusercontent.com/efreetales/radar-corridas/cet-dados/radares_cet.tsv"
+
+    /** Radares do mapa colaborativo descartados por não estarem na lista da CET. */
+    @Volatile
+    var osmDiscarded = 0
+        private set
 
     /** Quantos radares vieram da CET no último download. */
     @Volatile
@@ -314,7 +319,7 @@ object SpeedCams {
 
     private class Seg(
         val aLat: Double, val aLng: Double, val bLat: Double, val bLng: Double,
-        val limit: Int?, val oneway: Int, val name: String
+        val limit: Int?, val oneway: Int, val name: String, val highway: String = ""
     )
 
     private fun parseLimit(v: String?): Int? {
@@ -370,7 +375,7 @@ object SpeedCams {
                     for (k in 0 until geom.length() - 1) {
                         val a = geom.optJSONObject(k) ?: continue
                         val b = geom.optJSONObject(k + 1) ?: continue
-                        val s = Seg(a.optDouble("lat"), a.optDouble("lon"), b.optDouble("lat"), b.optDouble("lon"), limit, oneway, name)
+                        val s = Seg(a.optDouble("lat"), a.optDouble("lon"), b.optDouble("lat"), b.optDouble("lon"), limit, oneway, name, highway)
                         val keys = hashSetOf(key(s.aLat, s.aLng), key(s.bLat, s.bLng), key((s.aLat + s.bLat) / 2, (s.aLng + s.bLng) / 2))
                         for (kk in keys) segGrid.getOrPut(kk) { mutableListOf() }.add(s)
                     }
@@ -379,6 +384,7 @@ object SpeedCams {
         }
 
         val out = ArrayList<SpeedCam>()
+        val onRodovia = HashSet<SpeedCam>()
         val seen = HashSet<Long>()
         for (n in nodes) {
             if (!seen.add(n.id)) continue
@@ -406,7 +412,9 @@ object SpeedCams {
             val name = best?.name?.takeIf { it.isNotBlank() } ?: n.name
             // Junta radares duplicados (mesmo ponto)
             if (out.any { abs(it.lat - n.lat) < 0.00012 && abs(it.lng - n.lng) < 0.00012 && it.bearing == bearing }) continue
-            out.add(SpeedCam(n.lat, n.lng, limit, bearing, name))
+            val cam = SpeedCam(n.lat, n.lng, limit, bearing, name)
+            out.add(cam)
+            if (best?.highway?.startsWith("motorway") == true || best?.highway?.startsWith("trunk") == true) onRodovia.add(cam)
         }
         if (cet.isEmpty()) return out
 
@@ -434,11 +442,22 @@ object SpeedCams {
             }
             merged.add(SpeedCam(c.lat, c.lng, c.limit ?: best?.limit, b, c.name))
         }
-        // Do mapa colaborativo, só os que não estão na lista da CET (ex.: outras cidades, rodovias)
+        // Do mapa colaborativo, só o que a CET não cobre:
+        //  - repetidos de um radar da CET (até ~40 m): fora, vale o da CET;
+        //  - dentro da área da CET (até ~1,5 km de algum radar dela), fora também: a CET lista todos os
+        //    radares da cidade, então um radar do mapa que ela não tem costuma ser antigo ou errado.
+        //    Exceção: rodovias e marginais expressas (estaduais/federais), que a CET não fiscaliza.
+        var removed = 0
         for (o in out) {
-            val dup = cet.any { abs(it.lat - o.lat) < 0.0004 && abs(it.lng - o.lng) < 0.0004 } // ~40 m
-            if (!dup) merged.add(o)
+            val dup = cet.any { abs(it.lat - o.lat) < 0.0004 && abs(it.lng - o.lng) < 0.0004 }
+            val insideCet = o !in onRodovia && cet.any { abs(it.lat - o.lat) < 0.0135 && abs(it.lng - o.lng) < 0.0147 }
+            if (dup || insideCet) {
+                removed++
+                continue
+            }
+            merged.add(o)
         }
+        osmDiscarded = removed
         return merged
     }
 
