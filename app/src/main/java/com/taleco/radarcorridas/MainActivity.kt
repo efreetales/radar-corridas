@@ -817,6 +817,8 @@ class MainActivity : AppCompatActivity() {
         eventsList = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
         card.addView(eventsList, matchWrap(top = 8))
         refreshEvents()
+        // Baixa a agenda do dia ao abrir o app (se estiver velha)
+        Events.refresh(this) { refreshEvents() }
     }
 
     private fun refreshEvents() {

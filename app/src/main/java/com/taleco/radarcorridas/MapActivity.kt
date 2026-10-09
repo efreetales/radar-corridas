@@ -51,5 +51,13 @@ class MapActivity : AppCompatActivity() {
         // Carrega com um endereço https "de mentira": os servidores de mapa recusam páginas sem origem (file://)
         val html = assets.open("mapa.html").bufferedReader().use { it.readText() }
         web.loadDataWithBaseURL("https://radarcorridas.app/", html, "text/html", "utf-8", null)
+
+        // Agenda de eventos: baixa se ainda não tiver (ou estiver velha) e atualiza o mapa
+        val f = Events.file(this)
+        if (!f.exists() || System.currentTimeMillis() - f.lastModified() > 2 * 60 * 60 * 1000L) {
+            Events.refresh(this, force = true) { n ->
+                if (n != null) web.evaluateJavascript("window.reloadEvents && window.reloadEvents()", null)
+            }
+        }
     }
 }

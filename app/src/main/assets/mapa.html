@@ -33,6 +33,11 @@
 
   #mapwrap { flex:1; position:relative; min-height:160px; }
   #map { position:absolute; inset:0; }
+  #legend { position:absolute; left:8px; bottom:26px; z-index:450; background:rgba(13,17,23,.8); border-radius:10px;
+            padding:6px 9px; font-size:10.5px; color:var(--tx); line-height:1.55; max-width:62%; }
+  #legend .dot { width:8px; height:8px; margin:0 3px 0 6px; }
+  #legend .dot:first-of-type { margin-left:0; }
+  #legend .ln { display:inline-block; width:14px; height:4px; border-radius:2px; vertical-align:middle; margin:0 3px 0 6px; }
   #scale { position:absolute; right:10px; top:50%; transform:translateY(-50%); z-index:450; display:flex; gap:6px;
            background:rgba(13,17,23,.8); border-radius:10px; padding:8px 8px 8px 6px; }
   #scale .grad { width:10px; border-radius:5px; background:linear-gradient(to top,#1f6feb,#2FD3A6 45%,#F5C518 70%,#E5484D); }
@@ -44,9 +49,9 @@
            border-top-left-radius:20px; border-top-right-radius:20px; box-shadow:0 -6px 24px rgba(0,0,0,.45); }
   #handle { padding:10px 16px 12px; touch-action:none; }
   #grip { width:44px; height:5px; border-radius:3px; background:#3a424d; margin:0 auto 10px; }
-  .peek { display:flex; gap:8px; }
-  .peek div { flex:1; min-width:0; }
-  .peek b { display:block; font-size:17px; white-space:nowrap; }
+  .peek { display:grid; grid-template-columns:0.9fr 0.8fr 1.5fr 0.9fr; gap:8px; }
+  .peek div { min-width:0; }
+  .peek b { display:block; font-size:16px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
   .peek span { color:var(--mu); font-size:11px; }
   #more { max-height:0; overflow:hidden; transition:max-height .25s ease; padding:0 14px; }
   #sheet.open #more { max-height:58vh; overflow-y:auto; }
@@ -85,6 +90,7 @@
   </div>
   <div id="mapwrap">
     <div id="map"></div>
+    <div id="legend"></div>
     <div id="scale"><div class="grad"></div><div class="lab"><b id="smax">–</b><small>R$/h<br>das ofertas</small><b id="smin">–</b></div></div>
   </div>
   <div id="sheet">
@@ -166,7 +172,8 @@ function selects(id, list, key){
 function layers(){
   const el = document.getElementById("lay");
   LAY.forEach(([v,l]) => { const b=document.createElement("button"); b.className="chip"; b.innerHTML=l; b.dataset.v=v;
-    b.onclick = () => { st.lay[v] = !st.lay[v]; paint(); render(); }; el.appendChild(b); });
+    b.onclick = () => { st.lay[v] = !st.lay[v]; window.reloadEvents = () => { try { events = (JSON.parse(raw("eventos_hoje.json") || "{}").eventos || []).filter(e => inSP(e.lat, e.lng)); } catch(e) {} render(); };
+paint(); render(); }; el.appendChild(b); });
 }
 function paint(){ document.querySelectorAll("#lay .chip").forEach(b => b.classList.toggle("on", !!st.lay[b.dataset.v])); }
 
@@ -267,10 +274,12 @@ function render(){
       `<div class="t">${c.name}<small>${c.n} oferta${c.n>1?"s":""} · ${Math.round(100*c.good/c.n)}% boas</small></div>`+
       `<div class="v">${brl(c.avg).replace(",00","")}/h</div></div>`).join("")
     : `<div class="empty">Sem ofertas nesse filtro.</div>`;
-  html += `<div class="legend">Percursos:<span class="dot" style="background:#6E7681"></span>indo buscar
-    <span class="dot" style="background:#F5C518"></span>esperando<span class="dot" style="background:#2FD3A6"></span>com passageiro<br>
-    Ofertas:<span class="dot" style="background:#3DD68C"></span>boa<span class="dot" style="background:#F5C518"></span>média
-    <span class="dot" style="background:#E5484D"></span>ruim</div>`;
+  // Legenda fixa no mapa, só das camadas ligadas que têm cores
+  const lg = [];
+  if (st.lay.ofertas) lg.push(`Ofertas:<span class="dot" style="background:#3DD68C"></span>boa<span class="dot" style="background:#F5C518"></span>média<span class="dot" style="background:#E5484D"></span>ruim`);
+  if (st.lay.percursos) lg.push(`Percursos:<span class="ln" style="background:#6E7681"></span>buscar<span class="ln" style="background:#F5C518"></span>espera<span class="ln" style="background:#2FD3A6"></span>viagem`);
+  if (st.lay.radares) lg.push(`Radares:<span class="dot" style="background:#3DD68C"></span>ok<span class="dot" style="background:#F5C518"></span>tolerância<span class="dot" style="background:#E5484D"></span>multa`);
+  const le = document.getElementById("legend"); le.innerHTML = lg.join("<br>"); le.style.display = lg.length ? "block" : "none";
   document.getElementById("moreIn").innerHTML = html;
 }
 
