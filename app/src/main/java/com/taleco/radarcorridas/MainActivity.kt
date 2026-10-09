@@ -46,38 +46,113 @@ class MainActivity : AppCompatActivity() {
     private lateinit var costSummary: TextView
     private lateinit var countText: TextView
 
+    // ---------- Navegação: tela inicial com cards → página de cada seção ----------
+
+    private class Page(val key: String, val icon: Int, val hint: String) {
+        lateinit var body: LinearLayout
+    }
+
+    /** Ordem e ícones dos cards da tela inicial. "Prévia do cartão" fica dentro de Ganhos. */
+    private val pages = linkedMapOf(
+        "Cálculo de ganhos" to Page("Ganhos", R.drawable.ic_money, "Faixas de ruim, médio e bom"),
+        "Radares de velocidade" to Page("Radares", R.drawable.ic_speed, "Aviso, bipe e distância"),
+        "Valetas e buracos" to Page("Valetas", R.drawable.ic_warning, "Marcar e avisar"),
+        "Meus pontos bons" to Page("Pontos bons", R.drawable.ic_star, "Lugares e horários"),
+        "Custos do carro" to Page("Custos", R.drawable.ic_fuel, "Combustível e aluguel"),
+        "Corridas e percurso" to Page("Corridas", R.drawable.ic_car, "Registro e permissões"),
+        "Aparência" to Page("Aparência", R.drawable.ic_palette, "Posição e botão R"),
+        "Dados" to Page("Dados", R.drawable.ic_storage, "Exportar e diagnóstico")
+    )
+
+    private lateinit var scroll: ScrollView
+    private lateinit var home: LinearLayout
+    private lateinit var statusCard: LinearLayout
+    private var currentPage: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         prefs = Prefs(this)
 
-        val scroll = ScrollView(this).apply {
+        scroll = ScrollView(this).apply {
             setBackgroundColor(Colors.BG)
             isFillViewport = true
         }
-        val col = LinearLayout(this).apply {
-            orientation = LinearLayout.VERTICAL
-            setPadding(dp(16), dp(24), dp(16), dp(40))
-        }
-        scroll.addView(col)
         setContentView(scroll)
 
+        // Conteúdo de cada página (montado uma vez)
+        for ((title, pg) in pages) {
+            pg.body = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
+        }
+        statusCard = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(dp(20), dp(20), dp(20), dp(20))
+            background = rounded(Colors.SURFACE, 20f)
+        }
+
+        val dummy = LinearLayout(this)
+        buildStatus(dummy)
+        buildPreview(dummy)
+        buildMetrics(dummy)
+        buildCosts(dummy)
+        buildAppearance(dummy)
+        buildTrips(dummy)
+        buildSpeed(dummy)
+        buildHazards(dummy)
+        buildSpots(dummy)
+        buildData(dummy)
+        tallAll(statusCard)
+        for (pg in pages.values) tallAll(pg.body)
+
+        home = buildHome()
+        showHome()
+
+        onBackPressedDispatcher.addCallback(this, object : androidx.activity.OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (currentPage != null) {
+                    showHome()
+                } else {
+                    isEnabled = false
+                    onBackPressedDispatcher.onBackPressed()
+                }
+            }
+        })
+    }
+
+    private fun buildHome(): LinearLayout {
+        val col = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(dp(16), dp(28), dp(16), dp(40))
+        }
         col.addView(text("Radar Corridas", 28f, Colors.TEXT, bold = true))
         col.addView(text(
             "Mostra na hora se a corrida compensa. Só lê a oferta: nunca aceita nem recusa por você.",
             14f, Colors.MUTED
-        ).apply { setPadding(0, dp(4), 0, dp(8)) })
+        ).apply { setPadding(0, dp(4), 0, dp(16)) })
 
-        buildStatus(col)
-        buildPreview(col)
-        buildMetrics(col)
-        buildCosts(col)
-        buildAppearance(col)
-        buildTrips(col)
-        buildSpeed(col)
-        buildHazards(col)
-        buildSpots(col)
-        buildData(col)
-        tallAll(col)
+        statusCard.addView(icon(R.drawable.ic_power, 34, Colors.ACCENT).apply {
+            layoutParams = LinearLayout.LayoutParams(dp(34), dp(34)).apply { bottomMargin = dp(14) }
+        }, 0)
+        col.addView(statusCard, matchWrap())
+
+        // Grade de cards, 2 por linha
+        val entries = pages.entries.toList()
+        var i = 0
+        while (i < entries.size) {
+            val row = LinearLayout(this).apply { orientation = LinearLayout.HORIZONTAL }
+            for (j in 0..1) {
+                val e = entries.getOrNull(i + j)
+                val lp = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f).apply {
+                    if (j == 0) rightMargin = dp(6) else leftMargin = dp(6)
+                }
+                if (e == null) {
+                    row.addView(View(this), lp)
+                } else {
+                    row.addView(tile(e.key, e.value), lp)
+                }
+            }
+            col.addView(row, matchWrap(top = 12))
+            i += 2
+        }
 
         val version = try {
             packageManager.getPackageInfo(packageName, 0).versionName
@@ -86,8 +161,82 @@ class MainActivity : AppCompatActivity() {
         }
         col.addView(text("Versão $version", 12f, Colors.MUTED).apply {
             gravity = Gravity.CENTER
-            setPadding(0, dp(16), 0, 0)
+            setPadding(0, dp(20), 0, 0)
         })
+        return col
+    }
+
+    private fun ripple(v: View) {
+        val tv = android.util.TypedValue()
+        theme.resolveAttribute(android.R.attr.selectableItemBackground, tv, true)
+        v.foreground = ContextCompat.getDrawable(this, tv.resourceId)
+        v.isClickable = true
+        v.isFocusable = true
+    }
+
+    private fun icon(res: Int, sizeDp: Int, color: Int) = android.widget.ImageView(this).apply {
+        setImageResource(res)
+        imageTintList = ColorStateList.valueOf(color)
+        layoutParams = LinearLayout.LayoutParams(dp(sizeDp), dp(sizeDp))
+    }
+
+    /** Card da tela inicial: ícone em cima, nome embaixo (como no app do banco). */
+    private fun tile(title: String, pg: Page): View {
+        val card = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(dp(18), dp(18), dp(18), dp(16))
+            background = rounded(Colors.SURFACE, 20f)
+            minimumHeight = dp(150)
+        }
+        ripple(card)
+        card.addView(icon(pg.icon, 34, Colors.ACCENT))
+        card.addView(View(this), LinearLayout.LayoutParams(1, 0, 1f))
+        card.addView(text(pg.key, 18f, Colors.TEXT, bold = true).apply { setPadding(0, dp(18), 0, 0) })
+        card.addView(text(pg.hint, 12f, Colors.MUTED).apply { setPadding(0, dp(2), 0, 0) })
+        card.setOnClickListener { showPage(title) }
+        return card
+    }
+
+    private fun showHome() {
+        currentPage = null
+        (home.parent as? android.view.ViewGroup)?.removeView(home)
+        scroll.removeAllViews()
+        scroll.addView(home)
+        scroll.scrollTo(0, 0)
+        updateStatus()
+    }
+
+    private fun showPage(title: String) {
+        val pg = pages[title] ?: return
+        currentPage = title
+        val col = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(dp(16), dp(20), dp(16), dp(40))
+        }
+        val bar = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            gravity = Gravity.CENTER_VERTICAL
+        }
+        val back = android.widget.FrameLayout(this).apply {
+            minimumWidth = dp(48)
+            minimumHeight = dp(48)
+            setOnClickListener { showHome() }
+        }
+        ripple(back)
+        back.addView(icon(R.drawable.ic_back, 26, Colors.TEXT), android.widget.FrameLayout.LayoutParams(dp(26), dp(26), Gravity.CENTER))
+        bar.addView(back, LinearLayout.LayoutParams(dp(48), dp(48)))
+        bar.addView(icon(pg.icon, 28, Colors.ACCENT).apply {
+            layoutParams = LinearLayout.LayoutParams(dp(28), dp(28)).apply { leftMargin = dp(4); rightMargin = dp(10) }
+        })
+        bar.addView(text(title, 22f, Colors.TEXT, bold = true))
+        col.addView(bar, matchWrap())
+
+        (pg.body.parent as? android.view.ViewGroup)?.removeView(pg.body)
+        col.addView(pg.body, matchWrap(top = 8))
+        scroll.removeAllViews()
+        scroll.addView(col)
+        scroll.scrollTo(0, 0)
+        onResume()
     }
 
     override fun onResume() {
@@ -1106,70 +1255,22 @@ class MainActivity : AppCompatActivity() {
         return box
     }
 
-    /** Resumo de cada seção, mostrado embaixo do título quando ela está fechada. */
-    private val sectionHints = mapOf(
-        "Status" to "Leitura de ofertas e teste do cartão",
-        "Prévia do cartão" to "Como o cartão aparece na oferta",
-        "Cálculo de ganhos" to "Faixas de ruim / médio / bom",
-        "Custos do carro" to "Combustível, aluguel e outros custos",
-        "Aparência" to "Posição, opacidade e botão R",
-        "Corridas e percurso" to "Registro das corridas e permissões",
-        "Radares de velocidade" to "Aviso, bipe, distância e lista da CET",
-        "Valetas e buracos" to "Marcar valetas e solavancos",
-        "Meus pontos bons" to "Lugares que rendem em certos horários",
-        "Dados" to "Exportar dados e diagnóstico"
-    )
-
     /**
-     * Seção em acordeão: o título abre e fecha o conteúdo.
-     * Lembra quais seções você deixou abertas.
+     * Cada builder pede uma "seção": o Status vai para o card do topo da tela inicial;
+     * as outras viram um bloco dentro da página do card correspondente.
      */
-    private fun section(parent: LinearLayout, title: String): LinearLayout {
-        val sp = getSharedPreferences("radar_ui", MODE_PRIVATE)
-        val key = "aberta_$title"
-        val card = LinearLayout(this).apply {
+    private fun section(@Suppress("UNUSED_PARAMETER") parent: LinearLayout, title: String): LinearLayout {
+        if (title == "Status") return statusCard
+        val key = if (title == "Prévia do cartão") "Cálculo de ganhos" else title
+        val page = pages[key] ?: return LinearLayout(this)
+        val block = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
+            setPadding(dp(16), dp(16), dp(16), dp(16))
             background = rounded(Colors.SURFACE, 16f)
         }
-        val header = LinearLayout(this).apply {
-            orientation = LinearLayout.HORIZONTAL
-            gravity = Gravity.CENTER_VERTICAL
-            setPadding(dp(16), dp(16), dp(12), dp(16))
-            minimumHeight = dp(64)
-            isClickable = true
-            isFocusable = true
-            val tv = android.util.TypedValue()
-            context.theme.resolveAttribute(android.R.attr.selectableItemBackground, tv, true)
-            foreground = ContextCompat.getDrawable(context, tv.resourceId)
-        }
-        val titles = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
-        titles.addView(text(title, 18f, Colors.TEXT, bold = true))
-        val hint = text(sectionHints[title] ?: "", 12f, Colors.MUTED)
-        titles.addView(hint)
-        header.addView(titles, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f))
-        val chevron = text("", 20f, Colors.ACCENT, bold = true).apply { setPadding(dp(8), 0, dp(4), 0) }
-        header.addView(chevron)
-        card.addView(header, matchWrap())
-
-        val body = LinearLayout(this).apply {
-            orientation = LinearLayout.VERTICAL
-            setPadding(dp(16), 0, dp(16), dp(16))
-        }
-        card.addView(body, matchWrap())
-
-        fun apply(open: Boolean) {
-            body.visibility = if (open) View.VISIBLE else View.GONE
-            chevron.text = if (open) "▴" else "▾"
-            hint.visibility = if (open || hint.text.isEmpty()) View.GONE else View.VISIBLE
-        }
-        apply(sp.getBoolean(key, title == "Status"))
-        header.setOnClickListener {
-            val open = body.visibility != View.VISIBLE
-            sp.edit().putBoolean(key, open).apply()
-            apply(open)
-        }
-        parent.addView(card, matchWrap(top = 12))
-        return body
+        if (title == "Prévia do cartão") block.addView(text(title, 16f, Colors.TEXT, bold = true).apply { setPadding(0, 0, 0, dp(8)) })
+        page.body.addView(block, matchWrap(top = 12))
+        return block
     }
 
     /** Botões mais altos e fáceis de tocar. */
