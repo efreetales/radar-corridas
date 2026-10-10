@@ -260,6 +260,9 @@ class RadarService : AccessibilityService() {
         }
     }
 
+    /** Pede uma leitura da tela agora (ex.: antes de mostrar aviso de evento). */
+    fun requestScan() = scheduleScan()
+
     private fun scheduleScan() {
         if (scanPending) return
         scanPending = true

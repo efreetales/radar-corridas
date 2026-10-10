@@ -216,6 +216,12 @@ object SpotWatch {
         }
         val s = best ?: return
         if (bannerBusy) return
+        // Antes de avisar: a tela da Uber tem que confirmar, há poucos segundos, que você está livre.
+        // Se não confirmou, pede uma leitura agora e decide na próxima posição (uns 5 s depois).
+        if (!RideScreen.confirmedFree()) {
+            RadarService.instance?.requestScan()
+            return
+        }
         alertedAt[s.id] = now
         leftSince.remove(s.id)
         show(ctx, s, bestD, kmh, beep = true)

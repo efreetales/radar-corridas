@@ -39,15 +39,23 @@ object RideScreen {
     @Volatile
     private var lastSeen = 0L
 
+    /** Última vez que a tela da Uber mostrou "Procurando viagens" SEM corrida. */
+    @Volatile
+    private var lastFree = 0L
+
     fun isRide(texts: List<String>): Boolean =
         texts.any { t -> val x = t.trim(); PREFIXES.any { x.startsWith(it, ignoreCase = true) } }
 
     fun update(texts: List<String>) {
-        if (isRide(texts)) lastSeen = System.currentTimeMillis()
-        else if (texts.any { t -> HOME.any { t.contains(it, ignoreCase = true) } }) lastSeen = 0L
+        if (isRide(texts)) { lastSeen = System.currentTimeMillis(); lastFree = 0L }
+        else if (texts.any { t -> HOME.any { t.contains(it, ignoreCase = true) } }) { lastSeen = 0L; lastFree = System.currentTimeMillis() }
     }
 
     val active: Boolean get() = lastSeen > 0 && System.currentTimeMillis() - lastSeen < GRACE_MS
+
+    /** A tela da Uber confirmou "livre" há pouco (antes de mostrar aviso de evento/ponto). */
+    fun confirmedFree(maxAgeMs: Long = 20_000L): Boolean =
+        lastFree > 0 && System.currentTimeMillis() - lastFree < maxAgeMs
 }
 
 object TripTracker {
