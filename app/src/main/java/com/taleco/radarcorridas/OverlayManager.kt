@@ -94,6 +94,9 @@ class OverlayManager(private val service: AccessibilityService) {
             service.dp(5), if (b.sign != null) Color.parseColor("#E8590C") else Color.parseColor("#D62828")
         )
         speedValue?.text = b.title ?: "${b.speedKmh} km/h"
+        // Aviso de ponto/evento: nome inteiro (até 2 linhas, letra um pouco menor)
+        speedValue?.textSize = if (b.action != null) 18f else 24f
+        speedValue?.maxLines = if (b.action != null) 2 else 1
         speedValue?.setTextColor(fg)
         speedLine?.text = b.line
         speedLine?.setTextColor(fg)
@@ -317,6 +320,49 @@ class OverlayManager(private val service: AccessibilityService) {
         if (c != null && clp != null) {
             try { wm.removeView(c); wm.addView(c, clp) } catch (_: Exception) {}
         }
+    }
+
+    // ---------- "Indo para" (depois de abrir o Waze até um evento/ponto) ----------
+    private var going: TextView? = null
+
+    fun showGoing(textLine: String, color: Int) {
+        hideGoing()
+        val v = TextView(service).apply {
+            text = textLine
+            textSize = 13f
+            typeface = Typeface.DEFAULT_BOLD
+            setTextColor(Color.WHITE)
+            maxLines = 2
+            setPadding(service.dp(14), service.dp(8), service.dp(14), service.dp(8))
+            background = GradientDrawable().apply { cornerRadius = service.dp(20).toFloat(); setColor(color) }
+            elevation = service.dp(4).toFloat()
+            setOnClickListener { GoingTo.stop() }
+        }
+        val lp = WindowManager.LayoutParams(
+            service.resources.displayMetrics.widthPixels - service.dp(48),
+            WindowManager.LayoutParams.WRAP_CONTENT,
+            WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY,
+            WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
+                WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL or
+                WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN,
+            PixelFormat.TRANSLUCENT
+        )
+        lp.gravity = Gravity.TOP or Gravity.CENTER_HORIZONTAL
+        lp.y = service.dp(36)
+        try {
+            wm.addView(v, lp)
+            going = v
+        } catch (_: Exception) {
+            going = null
+        }
+        // avisos e card da oferta continuam por cima
+        val c = card; val clp = cardLp
+        if (c != null && clp != null) try { wm.removeView(c); wm.addView(c, clp) } catch (_: Exception) {}
+    }
+
+    fun hideGoing() {
+        going?.let { v -> try { wm.removeView(v) } catch (_: Exception) {} }
+        going = null
     }
 
     fun showBubble(prefs: Prefs) {

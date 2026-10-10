@@ -789,6 +789,13 @@ class MainActivity : AppCompatActivity() {
             isChecked = prefs.eventAlerts
             setOnCheckedChangeListener { _, c -> prefs.eventAlerts = c }
         }, matchWrap(top = 8))
+        card.addView(SwitchMaterial(this).apply {
+            text = "Mostrar eventos no card da oferta"
+            setTextColor(Colors.TEXT)
+            isChecked = prefs.eventsInOffer
+            setOnCheckedChangeListener { _, c -> prefs.eventsInOffer = c }
+        }, matchWrap(top = 4))
+        card.addView(text("Ponto bom favorito perto do destino sempre aparece no card e vem antes de evento.", 12f, Colors.MUTED))
         val radLbl = text("", 14f, Colors.TEXT).apply { setPadding(0, dp(10), 0, 0) }
         fun setRad(v: Int) { radLbl.text = String.format(PT_BR, "Avisar a até %.1f km do evento", v / 1000f) }
         setRad(prefs.eventRadiusM)

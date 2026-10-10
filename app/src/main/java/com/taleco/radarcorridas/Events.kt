@@ -29,7 +29,8 @@ class CityEvent(
     val audience: Int?,
     var lat: Double?,
     var lng: Double?,
-    val noPlace: Boolean = false   // a agenda não achou o endereço exato: não vai para o mapa
+    val noPlace: Boolean = false,  // a agenda não achou o endereço exato: não vai para o mapa
+    val spreadMin: Int? = null     // incerteza da saída (min). Show em balada: saída espalhada por mais tempo
 ) {
     val icon: String get() = when (type.lowercase(Locale.ROOT)) {
         "teatro", "musical", "danca", "dança", "ópera", "opera" -> "🎭"
@@ -49,9 +50,12 @@ class CityEvent(
         } catch (_: Exception) { return null }
         // Término depois da meia-noite (ex.: começa 23h, termina 0h10) conta no dia seguinte
         val endAbs = endMin + if ((startMin != null && endMin < startMin) || endMin < 6 * 60) 1440 else 0
-        val startAbs = endAbs - 20
-        val s = startAbs % 1440
-        val e = (endAbs + 40) % 1440
+        // Janela de aviso: padrão 20 min antes até 40 depois; com incerteza, metade antes e metade depois (+20)
+        val before = spreadMin?.let { maxOf(20, it / 2) } ?: 20
+        val after = spreadMin?.let { maxOf(40, it / 2 + 20) } ?: 40
+        val startAbs = endAbs - before
+        val s = (startAbs + 1440) % 1440
+        val e = (endAbs + after) % 1440
         val windowDay = ((day - 1 + startAbs / 1440) % 7) + 1
         return Spot(-(name.hashCode().toLong() and 0xffffffL) - 1, "$icon $name", la, lo, setOf(windowDay), s, e, radiusM, true, event = this)
     }
@@ -109,7 +113,8 @@ object Events {
                     if (o.has("publico_estimado") && !o.isNull("publico_estimado")) o.optInt("publico_estimado") else null,
                     if (o.has("lat") && !o.isNull("lat")) o.optDouble("lat") else null,
                     if (o.has("lng") && !o.isNull("lng")) o.optDouble("lng") else null,
-                    o.optBoolean("sem_local", false)
+                    o.optBoolean("sem_local", false),
+                    if (o.has("incerteza_min") && !o.isNull("incerteza_min")) o.optInt("incerteza_min") else null
                 )
             )
         }
@@ -178,6 +183,7 @@ object Events {
             e.audience?.let { put("publico_estimado", it) }
             e.lat?.let { put("lat", it) }; e.lng?.let { put("lng", it) }
             if (e.noPlace) put("sem_local", true)
+            e.spreadMin?.let { put("incerteza_min", it) }
             put("icone", e.icon)
         })
         root.put("eventos", arr)

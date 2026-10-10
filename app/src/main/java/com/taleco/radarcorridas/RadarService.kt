@@ -442,6 +442,9 @@ class RadarService : AccessibilityService() {
         if (prefs.showBubble) overlay.showBubble(prefs) else overlay.hideBubble()
     }
 
+    fun showGoing(text: String, color: Int) { if (::overlay.isInitialized) overlay.showGoing(text, color) }
+    fun hideGoing() { if (::overlay.isInitialized) overlay.hideGoing() }
+
     val isOfferCardShowing: Boolean get() = ::overlay.isInitialized && overlay.isCardShowing
 
     fun showSpeedBanner(b: SpeedBanner) {

@@ -137,18 +137,58 @@ object Spots {
     }
 }
 
+/**
+ * Depois de tocar em "Waze" no aviso: uma faixa no topo lembra PARA ONDE você está indo
+ * ("Indo para: Urias – Carranca · Audio · saída ~01:30"). Some ao chegar (150 m), ao aceitar
+ * uma corrida, com um toque, ou depois de 90 min.
+ */
+object GoingTo {
+    private const val ARRIVE_M = 150f
+    private const val MAX_MS = 90 * 60_000L
+    @Volatile
+    var spot: Spot? = null
+        private set
+    private var since = 0L
+
+    fun start(s: Spot) {
+        spot = s
+        since = System.currentTimeMillis()
+        val e = s.event
+        val txt = if (e != null)
+            "Indo para: ${s.name} · ${e.place.ifBlank { e.address }} · saída ~${Spot.hhmm(e.endMin)}   ✕"
+        else "Indo para: ★ ${s.name} · bom até ${Spot.hhmm(s.endMin)}   ✕"
+        RadarService.instance?.showGoing(txt, if (e != null) 0xFF9C1B4A.toInt() else 0xFF5232B8.toInt())
+    }
+
+    fun stop() {
+        spot = null
+        RadarService.instance?.hideGoing()
+    }
+
+    fun onLocation(loc: Location) {
+        val s = spot ?: return
+        val d = loc.distanceTo(Location("g").apply { latitude = s.lat; longitude = s.lng })
+        if (d < ARRIVE_M || TripTracker.busy || System.currentTimeMillis() - since > MAX_MS) stop()
+    }
+}
+
 /** Destino da oferta perto de um ponto bom no horário em que você chegaria lá. */
 object SpotMatch {
     fun near(ctx: Context, dest: LatLng, arriveInMin: Double): Pair<Spot, Double>? {
         val maxM = Prefs(ctx).spotStarKm * 1000.0
         val cal = Calendar.getInstance().apply { add(Calendar.MINUTE, arriveInMin.toInt()) }
-        var best: Pair<Spot, Double>? = null
-        for (s in Spots.all(ctx) + Events.spots(ctx)) {
-            if (!s.activeAt(cal)) continue
-            val d = Geo.meters(dest, LatLng(s.lat, s.lng))
-            if (d <= maxM && (best == null || d < best.second)) best = s to d
+        // 1º os seus pontos bons; evento só se nenhum ponto bom bater (e se estiver ligado)
+        fun closest(list: List<Spot>): Pair<Spot, Double>? {
+            var best: Pair<Spot, Double>? = null
+            for (s in list) {
+                if (!s.activeAt(cal)) continue
+                val d = Geo.meters(dest, LatLng(s.lat, s.lng))
+                if (d <= maxM && (best == null || d < best.second)) best = s to d
+            }
+            return best
         }
-        return best
+        closest(Spots.all(ctx))?.let { return it }
+        return if (Prefs(ctx).eventsInOffer) closest(Events.spots(ctx)) else null
     }
 
     fun note(s: Spot, d: Double): String =
@@ -188,6 +228,7 @@ object SpotWatch {
     }
 
     fun onLocation(ctx: Context, loc: Location, kmh: Double, bannerBusy: Boolean) {
+        GoingTo.onLocation(loc)
         // Com oferta na tela ou corrida aceita, nada de ponto/evento (e o que estiver aberto sai)
         val offerUp = RadarService.instance?.isOfferCardShowing == true
         if (TripTracker.busy || offerUp) {
@@ -238,7 +279,8 @@ object SpotWatch {
         RadarService.instance?.showSpeedBanner(
             SpeedBanner(
                 null, kmh.roundToInt(),
-                (if (s.event != null) "Saída do público ~${Spot.hhmm(s.event.endMin)}" else "Bom até ${Spot.hhmm(s.endMin)}") +
+                (if (s.event != null) "${s.event.place.ifBlank { "" }}${if (s.event.place.isNotBlank()) " · " else ""}saída ~${Spot.hhmm(s.event.endMin)}"
+                 else "Bom até ${Spot.hhmm(s.endMin)}") +
                     " · a $dist ${if (unit == "metros") "m" else unit}",
                 if (s.event != null) PINK else PURPLE,
                 null, (1.0 - d / s.radiusM).coerceIn(0.0, 1.0).toFloat(),

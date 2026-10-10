@@ -374,7 +374,10 @@ object HazardWatch {
         val svc = RadarService.instance ?: return
         SpotWatch.onBannerClosed()
         svc.hideSpeedBanner()
-        if (spot != null && spot.id != 0L) Nav.waze(svc, spot.lat, spot.lng)
+        if (spot != null && spot.id != 0L) {
+            Nav.waze(svc, spot.lat, spot.lng)
+            GoingTo.start(spot)
+        }
     }
 
     fun onBannerTap() {

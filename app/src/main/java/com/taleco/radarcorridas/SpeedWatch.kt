@@ -257,7 +257,46 @@ object SpeedWatch {
         return true
     }
 
+    /** Distância lateral (m) entre você e a linha da via do radar; null se o radar não tem eixo. */
+    private fun crossOffset(c: SpeedCam, loc: Location): Double? {
+        val axis = c.axis ?: return null
+        val cl = camLocation(c)
+        val d = loc.distanceTo(cl).toDouble()
+        var a = angleDiff(axis, (loc.bearingTo(cl) + 360f) % 360f)
+        a = minOf(a, 180f - a)
+        return d * sin(Math.toRadians(a.toDouble()))
+    }
+
+    /**
+     * Pistas paralelas (Marginais: expressa / central / local) têm radares lado a lado no mesmo km.
+     * Entre os candidatos à frente que estão quase na mesma altura (até 150 m um do outro),
+     * fica o mais alinhado com você; o mais perto em linha reta nem sempre é a sua pista.
+     */
     private fun findTarget(loc: Location, heading: Float, lookahead: Double): SpeedCam? {
+        val cands = ArrayList<Pair<SpeedCam, Double>>()
+        for (c in SpeedCams.nearby(loc.latitude, loc.longitude)) {
+            if (recentlyPassed.containsKey(c)) continue
+            if (SpeedCams.isHidden(c)) continue
+            val d = loc.distanceTo(camLocation(c)).toDouble()
+            if (d > lookahead) continue
+            if (!onSameRoad(c, loc, heading, d)) continue
+            val roadLimit = UberRoad.fresh()
+            if (roadLimit != null && c.limit != null && abs(c.limit!! - roadLimit) >= 20 && d > 40) continue
+            cands.add(c to d)
+        }
+        if (cands.isEmpty()) return null
+        val nearest = cands.minByOrNull { it.second }!!
+        val group = cands.filter { it.second - nearest.second < 150.0 }
+        laneAlternatives = group.map { it.first }
+        if (group.size == 1) return nearest.first
+        return group.minByOrNull { crossOffset(it.first, loc) ?: Double.MAX_VALUE }!!.first
+    }
+
+    /** Radares de pistas paralelas no mesmo ponto (para não acusar multa se a pista é incerta). */
+    private var laneAlternatives: List<SpeedCam> = emptyList()
+
+    @Suppress("unused")
+    private fun findTargetOld(loc: Location, heading: Float, lookahead: Double): SpeedCam? {
         var best: SpeedCam? = null
         var bestD = lookahead
         for (c in SpeedCams.nearby(loc.latitude, loc.longitude)) {
@@ -379,7 +418,14 @@ object SpeedWatch {
 
     private fun onPassed(ctx: Context, cam: SpeedCam, kmhD: Double, loc: Location) {
         val kmh = kmhD.roundToInt()
-        val limit = limitOf(cam)
+        var limit = limitOf(cam)
+        // Pista incerta: havia radar de outra pista paralela com limite maior e a sua velocidade cabe nele.
+        // Nesse caso não acusa multa (avisava "provável multa" na Marginal estando na expressa).
+        if (limit != null && kmh > toleratedUpTo(limit)) {
+            val alt = laneAlternatives.filter { it !== cam }.mapNotNull { limitOf(it) }.filter { it > limit!! }.maxOrNull()
+            if (alt != null && kmh <= toleratedUpTo(alt)) limit = alt
+        }
+        laneAlternatives = emptyList()
         val result = when {
             limit == null -> "limite desconhecido"
             kmh > toleratedUpTo(limit) -> "provável multa"

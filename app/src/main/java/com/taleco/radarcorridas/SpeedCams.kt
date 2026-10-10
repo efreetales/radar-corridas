@@ -500,11 +500,14 @@ object SpeedCams {
         //  - repetidos de um radar da CET (até ~40 m): fora, vale o da CET;
         //  - dentro da área da CET (até ~1,5 km de algum radar dela), fora também: a CET lista todos os
         //    radares da cidade, então um radar do mapa que ela não tem costuma ser antigo ou errado.
-        //    Exceção: rodovias e marginais expressas (estaduais/federais), que a CET não fiscaliza.
+        //    Exceção: RODOVIAS (Imigrantes, Anchieta, Bandeirantes...), que a CET não fiscaliza.
+        //    As Marginais são da CET: radar do mapa nelas é repetido/deslocado (avisava "multa" falsa).
+        val rodoviaName = Regex("(?i)^(rodovia|rod\\.|sp-|br-|anel )|rodoanel")
         var removed = 0
         for (o in out) {
             val dup = cet.any { abs(it.lat - o.lat) < 0.0004 && abs(it.lng - o.lng) < 0.0004 }
-            val insideCet = o !in onRodovia && cet.any { abs(it.lat - o.lat) < 0.0135 && abs(it.lng - o.lng) < 0.0147 }
+            val isRodovia = o in onRodovia && rodoviaName.containsMatchIn(o.name)
+            val insideCet = !isRodovia && cet.any { abs(it.lat - o.lat) < 0.0135 && abs(it.lng - o.lng) < 0.0147 }
             if (dup || insideCet) {
                 removed++
                 continue
