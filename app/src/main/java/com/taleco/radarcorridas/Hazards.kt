@@ -368,14 +368,20 @@ object HazardWatch {
     val lastSpeedKmh: Double get() = lastKmh
 
     /** Toque no aviso: desfaz a marcação recente, ou fecha o aviso. */
-    fun onBannerTap() {
-        // Aviso de ponto bom: o toque abre o Waze até o ponto
+    /** Botão "Waze" do aviso de ponto bom / evento. */
+    fun onActionTap() {
         val spot = SpotWatch.current
-        val svc = RadarService.instance
-        if (SpotWatch.showing && spot != null && svc != null && spot.id != 0L) {
+        val svc = RadarService.instance ?: return
+        SpotWatch.onBannerClosed()
+        svc.hideSpeedBanner()
+        if (spot != null && spot.id != 0L) Nav.waze(svc, spot.lat, spot.lng)
+    }
+
+    fun onBannerTap() {
+        // Aviso de ponto bom / evento: tocar fora do botão só fecha
+        if (SpotWatch.showing) {
             SpotWatch.onBannerClosed()
-            svc.hideSpeedBanner()
-            Nav.waze(svc, spot.lat, spot.lng)
+            RadarService.instance?.hideSpeedBanner()
             return
         }
         val ctx = appContext

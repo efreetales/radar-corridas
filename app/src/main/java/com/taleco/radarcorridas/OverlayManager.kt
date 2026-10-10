@@ -25,6 +25,7 @@ class OverlayManager(private val service: AccessibilityService) {
 
     private val wm = service.getSystemService(WindowManager::class.java)
     private var card: View? = null
+    private var cardLp: WindowManager.LayoutParams? = null
     private var bubble: View? = null
 
     // Aviso de radar
@@ -37,6 +38,7 @@ class OverlayManager(private val service: AccessibilityService) {
     private var speedBase: GradientDrawable? = null
     private var speedFillShape: GradientDrawable? = null
     private var speedFill: ClipDrawable? = null
+    private var speedAction: TextView? = null
 
     val isCardShowing: Boolean get() = card != null
 
@@ -66,6 +68,7 @@ class OverlayManager(private val service: AccessibilityService) {
         try {
             wm.addView(view, lp)
             card = view
+            cardLp = lp
         } catch (e: Exception) {
             card = null
         }
@@ -96,6 +99,11 @@ class OverlayManager(private val service: AccessibilityService) {
         speedLine?.setTextColor(fg)
         speedDist?.setTextColor(fg)
         speedDistUnit?.setTextColor(fg)
+        speedAction?.let { a ->
+            a.visibility = if (b.action != null) View.VISIBLE else View.GONE
+            a.text = "➜\n${b.action ?: ""}"
+            a.setTextColor(b.color)
+        }
         if (b.distText != null) {
             speedDist?.text = b.distText
             speedDistUnit?.text = b.distUnit
@@ -119,6 +127,7 @@ class OverlayManager(private val service: AccessibilityService) {
         speedBase = null
         speedFillShape = null
         speedFill = null
+        speedAction = null
     }
 
     /** Mesma cor, uns 35% mais escura: é o "preenchimento" que avança até o radar. */
@@ -196,12 +205,28 @@ class OverlayManager(private val service: AccessibilityService) {
             LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT
         ).apply { leftMargin = service.dp(8) })
 
+        // Botão à direita (só no aviso de ponto/evento): abre o Waze. O resto do aviso só fecha.
+        val action = TextView(service).apply {
+            gravity = Gravity.CENTER
+            textSize = 15f
+            typeface = Typeface.DEFAULT_BOLD
+            setLineSpacing(0f, 0.95f)
+            background = GradientDrawable().apply {
+                setColor(Color.WHITE)
+                cornerRadii = floatArrayOf(0f, 0f, radius, radius, radius, radius, 0f, 0f)
+            }
+            visibility = View.GONE
+        }
+        root.addView(action, LinearLayout.LayoutParams(service.dp(74), LinearLayout.LayoutParams.MATCH_PARENT).apply {
+            leftMargin = service.dp(12); topMargin = -service.dp(8); bottomMargin = -service.dp(8); rightMargin = -service.dp(16)
+        })
 
         // Fechar fácil: um toque em qualquer lugar do aviso, ou arrastar para o lado.
         val slop = ViewConfiguration.get(service).scaledTouchSlop
         val swipeDistance = service.dp(80)
         var downX = 0f
         var moved = false
+        var onAction = false
         // Segurar o aviso de radar por 1 s: "radar errado" (some e não aparece mais)
         var longDone = false
         val longPress = Runnable {
@@ -213,6 +238,7 @@ class OverlayManager(private val service: AccessibilityService) {
                     downX = ev.rawX
                     moved = false
                     longDone = false
+                    onAction = action.visibility == View.VISIBLE && ev.x >= action.left - service.dp(6)
                     v.postDelayed(longPress, 1000L)
                     true
                 }
@@ -232,6 +258,8 @@ class OverlayManager(private val service: AccessibilityService) {
                     if (longDone) {
                         v.translationX = 0f
                         v.alpha = 1f
+                    } else if (onAction && !moved) {
+                        HazardWatch.onActionTap()
                     } else if (!moved || abs(dx) > swipeDistance) {
                         // toque simples ou arrasto longo: fecha
                         v.animate().translationX(if (dx < 0) -v.width.toFloat() else v.width.toFloat())
@@ -275,8 +303,14 @@ class OverlayManager(private val service: AccessibilityService) {
             speedBase = base
             speedFillShape = fillShape
             speedFill = fill
+            speedAction = action
         } catch (e: Exception) {
             speedView = null
+        }
+        // O card da oferta fica sempre por cima de qualquer aviso
+        val c = card; val clp = cardLp
+        if (c != null && clp != null) {
+            try { wm.removeView(c); wm.addView(c, clp) } catch (_: Exception) {}
         }
     }
 

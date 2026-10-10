@@ -328,6 +328,8 @@ class RadarService : AccessibilityService() {
         lastSig = sig
 
         val eval = Evaluator.evaluate(offer, prefs)
+        // O card da oferta é o mais importante: aviso de ponto/evento sai da frente
+        if (SpotWatch.showing) hideSpeedBanner()
         overlay.showCard(eval, prefs)
         checkSpotStar(eval, sig)
 
@@ -434,6 +436,8 @@ class RadarService : AccessibilityService() {
         if (!::overlay.isInitialized) return
         if (prefs.showBubble) overlay.showBubble(prefs) else overlay.hideBubble()
     }
+
+    val isOfferCardShowing: Boolean get() = ::overlay.isInitialized && overlay.isCardShowing
 
     fun showSpeedBanner(b: SpeedBanner) {
         // Radar ou valeta passam na frente do aviso de ponto bom

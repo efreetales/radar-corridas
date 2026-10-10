@@ -62,7 +62,8 @@ class SpeedBanner(
     val sign: String? = null,     // no lugar da placa de limite (ex.: "⚠" para valeta)
     val title: String? = null,    // no lugar da velocidade (ex.: nome do ponto)
     val distText: String? = null, // distância já formatada (ex.: "1,8")
-    val distUnit: String = "metros"
+    val distUnit: String = "metros",
+    val action: String? = null    // botão à direita (ex.: "Waze"); o resto do aviso só fecha
 )
 
 /**

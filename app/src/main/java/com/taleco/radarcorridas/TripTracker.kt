@@ -72,6 +72,9 @@ object TripTracker {
 
     val isOnTrip: Boolean get() = trip != null
 
+    /** Oferta na tela, corrida aceita ou em andamento: não é hora de sugerir ponto/evento. */
+    val busy: Boolean get() = phase != Phase.LIVRE || trip != null
+
     /** Chamado a cada leitura da tela. */
     fun onScreen(ctx: Context, prefs: Prefs, state: ScreenState, offer: Offer?) {
         appContext = ctx.applicationContext

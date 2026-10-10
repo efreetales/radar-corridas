@@ -188,6 +188,12 @@ object SpotWatch {
     }
 
     fun onLocation(ctx: Context, loc: Location, kmh: Double, bannerBusy: Boolean) {
+        // Com oferta na tela ou corrida aceita, nada de ponto/evento (e o que estiver aberto sai)
+        val offerUp = RadarService.instance?.isOfferCardShowing == true
+        if (TripTracker.busy || offerUp) {
+            if (showing) hide.run()
+            return
+        }
         val now = System.currentTimeMillis()
         if (now - lastCheck < 5_000L) return
         lastCheck = now
@@ -226,11 +232,11 @@ object SpotWatch {
         RadarService.instance?.showSpeedBanner(
             SpeedBanner(
                 null, kmh.roundToInt(),
-                if (s.event != null) "Saída do público ~${Spot.hhmm(s.event.endMin)} · toque para ir com o Waze"
-                else "Bom até ${Spot.hhmm(s.endMin)} · toque para ir com o Waze",
+                (if (s.event != null) "Saída do público ~${Spot.hhmm(s.event.endMin)}" else "Bom até ${Spot.hhmm(s.endMin)}") +
+                    " · a $dist ${if (unit == "metros") "m" else unit}",
                 if (s.event != null) PINK else PURPLE,
                 null, (1.0 - d / s.radiusM).coerceIn(0.0, 1.0).toFloat(),
-                sign = "★", title = s.name, distText = dist, distUnit = unit
+                sign = "★", title = s.name, action = "Waze"
             )
         )
         showing = true
