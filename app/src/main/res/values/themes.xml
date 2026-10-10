@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.Radar" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="colorPrimary">#2FD3A6</item>
+        <item name="colorPrimaryVariant">#1FA582</item>
+        <item name="colorOnPrimary">#06231B</item>
+        <item name="colorSecondary">#2FD3A6</item>
+        <item name="colorOnSecondary">#06231B</item>
+        <item name="colorSurface">#161B22</item>
+        <item name="colorOnSurface">#E6EDF3</item>
+        <item name="android:colorBackground">#0D1117</item>
+        <item name="android:windowBackground">#0D1117</item>
+        <item name="android:statusBarColor">#0D1117</item>
+        <item name="android:navigationBarColor">#0D1117</item>
+        <item name="android:textColorPrimary">#E6EDF3</item>
+        <item name="android:textColorSecondary">#8B949E</item>
+    </style>
+</resources>

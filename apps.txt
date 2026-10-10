@@ -1,0 +1,2 @@
+app.rotapro
+co.gigu.app

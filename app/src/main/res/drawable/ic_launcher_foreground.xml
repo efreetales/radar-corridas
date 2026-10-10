@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Radar: dois anéis, um feixe de varredura e um ponto (a corrida encontrada). Tudo dentro da área segura de 66dp. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#2FD3A6"
+        android:strokeAlpha="0.45"
+        android:strokeWidth="3"
+        android:pathData="M54,25A29,29 0,1 1,54 83A29,29 0,1 1,54 25Z" />
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#2FD3A6"
+        android:strokeAlpha="0.7"
+        android:strokeWidth="3"
+        android:pathData="M54,39A15,15 0,1 1,54 69A15,15 0,1 1,54 39Z" />
+    <path
+        android:fillColor="#2FD3A6"
+        android:fillAlpha="0.85"
+        android:pathData="M54,54L54,25A29,29 0,0 1,79.1 39.5Z" />
+    <path
+        android:fillColor="#F5C518"
+        android:pathData="M68,33A5,5 0,1 1,68 43A5,5 0,1 1,68 33Z" />
+    <path
+        android:fillColor="#E6EDF3"
+        android:pathData="M54,50A4,4 0,1 1,54 58A4,4 0,1 1,54 50Z" />
+</vector>

@@ -1,0 +1,30 @@
+name: Radares CET
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 9 1 * *"
+permissions:
+  contents: write
+jobs:
+  cet:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Extrair
+        run: |
+          mkdir -p out
+          python tools/cet_radares.py > out/log.txt 2>&1 || echo "FALHOU" >> out/log.txt
+      - name: Publicar no ramo cet-dados
+        run: |
+          git config user.name "radar-bot"
+          git config user.email "radar-bot@users.noreply.github.com"
+          mv out /tmp/out
+          git checkout --orphan cet-dados
+          git rm -rf . -q
+          cp -r /tmp/out/* .
+          git add -A
+          git commit -q -m "Dados CET $(date -u +%F)"
+          git push -f origin cet-dados

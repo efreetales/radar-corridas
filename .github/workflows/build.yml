@@ -1,0 +1,53 @@
+name: Gerar APK
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: "8.7"
+
+      - name: Compilar
+        run: |
+          set -o pipefail
+          gradle :app:assembleDebug --console=plain 2>&1 | tee build.log
+
+      - name: Mostrar erros da compilação
+        if: failure()
+        run: |
+          msg=$(grep -v "> Task" build.log | grep -E -A4 "^e: |error:|What went wrong" | head -60 | sed ':a;N;$!ba;s/%/%25/g;s/\r//g;s/\n/%0A/g')
+          echo "::error::$msg"
+
+      - name: Renomear APK
+        run: cp app/build/outputs/apk/debug/app-debug.apk RadarCorridas.apk
+
+      - name: Guardar APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: RadarCorridas
+          path: RadarCorridas.apk
+
+      - name: Publicar versão para baixar no celular
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: build-${{ github.run_number }}
+          name: Radar Corridas 0.1.${{ github.run_number }}
+          body: Baixe o arquivo RadarCorridas.apk abaixo e instale no celular.
+          files: RadarCorridas.apk
+          make_latest: true
