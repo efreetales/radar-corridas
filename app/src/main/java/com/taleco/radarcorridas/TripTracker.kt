@@ -341,7 +341,7 @@ object FreeTrack {
         last = loc
         lastAt = now
         try {
-            val f = TripTracker.routesFile(ctx)
+            val f = TripLog.routesFile(ctx)
             if (!f.exists()) f.writeText("id;data_hora;lat;lng;fase\n")
             val d = java.util.Date(now)
             f.appendText(String.format(java.util.Locale.US, "livre-%s;%s;%.6f;%.6f;LIVRE\n",
