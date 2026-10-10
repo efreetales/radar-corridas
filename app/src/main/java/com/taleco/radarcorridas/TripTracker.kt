@@ -87,7 +87,15 @@ object TripTracker {
         var kmToPickup = 0.0
         var kmTrip = 0.0
         var kmAfter = 0.0
+        var passenger: String? = null   // nome lido na tela da Uber ("Encontro com X", "Destino de X")
+        var ratedDone = false           // apareceu "Como foi a viagem?": corrida concluída de verdade
     }
+
+    // Corrida emendada: oferta aceita enquanto outra corrida está em andamento
+    private var nextOffer: Offer? = null
+    private var nextGoneAt = 0L
+    private var queued: Offer? = null
+    private var queuedAt = 0L
 
     private val handler = Handler(Looper.getMainLooper())
     private var phase = Phase.LIVRE
@@ -142,7 +150,18 @@ object TripTracker {
             }
 
             Phase.A_CAMINHO, Phase.NO_EMBARQUE, Phase.EM_VIAGEM -> {
-                if (state == ScreenState.INICIO) finish(ctx, null)
+                when {
+                    state == ScreenState.OFERTA && offer != null -> { nextOffer = offer; nextGoneAt = 0L }
+                    state == ScreenState.INICIO -> { nextOffer = null; queued = null; finish(ctx, null) }
+                    nextOffer != null -> {
+                        if (nextGoneAt == 0L) nextGoneAt = now
+                        else if (now - nextGoneAt >= DECISION_MS) {
+                            // sumiu sem voltar para a tela inicial: aceita, vira a próxima corrida
+                            queued = nextOffer; queuedAt = nextGoneAt; nextOffer = null
+                            OfferLog.appendDiag(ctx, "CORRIDA: emendada aceita (R$ ${queued?.price}), começa quando a atual terminar")
+                        }
+                    }
+                }
             }
         }
         checkTimeouts()
@@ -241,6 +260,7 @@ object TripTracker {
         val minutes = (endedAt - t.acceptedAt) / 60_000.0
         val looksDone = moved >= t.offer.totalKm * 0.6 && minutes >= t.offer.totalMin * 0.5
         val status = when {
+            t.ratedDone -> "concluída"
             reason != null -> "interrompida ($reason)"
             t.leftPickupAt != null -> "concluída"
             looksDone -> "concluída (estimada)"
@@ -250,7 +270,57 @@ object TripTracker {
         TripLog.save(ctx, t.id, t.offer, t.acceptedAt, t.arrivedPickupAt, t.leftPickupAt, t.arrivedDestAt, endedAt,
             t.kmToPickup, t.kmTrip, t.origin, t.destination, status,
             t.points.map { TripLog.RoutePoint(it.time, it.lat, it.lng, it.phase.name) })
-        OfferLog.appendDiag(ctx, "CORRIDA ${t.id}: $status, ${t.points.size} pontos de GPS")
+        OfferLog.appendDiag(ctx, "CORRIDA ${t.id}: $status${t.passenger?.let { " ($it)" } ?: ""}, ${t.points.size} pontos de GPS")
+    }
+
+    /**
+     * Fases lidas direto da tela da Uber (mais confiável que o GPS):
+     *  "Encontro com X" = indo buscar X · botão "Iniciar ..." = chegou no embarque
+     *  "Destino de X" = X embarcou · "Como foi a viagem?" + X = corrida de X concluída.
+     * Também cuida da corrida emendada: termina a atual e já começa a próxima.
+     */
+    fun onUberTexts(ctx: Context, prefs: Prefs, texts: List<String>) {
+        if (!prefs.trackTrips) return
+        appContext = ctx.applicationContext
+        val now = System.currentTimeMillis()
+        val tt = texts.map { it.trim() }
+        val meet = tt.firstOrNull { it.startsWith("Encontro com ") }?.removePrefix("Encontro com ")?.trim()
+        val dest = tt.firstOrNull { it.startsWith("Destino de ") }?.removePrefix("Destino de ")?.trim()
+        // Chegou no embarque: a Uber mostra "Aguardando…" / "Perto de …" (o botão "Iniciar" aparece desde o aceite)
+        val atPickup = tt.any { it.contains("Aguardando", ignoreCase = true) || it.startsWith("Perto de ") }
+        val ri = tt.indexOfFirst { it.startsWith("Como foi a viagem") }
+        val rated = if (ri >= 0) tt.getOrNull(ri + 1) else null
+
+        // 1) Avaliação = a corrida (de quem foi avaliado) terminou
+        val cur = trip
+        if (rated != null && cur != null && (cur.passenger == null || cur.passenger == rated)) {
+            cur.passenger = cur.passenger ?: rated
+            cur.ratedDone = true
+            if (cur.arrivedDestAt == null) cur.arrivedDestAt = now
+            finish(ctx, null)
+        }
+        // 2) Começa a próxima (emendada) quando a tela já mostra o próximo passageiro
+        if (trip == null && meet != null && meet != rated) {
+            val q = queued ?: lastOffer.takeIf { phase == Phase.OFERTA }
+            if (q != null) {
+                val at = if (queued != null) queuedAt else now
+                queued = null
+                startTrip(ctx, q, at)
+                trip?.passenger = meet
+            }
+        }
+        // 3) Fases da corrida atual
+        val t = trip ?: return
+        if (t.passenger == null) t.passenger = meet ?: dest
+        if (atPickup && dest == null && t.arrivedPickupAt == null) {
+            t.arrivedPickupAt = now
+            if (phase == Phase.A_CAMINHO) phase = Phase.NO_EMBARQUE
+        }
+        if (dest != null && dest == t.passenger && t.leftPickupAt == null) {
+            if (t.arrivedPickupAt == null) t.arrivedPickupAt = now
+            t.leftPickupAt = now
+            phase = Phase.EM_VIAGEM
+        }
     }
 
     /** Se o app reiniciar no meio da corrida, encerra o que estava aberto. */
@@ -346,6 +416,38 @@ object FreeTrack {
             val d = java.util.Date(now)
             f.appendText(String.format(java.util.Locale.US, "livre-%s;%s;%.6f;%.6f;LIVRE\n",
                 day.format(d), fmt.format(d), loc.latitude, loc.longitude))
+        } catch (_: Exception) {
+        }
+    }
+}
+
+/**
+ * Resumo da sessão da Uber (aparece ao ficar offline):
+ * "9 de out., 18:36 – 10 de out., 02:22 | R$ 458,29 | Viagens concluídas | Viagens oferecidas | 14 | 23".
+ * Guardado em sessoes_uber.csv para conferir com o que o Radar registrou.
+ */
+object UberSession {
+    private var lastKey = ""
+
+    fun read(ctx: android.content.Context, texts: List<String>) {
+        val tt = texts.map { it.trim() }
+        val ci = tt.indexOf("Viagens concluídas")
+        if (ci < 0) return
+        val period = tt.firstOrNull { it.contains("–") && it.contains(" de ") && it.contains(":") } ?: return
+        val money = tt.firstOrNull { it.startsWith("R$") } ?: return
+        val nums = tt.drop(ci + 1).filter { it.matches(Regex("\\d{1,3}")) }
+        val done = nums.getOrNull(0) ?: return
+        val offered = nums.getOrNull(1) ?: ""
+        val key = "$period|$money|$done"
+        if (key == lastKey) return
+        lastKey = key
+        try {
+            val f = java.io.File(ctx.filesDir, "sessoes_uber.csv")
+            if (!f.exists()) f.writeText("periodo;valor;concluidas;oferecidas;lido_em\n")
+            if (f.readText().contains("\"$period\";$money;$done;")) return
+            val now = java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss", java.util.Locale.US).format(java.util.Date())
+            f.appendText("\"$period\";$money;$done;$offered;$now\n")
+            OfferLog.appendDiag(ctx, "SESSÃO UBER: $period · $money · $done viagens")
         } catch (_: Exception) {
         }
     }

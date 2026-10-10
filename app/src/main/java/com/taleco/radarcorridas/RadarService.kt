@@ -277,7 +277,11 @@ class RadarService : AccessibilityService() {
         var offer: Offer? = null
         for ((_, texts) in screens) UberRoad.update(texts)
         // Corrida em andamento pela tela da Uber (só a Uber; outros apps não mexem nisso)
-        screens.filter { it.first == "com.ubercab.driver" }.forEach { RideScreen.update(it.second) }
+        screens.filter { it.first == "com.ubercab.driver" }.forEach {
+            RideScreen.update(it.second)
+            TripTracker.onUberTexts(this, prefs, it.second)
+            UberSession.read(this, it.second)
+        }
         for ((app, texts) in screens) {
             offer = OfferParser.parse(app, texts)
             if (offer != null) break

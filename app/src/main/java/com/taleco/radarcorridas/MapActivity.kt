@@ -15,7 +15,7 @@ class MapActivity : AppCompatActivity() {
 
     /** Entrega ao mapa os arquivos de dados guardados no celular. */
     inner class Bridge {
-        private val allowed = setOf("ofertas.csv", "corridas.csv", "rotas.csv", "passagens_radar.csv", "valetas.csv", "pontos.json", "eventos_hoje.json")
+        private val allowed = setOf("ofertas.csv", "corridas.csv", "rotas.csv", "passagens_radar.csv", "valetas.csv", "pontos.json", "eventos_hoje.json", "sessoes_uber.csv")
 
         /** Sua posição atual (a mais recente que o celular tem): "lat,lng,precisão" ou "". */
         @SuppressLint("MissingPermission")
