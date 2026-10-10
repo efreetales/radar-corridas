@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Radar Corridas</title>
+<style>
+  :root { --bg:#0D1117; --s1:#161B22; --s2:#21262D; --s3:#2B323B; --line:#30363D; --tx:#E6EDF3; --mu:#8B949E;
+          --ac:#2FD3A6; --good:#3DD68C; --mid:#F5C518; --bad:#E5484D; --blue:#4C9AFF; --purple:#9775FA; }
+  * { box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  html,body { margin:0; background:var(--bg); color:var(--tx); font-family:system-ui,Roboto,sans-serif; }
+  body { padding:0 0 32px; }
+  header { position:sticky; top:0; z-index:5; background:var(--bg); padding:14px 16px 10px; display:flex; align-items:center; gap:12px; }
+  header button.back { width:40px; height:40px; border-radius:12px; border:0; background:var(--s2); color:var(--tx); font-size:20px; }
+  header h1 { margin:0; font-size:20px; } header small { display:block; color:var(--mu); font-size:12px; font-weight:400; margin-top:2px; }
+  main { padding:0 16px; }
+  .card { background:var(--s1); border:1px solid var(--line); border-radius:16px; padding:14px; margin-bottom:10px; }
+  .muted { color:var(--mu); } .tiny { font-size:11px; } .sm { font-size:12.5px; }
+  .seg { display:flex; background:var(--s1); border:1px solid var(--line); border-radius:12px; padding:3px; margin-bottom:10px; }
+  .seg button { flex:1; border:0; background:none; color:var(--mu); font:700 13px system-ui,sans-serif; padding:9px 0; border-radius:9px; }
+  .seg button.on { background:#1d3b33; color:var(--ac); }
+  .seg button i { font-style:normal; font-weight:500; opacity:.8; margin-left:4px; }
+  .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:8px; } .grid3 { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
+  .kpi { background:var(--s1); border:1px solid var(--line); border-radius:14px; padding:11px 12px; min-width:0; }
+  .kpi b { display:block; font-size:18px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; } .kpi span { color:var(--mu); font-size:11px; }
+  .kpi.big b { font-size:22px; }
+  .chip { display:inline-flex; align-items:center; gap:5px; font-size:11px; font-weight:700; padding:3px 8px; border-radius:999px; background:var(--s3); }
+  .chip.good { color:var(--good); background:rgba(61,214,140,.12); } .chip.mid { color:var(--mid); background:rgba(245,197,24,.12); } .chip.bad { color:var(--bad); background:rgba(229,72,77,.12); }
+  .chip.acc { color:var(--ac); background:rgba(47,211,166,.12); }
+  .pillrow { display:flex; gap:8px; margin-bottom:10px; overflow-x:auto; }
+  .pill { border:1px solid var(--line); background:var(--s1); color:var(--tx); border-radius:999px; padding:7px 14px; font-weight:700; font-size:13px; flex:none; }
+  .pill.on { background:var(--tx); color:var(--bg); }
+  /* Histórico */
+  .weeknav { display:flex; align-items:center; justify-content:center; gap:18px; font-weight:700; margin:2px 0 8px; }
+  .weeknav button { border:0; background:none; color:var(--ac); font-size:22px; width:36px; }
+  .bars { display:grid; grid-template-columns:repeat(7,1fr); gap:10px; align-items:end; height:84px; padding:0 4px; }
+  .bars div { display:flex; flex-direction:column; align-items:center; justify-content:flex-end; height:100%; gap:4px; }
+  .bars i { display:block; width:100%; max-width:28px; border-radius:6px 6px 3px 3px; background:var(--s3); min-height:4px; }
+  .bars i.has { background:var(--ac); } .bars span { font-size:11px; color:var(--mu); }
+  .bars div.sel span { color:var(--tx); font-weight:700; }
+  .dayhd { display:flex; justify-content:space-between; color:var(--mu); font-size:12px; font-weight:700; letter-spacing:.04em; margin:14px 2px 6px; text-transform:uppercase; }
+  .offer { background:var(--s1); border:1px solid var(--line); border-radius:16px; padding:12px; margin-bottom:8px; }
+  .offer.accepted { border-color:rgba(47,211,166,.55); }
+  .offer .top { display:flex; align-items:center; gap:10px; }
+  .offer .app { width:38px; height:38px; border-radius:10px; background:#000; color:#fff; font-weight:800; font-size:11px; display:flex; align-items:center; justify-content:center; flex:none; border:1px solid #333; }
+  .offer .app.n99 { background:#FFD400; color:#111; }
+  .offer .val { font-size:18px; font-weight:800; } .offer .val small { color:var(--mu); font-weight:500; font-size:12px; margin-left:4px; }
+  .offer .sub { color:var(--mu); font-size:12px; margin-top:2px; }
+  .offer .chk { margin-left:auto; width:30px; height:30px; border-radius:50%; border:2px solid var(--ac); color:var(--ac); display:flex; align-items:center; justify-content:center; font-weight:800; flex:none; }
+  .offer .mets { display:grid; grid-template-columns:repeat(4,1fr); gap:6px; margin-top:10px; }
+  .offer .mets div { background:var(--s2); border-radius:10px; padding:7px 4px; text-align:center; } .offer .mets b { display:block; font-size:13.5px; } .offer .mets span { font-size:10.5px; color:var(--mu); }
+  .offer .addr { font-size:11.5px; color:var(--mu); margin-top:8px; line-height:1.4; }
+  .g { color:var(--good); } .m { color:var(--mid); } .r { color:var(--bad); }
+  /* Melhores horários */
+  .rank { display:flex; align-items:center; gap:12px; background:var(--s1); border:1px solid var(--line); border-radius:14px; padding:12px; margin-bottom:8px; }
+  .rank .n { width:28px; height:28px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:13px; flex:none; }
+  .rank .t { flex:1; } .rank .t b { font-size:15px; } .rank .t small { display:block; color:var(--mu); font-size:12px; }
+  .rank .v { text-align:right; } .rank .v b { display:block; font-size:15px; }
+  .hourbar { display:grid; grid-template-columns:repeat(12,1fr); gap:4px; align-items:end; height:70px; margin-top:6px; }
+  .hourbar i { display:block; border-radius:4px 4px 2px 2px; min-height:3px; }
+  .hourlab { display:grid; grid-template-columns:repeat(12,1fr); gap:4px; font-size:9.5px; color:var(--mu); text-align:center; margin-top:4px; }
+  /* Jornada */
+  .phase { margin:12px 0; } .phase .row1 { display:flex; align-items:center; gap:8px; font-size:14px; }
+  .phase .row1 b { margin-left:auto; font-variant-numeric:tabular-nums; } .phase .row1 em { font-style:normal; color:var(--mu); font-size:12px; width:40px; text-align:right; }
+  .track { height:7px; border-radius:4px; background:var(--s3); margin-top:6px; overflow:hidden; } .track i { display:block; height:100%; border-radius:4px; }
+  .dot { width:10px; height:10px; border-radius:50%; flex:none; }
+  .stack { display:flex; height:8px; border-radius:4px; overflow:hidden; margin-top:8px; background:var(--s3); } .stack i { display:block; height:100%; }
+  /* Custos */
+  .hero { background:linear-gradient(180deg,#14261F,#10181A); border:1px solid #1f4237; border-radius:18px; padding:16px; margin-bottom:10px; }
+  .hero .big { font-size:34px; font-weight:800; } .hero .big small { font-size:14px; color:var(--mu); font-weight:500; }
+  .hero .tip { display:inline-block; margin-top:8px; background:rgba(47,211,166,.12); color:var(--ac); border:1px solid rgba(47,211,166,.35); border-radius:10px; padding:7px 10px; font-weight:700; font-size:13px; }
+  .field { display:flex; align-items:center; justify-content:space-between; gap:10px; padding:10px 0; border-bottom:1px solid var(--line); }
+  .field:last-child { border-bottom:0; } .field label { font-size:14px; } .field label small { display:block; color:var(--mu); font-size:11px; }
+  .field input { width:112px; background:var(--s2); border:1px solid var(--line); color:var(--tx); border-radius:10px; padding:9px 10px; font-size:15px; text-align:right; font-weight:700; }
+  .field input.txt { width:160px; text-align:left; font-weight:600; }
+  h2 { font-size:13px; letter-spacing:.05em; color:var(--mu); margin:16px 2px 8px; text-transform:uppercase; }
+  /* Estilo do cartão */
+  .preview { background:#000; border-radius:18px; border:4px solid var(--good); padding:12px 14px; margin-bottom:12px; }
+  .preview .tl { display:flex; gap:14px; color:var(--tx); font-weight:700; font-size:14px; margin-bottom:8px; flex-wrap:wrap; }
+  .preview .tl span { color:var(--mu); font-weight:500; }
+  .preview .ml { display:flex; gap:10px; }
+  .preview .ml div span { color:var(--mu); font-size:12px; display:block; } .preview .ml div { flex:1; min-width:0; } .preview .ml div b { font-size:17px; display:flex; align-items:center; gap:5px; white-space:nowrap; }
+  .preview .ml div b i { width:4px; height:22px; border-radius:2px; display:block; }
+  .slots { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:6px; }
+  .slot { background:var(--s1); border:1px solid var(--line); border-radius:12px; padding:9px 6px; text-align:center; font-size:12.5px; position:relative; min-height:64px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; }
+  .slot .no { position:absolute; left:6px; top:5px; font-size:10px; color:var(--mu); }
+  .slot .mv { display:flex; gap:3px; } .slot .mv button { border:0; background:var(--s3); color:var(--tx); border-radius:6px; width:22px; height:24px; font-size:12px; padding:0; }
+  .slot.empty { border-style:dashed; color:var(--mu); font-size:20px; }
+  .tray { display:flex; flex-wrap:wrap; gap:8px; background:var(--s1); border:1px dashed var(--line); border-radius:14px; padding:10px; }
+  .tray button { border:1px solid var(--line); background:var(--s2); color:var(--tx); border-radius:10px; padding:8px 12px; font-weight:600; font-size:13px; }
+  .note { font-size:12px; color:var(--mu); margin:6px 2px 10px; line-height:1.45; }
+  .btn { display:block; width:100%; border:0; border-radius:14px; padding:14px; font-weight:800; font-size:15px; background:var(--ac); color:#06231B; margin-top:12px; }
+  .btn.ghost { background:var(--s2); color:var(--tx); }
+  .empty { color:var(--mu); text-align:center; padding:26px 8px; font-size:13px; }
+</style>
+</head>
+<body>
+<header><button class="back" onclick="goBack()">‹</button><h1 id="ttl">Radar</h1></header>
+<main id="app"></main>
+<script>
+// ===== dados do app =====
+function raw(n){ try { return (window.Radar && Radar.file(n)) || ""; } catch(e){ return ""; } }
+function pget(k, d){ try { const v = window.Radar && Radar.pref && Radar.pref(k); return v === undefined || v === null || v === "" ? d : v; } catch(e){ return d; } }
+function pset(k, v){ try { window.Radar && Radar.setPref && Radar.setPref(k, String(v)); } catch(e){} }
+function goBack(){ try { if (window.Radar && Radar.close) Radar.close(); else history.back(); } catch(e){ history.back(); } }
+function parseCsv(text){ const lines = text.split(/\r?\n/).filter(l => l.trim()); if (!lines.length) return [];
+  const split = l => { const o=[]; let c="", q=false; for (const ch of l){ if (ch === '"') q=!q; else if (ch === ';' && !q){ o.push(c); c=""; } else c+=ch; } o.push(c); return o; };
+  const h = split(lines[0]); return lines.slice(1).map(l => { const v=split(l), o={}; h.forEach((k,i)=>o[k]=v[i]??""); return o; }); }
+const num = s => { if (s==null||s==="") return null; const n=parseFloat(String(s).replace(".", "").replace(",", ".")); return isNaN(n)?null:n; };
+const num2 = s => { if (s==null||s==="") return null; const n=parseFloat(String(s).replace(",", ".")); return isNaN(n)?null:n; };
+const when = s => s ? new Date(s.replace(" ","T")) : null;
+const brl = (v, d=2) => "R$ " + (v||0).toLocaleString("pt-BR",{minimumFractionDigits:d,maximumFractionDigits:d});
+const hm = d => String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0");
+const dur = m => { m = Math.max(0, Math.round(m)); const h = Math.floor(m/60); return h ? `${h}h${String(m%60).padStart(2,"0")}` : `${m} min`; };
+const WD = ["Dom","Seg","Ter","Qua","Qui","Sex","Sáb"], MO = ["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
+const shiftDay = d => { const x = new Date(d.getTime() - 6*3600e3); x.setHours(0,0,0,0); return x; };
+const key = d => d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+
+// faixas boa/média/ruim de R$/km e R$/hora (as mesmas do app)
+const KMB = +pget("bad_km", 1.70), KMG = +pget("good_km", 3.50), HB = +pget("bad_hora", 55), HG = +pget("good_hora", 75);
+const cls = (v, b, g) => v == null ? "" : v >= g ? "g" : v <= b ? "r" : "m";
+
+// ofertas (sem repetir a mesma oferta lida duas vezes) + quais viraram corrida
+const offersAll = parseCsv(raw("ofertas.csv")).map(o => ({ t:when(o.data_hora), app:o.app, cat:o.categoria, price:num2(o.valor), km:num2(o.km_total),
+  min:num2(o.min_total), rskm:num2(o.rs_km), rsh:num2(o.rs_hora), nota:num2(o.nota), lucro:num2(o.lucro), v:o.veredito, orig:o.origem, dest:o.destino }))
+  .filter(o => o.t && o.price);
+const offers = []; offersAll.sort((a,b)=>a.t-b.t).forEach(o => { const p = offers[offers.length-1];
+  if (p && Math.abs(o.t - p.t) < 45e3 && Math.abs(o.price - p.price) < 0.02) return; offers.push(o); });
+const trips = parseCsv(raw("corridas.csv")).map(c => ({ acc:when(c.aceite), price:num2(c.valor), st:c.status||"", app:c.app,
+  minPick:num2(c.min_ate_embarque), wait:num2(c.min_espera_passageiro), minTrip:num2(c.min_viagem), end:when(c.fim), arr:when(c.chegada_embarque) })).filter(c => c.acc);
+offers.forEach(o => { o.accepted = trips.some(c => c.acc >= o.t && c.acc - o.t < 120e3 && Math.abs((c.price||0) - o.price) < 0.05); });
+const sessions = parseCsv(raw("sessoes_uber.csv"));
+const fixAddr = a => { const t = (a||"").replace(/,\s*$/,"").replace(/S[äa]o( Paulo)?$/,"").replace(/,\s*$/,"").trim(); return t.length >= 5 ? t : ""; };
+
+// ===== telas =====
+const PAGES = { historico:["Histórico de ofertas","Tudo o que o Radar avaliou"], horarios:["Melhores horários","Quando rolam as corridas que mais pagam"],
+  jornada:["Jornada","Quanto tempo você roda, por fase"], custos:["Custos do carro","Quanto o seu carro custa por km"], cartao:["Estilo do cartão","Monte o cartão do jeito que você lê melhor"] };
+const page = (new URLSearchParams(location.search).get("p") || location.hash.slice(1) || "historico");
+document.getElementById("ttl").innerHTML = `${PAGES[page]?.[0]||"Radar"}<small>${PAGES[page]?.[1]||""}</small>`;
+const app = document.getElementById("app");
+
+// ---------- HISTÓRICO ----------
+let hWeek = 0, hDay = null, hApp = "todos", hTab = "todas";
+function weekStart(off){ const last = offers.length ? shiftDay(offers[offers.length-1].t) : shiftDay(new Date());
+  const d = new Date(last); const wd = (d.getDay()+6)%7; d.setDate(d.getDate() - wd + 7*off); return d; }
+function historico(){
+  const ws = weekStart(hWeek), we = new Date(ws); we.setDate(we.getDate()+7);
+  let inWeek = offers.filter(o => { const d = shiftDay(o.t); return d >= ws && d < we; });
+  if (hApp !== "todos") inWeek = inWeek.filter(o => (o.app||"").toUpperCase() === hApp);
+  const perDay = Array.from({length:7}, (_, i) => { const d = new Date(ws); d.setDate(d.getDate()+i);
+    return { d, n: inWeek.filter(o => key(shiftDay(o.t)) === key(d)).length }; });
+  const maxN = Math.max(1, ...perDay.map(x => x.n));
+  let list = hDay ? inWeek.filter(o => key(shiftDay(o.t)) === hDay) : inWeek;
+  const nAll = list.length, nAcc = list.filter(o => o.accepted).length;
+  if (hTab === "aceitas") list = list.filter(o => o.accepted); if (hTab === "recusadas") list = list.filter(o => !o.accepted);
+  const tot = list.reduce((s,o)=>s+o.price,0), avg = f => { const a = list.map(f).filter(x => x!=null); return a.length ? a.reduce((s,x)=>s+x,0)/a.length : null; };
+  const e = new Date(we); e.setDate(e.getDate()-1);
+  let h = `<div class="card"><div class="weeknav"><button onclick="hWeek--;hDay=null;render()">‹</button>${ws.getDate()} ${MO[ws.getMonth()]} – ${e.getDate()} ${MO[e.getMonth()]}<button onclick="if(hWeek<0){hWeek++;hDay=null;render()}" ${hWeek>=0?"disabled style=opacity:.3":""}>›</button></div>
+    <div class="bars">${perDay.map(x => `<div class="${hDay===key(x.d)?"sel":""}" onclick="hDay=hDay==='${key(x.d)}'?null:'${key(x.d)}';render()"><i class="${x.n?"has":""}" style="height:${Math.max(4, 64*x.n/maxN)}px;${hDay&&hDay!==key(x.d)?"opacity:.35":""}"></i><span>${x.d.getDate()}</span></div>`).join("")}</div></div>
+    <div class="pillrow">${[["todos","Todos"],["UBER","Uber"],["99","99"]].map(([k,l]) => `<button class="pill ${hApp===k?"on":""}" onclick="hApp='${k}';render()">${l}</button>`).join("")}</div>
+    <div class="seg">${[["todas","Todas",nAll],["aceitas","Aceitas",nAcc],["recusadas","Recusadas",nAll-nAcc]].map(([k,l,n]) => `<button class="${hTab===k?"on":""}" onclick="hTab='${k}';render()">${l}<i>${n}</i></button>`).join("")}</div>
+    <div class="grid2" style="margin-bottom:8px"><div class="kpi big"><b>${list.length}</b><span>ofertas analisadas</span></div><div class="kpi big"><b>${brl(tot)}</b><span>total ofertado</span></div></div>
+    <div class="grid3" style="margin-bottom:4px"><div class="kpi"><b>${brl(avg(o=>o.price))}</b><span>média por oferta</span></div><div class="kpi"><b class="${cls(avg(o=>o.rsh),HB,HG)}">${brl(avg(o=>o.rsh))}</b><span>média por hora</span></div><div class="kpi"><b class="${cls(avg(o=>o.rskm),KMB,KMG)}">${brl(avg(o=>o.rskm))}</b><span>média por km</span></div></div>`;
+  if (!list.length) h += `<div class="empty">Nenhuma oferta nesse filtro.</div>`;
+  const byDay = {}; list.slice().reverse().forEach(o => { const k = key(shiftDay(o.t)); (byDay[k] = byDay[k] || []).push(o); });
+  Object.values(byDay).forEach(arr => { const d = shiftDay(arr[0].t);
+    h += `<div class="dayhd"><span>${WD[d.getDay()]}, ${d.getDate()} ${MO[d.getMonth()]}</span><span>${brl(arr.reduce((s,o)=>s+o.price,0))}</span></div>`;
+    arr.forEach(o => { const vc = o.v==="BOM"?"good":o.v==="RUIM"?"bad":"mid", vl = o.v==="BOM"?"Boa":o.v==="RUIM"?"Ruim":"Média";
+      h += `<div class="offer ${o.accepted?"accepted":""}"><div class="top"><div class="app ${o.app==="99"?"n99":""}">${o.app==="99"?"99":"Uber"}</div>
+        <div><div class="val">${brl(o.price)}<small>${hm(o.t)} · ${o.cat||""}</small></div><div class="sub">${(o.km||0).toFixed(1).replace(".",",")} km · ${Math.round(o.min||0)} min &nbsp;<span class="chip ${vc}">● ${vl}</span>${o.accepted?` <span class="chip acc">✓ aceita</span>`:""}</div></div>
+        ${o.accepted?`<div class="chk">✓</div>`:""}</div>
+        <div class="mets"><div><b class="${cls(o.rskm,KMB,KMG)}">${brl(o.rskm)}</b><span>por km</span></div><div><b class="${cls(o.rsh,HB,HG)}">${brl(o.rsh,0)}</b><span>por hora</span></div><div><b>${o.nota?("★ "+o.nota.toFixed(2).replace(".",",")):"–"}</b><span>nota</span></div><div><b>${o.lucro!=null?brl(o.lucro):"–"}</b><span>lucro</span></div></div>
+        ${fixAddr(o.orig)||fixAddr(o.dest)?`<div class="addr">${fixAddr(o.orig)?"● "+fixAddr(o.orig):""}${fixAddr(o.orig)&&fixAddr(o.dest)?"<br>":""}${fixAddr(o.dest)?"■ "+fixAddr(o.dest):""}</div>`:""}</div>`; });
+  });
+  app.innerHTML = h;
+}
+
+// ---------- MELHORES HORÁRIOS ----------
+let rPer = "tudo", rTab = "melhores";
+function horarios(){
+  const now = offers.length ? offers[offers.length-1].t : new Date();
+  const lim = rPer === "semana" ? 7 : rPer === "mes" ? 30 : 9999;
+  const list = offers.filter(o => (now - o.t) / 864e5 <= lim && o.rskm != null);
+  const bands = Array.from({length:12}, (_, i) => { const a = list.filter(o => Math.floor(o.t.getHours()/2) === i);
+    return { i, n:a.length, km: a.length ? a.reduce((s,o)=>s+o.rskm,0)/a.length : null, h: a.filter(o=>o.rsh!=null).length ? a.reduce((s,o)=>s+(o.rsh||0),0)/a.filter(o=>o.rsh!=null).length : null }; });
+  const lab = b => `${String(b.i*2).padStart(2,"0")}–${String((b.i*2+2)%24).padStart(2,"0")}h`;
+  const valid = bands.filter(b => b.n >= 2).sort((a,b) => b.km - a.km);
+  const best = valid[0], worst = valid[valid.length-1];
+  const maxKm = Math.max(1, ...bands.map(b => b.km || 0));
+  const tag = b => b.km >= KMG ? ["Ótima","g"] : b.km <= KMB ? ["Ruim","r"] : ["Média","m"];
+  let h = `<div class="seg">${[["semana","Semana"],["mes","Mês"],["tudo","Tudo"]].map(([k,l]) => `<button class="${rPer===k?"on":""}" onclick="rPer='${k}';render()">${l}</button>`).join("")}</div>`;
+  if (!valid.length) { app.innerHTML = h + `<div class="empty">Poucas ofertas nesse período. Rode mais um pouco que o ranking aparece.</div>`; return; }
+  h += `<div class="grid2" style="margin-bottom:10px"><div class="kpi"><span>↑ Melhor horário</span><b style="font-size:22px">${lab(best)}</b><b class="g" style="font-size:14px">${brl(best.km)}/km</b><span>${best.n} ofertas</span></div>
+    <div class="kpi"><span>↓ Pior horário</span><b style="font-size:22px">${lab(worst)}</b><b class="r" style="font-size:14px">${brl(worst.km)}/km</b><span>${worst.n} ofertas</span></div></div>
+    <div class="card"><div class="sm muted">Valor por km médio das ofertas, por faixa de 2 horas</div>
+    <div class="hourbar">${bands.map(b => `<i style="height:${b.km?Math.max(4,66*b.km/maxKm):3}px;background:${b.km==null?"var(--s3)":b.km>=KMG?"var(--good)":b.km<=KMB?"var(--bad)":"var(--mid)"};${b.n<2?"opacity:.35":""}"></i>`).join("")}</div>
+    <div class="hourlab">${bands.map(b => `<span>${b.i*2}h</span>`).join("")}</div></div>`;
+  const third = Math.ceil(valid.length/3);
+  const groups = { melhores: valid.slice(0, third), intermediarios: valid.slice(third, valid.length-third), piores: valid.slice(valid.length-third).reverse() };
+  h += `<div class="seg">${[["melhores","Melhores"],["intermediarios","Intermediários"],["piores","Piores"]].map(([k,l]) => `<button class="${rTab===k?"on":""}" onclick="rTab='${k}';render()">${l}</button>`).join("")}</div>`;
+  (groups[rTab].length ? groups[rTab] : valid).forEach(b => { const [t,c] = tag(b), pos = valid.indexOf(b)+1;
+    h += `<div class="rank"><div class="n" style="background:${c==="g"?"rgba(61,214,140,.15)":c==="r"?"rgba(229,72,77,.15)":"rgba(245,197,24,.15)"};color:var(--${c==="g"?"good":c==="r"?"bad":"mid"})">${pos}</div>
+      <div class="t"><b>${lab(b)}</b><small>${b.n} ofertas${b.h?" · "+brl(b.h,0)+"/h":""}</small></div><div class="v"><b>${brl(b.km)}/km</b><span class="chip ${c==="g"?"good":c==="r"?"bad":"mid"}">● ${t}</span></div></div>`; });
+  h += `<div class="note">Pelas ofertas que o Radar leu. Faixas com menos de 2 ofertas ficam apagadas no gráfico e fora do ranking.</div>`;
+  app.innerHTML = h;
+}
+
+// ---------- JORNADA ----------
+let jDay = 0;
+function jornada(){
+  const days = [...new Set(trips.map(c => key(shiftDay(c.acc))).concat(offers.map(o => key(shiftDay(o.t)))))]
+    .map(k => { const [y,m,d] = k.split("-").map(Number); return new Date(y,m-1,d); }).sort((a,b)=>b-a);
+  if (!days.length) { app.innerHTML = `<div class="empty">Ainda não há corridas registradas.</div>`; return; }
+  const d = days[Math.min(jDay, days.length-1)], k = key(d);
+  const ts = trips.filter(c => key(shiftDay(c.acc)) === k), os = offers.filter(o => key(shiftDay(o.t)) === k);
+  const pick = ts.reduce((s,c)=>s+(c.minPick||0),0), wait = ts.reduce((s,c)=>s+(c.wait||0),0), ride = ts.reduce((s,c)=>s+(c.minTrip||0),0);
+  // tempo online: do resumo da sessão da Uber, se houver; senão da 1ª oferta até o fim da última corrida
+  const times = os.map(o=>o.t).concat(ts.map(c=>c.acc), ts.map(c=>c.end).filter(Boolean));
+  const t0 = new Date(Math.min(...times)), t1 = new Date(Math.max(...times));
+  let online = (t1 - t0)/60e3, src = "estimado: da 1ª oferta ao fim da última corrida";
+  const s = sessions.find(x => { const m = /(\d{1,2}):(\d{2}) – .*?(\d{1,2}):(\d{2})/.exec(x.periodo||""); return m && x.lido_em && key(shiftDay(when(x.lido_em))) === k; });
+  if (s) { const m = /(\d{1,2}):(\d{2}) – .*?(\d{1,2}):(\d{2})/.exec(s.periodo); let a = +m[1]*60+ +m[2], b = +m[3]*60+ +m[4]; if (b < a) b += 1440; online = b - a; src = "da sessão da Uber"; }
+  const waitTrips = Math.max(0, online - pick - wait - ride);
+  const P = [["Aguardando viagens", waitTrips, "var(--mid)"], ["Buscando passageiro", pick, "var(--purple)"], ["Aguardando passageiro", wait, "var(--blue)"], ["Em viagem", ride, "var(--good)"]];
+  const tot = Math.max(1, P.reduce((x,p)=>x+p[1],0));
+  let h = `<div class="weeknav"><button onclick="if(jDay<${days.length-1}){jDay++;render()}">‹</button>${WD[d.getDay()]}, ${d.getDate()} ${MO[d.getMonth()]} (turno)<button onclick="if(jDay>0){jDay--;render()}" ${jDay?"":"disabled style=opacity:.3"}>›</button></div>
+    <div class="card"><div class="tiny muted" style="letter-spacing:.05em">TEMPO ONLINE NO TURNO</div><div style="font-size:30px;font-weight:800;margin:4px 0 2px">${dur(online)}</div><div class="tiny muted">${hm(t0)}–${hm(t1)} · ${src}</div>
+    ${P.map(([l,v,c]) => `<div class="phase"><div class="row1"><span class="dot" style="background:${c}"></span>${l}<em>${Math.round(100*v/tot)}%</em><b>${dur(v)}</b></div><div class="track"><i style="width:${100*v/tot}%;background:${c}"></i></div></div>`).join("")}
+    <div class="sm" style="color:var(--ac);margin-top:6px">↗ ${Math.round(100*ride/tot)}% do tempo online foi em viagem${ts.length?` · ${ts.filter(c=>c.st.startsWith("concluída")).length} corridas`:""}</div></div>`;
+  // por dia (últimos turnos)
+  h += `<h2>Por turno</h2>`;
+  days.slice(0, 7).forEach((dd, i) => { const kk = key(dd), tt = trips.filter(c => key(shiftDay(c.acc)) === kk);
+    const r = tt.reduce((s,c)=>s+(c.minTrip||0),0), p = tt.reduce((s,c)=>s+(c.minPick||0),0), w = tt.reduce((s,c)=>s+(c.wait||0),0);
+    const oo = offers.filter(o => key(shiftDay(o.t)) === kk), tm = oo.map(o=>o.t).concat(tt.map(c=>c.acc), tt.map(c=>c.end).filter(Boolean));
+    const on = tm.length ? (Math.max(...tm) - Math.min(...tm))/60e3 : 0, fr = Math.max(0, on - r - p - w), T = Math.max(1, on);
+    h += `<div class="card" onclick="jDay=${i};render();scrollTo(0,0)" style="padding:12px"><div style="display:flex;justify-content:space-between"><b>${WD[dd.getDay()]}, ${dd.getDate()} ${MO[dd.getMonth()]}</b><b>${dur(on)}</b></div>
+      <div class="stack"><i style="width:${100*fr/T}%;background:var(--mid)"></i><i style="width:${100*p/T}%;background:var(--purple)"></i><i style="width:${100*w/T}%;background:var(--blue)"></i><i style="width:${100*r/T}%;background:var(--good)"></i></div></div>`; });
+  h += `<div class="note">As fases vêm das corridas registradas. A partir das próximas versões o Radar grava o tempo online direto da tela da Uber.</div>`;
+  app.innerHTML = h;
+}
+
+// ---------- CUSTOS ----------
+const CF = [
+  ["car","Carro","", "txt", "Seu carro"],
+  ["kml","Consumo","km por litro", "n", 11],
+  ["fuel","Combustível","R$ por litro", "n", 6.19],
+  ["rent","Aluguel ou parcela","R$ por mês", "n", 0],
+  ["ins","Seguro","R$ por mês", "n", 0],
+  ["ipva","IPVA e licenciamento","R$ por ano", "n", 0],
+  ["maint","Manutenção e pneus","R$ por km", "n", 0.15],
+  ["other","Outros fixos","celular, internet, lavagem — R$ por mês", "n", 0],
+  ["kmmes","Km rodados","por mês", "n", 4000],
+  ["dias","Dias de trabalho","por semana", "n", 6],
+  ["horas","Horas online","por dia", "n", 10],
+  ["lucro","Lucro que você quer","R$ por mês", "n", 4000]
+];
+function custos(){
+  const v = {}; CF.forEach(([k,,,t,d]) => v[k] = t === "txt" ? pget("c_"+k, d) : (num2(pget("c_"+k, d)) ?? d));
+  const fuelKm = v.kml > 0 ? v.fuel / v.kml : 0;
+  const fixedMes = v.rent + v.ins + v.ipva/12 + v.other;
+  const kmMes = Math.max(1, v.kmmes), diasMes = v.dias * 4.33, horasMes = diasMes * v.horas;
+  const custoKm = fuelKm + v.maint + fixedMes / kmMes, custos = custoKm * kmMes;
+  const receita = custos + v.lucro, minKm = receita / kmMes;
+  const meta = receita / Math.max(1, diasMes);
+  let h = `<div class="hero"><div class="tiny muted">${v.car || "Seu carro"} · seu custo por km rodado</div><div class="big">${brl(custoKm)}<small>/km</small></div>
+    <div class="tip">Aceite corridas acima de ${brl(minKm)}/km</div>
+    <div class="grid3" style="margin-top:12px"><div class="kpi"><span>custos/mês</span><b class="r" style="font-size:15px">${brl(custos,0)}</b></div><div class="kpi"><span>receita/mês</span><b style="font-size:15px">${brl(receita,0)}</b></div><div class="kpi"><span>lucro/mês</span><b class="g" style="font-size:15px">${brl(v.lucro,0)}</b></div></div></div>
+    <div class="grid2" style="margin-bottom:6px"><div class="kpi big"><span>meta diária</span><b>${brl(meta)}</b><span>${v.dias} dias por semana</span></div><div class="kpi big"><span>tempo online</span><b>${v.horas}h</b><span>por dia</span></div></div>
+    <h2>Seus números</h2><div class="grid2">
+      <div class="kpi"><span>km/dia</span><b>${Math.round(kmMes/diasMes)} km</b></div><div class="kpi"><span>ganho/hora necessário</span><b>${brl(receita/Math.max(1,horasMes))}</b></div>
+      <div class="kpi"><span>combustível/km</span><b>${brl(fuelKm)}</b></div><div class="kpi"><span>fixos/km</span><b>${brl(fixedMes/kmMes)}</b></div>
+      <div class="kpi"><span>custo/hora</span><b class="r">${brl(custos/Math.max(1,horasMes))}</b></div><div class="kpi"><span>lucro/hora</span><b class="g">${brl(v.lucro/Math.max(1,horasMes))}</b></div></div>
+    <h2>Seu carro e seus gastos</h2><div class="card" style="padding:4px 14px">${CF.map(([k,l,s,t]) => `<div class="field"><label>${l}${s?`<small>${s}</small>`:""}</label>
+      <input class="${t==="txt"?"txt":""}" ${t==="n"?'inputmode="decimal"':""} value="${t==="txt"?v[k]:String(v[k]).replace(".",",")}" onchange="pset('c_${k}', this.value.replace(',', '.'));render()"></div>`).join("")}</div>
+    <button class="btn" onclick="pset('bad_km', ${(minKm).toFixed(2)});pset('good_km', ${(minKm*1.35).toFixed(2)});this.textContent='Semáforo ajustado ✓'">Usar ${brl(minKm)}/km como mínimo no semáforo</button>
+    <div class="note">Mínimo por km = (custos do mês + lucro desejado) ÷ km do mês. O botão ajusta a faixa do R$/Km do card: abaixo do mínimo fica vermelho, 35% acima fica verde.</div>`;
+  app.innerHTML = h;
+}
+
+// ---------- ESTILO DO CARTÃO ----------
+const TOPF = { tempo:"Tempo total", dist:"Distância total", valor:"Valor da corrida", cat:"Categoria", app:"App" };
+const BOTF = { km:"R$/Km", hora:"R$/Hora", min:"R$/Min", nota:"Nota", lucro:"Lucro", lucrohora:"Lucro/Hora" };
+let cTop = pget("card_top", "valor,tempo,dist").split(",").filter(x => TOPF[x]);
+let cBot = pget("card_bottom", "km,hora,nota,lucro").split(",").filter(x => BOTF[x]);
+const SAMPLE = { tempo:"35 min", dist:"20,5 km", valor:"R$ 76,07", cat:"Black", app:"Uber", km:["R$ 3,71","g"], hora:["R$ 130","g"], min:["R$ 2,17","g"], nota:["4,85","m"], lucro:["R$ 63,77","g"], lucrohora:["R$ 109","g"] };
+function mv(arr, i, d){ const j = i + d; if (j < 0 || j >= arr.length) return; [arr[i], arr[j]] = [arr[j], arr[i]]; save(); }
+function save(){ pset("card_top", cTop.join(",")); pset("card_bottom", cBot.join(",")); render(); }
+function cartao(){
+  const colr = c => c==="g"?"var(--good)":c==="r"?"var(--bad)":"var(--mid)";
+  let h = `<div class="tiny muted" style="margin:0 2px 6px">PRÉVIA</div><div class="preview">
+    <div class="tl">${cTop.map((k,i) => i===0 && k==="valor" ? `<b style="font-size:16px">${SAMPLE[k]}</b>` : `<span>${SAMPLE[k]}</span>`).join(" · ")}</div>
+    <div class="ml">${cBot.map(k => `<div><span>${BOTF[k]}</span><b><i style="background:${colr(SAMPLE[k][1])}"></i>${SAMPLE[k][0]}</b></div>`).join("")}</div></div>`;
+  const slots = (arr, max, F, name) => `<div class="slots">${Array.from({length:max}, (_, i) => arr[i] ? `<div class="slot"><span class="no">${i+1}</span>${F[arr[i]]}
+      <div class="mv"><button onclick="mv(${name},${i},-1)">‹</button><button onclick="${name}.splice(${i},1);save()">✕</button><button onclick="mv(${name},${i},1)">›</button></div></div>` : `<div class="slot empty">+</div>`).join("")}</div>`;
+  h += `<h2 style="display:flex;justify-content:space-between">Linha de cima <span>${cTop.length}/3</span></h2>${slots(cTop, 3, TOPF, "cTop").replace('class="slots"','class="slots" style="grid-template-columns:repeat(3,minmax(0,1fr))"')}
+    <h2 style="display:flex;justify-content:space-between">Linha de baixo (com cor) <span>${cBot.length}/4</span></h2>${slots(cBot, 4, BOTF, "cBot")}
+    <h2>Disponíveis — toque para colocar</h2><div class="tray">
+    ${Object.keys(TOPF).filter(k => !cTop.includes(k)).map(k => `<button onclick="if(cTop.length<3){cTop.push('${k}');save()}">${TOPF[k]} ↑</button>`).join("")}
+    ${Object.keys(BOTF).filter(k => !cBot.includes(k)).map(k => `<button onclick="if(cBot.length<4){cBot.push('${k}');save()}">${BOTF[k]} ↓</button>`).join("")}</div>
+    <div class="note">‹ › muda a ordem, ✕ tira do cartão. A linha de baixo leva a cor de cada métrica (verde, amarelo, vermelho) pelas faixas da página Ganhos.</div>
+    <button class="btn ghost" onclick="cTop=['valor','tempo','dist'];cBot=['km','hora','nota','lucro'];save()">Restaurar padrão</button>`;
+  app.innerHTML = h;
+}
+
+function render(){ ({historico, horarios, jornada, custos, cartao}[page] || historico)(); }
+render();
+</script>
+</body>
+</html>

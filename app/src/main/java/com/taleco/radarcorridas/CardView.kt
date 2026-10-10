@@ -58,15 +58,41 @@ object CardView {
             }
         }
 
+        val sp = ctx.getSharedPreferences("radar", Context.MODE_PRIVATE)
+        val topKeys = (sp.getString("card_top", null) ?: "").split(",").filter { it.isNotBlank() }
+        val botKeys = (sp.getString("card_bottom", null) ?: "").split(",").filter { it.isNotBlank() }
+        val results = if (botKeys.isEmpty()) eval.results
+            else botKeys.mapNotNull { k -> eval.results.firstOrNull { it.metric.key == k } }
+
+        // Linha de cima (Estilo do cartão): valor, tempo, distância, categoria, app
+        val hours0 = (offer.totalMin / 60).toInt()
+        val mins0 = Math.round(offer.totalMin - hours0 * 60).toInt()
+        val topVals = mapOf(
+            "valor" to String.format(PT_BR, "R$ %.2f", offer.price),
+            "tempo" to (if (hours0 > 0) String.format(PT_BR, "%dh%02d", hours0, mins0) else "$mins0 min"),
+            "dist" to String.format(PT_BR, "%.1f km", offer.totalKm),
+            "cat" to (offer.category ?: ""),
+            "app" to offer.app
+        )
+        if (topKeys.isNotEmpty()) {
+            root.addView(TextView(ctx).apply {
+                text = topKeys.mapNotNull { topVals[it]?.takeIf { v -> v.isNotBlank() } }.joinToString("  ·  ")
+                setTextColor(Color.WHITE)
+                textSize = 17f
+                typeface = Typeface.DEFAULT_BOLD
+                setPadding(0, 0, 0, ctx.dp(6))
+            })
+        }
+
         val row = LinearLayout(ctx).apply { orientation = LinearLayout.HORIZONTAL }
-        if (eval.results.isEmpty()) {
+        if (results.isEmpty()) {
             row.addView(TextView(ctx).apply {
                 text = "Ative ao menos uma métrica"
                 setTextColor(Colors.TEXT)
                 textSize = 16f
             })
         }
-        eval.results.forEachIndexed { i, r ->
+        results.forEachIndexed { i, r ->
             val col = LinearLayout(ctx).apply {
                 orientation = LinearLayout.VERTICAL
                 if (i > 0) setPadding(ctx.dp(18), 0, 0, 0)
@@ -108,7 +134,7 @@ object CardView {
             String.format(PT_BR, "%.1f km", offer.totalKm)
         )
         offer.category?.let { footerParts.add(it) }
-        root.addView(TextView(ctx).apply {
+        if (topKeys.isEmpty()) root.addView(TextView(ctx).apply {
             text = footerParts.joinToString("  ·  ")
             setTextColor(Colors.TEXT)
             textSize = 15f

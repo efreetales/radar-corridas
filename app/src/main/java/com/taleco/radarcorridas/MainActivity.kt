@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
 
     // ---------- Navegação: tela inicial com cards → página de cada seção ----------
 
-    private class Page(val key: String, val icon: Int, val hint: String) {
+    private class Page(val key: String, val icon: Int, val hint: String, val web: String? = null) {
         lateinit var body: LinearLayout
     }
 
@@ -59,7 +59,11 @@ class MainActivity : AppCompatActivity() {
         "Valetas e buracos" to Page("Valetas", R.drawable.ic_warning, "Marcar e avisar"),
         "Meus pontos bons" to Page("Pontos bons", R.drawable.ic_star, "Lugares e horários"),
         "Eventos de hoje" to Page("Eventos", R.drawable.ic_event, "Saídas de teatros, shows e jogos"),
-        "Custos do carro" to Page("Custos", R.drawable.ic_fuel, "Combustível e aluguel"),
+        "Histórico de ofertas" to Page("Histórico", R.drawable.ic_history, "Aceitas e recusadas", web = "historico"),
+        "Melhores horários" to Page("Horários", R.drawable.ic_clock, "Quando mais paga", web = "horarios"),
+        "Jornada" to Page("Jornada", R.drawable.ic_timer, "Tempo por fase", web = "jornada"),
+        "Custos do carro" to Page("Custos", R.drawable.ic_fuel, "Custo por km e meta", web = "custos"),
+        "Estilo do cartão" to Page("Cartão", R.drawable.ic_tune, "Campos e ordem", web = "cartao"),
         "Corridas e percurso" to Page("Corridas", R.drawable.ic_car, "Registro e permissões"),
         "Aparência" to Page("Aparência", R.drawable.ic_palette, "Posição e botão R"),
         "Dados" to Page("Dados", R.drawable.ic_storage, "Exportar e diagnóstico")
@@ -214,7 +218,11 @@ class MainActivity : AppCompatActivity() {
         card.addView(View(this), LinearLayout.LayoutParams(1, 0, 1f))
         card.addView(text(pg.key, 18f, Colors.TEXT, bold = true).apply { setPadding(0, dp(18), 0, 0) })
         card.addView(text(pg.hint, 12f, Colors.MUTED).apply { setPadding(0, dp(2), 0, 0) })
-        card.setOnClickListener { showPage(title) }
+        card.setOnClickListener {
+            val w = pg.web
+            if (w != null) startActivity(Intent(this, PainelActivity::class.java).putExtra(PainelActivity.EXTRA_PAGE, w))
+            else showPage(title)
+        }
         return card
     }
 

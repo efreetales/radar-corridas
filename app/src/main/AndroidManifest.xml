@@ -35,6 +35,10 @@
             android:exported="false"
             android:label="Mapa" />
 
+        <activity
+            android:name=".PainelActivity"
+            android:exported="false" />
+
         <service
             android:name=".RadarService"
             android:exported="true"
