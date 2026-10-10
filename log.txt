@@ -1,0 +1,4 @@
+app.rotapro: Rota Pro - Cálculo de Ganhos – Apps no Google Play
+  8 telas
+co.gigu.app: GigU: Seu copiloto inteligente – Apps no Google Play
+  7 telas
