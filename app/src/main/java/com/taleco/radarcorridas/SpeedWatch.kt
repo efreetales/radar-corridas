@@ -215,6 +215,7 @@ object SpeedWatch {
 
         // Pontos bons: só quando não há radar nem valeta na tela
         SpotWatch.onLocation(ctx, loc, kmh, radarBusy || HazardWatch.isShowing)
+        FreeTrack.onLocation(ctx, loc)
     }
 
     private fun camLocation(c: SpeedCam) = Location("radar").apply {

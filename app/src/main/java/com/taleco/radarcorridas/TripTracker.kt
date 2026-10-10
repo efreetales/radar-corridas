@@ -318,3 +318,35 @@ object TripLog {
         return try { (f.readLines().count { it.isNotBlank() } - 1).coerceAtLeast(0) } catch (_: Exception) { 0 }
     }
 }
+
+/**
+ * Trajeto LIVRE (sem corrida), para o Itinerário desenhar o dia inteiro como o Google.
+ * Um ponto a cada 10 s se você andou 30 m ou mais. Vai para rotas.csv com id "livre-AAAAMMDD" e fase LIVRE.
+ */
+object FreeTrack {
+    private const val EVERY_MS = 10_000L
+    private const val MIN_MOVE_M = 30f
+    private var last: android.location.Location? = null
+    private var lastAt = 0L
+    private val day = java.text.SimpleDateFormat("yyyyMMdd", java.util.Locale.US)
+    private val fmt = java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss", java.util.Locale.US)
+
+    fun onLocation(ctx: android.content.Context, loc: android.location.Location) {
+        if (TripTracker.isOnTrip || RideScreen.active) { last = null; return }
+        if (loc.hasAccuracy() && loc.accuracy > 60f) return
+        val now = System.currentTimeMillis()
+        if (now - lastAt < EVERY_MS) return
+        val l = last
+        if (l != null && l.distanceTo(loc) < MIN_MOVE_M) return
+        last = loc
+        lastAt = now
+        try {
+            val f = TripTracker.routesFile(ctx)
+            if (!f.exists()) f.writeText("id;data_hora;lat;lng;fase\n")
+            val d = java.util.Date(now)
+            f.appendText(String.format(java.util.Locale.US, "livre-%s;%s;%.6f;%.6f;LIVRE\n",
+                day.format(d), fmt.format(d), loc.latitude, loc.longitude))
+        } catch (_: Exception) {
+        }
+    }
+}

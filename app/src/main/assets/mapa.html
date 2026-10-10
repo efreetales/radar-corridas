@@ -171,7 +171,9 @@ const trips = parseCsv(raw("corridas.csv")).map(c => ({ id:c.id, t:when(c.aceite
   rsh:num(c.rs_hora_real), wait:num(c.min_espera_passageiro), toPick:num(c.min_ate_embarque),
   orig:c.origem, dest:c.destino })).filter(c => c.t);
 const routes = {};
+const freePts = []; // trajeto livre (sem corrida), com horário
 parseCsv(raw("rotas.csv")).forEach(p => { const la=num(p.lat), lo=num(p.lng); if (!inSP(la,lo)) return;
+  if (p.fase === "LIVRE") { const t = when(p.data_hora); if (t) freePts.push([la,lo,t]); return; }
   (routes[p.id] = routes[p.id] || []).push([la,lo,p.fase]); });
 const passes = parseCsv(raw("passagens_radar.csv")).map(p => ({ t:when(p.data_hora), via:p.via, lim:num(p.limite),
   kmh:num(p.velocidade_gps), res:p.resultado||"", la:num(p.lat), lo:num(p.lng) })).filter(p => p.t && inSP(p.la,p.lo));
@@ -401,7 +403,7 @@ const full = parseCsv(raw("corridas.csv")).map(c => ({ id:c.id, cat:(c.categoria
   acc:when(c.aceite), arr:when(c.chegada_embarque), dep:when(c.saida_embarque), dst:when(c.chegada_destino), end:when(c.fim),
   kmPick:num(c.km_ate_embarque), kmTrip:num(c.km_viagem), minPick:num(c.min_ate_embarque), wait:num(c.min_espera_passageiro),
   minTrip:num(c.min_viagem), rsh:num(c.rs_hora_real), orig:c.origem||"", dest:c.destino||"" })).filter(c => c.acc);
-const days = [...new Set(full.map(c => shiftKey(c.acc)).concat(offers.map(o => shiftKey(o.t))))].sort();
+const days = [...new Set(full.map(c => shiftKey(c.acc)).concat(offers.map(o => shiftKey(o.t))).concat(freePts.map(p => shiftKey(p[2]))))].sort();
 let dayIx = days.length - 1, mode = "ana", selTrip = null;
 const itLayer = L.layerGroup().addTo(map);
 const hm = d => d ? String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0") : "";
@@ -422,6 +424,12 @@ function renderItin(){
   const ts = full.filter(c => shiftKey(c.acc) === k).sort((a,b) => a.acc - b.acc);
   const ofs = offers.filter(o => shiftKey(o.t) === k);
   const bounds = [];
+  // trajeto livre (azul tracejado); quebra a linha quando há buraco de mais de 3 min
+  let fl = [];
+  const fflush = () => { if (fl.length > 1) L.polyline(fl, { color:"#4C9AFF", weight:3, opacity: selTrip ? .25 : .7, dashArray:"6 6" }).addTo(itLayer); fl = []; };
+  freePts.filter(p => shiftKey(p[2]) === k).sort((a,b) => a[2]-b[2]).forEach((p, i, arr) => {
+    if (i && p[2] - arr[i-1][2] > 180e3) fflush(); fl.push([p[0],p[1]]); bounds.push([p[0],p[1]]); });
+  fflush();
   // ofertas recebidas (pontinhos) — só para dar contexto
   ofs.forEach(o => L.circleMarker([o.la,o.lo], { radius:4, color:"#0D1117", weight:1, fillColor:vcol(o.v), fillOpacity:.7 })
     .bindPopup(`Oferta ${hm(o.t)} · ${brl(o.price||0)} · ${o.cat||""}<br><small>${o.orig||""}</small>`).addTo(itLayer));
@@ -475,7 +483,7 @@ function renderItin(){
   html += `</div>`;
   document.getElementById("moreIn").innerHTML = html;
   const le = document.getElementById("legend");
-  le.innerHTML = `<div class="row"><b>Percurso</b><span class="its"><span class="it"><span class="ln" style="background:#6E7681"></span>buscar</span><span class="it"><span class="ln" style="background:#F5C518"></span>espera</span><span class="it"><span class="ln" style="background:#2FD3A6"></span>viagem</span><span class="it">🏁 destino</span></span></div>`;
+  le.innerHTML = `<div class="row"><b>Percurso</b><span class="its"><span class="it"><span class="ln" style="background:#6E7681"></span>buscar</span><span class="it"><span class="ln" style="background:#F5C518"></span>espera</span><span class="it"><span class="ln" style="background:#2FD3A6"></span>viagem</span><span class="it"><span class="ln" style="background:repeating-linear-gradient(90deg,#4C9AFF 0 4px,transparent 4px 7px)"></span>livre</span><span class="it">🏁 destino</span></span></div>`;
   le.style.display = "block";
   return bounds;
 }
