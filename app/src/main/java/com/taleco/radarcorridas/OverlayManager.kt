@@ -114,6 +114,8 @@ class OverlayManager(private val service: AccessibilityService) {
             speedDist?.text = ""
             speedDistUnit?.text = ""
         }
+        // Sem distância (ex.: aviso de evento, que tem o botão): a coluna some e não estica o aviso
+        (speedDist?.parent as? View)?.visibility = if (speedDist?.text.isNullOrEmpty()) View.GONE else View.VISIBLE
     }
 
     fun hideSpeed() {
@@ -142,13 +144,18 @@ class OverlayManager(private val service: AccessibilityService) {
         val fillShape = GradientDrawable().apply { cornerRadius = radius; setColor(Colors.SURFACE) }
         val fill = ClipDrawable(fillShape, Gravity.START, ClipDrawable.HORIZONTAL).apply { level = 0 }
 
+        // root = fundo arredondado; inner = conteúdo com respiro; o botão (quando há) encosta na borda direita
         val root = LinearLayout(service).apply {
             orientation = LinearLayout.HORIZONTAL
-            gravity = Gravity.CENTER_VERTICAL
-            setPadding(service.dp(10), service.dp(8), service.dp(16), service.dp(8))
             background = LayerDrawable(arrayOf(base, fill))
             elevation = service.dp(6).toFloat()
         }
+        val inner = LinearLayout(service).apply {
+            orientation = LinearLayout.HORIZONTAL
+            gravity = Gravity.CENTER_VERTICAL
+            setPadding(service.dp(10), service.dp(8), service.dp(16), service.dp(8))
+        }
+        root.addView(inner, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f))
         // Placa de limite de velocidade: círculo branco com borda vermelha
         val size = service.dp(54)
         val sign = TextView(service).apply {
@@ -162,7 +169,7 @@ class OverlayManager(private val service: AccessibilityService) {
                 setStroke(service.dp(5), Color.parseColor("#D62828"))
             }
         }
-        root.addView(sign, LinearLayout.LayoutParams(size, size).apply { rightMargin = service.dp(10) })
+        inner.addView(sign, LinearLayout.LayoutParams(size, size).apply { rightMargin = service.dp(10) })
 
         // Meio: velocidade e nome da rua
         val col = LinearLayout(service).apply { orientation = LinearLayout.VERTICAL }
@@ -179,7 +186,7 @@ class OverlayManager(private val service: AccessibilityService) {
         }
         col.addView(value)
         col.addView(line)
-        root.addView(col, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f))
+        inner.addView(col, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f))
 
         // Direita: distância até o radar, bem grande
         val distCol = LinearLayout(service).apply {
@@ -201,7 +208,7 @@ class OverlayManager(private val service: AccessibilityService) {
         }
         distCol.addView(dist)
         distCol.addView(distUnit)
-        root.addView(distCol, LinearLayout.LayoutParams(
+        inner.addView(distCol, LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT
         ).apply { leftMargin = service.dp(8) })
 
@@ -217,9 +224,7 @@ class OverlayManager(private val service: AccessibilityService) {
             }
             visibility = View.GONE
         }
-        root.addView(action, LinearLayout.LayoutParams(service.dp(74), LinearLayout.LayoutParams.MATCH_PARENT).apply {
-            leftMargin = service.dp(12); topMargin = -service.dp(8); bottomMargin = -service.dp(8); rightMargin = -service.dp(16)
-        })
+        root.addView(action, LinearLayout.LayoutParams(service.dp(78), LinearLayout.LayoutParams.MATCH_PARENT))
 
         // Fechar fácil: um toque em qualquer lugar do aviso, ou arrastar para o lado.
         val slop = ViewConfiguration.get(service).scaledTouchSlop
