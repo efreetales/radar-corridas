@@ -26,6 +26,30 @@ enum class ScreenState {
  * Fases medidas pelo GPS, comparando com os endereços da oferta:
  *  aceite -> chegada ao embarque -> saída com o passageiro -> chegada ao destino -> fim (tela inicial de novo).
  */
+/**
+ * Corrida em andamento lida direto da tela da Uber:
+ * "Embarque em …" (indo buscar / esperando), "Insira o código …", "Destino de <passageiro>" (em viagem).
+ * Vale até a Uber voltar para "Procurando viagens" sem nada disso, ou 15 min sem ver a tela da Uber.
+ */
+object RideScreen {
+    private val PREFIXES = listOf("Destino de ", "Embarque em ", "Insira o código")
+    private val HOME = listOf("Procurando viagens", "Você está online", "Você está offline")
+    private const val GRACE_MS = 15 * 60_000L
+
+    @Volatile
+    private var lastSeen = 0L
+
+    fun isRide(texts: List<String>): Boolean =
+        texts.any { t -> val x = t.trim(); PREFIXES.any { x.startsWith(it, ignoreCase = true) } }
+
+    fun update(texts: List<String>) {
+        if (isRide(texts)) lastSeen = System.currentTimeMillis()
+        else if (texts.any { t -> HOME.any { t.contains(it, ignoreCase = true) } }) lastSeen = 0L
+    }
+
+    val active: Boolean get() = lastSeen > 0 && System.currentTimeMillis() - lastSeen < GRACE_MS
+}
+
 object TripTracker {
 
     private const val DECISION_MS = 4_000L        // tempo sem a tela inicial para considerar "aceita"
@@ -37,8 +61,9 @@ object TripTracker {
 
     private val HOME_MARKERS = listOf("Procurando viagens", "Você está online", "Você está offline")
 
+    /** Tela inicial de verdade: "procurando viagens" e nenhum sinal de corrida em andamento. */
     fun isHomeScreen(texts: List<String>): Boolean =
-        texts.any { t -> HOME_MARKERS.any { m -> t.contains(m, ignoreCase = true) } }
+        !RideScreen.isRide(texts) && texts.any { t -> HOME_MARKERS.any { m -> t.contains(m, ignoreCase = true) } }
 
     private enum class Phase { LIVRE, OFERTA, A_CAMINHO, NO_EMBARQUE, EM_VIAGEM }
 
@@ -72,8 +97,9 @@ object TripTracker {
 
     val isOnTrip: Boolean get() = trip != null
 
-    /** Oferta na tela, corrida aceita ou em andamento: não é hora de sugerir ponto/evento. */
-    val busy: Boolean get() = phase != Phase.LIVRE || trip != null
+    /** Oferta na tela, corrida aceita ou em andamento: não é hora de sugerir ponto/evento.
+     *  Além do que o app acompanhou, vale o que a tela da Uber mostra (sobrevive a reiniciar/atualizar o app). */
+    val busy: Boolean get() = phase != Phase.LIVRE || trip != null || RideScreen.active
 
     /** Chamado a cada leitura da tela. */
     fun onScreen(ctx: Context, prefs: Prefs, state: ScreenState, offer: Offer?) {
