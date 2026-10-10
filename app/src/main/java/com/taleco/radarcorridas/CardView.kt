@@ -78,9 +78,9 @@ object CardView {
             root.addView(TextView(ctx).apply {
                 text = topKeys.mapNotNull { topVals[it]?.takeIf { v -> v.isNotBlank() } }.joinToString("  ·  ")
                 setTextColor(Color.WHITE)
-                textSize = 17f
+                textSize = 20f
                 typeface = Typeface.DEFAULT_BOLD
-                setPadding(0, 0, 0, ctx.dp(6))
+                setPadding(0, 0, 0, ctx.dp(8))
             })
         }
 
@@ -100,7 +100,7 @@ object CardView {
             col.addView(TextView(ctx).apply {
                 text = r.metric.label
                 setTextColor(Colors.MUTED)
-                textSize = 13f
+                textSize = 15f
             })
             val valueRow = LinearLayout(ctx).apply {
                 orientation = LinearLayout.HORIZONTAL
@@ -137,17 +137,17 @@ object CardView {
         if (topKeys.isEmpty()) root.addView(TextView(ctx).apply {
             text = footerParts.joinToString("  ·  ")
             setTextColor(Colors.TEXT)
-            textSize = 15f
+            textSize = 17f
             typeface = Typeface.DEFAULT_BOLD
-            setPadding(0, ctx.dp(6), 0, 0)
+            setPadding(0, ctx.dp(8), 0, 0)
         })
         eval.spotNote?.let { note ->
             root.addView(TextView(ctx).apply {
                 text = note
                 setTextColor(Color.parseColor("#C4B5FD"))
-                textSize = 15f
+                textSize = 17f
                 typeface = Typeface.DEFAULT_BOLD
-                setPadding(0, ctx.dp(6), 0, 0)
+                setPadding(0, ctx.dp(8), 0, 0)
             })
         }
         return root

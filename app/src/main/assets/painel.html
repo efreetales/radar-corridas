@@ -4,94 +4,106 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <title>Radar Corridas</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <style>
-  :root { --bg:#0D1117; --s1:#161B22; --s2:#21262D; --s3:#2B323B; --line:#30363D; --tx:#E6EDF3; --mu:#8B949E;
-          --ac:#2FD3A6; --good:#3DD68C; --mid:#F5C518; --bad:#E5484D; --blue:#4C9AFF; --purple:#9775FA; }
+  /* Pensado para usar no carro: textos de leitura >= 15px, alvos de toque >= 48px, bastante respiro */
+  :root { --bg:#0D1117; --s1:#161B22; --s2:#21262D; --s3:#2B323B; --line:#30363D; --tx:#E6EDF3; --mu:#9AA4AF;
+          --ac:#2FD3A6; --good:#3DD68C; --mid:#F5C518; --bad:#FF6369; --blue:#4C9AFF; --purple:#9775FA; }
   * { box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
-  html,body { margin:0; background:var(--bg); color:var(--tx); font-family:system-ui,Roboto,sans-serif; }
-  body { padding:0 0 32px; }
-  header { position:sticky; top:0; z-index:5; background:var(--bg); padding:14px 16px 10px; display:flex; align-items:center; gap:12px; }
-  header button.back { width:40px; height:40px; border-radius:12px; border:0; background:var(--s2); color:var(--tx); font-size:20px; }
-  header h1 { margin:0; font-size:20px; } header small { display:block; color:var(--mu); font-size:12px; font-weight:400; margin-top:2px; }
+  html,body { margin:0; background:var(--bg); color:var(--tx); font-family:system-ui,Roboto,sans-serif; font-size:16px; line-height:1.35; }
+  body { padding:0 0 40px; }
+  button { font-family:inherit; cursor:pointer; }
+  header { position:sticky; top:0; z-index:500; background:var(--bg); padding:14px 16px 14px; display:flex; align-items:center; gap:14px; }
+  header button.back { width:52px; height:52px; border-radius:14px; border:0; background:var(--s2); color:var(--tx); font-size:28px; flex:none; }
+  header h1 { margin:0; font-size:23px; line-height:1.15; } header small { display:block; color:var(--mu); font-size:14px; font-weight:400; margin-top:3px; }
   main { padding:0 16px; }
-  .card { background:var(--s1); border:1px solid var(--line); border-radius:16px; padding:14px; margin-bottom:10px; }
-  .muted { color:var(--mu); } .tiny { font-size:11px; } .sm { font-size:12.5px; }
-  .seg { display:flex; background:var(--s1); border:1px solid var(--line); border-radius:12px; padding:3px; margin-bottom:10px; }
-  .seg button { flex:1; border:0; background:none; color:var(--mu); font:700 13px system-ui,sans-serif; padding:9px 0; border-radius:9px; }
+  .card { background:var(--s1); border:1px solid var(--line); border-radius:18px; padding:18px 16px; margin-bottom:14px; }
+  .muted { color:var(--mu); } .tiny { font-size:13px; } .sm { font-size:15px; }
+  .seg { display:flex; background:var(--s1); border:1px solid var(--line); border-radius:14px; padding:4px; margin-bottom:14px; gap:4px; }
+  .seg button { flex:1; min-height:50px; border:0; background:none; color:var(--mu); font-weight:700; font-size:16px; border-radius:11px; padding:0 4px; }
   .seg button.on { background:#1d3b33; color:var(--ac); }
-  .seg button i { font-style:normal; font-weight:500; opacity:.8; margin-left:4px; }
-  .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:8px; } .grid3 { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
-  .kpi { background:var(--s1); border:1px solid var(--line); border-radius:14px; padding:11px 12px; min-width:0; }
-  .kpi b { display:block; font-size:18px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; } .kpi span { color:var(--mu); font-size:11px; }
-  .kpi.big b { font-size:22px; }
-  .chip { display:inline-flex; align-items:center; gap:5px; font-size:11px; font-weight:700; padding:3px 8px; border-radius:999px; background:var(--s3); }
-  .chip.good { color:var(--good); background:rgba(61,214,140,.12); } .chip.mid { color:var(--mid); background:rgba(245,197,24,.12); } .chip.bad { color:var(--bad); background:rgba(229,72,77,.12); }
-  .chip.acc { color:var(--ac); background:rgba(47,211,166,.12); }
-  .pillrow { display:flex; gap:8px; margin-bottom:10px; overflow-x:auto; }
-  .pill { border:1px solid var(--line); background:var(--s1); color:var(--tx); border-radius:999px; padding:7px 14px; font-weight:700; font-size:13px; flex:none; }
+  .seg button i { font-style:normal; font-weight:500; opacity:.85; margin-left:5px; }
+  .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:12px; } .grid3 { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+  .kpi { background:var(--s1); border:1px solid var(--line); border-radius:16px; padding:16px 14px; min-width:0; }
+  .kpi b { display:block; font-size:22px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin:2px 0; } .kpi span { color:var(--mu); font-size:14px; }
+  .kpi.big b { font-size:26px; }
+  .chip { display:inline-flex; align-items:center; gap:5px; font-size:14px; font-weight:700; padding:5px 11px; border-radius:999px; background:var(--s3); white-space:nowrap; }
+  .chip.good { color:var(--good); background:rgba(61,214,140,.14); } .chip.mid { color:var(--mid); background:rgba(245,197,24,.14); } .chip.bad { color:var(--bad); background:rgba(255,99,105,.14); }
+  .chip.acc { color:var(--ac); background:rgba(47,211,166,.14); }
+  .pillrow { display:flex; gap:10px; margin-bottom:12px; overflow-x:auto; }
+  .pill { min-height:48px; border:1px solid var(--line); background:var(--s1); color:var(--tx); border-radius:999px; padding:0 22px; font-weight:700; font-size:16px; flex:none; }
   .pill.on { background:var(--tx); color:var(--bg); }
   /* Histórico */
-  .weeknav { display:flex; align-items:center; justify-content:center; gap:18px; font-weight:700; margin:2px 0 8px; }
-  .weeknav button { border:0; background:none; color:var(--ac); font-size:22px; width:36px; }
-  .bars { display:grid; grid-template-columns:repeat(7,1fr); gap:10px; align-items:end; height:84px; padding:0 4px; }
-  .bars div { display:flex; flex-direction:column; align-items:center; justify-content:flex-end; height:100%; gap:4px; }
-  .bars i { display:block; width:100%; max-width:28px; border-radius:6px 6px 3px 3px; background:var(--s3); min-height:4px; }
-  .bars i.has { background:var(--ac); } .bars span { font-size:11px; color:var(--mu); }
-  .bars div.sel span { color:var(--tx); font-weight:700; }
-  .dayhd { display:flex; justify-content:space-between; color:var(--mu); font-size:12px; font-weight:700; letter-spacing:.04em; margin:14px 2px 6px; text-transform:uppercase; }
-  .offer { background:var(--s1); border:1px solid var(--line); border-radius:16px; padding:12px; margin-bottom:8px; }
-  .offer.accepted { border-color:rgba(47,211,166,.55); }
-  .offer .top { display:flex; align-items:center; gap:10px; }
-  .offer .app { width:38px; height:38px; border-radius:10px; background:#000; color:#fff; font-weight:800; font-size:11px; display:flex; align-items:center; justify-content:center; flex:none; border:1px solid #333; }
-  .offer .app.n99 { background:#FFD400; color:#111; }
-  .offer .val { font-size:18px; font-weight:800; } .offer .val small { color:var(--mu); font-weight:500; font-size:12px; margin-left:4px; }
-  .offer .sub { color:var(--mu); font-size:12px; margin-top:2px; }
-  .offer .chk { margin-left:auto; width:30px; height:30px; border-radius:50%; border:2px solid var(--ac); color:var(--ac); display:flex; align-items:center; justify-content:center; font-weight:800; flex:none; }
-  .offer .mets { display:grid; grid-template-columns:repeat(4,1fr); gap:6px; margin-top:10px; }
-  .offer .mets div { background:var(--s2); border-radius:10px; padding:7px 4px; text-align:center; } .offer .mets b { display:block; font-size:13.5px; } .offer .mets span { font-size:10.5px; color:var(--mu); }
-  .offer .addr { font-size:11.5px; color:var(--mu); margin-top:8px; line-height:1.4; }
+  .weeknav { display:flex; align-items:center; justify-content:space-between; gap:8px; font-weight:700; font-size:18px; margin:0 0 12px; }
+  .weeknav button { width:52px; height:52px; border-radius:14px; border:0; background:var(--s2); color:var(--ac); font-size:28px; flex:none; }
+  .bars { display:grid; grid-template-columns:repeat(7,1fr); gap:8px; align-items:end; height:104px; }
+  .bars div { display:flex; flex-direction:column; align-items:center; justify-content:flex-end; height:100%; gap:6px; padding-top:4px; }
+  .bars i { display:block; width:100%; max-width:32px; border-radius:7px 7px 3px 3px; background:var(--s3); min-height:4px; }
+  .bars i.has { background:var(--ac); } .bars span { font-size:15px; color:var(--mu); }
+  .bars div.sel span { color:var(--tx); font-weight:800; }
+  .dayhd { display:flex; justify-content:space-between; color:var(--mu); font-size:15px; font-weight:700; letter-spacing:.03em; margin:22px 2px 10px; text-transform:uppercase; }
+  .offer { background:var(--s1); border:1px solid var(--line); border-radius:18px; padding:16px; margin-bottom:12px; }
+  .offer.accepted { border:2px solid rgba(47,211,166,.65); }
+  .offer .top { display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; }
+  .offer .val { font-size:26px; font-weight:800; }
+  .offer .chips { display:flex; gap:6px; flex-wrap:wrap; }
+  .offer .sub { color:var(--mu); font-size:15px; margin-top:4px; }
+  .offer .sub b { color:var(--tx); font-weight:600; }
+  .offer .mets { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-top:14px; }
+  .offer .mets div { background:var(--s2); border-radius:12px; padding:12px 6px; text-align:center; min-width:0; } .offer .mets b { display:block; font-size:19px; white-space:nowrap; } .offer .mets span { font-size:13px; color:var(--mu); }
+  .offer .addr { font-size:15px; color:var(--mu); margin-top:14px; line-height:1.5; }
   .g { color:var(--good); } .m { color:var(--mid); } .r { color:var(--bad); }
   /* Melhores horários */
-  .rank { display:flex; align-items:center; gap:12px; background:var(--s1); border:1px solid var(--line); border-radius:14px; padding:12px; margin-bottom:8px; }
-  .rank .n { width:28px; height:28px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:13px; flex:none; }
-  .rank .t { flex:1; } .rank .t b { font-size:15px; } .rank .t small { display:block; color:var(--mu); font-size:12px; }
-  .rank .v { text-align:right; } .rank .v b { display:block; font-size:15px; }
-  .hourbar { display:grid; grid-template-columns:repeat(12,1fr); gap:4px; align-items:end; height:70px; margin-top:6px; }
+  .rank { display:flex; align-items:center; gap:14px; background:var(--s1); border:1px solid var(--line); border-radius:16px; padding:16px; margin-bottom:10px; }
+  .rank .n { width:40px; height:40px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:17px; flex:none; }
+  .rank .t { flex:1; } .rank .t b { font-size:19px; } .rank .t small { display:block; color:var(--mu); font-size:14px; margin-top:2px; }
+  .rank .v { text-align:right; display:flex; flex-direction:column; align-items:flex-end; gap:6px; } .rank .v b { display:block; font-size:18px; }
+  .hourbar { display:grid; grid-template-columns:repeat(12,1fr); gap:4px; align-items:end; height:90px; margin-top:12px; }
   .hourbar i { display:block; border-radius:4px 4px 2px 2px; min-height:3px; }
-  .hourlab { display:grid; grid-template-columns:repeat(12,1fr); gap:4px; font-size:9.5px; color:var(--mu); text-align:center; margin-top:4px; }
+  .hourlab { display:grid; grid-template-columns:repeat(12,1fr); gap:4px; font-size:12px; color:var(--mu); text-align:center; margin-top:6px; }
   /* Jornada */
-  .phase { margin:12px 0; } .phase .row1 { display:flex; align-items:center; gap:8px; font-size:14px; }
-  .phase .row1 b { margin-left:auto; font-variant-numeric:tabular-nums; } .phase .row1 em { font-style:normal; color:var(--mu); font-size:12px; width:40px; text-align:right; }
-  .track { height:7px; border-radius:4px; background:var(--s3); margin-top:6px; overflow:hidden; } .track i { display:block; height:100%; border-radius:4px; }
-  .dot { width:10px; height:10px; border-radius:50%; flex:none; }
-  .stack { display:flex; height:8px; border-radius:4px; overflow:hidden; margin-top:8px; background:var(--s3); } .stack i { display:block; height:100%; }
+  .phase { margin:16px 0; } .phase .row1 { display:flex; align-items:center; gap:10px; font-size:16px; }
+  .phase .row1 b { margin-left:auto; font-size:17px; font-variant-numeric:tabular-nums; } .phase .row1 em { font-style:normal; color:var(--mu); font-size:14px; width:44px; text-align:right; }
+  .track { height:9px; border-radius:5px; background:var(--s3); margin-top:8px; overflow:hidden; } .track i { display:block; height:100%; border-radius:5px; }
+  .dot { width:12px; height:12px; border-radius:50%; flex:none; }
+  .stack { display:flex; height:10px; border-radius:5px; overflow:hidden; margin-top:12px; background:var(--s3); } .stack i { display:block; height:100%; }
+  .legend { display:flex; flex-wrap:wrap; gap:6px 16px; font-size:14px; color:var(--mu); margin-top:10px; } .legend span { white-space:nowrap; }
   /* Custos */
-  .hero { background:linear-gradient(180deg,#14261F,#10181A); border:1px solid #1f4237; border-radius:18px; padding:16px; margin-bottom:10px; }
-  .hero .big { font-size:34px; font-weight:800; } .hero .big small { font-size:14px; color:var(--mu); font-weight:500; }
-  .hero .tip { display:inline-block; margin-top:8px; background:rgba(47,211,166,.12); color:var(--ac); border:1px solid rgba(47,211,166,.35); border-radius:10px; padding:7px 10px; font-weight:700; font-size:13px; }
-  .field { display:flex; align-items:center; justify-content:space-between; gap:10px; padding:10px 0; border-bottom:1px solid var(--line); }
-  .field:last-child { border-bottom:0; } .field label { font-size:14px; } .field label small { display:block; color:var(--mu); font-size:11px; }
-  .field input { width:112px; background:var(--s2); border:1px solid var(--line); color:var(--tx); border-radius:10px; padding:9px 10px; font-size:15px; text-align:right; font-weight:700; }
-  .field input.txt { width:160px; text-align:left; font-weight:600; }
-  h2 { font-size:13px; letter-spacing:.05em; color:var(--mu); margin:16px 2px 8px; text-transform:uppercase; }
+  .hero { background:linear-gradient(180deg,#14261F,#10181A); border:1px solid #1f4237; border-radius:20px; padding:20px 18px; margin-bottom:14px; }
+  .hero .big { font-size:40px; font-weight:800; } .hero .big small { font-size:17px; color:var(--mu); font-weight:500; }
+  .hero .tip { display:inline-block; margin-top:10px; background:rgba(47,211,166,.12); color:var(--ac); border:1px solid rgba(47,211,166,.35); border-radius:12px; padding:10px 14px; font-weight:700; font-size:16px; }
+  .field { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:14px 0; border-bottom:1px solid var(--line); }
+  .field:last-child { border-bottom:0; } .field label { font-size:17px; } .field label small { display:block; color:var(--mu); font-size:13px; margin-top:2px; }
+  .field input { width:120px; height:52px; background:var(--s2); border:1px solid var(--line); color:var(--tx); border-radius:12px; padding:0 12px; font-size:18px; text-align:right; font-weight:700; flex:none; }
+  .field input.txt { width:170px; text-align:left; font-weight:600; font-size:17px; }
+  h2 { font-size:15px; letter-spacing:.04em; color:var(--mu); margin:26px 2px 12px; text-transform:uppercase; }
   /* Estilo do cartão */
-  .preview { background:#000; border-radius:18px; border:4px solid var(--good); padding:12px 14px; margin-bottom:12px; }
-  .preview .tl { display:flex; gap:14px; color:var(--tx); font-weight:700; font-size:14px; margin-bottom:8px; flex-wrap:wrap; }
+  .preview { background:#000; border-radius:20px; border:4px solid var(--good); padding:14px 16px; margin-bottom:8px; }
+  .preview .tl { display:flex; gap:8px 14px; color:var(--tx); font-weight:700; font-size:19px; margin-bottom:10px; flex-wrap:wrap; }
   .preview .tl span { color:var(--mu); font-weight:500; }
-  .preview .ml { display:flex; gap:10px; }
-  .preview .ml div span { color:var(--mu); font-size:12px; display:block; } .preview .ml div { flex:1; min-width:0; } .preview .ml div b { font-size:17px; display:flex; align-items:center; gap:5px; white-space:nowrap; }
-  .preview .ml div b i { width:4px; height:22px; border-radius:2px; display:block; }
-  .slots { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:6px; }
-  .slot { background:var(--s1); border:1px solid var(--line); border-radius:12px; padding:9px 6px; text-align:center; font-size:12.5px; position:relative; min-height:64px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; }
-  .slot .no { position:absolute; left:6px; top:5px; font-size:10px; color:var(--mu); }
-  .slot .mv { display:flex; gap:3px; } .slot .mv button { border:0; background:var(--s3); color:var(--tx); border-radius:6px; width:22px; height:24px; font-size:12px; padding:0; }
-  .slot.empty { border-style:dashed; color:var(--mu); font-size:20px; }
-  .tray { display:flex; flex-wrap:wrap; gap:8px; background:var(--s1); border:1px dashed var(--line); border-radius:14px; padding:10px; }
-  .tray button { border:1px solid var(--line); background:var(--s2); color:var(--tx); border-radius:10px; padding:8px 12px; font-weight:600; font-size:13px; }
-  .note { font-size:12px; color:var(--mu); margin:6px 2px 10px; line-height:1.45; }
-  .btn { display:block; width:100%; border:0; border-radius:14px; padding:14px; font-weight:800; font-size:15px; background:var(--ac); color:#06231B; margin-top:12px; }
-  .btn.ghost { background:var(--s2); color:var(--tx); }
-  .empty { color:var(--mu); text-align:center; padding:26px 8px; font-size:13px; }
+  .preview .ml { display:flex; gap:6px; }
+  .preview .ml div span { color:var(--mu); font-size:14px; display:block; } .preview .ml div { flex:1; min-width:0; } .preview .ml div b { font-size:17px; display:flex; align-items:center; gap:5px; white-space:nowrap; }
+  .preview .ml div b i { width:4px; height:24px; border-radius:2px; display:block; flex:none; }
+  .slots { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+  .slot { background:var(--s1); border:1px solid var(--line); border-radius:14px; padding:10px 8px 10px 16px; font-size:16px; font-weight:600; position:relative; min-height:64px; display:flex; align-items:center; gap:8px; }
+  .slot .lb { flex:1; min-width:0; } .slot .hd { color:var(--mu); font-size:18px; }
+  .slot .no { position:absolute; left:6px; top:5px; font-size:12px; color:var(--mu); font-weight:500; }
+  .slot .mv button { border:0; background:var(--s3); color:var(--tx); border-radius:12px; width:44px; height:44px; font-size:18px; padding:0; flex:none; }
+  .slot.empty { border-style:dashed; color:var(--mu); font-size:26px; justify-content:center; padding-left:8px; }
+  .tray { display:flex; flex-wrap:wrap; gap:10px; background:var(--s1); border:1px dashed var(--line); border-radius:16px; padding:12px; }
+  .tray button { min-height:50px; border:1px solid var(--line); background:var(--s2); color:var(--tx); border-radius:12px; padding:0 16px; font-weight:600; font-size:16px; }
+  .note { font-size:14px; color:var(--mu); margin:10px 2px 14px; line-height:1.5; }
+  .btn { display:block; width:100%; min-height:56px; border:0; border-radius:16px; padding:14px; font-weight:800; font-size:17px; background:var(--ac); color:#06231B; margin-top:16px; }
+  .btn.alt { background:var(--s2); color:var(--tx); }
+  .mini { height:170px; border-radius:14px; overflow:hidden; margin-top:14px; background:#1b2129; }
+  .daymap { height:240px; border-radius:14px; overflow:hidden; background:#1b2129; margin:12px 0 12px; }
+  .leaflet-container { background:#1b2129; }
+  .slot.drag-over { outline:3px solid var(--ac); }
+  .slot[data-key], .tray button { touch-action:none; user-select:none; -webkit-user-select:none; }
+  .dghost { position:fixed; z-index:999; pointer-events:none; opacity:.92; transform:scale(1.06); box-shadow:0 8px 24px rgba(0,0,0,.5); }
+  .slot.dragging, .tray button.dragging { opacity:.3; }
+  .empty { color:var(--mu); text-align:center; padding:30px 8px; font-size:16px; }
 </style>
 </head>
 <body>
@@ -126,9 +138,34 @@ const offersAll = parseCsv(raw("ofertas.csv")).map(o => ({ t:when(o.data_hora), 
   .filter(o => o.t && o.price);
 const offers = []; offersAll.sort((a,b)=>a.t-b.t).forEach(o => { const p = offers[offers.length-1];
   if (p && Math.abs(o.t - p.t) < 45e3 && Math.abs(o.price - p.price) < 0.02) return; offers.push(o); });
-const trips = parseCsv(raw("corridas.csv")).map(c => ({ acc:when(c.aceite), price:num2(c.valor), st:c.status||"", app:c.app,
+const trips = parseCsv(raw("corridas.csv")).map(c => ({ id:c.id, km:(num2(c.km_ate_embarque)||0)+(num2(c.km_viagem)||0), acc:when(c.aceite), price:num2(c.valor), st:c.status||"", app:c.app,
   minPick:num2(c.min_ate_embarque), wait:num2(c.min_espera_passageiro), minTrip:num2(c.min_viagem), end:when(c.fim), arr:when(c.chegada_embarque) })).filter(c => c.acc);
-offers.forEach(o => { o.accepted = trips.some(c => c.acc >= o.t && c.acc - o.t < 120e3 && Math.abs((c.price||0) - o.price) < 0.05); });
+offers.forEach(o => { o.trip = trips.find(c => c.acc >= o.t && c.acc - o.t < 120e3 && Math.abs((c.price||0) - o.price) < 0.05); o.accepted = !!o.trip; });
+// percursos gravados (rotas.csv): por corrida e o trajeto livre
+const ROUTES = {}, FREE = [];
+parseCsv(raw("rotas.csv")).forEach(p => { const la = num2(p.lat), lo = num2(p.lng); if (la == null || lo == null) return;
+  if (p.fase === "LIVRE") { const t = when(p.data_hora); if (t) FREE.push([la, lo, t]); return; }
+  (ROUTES[p.id] = ROUTES[p.id] || []).push([la, lo, p.fase]); });
+const PHC = { A_CAMINHO:"#8B949E", NO_EMBARQUE:"#F5C518", EM_VIAGEM:"#2FD3A6" };
+function drawMini(el, ids, free){
+  if (!window.L) { el.innerHTML = '<div class="empty" style="padding:50px 0">Mapa indisponível sem internet</div>'; return; }
+  const m = L.map(el, { zoomControl:false, attributionControl:false, dragging:false, scrollWheelZoom:false, doubleClickZoom:false, boxZoom:false, keyboard:false, tap:false, touchZoom:false });
+  L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}", { maxZoom:16 }).addTo(m);
+  const all = [];
+  (free || []).forEach(seg => { if (seg.length > 1) { L.polyline(seg, { color:"#4C9AFF", weight:2.5, opacity:.7, dashArray:"5 5" }).addTo(m); all.push(...seg); } });
+  ids.forEach(id => { const pts = ROUTES[id] || []; let seg = [], ph = null;
+    const flush = () => { if (seg.length > 1) L.polyline(seg, { color:PHC[ph] || "#888", weight:4 }).addTo(m); };
+    pts.forEach(p => { all.push([p[0],p[1]]); if (p[2] !== ph) { if (seg.length) seg.push([p[0],p[1]]); flush(); seg = [[p[0],p[1]]]; ph = p[2]; } else seg.push([p[0],p[1]]); }); flush();
+    if (pts.length) { L.circleMarker([pts[0][0],pts[0][1]], { radius:5, color:"#fff", weight:2, fillColor:"#8B949E", fillOpacity:1 }).addTo(m);
+      const z = pts[pts.length-1]; L.circleMarker([z[0],z[1]], { radius:5, color:"#fff", weight:2, fillColor:"#E5484D", fillOpacity:1 }).addTo(m); } });
+  if (all.length > 1) m.fitBounds(L.latLngBounds(all), { padding:[14,14], maxZoom:16 }); else el.remove();
+}
+function initMaps(){ document.querySelectorAll("[data-mini]").forEach(el => drawMini(el, el.dataset.mini.split("|"), null));
+  document.querySelectorAll("[data-day]").forEach(el => { const k = el.dataset.day;
+    const ids = trips.filter(c => key(shiftDay(c.acc)) === k).map(c => c.id);
+    const fp = FREE.filter(p => key(shiftDay(p[2])) === k).sort((a,b) => a[2]-b[2]); const segs = []; let cur = [];
+    fp.forEach((p, i) => { if (i && p[2] - fp[i-1][2] > 180e3) { segs.push(cur); cur = []; } cur.push([p[0],p[1]]); }); segs.push(cur);
+    drawMini(el, ids, segs); }); }
 const sessions = parseCsv(raw("sessoes_uber.csv"));
 const fixAddr = a => { const t = (a||"").replace(/,\s*$/,"").replace(/S[äa]o( Paulo)?$/,"").replace(/,\s*$/,"").trim(); return t.length >= 5 ? t : ""; };
 
@@ -159,20 +196,22 @@ function historico(){
     <div class="bars">${perDay.map(x => `<div class="${hDay===key(x.d)?"sel":""}" onclick="hDay=hDay==='${key(x.d)}'?null:'${key(x.d)}';render()"><i class="${x.n?"has":""}" style="height:${Math.max(4, 64*x.n/maxN)}px;${hDay&&hDay!==key(x.d)?"opacity:.35":""}"></i><span>${x.d.getDate()}</span></div>`).join("")}</div></div>
     <div class="pillrow">${[["todos","Todos"],["UBER","Uber"],["99","99"]].map(([k,l]) => `<button class="pill ${hApp===k?"on":""}" onclick="hApp='${k}';render()">${l}</button>`).join("")}</div>
     <div class="seg">${[["todas","Todas",nAll],["aceitas","Aceitas",nAcc],["recusadas","Recusadas",nAll-nAcc]].map(([k,l,n]) => `<button class="${hTab===k?"on":""}" onclick="hTab='${k}';render()">${l}<i>${n}</i></button>`).join("")}</div>
-    <div class="grid2" style="margin-bottom:8px"><div class="kpi big"><b>${list.length}</b><span>ofertas analisadas</span></div><div class="kpi big"><b>${brl(tot)}</b><span>total ofertado</span></div></div>
-    <div class="grid3" style="margin-bottom:4px"><div class="kpi"><b>${brl(avg(o=>o.price))}</b><span>média por oferta</span></div><div class="kpi"><b class="${cls(avg(o=>o.rsh),HB,HG)}">${brl(avg(o=>o.rsh))}</b><span>média por hora</span></div><div class="kpi"><b class="${cls(avg(o=>o.rskm),KMB,KMG)}">${brl(avg(o=>o.rskm))}</b><span>média por km</span></div></div>`;
+    <div class="grid2" style="margin-bottom:12px"><div class="kpi"><span>ofertas</span><b>${list.length}</b></div><div class="kpi"><span>total ofertado</span><b>${brl(tot,0)}</b></div>
+    <div class="kpi"><span>média por km</span><b class="${cls(avg(o=>o.rskm),KMB,KMG)}">${brl(avg(o=>o.rskm))}</b></div><div class="kpi"><span>média por hora</span><b class="${cls(avg(o=>o.rsh),HB,HG)}">${brl(avg(o=>o.rsh),0)}</b></div></div>`;
   if (!list.length) h += `<div class="empty">Nenhuma oferta nesse filtro.</div>`;
   const byDay = {}; list.slice().reverse().forEach(o => { const k = key(shiftDay(o.t)); (byDay[k] = byDay[k] || []).push(o); });
   Object.values(byDay).forEach(arr => { const d = shiftDay(arr[0].t);
     h += `<div class="dayhd"><span>${WD[d.getDay()]}, ${d.getDate()} ${MO[d.getMonth()]}</span><span>${brl(arr.reduce((s,o)=>s+o.price,0))}</span></div>`;
     arr.forEach(o => { const vc = o.v==="BOM"?"good":o.v==="RUIM"?"bad":"mid", vl = o.v==="BOM"?"Boa":o.v==="RUIM"?"Ruim":"Média";
-      h += `<div class="offer ${o.accepted?"accepted":""}"><div class="top"><div class="app ${o.app==="99"?"n99":""}">${o.app==="99"?"99":"Uber"}</div>
-        <div><div class="val">${brl(o.price)}<small>${hm(o.t)} · ${o.cat||""}</small></div><div class="sub">${(o.km||0).toFixed(1).replace(".",",")} km · ${Math.round(o.min||0)} min &nbsp;<span class="chip ${vc}">● ${vl}</span>${o.accepted?` <span class="chip acc">✓ aceita</span>`:""}</div></div>
-        ${o.accepted?`<div class="chk">✓</div>`:""}</div>
-        <div class="mets"><div><b class="${cls(o.rskm,KMB,KMG)}">${brl(o.rskm)}</b><span>por km</span></div><div><b class="${cls(o.rsh,HB,HG)}">${brl(o.rsh,0)}</b><span>por hora</span></div><div><b>${o.nota?("★ "+o.nota.toFixed(2).replace(".",",")):"–"}</b><span>nota</span></div><div><b>${o.lucro!=null?brl(o.lucro):"–"}</b><span>lucro</span></div></div>
-        ${fixAddr(o.orig)||fixAddr(o.dest)?`<div class="addr">${fixAddr(o.orig)?"● "+fixAddr(o.orig):""}${fixAddr(o.orig)&&fixAddr(o.dest)?"<br>":""}${fixAddr(o.dest)?"■ "+fixAddr(o.dest):""}</div>`:""}</div>`; });
+      const nota = o.nota ? " · ★ " + o.nota.toFixed(2).replace(".",",") : "";
+      h += `<div class="offer ${o.accepted?"accepted":""}">
+        <div class="top"><div class="val">${brl(o.price)}</div><div class="chips">${o.accepted?`<span class="chip acc">✓ Aceita</span>`:""}<span class="chip ${vc}">● ${vl}</span></div></div>
+        <div class="sub"><b>${hm(o.t)}</b> · ${o.app==="99"?"99":"Uber"} ${o.cat||""} · ${(o.km||0).toFixed(1).replace(".",",")} km · ${Math.round(o.min||0)} min${nota}</div>
+        <div class="mets"><div><b class="${cls(o.rskm,KMB,KMG)}">${brl(o.rskm)}</b><span>por km</span></div><div><b class="${cls(o.rsh,HB,HG)}">${brl(o.rsh,0)}</b><span>por hora</span></div><div><b>${o.lucro!=null?brl(o.lucro,0):"–"}</b><span>lucro</span></div></div>
+        ${fixAddr(o.orig)||fixAddr(o.dest)?`<div class="addr">${fixAddr(o.orig)?"● "+fixAddr(o.orig):""}${fixAddr(o.orig)&&fixAddr(o.dest)?"<br>":""}${fixAddr(o.dest)?"■ "+fixAddr(o.dest):""}</div>`:""}
+        ${o.trip && (ROUTES[o.trip.id]||[]).length > 1 ? `<div class="mini" data-mini="${o.trip.id}"></div><div class="sm muted" style="margin-top:10px">${o.trip.st[0].toUpperCase()+o.trip.st.slice(1)} · ${(o.trip.km||0).toFixed(1).replace(".",",")} km rodados${o.trip.end?" · "+hm(o.trip.acc)+"–"+hm(o.trip.end):""}</div>` : ""}</div>`; });
   });
-  app.innerHTML = h;
+  app.innerHTML = h; initMaps();
 }
 
 // ---------- MELHORES HORÁRIOS ----------
@@ -190,8 +229,8 @@ function horarios(){
   const tag = b => b.km >= KMG ? ["Ótima","g"] : b.km <= KMB ? ["Ruim","r"] : ["Média","m"];
   let h = `<div class="seg">${[["semana","Semana"],["mes","Mês"],["tudo","Tudo"]].map(([k,l]) => `<button class="${rPer===k?"on":""}" onclick="rPer='${k}';render()">${l}</button>`).join("")}</div>`;
   if (!valid.length) { app.innerHTML = h + `<div class="empty">Poucas ofertas nesse período. Rode mais um pouco que o ranking aparece.</div>`; return; }
-  h += `<div class="grid2" style="margin-bottom:10px"><div class="kpi"><span>↑ Melhor horário</span><b style="font-size:22px">${lab(best)}</b><b class="g" style="font-size:14px">${brl(best.km)}/km</b><span>${best.n} ofertas</span></div>
-    <div class="kpi"><span>↓ Pior horário</span><b style="font-size:22px">${lab(worst)}</b><b class="r" style="font-size:14px">${brl(worst.km)}/km</b><span>${worst.n} ofertas</span></div></div>
+  h += `<div class="grid2" style="margin-bottom:14px"><div class="kpi"><span>↑ Melhor horário</span><b style="font-size:26px">${lab(best)}</b><b class="g" style="font-size:18px">${brl(best.km)}/km</b><span>${best.n} ofertas</span></div>
+    <div class="kpi"><span>↓ Pior horário</span><b style="font-size:26px">${lab(worst)}</b><b class="r" style="font-size:18px">${brl(worst.km)}/km</b><span>${worst.n} ofertas</span></div></div>
     <div class="card"><div class="sm muted">Valor por km médio das ofertas, por faixa de 2 horas</div>
     <div class="hourbar">${bands.map(b => `<i style="height:${b.km?Math.max(4,66*b.km/maxKm):3}px;background:${b.km==null?"var(--s3)":b.km>=KMG?"var(--good)":b.km<=KMB?"var(--bad)":"var(--mid)"};${b.n<2?"opacity:.35":""}"></i>`).join("")}</div>
     <div class="hourlab">${bands.map(b => `<span>${b.i*2}h</span>`).join("")}</div></div>`;
@@ -224,19 +263,23 @@ function jornada(){
   const P = [["Aguardando viagens", waitTrips, "var(--mid)"], ["Buscando passageiro", pick, "var(--purple)"], ["Aguardando passageiro", wait, "var(--blue)"], ["Em viagem", ride, "var(--good)"]];
   const tot = Math.max(1, P.reduce((x,p)=>x+p[1],0));
   let h = `<div class="weeknav"><button onclick="if(jDay<${days.length-1}){jDay++;render()}">‹</button>${WD[d.getDay()]}, ${d.getDate()} ${MO[d.getMonth()]} (turno)<button onclick="if(jDay>0){jDay--;render()}" ${jDay?"":"disabled style=opacity:.3"}>›</button></div>
-    <div class="card"><div class="tiny muted" style="letter-spacing:.05em">TEMPO ONLINE NO TURNO</div><div style="font-size:30px;font-weight:800;margin:4px 0 2px">${dur(online)}</div><div class="tiny muted">${hm(t0)}–${hm(t1)} · ${src}</div>
+    <div class="card"><div style="display:flex;justify-content:space-between;font-size:18px"><b>${WD[d.getDay()]}, ${d.getDate()} ${MO[d.getMonth()]}</b><b>${trips.filter(c => key(shiftDay(c.acc)) === k).reduce((x,c)=>x+(c.km||0),0).toFixed(0)} km</b></div>
+      <div class="daymap" data-day="${k}"></div>
+      <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap" class="sm"><span class="muted">${hm(t0)}–${hm(t1)} · ${dur(online)}</span><span>${brl(ts.filter(c=>c.st.startsWith("concluída")).reduce((x,c)=>x+(c.price||0),0))} registrado</span></div>
+      <div class="legend"><span><b style="color:#8B949E">━</b> buscar</span><span><b style="color:#F5C518">━</b> espera</span><span><b style="color:#2FD3A6">━</b> viagem</span><span><b style="color:#4C9AFF">┅</b> livre</span></div></div>
+    <div class="card"><div class="sm muted" style="letter-spacing:.04em">TEMPO ONLINE NO TURNO</div><div style="font-size:38px;font-weight:800;margin:6px 0 4px">${dur(online)}</div><div class="sm muted">${hm(t0)}–${hm(t1)} · ${src}</div>
     ${P.map(([l,v,c]) => `<div class="phase"><div class="row1"><span class="dot" style="background:${c}"></span>${l}<em>${Math.round(100*v/tot)}%</em><b>${dur(v)}</b></div><div class="track"><i style="width:${100*v/tot}%;background:${c}"></i></div></div>`).join("")}
-    <div class="sm" style="color:var(--ac);margin-top:6px">↗ ${Math.round(100*ride/tot)}% do tempo online foi em viagem${ts.length?` · ${ts.filter(c=>c.st.startsWith("concluída")).length} corridas`:""}</div></div>`;
+    <div class="sm" style="color:var(--ac);margin-top:10px">↗ ${Math.round(100*ride/tot)}% do tempo online foi em viagem${ts.length?` · ${ts.filter(c=>c.st.startsWith("concluída")).length} corridas`:""}</div></div>`;
   // por dia (últimos turnos)
   h += `<h2>Por turno</h2>`;
   days.slice(0, 7).forEach((dd, i) => { const kk = key(dd), tt = trips.filter(c => key(shiftDay(c.acc)) === kk);
     const r = tt.reduce((s,c)=>s+(c.minTrip||0),0), p = tt.reduce((s,c)=>s+(c.minPick||0),0), w = tt.reduce((s,c)=>s+(c.wait||0),0);
     const oo = offers.filter(o => key(shiftDay(o.t)) === kk), tm = oo.map(o=>o.t).concat(tt.map(c=>c.acc), tt.map(c=>c.end).filter(Boolean));
     const on = tm.length ? (Math.max(...tm) - Math.min(...tm))/60e3 : 0, fr = Math.max(0, on - r - p - w), T = Math.max(1, on);
-    h += `<div class="card" onclick="jDay=${i};render();scrollTo(0,0)" style="padding:12px"><div style="display:flex;justify-content:space-between"><b>${WD[dd.getDay()]}, ${dd.getDate()} ${MO[dd.getMonth()]}</b><b>${dur(on)}</b></div>
+    h += `<div class="card" onclick="jDay=${i};render();scrollTo(0,0)"><div style="display:flex;justify-content:space-between;font-size:17px"><b>${WD[dd.getDay()]}, ${dd.getDate()} ${MO[dd.getMonth()]}</b><b>${dur(on)}</b></div>
       <div class="stack"><i style="width:${100*fr/T}%;background:var(--mid)"></i><i style="width:${100*p/T}%;background:var(--purple)"></i><i style="width:${100*w/T}%;background:var(--blue)"></i><i style="width:${100*r/T}%;background:var(--good)"></i></div></div>`; });
   h += `<div class="note">As fases vêm das corridas registradas. A partir das próximas versões o Radar grava o tempo online direto da tela da Uber.</div>`;
-  app.innerHTML = h;
+  app.innerHTML = h; initMaps();
 }
 
 // ---------- CUSTOS ----------
@@ -262,15 +305,15 @@ function custos(){
   const custoKm = fuelKm + v.maint + fixedMes / kmMes, custos = custoKm * kmMes;
   const receita = custos + v.lucro, minKm = receita / kmMes;
   const meta = receita / Math.max(1, diasMes);
-  let h = `<div class="hero"><div class="tiny muted">${v.car || "Seu carro"} · seu custo por km rodado</div><div class="big">${brl(custoKm)}<small>/km</small></div>
+  let h = `<div class="hero"><div class="sm muted">${v.car || "Seu carro"} · seu custo por km rodado</div><div class="big">${brl(custoKm)}<small>/km</small></div>
     <div class="tip">Aceite corridas acima de ${brl(minKm)}/km</div>
-    <div class="grid3" style="margin-top:12px"><div class="kpi"><span>custos/mês</span><b class="r" style="font-size:15px">${brl(custos,0)}</b></div><div class="kpi"><span>receita/mês</span><b style="font-size:15px">${brl(receita,0)}</b></div><div class="kpi"><span>lucro/mês</span><b class="g" style="font-size:15px">${brl(v.lucro,0)}</b></div></div></div>
+    <div class="grid3" style="margin-top:16px"><div class="kpi" style="padding:12px 10px"><span>custos/mês</span><b class="r" style="font-size:18px">${brl(custos,0)}</b></div><div class="kpi" style="padding:12px 10px"><span>receita/mês</span><b style="font-size:18px">${brl(receita,0)}</b></div><div class="kpi" style="padding:12px 10px"><span>lucro/mês</span><b class="g" style="font-size:18px">${brl(v.lucro,0)}</b></div></div></div>
     <div class="grid2" style="margin-bottom:6px"><div class="kpi big"><span>meta diária</span><b>${brl(meta)}</b><span>${v.dias} dias por semana</span></div><div class="kpi big"><span>tempo online</span><b>${v.horas}h</b><span>por dia</span></div></div>
     <h2>Seus números</h2><div class="grid2">
       <div class="kpi"><span>km/dia</span><b>${Math.round(kmMes/diasMes)} km</b></div><div class="kpi"><span>ganho/hora necessário</span><b>${brl(receita/Math.max(1,horasMes))}</b></div>
       <div class="kpi"><span>combustível/km</span><b>${brl(fuelKm)}</b></div><div class="kpi"><span>fixos/km</span><b>${brl(fixedMes/kmMes)}</b></div>
       <div class="kpi"><span>custo/hora</span><b class="r">${brl(custos/Math.max(1,horasMes))}</b></div><div class="kpi"><span>lucro/hora</span><b class="g">${brl(v.lucro/Math.max(1,horasMes))}</b></div></div>
-    <h2>Seu carro e seus gastos</h2><div class="card" style="padding:4px 14px">${CF.map(([k,l,s,t]) => `<div class="field"><label>${l}${s?`<small>${s}</small>`:""}</label>
+    <h2>Seu carro e seus gastos</h2><div class="card" style="padding:4px 16px">${CF.map(([k,l,s,t]) => `<div class="field"><label>${l}${s?`<small>${s}</small>`:""}</label>
       <input class="${t==="txt"?"txt":""}" ${t==="n"?'inputmode="decimal"':""} value="${t==="txt"?v[k]:String(v[k]).replace(".",",")}" onchange="pset('c_${k}', this.value.replace(',', '.'));render()"></div>`).join("")}</div>
     <button class="btn" onclick="pset('bad_km', ${(minKm).toFixed(2)});pset('good_km', ${(minKm*1.35).toFixed(2)});this.textContent='Semáforo ajustado ✓'">Usar ${brl(minKm)}/km como mínimo no semáforo</button>
     <div class="note">Mínimo por km = (custos do mês + lucro desejado) ÷ km do mês. O botão ajusta a faixa do R$/Km do card: abaixo do mínimo fica vermelho, 35% acima fica verde.</div>`;
@@ -287,19 +330,53 @@ function mv(arr, i, d){ const j = i + d; if (j < 0 || j >= arr.length) return; [
 function save(){ pset("card_top", cTop.join(",")); pset("card_bottom", cBot.join(",")); render(); }
 function cartao(){
   const colr = c => c==="g"?"var(--good)":c==="r"?"var(--bad)":"var(--mid)";
-  let h = `<div class="tiny muted" style="margin:0 2px 6px">PRÉVIA</div><div class="preview">
-    <div class="tl">${cTop.map((k,i) => i===0 && k==="valor" ? `<b style="font-size:16px">${SAMPLE[k]}</b>` : `<span>${SAMPLE[k]}</span>`).join(" · ")}</div>
+  let h = `<h2 style="margin-top:6px">Prévia</h2><div class="preview">
+    <div class="tl">${cTop.map((k,i) => i===0 && k==="valor" ? `<b style="font-size:22px">${SAMPLE[k]}</b>` : `<span>${SAMPLE[k]}</span>`).join(" · ")}</div>
     <div class="ml">${cBot.map(k => `<div><span>${BOTF[k]}</span><b><i style="background:${colr(SAMPLE[k][1])}"></i>${SAMPLE[k][0]}</b></div>`).join("")}</div></div>`;
-  const slots = (arr, max, F, name) => `<div class="slots">${Array.from({length:max}, (_, i) => arr[i] ? `<div class="slot"><span class="no">${i+1}</span>${F[arr[i]]}
-      <div class="mv"><button onclick="mv(${name},${i},-1)">‹</button><button onclick="${name}.splice(${i},1);save()">✕</button><button onclick="mv(${name},${i},1)">›</button></div></div>` : `<div class="slot empty">+</div>`).join("")}</div>`;
-  h += `<h2 style="display:flex;justify-content:space-between">Linha de cima <span>${cTop.length}/3</span></h2>${slots(cTop, 3, TOPF, "cTop").replace('class="slots"','class="slots" style="grid-template-columns:repeat(3,minmax(0,1fr))"')}
+  const slots = (arr, max, F, name) => `<div class="slots">${Array.from({length:max}, (_, i) => arr[i] ? `<div class="slot" data-row="${name}" data-i="${i}" data-key="${arr[i]}"><span class="no">${i+1}</span><span class="hd">⠿</span><span class="lb">${F[arr[i]]}</span>
+      <div class="mv"><button aria-label="Tirar" onclick="${name}.splice(${i},1);save()">✕</button></div></div>` : `<div class="slot empty" data-row="${name}" data-i="${i}">+</div>`).join("")}</div>`;
+  h += `<h2 style="display:flex;justify-content:space-between">Linha de cima <span>${cTop.length}/3</span></h2>${slots(cTop, 3, TOPF, "cTop").replace('class="slots"','class="slots" style="grid-template-columns:1fr"')}
     <h2 style="display:flex;justify-content:space-between">Linha de baixo (com cor) <span>${cBot.length}/4</span></h2>${slots(cBot, 4, BOTF, "cBot")}
-    <h2>Disponíveis — toque para colocar</h2><div class="tray">
-    ${Object.keys(TOPF).filter(k => !cTop.includes(k)).map(k => `<button onclick="if(cTop.length<3){cTop.push('${k}');save()}">${TOPF[k]} ↑</button>`).join("")}
-    ${Object.keys(BOTF).filter(k => !cBot.includes(k)).map(k => `<button onclick="if(cBot.length<4){cBot.push('${k}');save()}">${BOTF[k]} ↓</button>`).join("")}</div>
-    <div class="note">‹ › muda a ordem, ✕ tira do cartão. A linha de baixo leva a cor de cada métrica (verde, amarelo, vermelho) pelas faixas da página Ganhos.</div>
-    <button class="btn ghost" onclick="cTop=['valor','tempo','dist'];cBot=['km','hora','nota','lucro'];save()">Restaurar padrão</button>`;
+    <h2>Disponíveis</h2><div class="tray">
+    ${Object.keys(TOPF).filter(k => !cTop.includes(k)).map(k => `<button data-tray="cTop" data-key="${k}">⠿ ${TOPF[k]} ↑</button>`).join("")}
+    ${Object.keys(BOTF).filter(k => !cBot.includes(k)).map(k => `<button data-tray="cBot" data-key="${k}">⠿ ${BOTF[k]} ↓</button>`).join("")}</div>
+    <div class="note">Segure e arraste um campo para mudar de lugar. Toque num disponível para colocar no fim da linha, ou arraste para cima de um campo para trocar.</div>
+    <button class="btn alt" onclick="cTop=['valor','tempo','dist'];cBot=['km','hora','nota','lucro'];save()">Restaurar padrão</button>`;
   app.innerHTML = h;
+  document.querySelectorAll(".slot[data-key], .tray button").forEach(el => el.addEventListener("pointerdown", startDrag));
+}
+// Arrastar e soltar (dedo ou mouse): campo → outra posição da mesma linha, bandeja → linha, campo → bandeja
+let drag = null;
+function startDrag(e){
+  if (e.target.closest("button") && !e.target.closest(".tray")) return;
+  const el = e.currentTarget, r = el.getBoundingClientRect();
+  drag = { el, row: el.dataset.row || null, tray: el.dataset.tray || null, key: el.dataset.key, i: +el.dataset.i, x0: e.clientX, y0: e.clientY, dx: e.clientX - r.left, dy: e.clientY - r.top, ghost: null, moved: false, over: null };
+  el.setPointerCapture(e.pointerId);
+  el.addEventListener("pointermove", moveDrag); el.addEventListener("pointerup", endDrag); el.addEventListener("pointercancel", endDrag);
+}
+function moveDrag(e){
+  if (!drag) return;
+  if (!drag.moved && Math.hypot(e.clientX - drag.x0, e.clientY - drag.y0) < 8) return;
+  if (!drag.moved) { drag.moved = true; const g = drag.el.cloneNode(true); g.classList.add("dghost"); const r = drag.el.getBoundingClientRect();
+    g.style.width = r.width + "px"; g.style.height = r.height + "px"; document.body.appendChild(g); drag.ghost = g; drag.el.classList.add("dragging"); }
+  drag.ghost.style.left = (e.clientX - drag.dx) + "px"; drag.ghost.style.top = (e.clientY - drag.dy) + "px";
+  const t = document.elementFromPoint(e.clientX, e.clientY)?.closest(".slot, .tray");
+  if (drag.over && drag.over !== t) drag.over.classList.remove("drag-over");
+  drag.over = t; if (t) t.classList.add("drag-over");
+}
+function endDrag(e){
+  if (!drag) return; const d = drag; drag = null;
+  d.el.removeEventListener("pointermove", moveDrag); d.el.removeEventListener("pointerup", endDrag); d.el.removeEventListener("pointercancel", endDrag);
+  if (d.ghost) d.ghost.remove(); d.el.classList.remove("dragging"); if (d.over) d.over.classList.remove("drag-over");
+  const lists = { cTop, cBot }, max = { cTop:3, cBot:4 };
+  if (!d.moved) { if (d.tray) { const L = lists[d.tray]; if (L.length < max[d.tray]) { L.push(d.key); save(); } } return; }
+  const t = d.over; if (!t) return;
+  if (t.classList.contains("tray")) { if (d.row) { lists[d.row].splice(d.i, 1); save(); } return; }
+  const row = t.dataset.row, j = +t.dataset.i, L = lists[row];
+  if (d.row) { if (d.row !== row) return; L.splice(d.i, 1); L.splice(Math.min(j, L.length), 0, d.key); save(); return; }
+  if (d.tray !== row) return;
+  if (j < L.length) { if (L.length >= max[row]) L.splice(j, 1, d.key); else L.splice(j, 0, d.key); } else if (L.length < max[row]) L.push(d.key);
+  save();
 }
 
 function render(){ ({historico, horarios, jornada, custos, cartao}[page] || historico)(); }

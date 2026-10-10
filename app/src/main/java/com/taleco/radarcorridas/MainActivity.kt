@@ -167,7 +167,7 @@ class MainActivity : AppCompatActivity() {
             for (j in 0..1) {
                 val e = entries.getOrNull(i + j)
                 val lp = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f).apply {
-                    if (j == 0) rightMargin = dp(6) else leftMargin = dp(6)
+                    if (j == 0) rightMargin = dp(7) else leftMargin = dp(7)
                 }
                 if (e == null) {
                     row.addView(View(this), lp)
@@ -175,7 +175,7 @@ class MainActivity : AppCompatActivity() {
                     row.addView(tile(e.key, e.value), lp)
                 }
             }
-            col.addView(row, matchWrap(top = 12))
+            col.addView(row, matchWrap(top = 14))
             i += 2
         }
 
@@ -1100,7 +1100,7 @@ class MainActivity : AppCompatActivity() {
                     paint()
                 }
             }
-            dayRow.addView(b, LinearLayout.LayoutParams(0, dp(44), 1f).apply { rightMargin = dp(3) })
+            dayRow.addView(b, LinearLayout.LayoutParams(0, dp(52), 1f).apply { rightMargin = dp(4) })
         }
         box.addView(dayRow, matchWrap())
 
@@ -1436,26 +1436,34 @@ class MainActivity : AppCompatActivity() {
         val page = pages[key] ?: return LinearLayout(this)
         val block = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
-            setPadding(dp(16), dp(16), dp(16), dp(16))
-            background = rounded(Colors.SURFACE, 16f)
+            setPadding(dp(18), dp(20), dp(18), dp(20))
+            background = rounded(Colors.SURFACE, 18f)
         }
         if (title == "Prévia do cartão") block.addView(text(title, 16f, Colors.TEXT, bold = true).apply { setPadding(0, 0, 0, dp(8)) })
-        page.body.addView(block, matchWrap(top = 12))
+        page.body.addView(block, matchWrap(top = 16))
         return block
     }
 
     /** Botões mais altos e fáceis de tocar. */
     private fun makeTall(b: MaterialButton) {
-        b.minHeight = dp(52)
-        b.minimumHeight = dp(52)
+        b.minHeight = dp(56)
+        b.minimumHeight = dp(56)
         b.insetTop = 0
         b.insetBottom = 0
-        b.cornerRadius = dp(12)
-        b.textSize = 15f
+        b.cornerRadius = dp(14)
+        b.textSize = 17f
     }
 
     /** Aplica o estilo alto a todos os botões da tela (menos os pequenos de dias/limites). */
     private fun tallAll(v: View) {
+        if (v is SwitchMaterial) {
+            // Chave com área de toque grande e texto legível
+            v.minHeight = dp(56)
+            v.minimumHeight = dp(56)
+            v.textSize = maxOf(16f, v.textSize / resources.displayMetrics.scaledDensity)
+            v.switchPadding = dp(12)
+            return
+        }
         if (v is MaterialButton) {
             val inGroup = v.parent is MaterialButtonToggleGroup
             val fixedSmall = (v.layoutParams?.height ?: 0) > 0
@@ -1465,9 +1473,22 @@ class MainActivity : AppCompatActivity() {
         if (v is android.view.ViewGroup) for (i in 0 until v.childCount) tallAll(v.getChildAt(i))
     }
 
+    /**
+     * Tamanho de leitura no carro: nada abaixo de 14sp, textos de conteúdo um pouco maiores.
+     * Explicações (cor apagada) podem ficar menores; o resto cresce.
+     */
+    private fun readable(size: Float, color: Int): Float = when {
+        size <= 11f -> 13f
+        size < 14f -> if (color == Colors.MUTED) 14f else 15f
+        size < 16f -> size + 2f
+        size < 18f -> size + 1f
+        else -> size
+    }
+
     private fun text(s: String, size: Float, color: Int, bold: Boolean = false) = TextView(this).apply {
         text = s
-        textSize = size
+        textSize = readable(size, color)
+        setLineSpacing(0f, 1.12f)
         setTextColor(color)
         if (bold) typeface = Typeface.DEFAULT_BOLD
     }
