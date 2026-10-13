@@ -1,5 +1,8 @@
 name: Sondagem de fontes
-on: { workflow_dispatch: {} }
+on:
+  push:
+    branches: [eventos]
+    paths: [".github/workflows/sondagem.yml"]
 permissions: { contents: write }
 jobs:
   s:
