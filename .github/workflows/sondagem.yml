@@ -10,19 +10,31 @@ jobs:
     steps:
       - run: |
           mkdir s && cd s
-          UA="Mozilla/5.0 (Linux; Android 14) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Mobile Safari/537.36"
+          UA="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36"
           get(){ curl -sL -m 40 -A "$UA" -H "Accept-Language: pt-BR,pt;q=0.9" -o "$1" -w "$1 %{http_code} %{size_download}\n" "$2" >> log.txt || echo "$1 FAIL" >> log.txt; }
-          get shotgun_city.html "https://shotgun.live/pt-br/cities/sao-paulo"
-          get shotgun_city2.html "https://shotgun.live/pt-br/cities/sao-paulo?page=2"
-          get shotgun_concerts.html "https://shotgun.live/pt-br/concerts"
-          get t360_city.html "https://www.ticket360.com.br/cidade/sp/sao-paulo"
-          get sympla_sp.html "https://www.sympla.com.br/eventos/sao-paulo-sp"
-          get sympla_hoje.html "https://www.sympla.com.br/eventos/sao-paulo-sp/hoje"
-          get catraca.html "https://catracalivre.com.br/agenda/"
-          get aovivo_archive.html "https://aovivo.substack.com/archive"
-          get aovivo_feed.xml "https://aovivo.substack.com/feed"
+          get ingresse.html "https://www.ingresse.com/sao-paulo"
+          get uhuu.html "https://uhuu.com/cidade/sao-paulo"
+          get fever.html "https://feverup.com/pt/sao-paulo"
           get eventim.html "https://www.eventim.com.br/city/sao-paulo-1/"
-          cat log.txt
+          get t360_p2.html "https://www.ticket360.com.br/cidade/sp/sao-paulo?pagina=2"
+          get t360_ev.html "https://www.ticket360.com.br/evento/34217/ingressos-para-vini-e-lucas"
+          get sympla_ev.html "https://www.sympla.com.br/eventos/sao-paulo-sp/hoje?page=2"
+          get sympla_fds.html "https://www.sympla.com.br/eventos/sao-paulo-sp/este-fim-de-semana"
+          get bares.html "https://baressp.com.br/eventos"
       - run: |
-          cd s && git init -q -b sondagem && git add . && git -c user.name=radar-bot -c user.email=radar-bot@users.noreply.github.com commit -qm sondagem
+          cd s && npm i -s playwright@1.47.2 >/dev/null 2>&1 && npx playwright install chromium >/dev/null 2>&1
+          cat > p.js <<'JS'
+          const { chromium } = require('playwright'); const fs = require('fs');
+          (async () => { const b = await chromium.launch(); const c = await b.newContext({ locale:'pt-BR', userAgent:'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0 Safari/537.36' });
+            for (const [f,u] of [['pw_shotgun_city.html','https://shotgun.live/pt-br/cities/sao-paulo'],['pw_shotgun_concerts.html','https://shotgun.live/pt-br/concerts'],['pw_eventim.html','https://www.eventim.com.br/city/sao-paulo-1/']]) {
+              const p = await c.newPage(); const api=[];
+              p.on('response', r => { const t=r.headers()['content-type']||''; if (t.includes('json')) api.push(r.status()+' '+r.url()); });
+              try { await p.goto(u, { waitUntil:'networkidle', timeout:60000 }); await p.waitForTimeout(6000); } catch(e) { fs.appendFileSync('log.txt', f+' ERR '+e.message+'\n'); }
+              fs.writeFileSync(f, await p.content()); fs.writeFileSync(f+'.api.txt', api.join('\n'));
+              fs.appendFileSync('log.txt', f+' '+(await p.title())+'\n'); }
+            await b.close(); })();
+          JS
+          node p.js; cat log.txt
+      - run: |
+          cd s && rm -rf node_modules package*.json && git init -q -b sondagem && git add . && git -c user.name=radar-bot -c user.email=radar-bot@users.noreply.github.com commit -qm sondagem
           git push -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}" sondagem
