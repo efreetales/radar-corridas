@@ -365,22 +365,37 @@ class OverlayManager(private val service: AccessibilityService) {
         going = null
     }
 
+    private var bubbleMenu: View? = null
+    private var bubbleLp: WindowManager.LayoutParams? = null
+
+    private fun bubbleBg(locked: Boolean) = GradientDrawable().apply {
+        shape = GradientDrawable.OVAL
+        setColor(Colors.ACCENT)
+        // travado: aro branco
+        setStroke(service.dp(if (locked) 4 else 3), if (locked) Color.WHITE else Color.parseColor("#0D1117"))
+    }
+
     fun showBubble(prefs: Prefs) {
         if (bubble != null) return
-        val size = service.dp(52)
-        val view = TextView(service).apply {
+        val size = service.dp(56)
+        val view = android.widget.FrameLayout(service).apply { alpha = 0.92f }
+        val r = TextView(service).apply {
             text = "R"
             setTextColor(Color.parseColor("#06231B"))
             textSize = 22f
             typeface = Typeface.DEFAULT_BOLD
             gravity = Gravity.CENTER
-            background = GradientDrawable().apply {
-                shape = GradientDrawable.OVAL
-                setColor(Colors.ACCENT)
-                setStroke(service.dp(3), Color.parseColor("#0D1117"))
-            }
-            alpha = 0.9f
+            background = bubbleBg(prefs.bubbleLocked)
         }
+        view.addView(r, android.widget.FrameLayout.LayoutParams(service.dp(52), service.dp(52), Gravity.CENTER))
+        val lock = TextView(service).apply {
+            text = "🔒"
+            textSize = 11f
+            gravity = Gravity.CENTER
+            background = GradientDrawable().apply { shape = GradientDrawable.OVAL; setColor(Color.WHITE) }
+            visibility = if (prefs.bubbleLocked) View.VISIBLE else View.GONE
+        }
+        view.addView(lock, android.widget.FrameLayout.LayoutParams(service.dp(20), service.dp(20), Gravity.BOTTOM or Gravity.END))
         val lp = WindowManager.LayoutParams(
             size, size,
             WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY,
@@ -391,6 +406,7 @@ class OverlayManager(private val service: AccessibilityService) {
         lp.gravity = Gravity.TOP or Gravity.START
         lp.x = prefs.bubbleX
         lp.y = prefs.bubbleY
+        bubbleLp = lp
 
         val slop = ViewConfiguration.get(service).scaledTouchSlop
         var startX = 0
@@ -398,13 +414,15 @@ class OverlayManager(private val service: AccessibilityService) {
         var touchX = 0f
         var touchY = 0f
         var moved = false
-        // Segurar o "R" por 0,6 s marca uma valeta.
+        // Segurar o "R" por 0,6 s marca uma valeta. Travado, o dedo pode escorregar à vontade.
         var longFired = false
         val longPress = Runnable {
             longFired = true
+            hideBubbleMenu()
             HazardWatch.markManual(service)
         }
         view.setOnTouchListener { v, ev ->
+            val locked = prefs.bubbleLocked
             when (ev.action) {
                 MotionEvent.ACTION_DOWN -> {
                     startX = lp.x; startY = lp.y
@@ -417,9 +435,10 @@ class OverlayManager(private val service: AccessibilityService) {
                 MotionEvent.ACTION_MOVE -> {
                     val dx = ev.rawX - touchX
                     val dy = ev.rawY - touchY
-                    if (abs(dx) > slop || abs(dy) > slop) {
+                    if (!locked && (abs(dx) > slop || abs(dy) > slop)) {
                         moved = true
                         v.removeCallbacks(longPress)
+                        hideBubbleMenu()
                     }
                     if (moved) {
                         lp.x = startX + dx.toInt()
@@ -428,13 +447,13 @@ class OverlayManager(private val service: AccessibilityService) {
                     }
                     true
                 }
-                MotionEvent.ACTION_UP -> {
+                MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
                     v.removeCallbacks(longPress)
                     if (moved) {
                         prefs.bubbleX = lp.x
                         prefs.bubbleY = lp.y
-                    } else if (!longFired) {
-                        openApp()
+                    } else if (!longFired && ev.action == MotionEvent.ACTION_UP) {
+                        if (bubbleMenu != null) hideBubbleMenu() else showBubbleMenu(prefs, r, lock)
                     }
                     true
                 }
@@ -449,7 +468,74 @@ class OverlayManager(private val service: AccessibilityService) {
         }
     }
 
+    /** Mini-menu ao lado do R: travar/destravar, marcar valeta, abrir o Radar. Some sozinho em 5 s. */
+    private val hideMenuRunnable = Runnable { hideBubbleMenu() }
+
+    private fun showBubbleMenu(prefs: Prefs, r: TextView, lock: TextView) {
+        hideBubbleMenu()
+        val blp = bubbleLp ?: return
+        val btn = service.dp(56)
+        val row = LinearLayout(service).apply {
+            orientation = LinearLayout.HORIZONTAL
+            gravity = Gravity.CENTER_VERTICAL
+            setPadding(service.dp(6), service.dp(6), service.dp(6), service.dp(6))
+            background = GradientDrawable().apply { setColor(Color.parseColor("#E6161B22")); cornerRadius = service.dp(36).toFloat() }
+        }
+        fun item(icon: String, label: String, onTap: () -> Unit) {
+            val col = LinearLayout(service).apply {
+                orientation = LinearLayout.VERTICAL
+                gravity = Gravity.CENTER
+                setPadding(service.dp(6), 0, service.dp(6), 0)
+                setOnClickListener { onTap() }
+            }
+            col.addView(TextView(service).apply {
+                text = icon; textSize = 22f; gravity = Gravity.CENTER
+                background = GradientDrawable().apply { shape = GradientDrawable.OVAL; setColor(Color.parseColor("#2B323B")) }
+            }, LinearLayout.LayoutParams(btn, btn))
+            col.addView(TextView(service).apply {
+                text = label; textSize = 12f; setTextColor(Color.WHITE); gravity = Gravity.CENTER
+            }, LinearLayout.LayoutParams(service.dp(78), LinearLayout.LayoutParams.WRAP_CONTENT))
+            row.addView(col)
+        }
+        val locked = prefs.bubbleLocked
+        item(if (locked) "🔓" else "🔒", if (locked) "Destravar" else "Travar") {
+            prefs.bubbleLocked = !locked
+            r.background = bubbleBg(prefs.bubbleLocked)
+            lock.visibility = if (prefs.bubbleLocked) View.VISIBLE else View.GONE
+            hideBubbleMenu()
+        }
+        item("⚠️", "Valeta") { hideBubbleMenu(); HazardWatch.markManual(service) }
+        item("📱", "Abrir Radar") { hideBubbleMenu(); openApp() }
+        val lp = WindowManager.LayoutParams(
+            WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT,
+            WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY,
+            WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN or
+                WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH,
+            PixelFormat.TRANSLUCENT
+        )
+        lp.gravity = Gravity.TOP or Gravity.START
+        val screenW = service.resources.displayMetrics.widthPixels
+        val menuW = service.dp(3 * 90 + 12)
+        // abre para o lado com mais espaço
+        lp.x = if (blp.x + service.dp(56) + menuW <= screenW) blp.x + service.dp(62) else maxOf(0, blp.x - menuW - service.dp(6))
+        lp.y = maxOf(0, blp.y - service.dp(18))
+        row.setOnTouchListener { _, ev -> if (ev.action == MotionEvent.ACTION_OUTSIDE) { hideBubbleMenu(); true } else false }
+        try {
+            wm.addView(row, lp)
+            bubbleMenu = row
+            row.postDelayed(hideMenuRunnable, 5_000L)
+        } catch (_: Exception) {
+            bubbleMenu = null
+        }
+    }
+
+    fun hideBubbleMenu() {
+        bubbleMenu?.let { v -> v.removeCallbacks(hideMenuRunnable); try { wm.removeView(v) } catch (_: Exception) {} }
+        bubbleMenu = null
+    }
+
     fun hideBubble() {
+        hideBubbleMenu()
         bubble?.let { v -> try { wm.removeView(v) } catch (_: Exception) {} }
         bubble = null
     }

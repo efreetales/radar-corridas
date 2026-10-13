@@ -56,13 +56,14 @@ class MainActivity : AppCompatActivity() {
 
     // ---------- Navegação: tela inicial com cards → página de cada seção ----------
 
-    private class Page(val key: String, val icon: Int, val hint: String, val web: String? = null) {
+    private class Page(val key: String, val icon: Int, val hint: String, val web: String? = null, val hidden: Boolean = false) {
         lateinit var body: LinearLayout
     }
 
     /** Ordem e ícones dos cards da tela inicial. "Prévia do cartão" fica dentro de Ganhos. */
     private val pages = linkedMapOf(
-        "Cálculo de ganhos" to Page("Ganhos", R.drawable.ic_money, "Faixas de ruim, médio e bom"),
+        "Cartão e ganhos" to Page("Cartão e ganhos", R.drawable.ic_money, "Faixas, campos do cartão e custos"),
+        "Cálculo de ganhos" to Page("Faixas de ganhos", R.drawable.ic_money, "Quando cada número fica vermelho, amarelo ou verde", hidden = true),
         "Radares de velocidade" to Page("Radares", R.drawable.ic_speed, "Aviso, bipe e distância"),
         "Valetas e buracos" to Page("Valetas", R.drawable.ic_warning, "Marcar e avisar"),
         "Meus pontos bons" to Page("Pontos bons", R.drawable.ic_star, "Lugares e horários"),
@@ -70,8 +71,8 @@ class MainActivity : AppCompatActivity() {
         "Histórico de ofertas" to Page("Histórico", R.drawable.ic_history, "Aceitas e recusadas", web = "historico"),
         "Melhores horários" to Page("Horários", R.drawable.ic_clock, "Quando mais paga", web = "horarios"),
         "Jornada" to Page("Jornada", R.drawable.ic_timer, "Tempo por fase", web = "jornada"),
-        "Custos do carro" to Page("Custos", R.drawable.ic_fuel, "Custo por km e meta", web = "custos"),
-        "Estilo do cartão" to Page("Cartão", R.drawable.ic_tune, "Campos e ordem", web = "cartao"),
+        "Custos do carro" to Page("Custos do carro", R.drawable.ic_fuel, "Seu custo por km e o mínimo para aceitar", web = "custos", hidden = true),
+        "Estilo do cartão" to Page("Campos do cartão", R.drawable.ic_tune, "O que aparece no cartão e em que ordem", web = "cartao", hidden = true),
         "Corridas e percurso" to Page("Corridas", R.drawable.ic_car, "Registro e permissões"),
         "Aparência" to Page("Aparência", R.drawable.ic_palette, "Posição e botão R"),
         "Dados" to Page("Dados", R.drawable.ic_storage, "Exportar e diagnóstico")
@@ -81,6 +82,44 @@ class MainActivity : AppCompatActivity() {
     private lateinit var home: LinearLayout
     private lateinit var statusCard: LinearLayout
     private var currentPage: String? = null
+    private var previewBlock: View? = null
+    /** Subpáginas: o "voltar" leva para a página-mãe, não para a tela inicial. */
+    private val parentPage = mapOf("Cálculo de ganhos" to "Cartão e ganhos")
+
+    private fun goBack() {
+        val p = currentPage?.let { parentPage[it] }
+        if (p != null) showPage(p) else showHome()
+    }
+
+    /** Página "Cartão e ganhos": prévia do cartão + submenu (faixas, campos, custos). */
+    private fun buildCardHub() {
+        val hub = pages["Cartão e ganhos"] ?: return
+        for (key in listOf("Cálculo de ganhos", "Estilo do cartão", "Custos do carro")) {
+            val pg = pages[key] ?: continue
+            val row = LinearLayout(this).apply {
+                orientation = LinearLayout.HORIZONTAL
+                gravity = Gravity.CENTER_VERTICAL
+                setPadding(dp(18), dp(20), dp(14), dp(20))
+                background = rounded(Colors.SURFACE, 18f)
+                minimumHeight = dp(88)
+            }
+            ripple(row)
+            row.addView(icon(pg.icon, 30, Colors.ACCENT).apply {
+                layoutParams = LinearLayout.LayoutParams(dp(30), dp(30)).apply { rightMargin = dp(16) }
+            })
+            val t = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
+            t.addView(text(pg.key, 18f, Colors.TEXT, bold = true))
+            t.addView(text(pg.hint, 13f, Colors.MUTED))
+            row.addView(t, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f))
+            row.addView(text("›", 30f, Colors.MUTED).apply { setPadding(dp(8), 0, 0, 0) })
+            row.setOnClickListener {
+                val w = pg.web
+                if (w != null) startActivity(Intent(this, PainelActivity::class.java).putExtra(PainelActivity.EXTRA_PAGE, w))
+                else showPage(key)
+            }
+            hub.body.addView(row, matchWrap(top = 14))
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -114,6 +153,7 @@ class MainActivity : AppCompatActivity() {
         buildSpots(dummy)
         buildEvents(dummy)
         buildData(dummy)
+        buildCardHub()
         tallAll(statusCard)
         for (pg in pages.values) tallAll(pg.body)
 
@@ -123,7 +163,7 @@ class MainActivity : AppCompatActivity() {
         onBackPressedDispatcher.addCallback(this, object : androidx.activity.OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 if (currentPage != null) {
-                    showHome()
+                    goBack()
                 } else {
                     isEnabled = false
                     onBackPressedDispatcher.onBackPressed()
@@ -168,7 +208,7 @@ class MainActivity : AppCompatActivity() {
         col.addView(mapTile, matchWrap(top = 12))
 
         // Grade de cards, 2 por linha
-        val entries = pages.entries.toList()
+        val entries = pages.entries.filter { !it.value.hidden }
         var i = 0
         while (i < entries.size) {
             val row = LinearLayout(this).apply { orientation = LinearLayout.HORIZONTAL }
@@ -257,7 +297,7 @@ class MainActivity : AppCompatActivity() {
         val back = android.widget.FrameLayout(this).apply {
             minimumWidth = dp(48)
             minimumHeight = dp(48)
-            setOnClickListener { showHome() }
+            setOnClickListener { goBack() }
         }
         ripple(back)
         back.addView(icon(R.drawable.ic_back, 26, Colors.TEXT), android.widget.FrameLayout.LayoutParams(dp(26), dp(26), Gravity.CENTER))
@@ -265,9 +305,15 @@ class MainActivity : AppCompatActivity() {
         bar.addView(icon(pg.icon, 28, Colors.ACCENT).apply {
             layoutParams = LinearLayout.LayoutParams(dp(28), dp(28)).apply { leftMargin = dp(4); rightMargin = dp(10) }
         })
-        bar.addView(text(title, 22f, Colors.TEXT, bold = true))
+        bar.addView(text(if (title == "Cálculo de ganhos") pg.key else title, 22f, Colors.TEXT, bold = true))
         col.addView(bar, matchWrap())
 
+        // A prévia do cartão aparece no topo do "Cartão e ganhos" e das "Faixas de ganhos"
+        val pv = previewBlock
+        if (pv != null && (title == "Cartão e ganhos" || title == "Cálculo de ganhos")) {
+            (pv.parent as? android.view.ViewGroup)?.removeView(pv)
+            pg.body.addView(pv, 0, matchWrap())
+        }
         (pg.body.parent as? android.view.ViewGroup)?.removeView(pg.body)
         col.addView(pg.body, matchWrap(top = 8))
         scroll.removeAllViews()
@@ -1447,14 +1493,14 @@ class MainActivity : AppCompatActivity() {
      */
     private fun section(@Suppress("UNUSED_PARAMETER") parent: LinearLayout, title: String): LinearLayout {
         if (title == "Status") return statusCard
-        val key = if (title == "Prévia do cartão") "Cálculo de ganhos" else title
+        val key = if (title == "Prévia do cartão") "Cartão e ganhos" else title
         val page = pages[key] ?: return LinearLayout(this)
         val block = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
             setPadding(dp(18), dp(20), dp(18), dp(20))
             background = rounded(Colors.SURFACE, 18f)
         }
-        if (title == "Prévia do cartão") block.addView(text(title, 16f, Colors.TEXT, bold = true).apply { setPadding(0, 0, 0, dp(8)) })
+        if (title == "Prévia do cartão") { block.addView(text(title, 16f, Colors.TEXT, bold = true).apply { setPadding(0, 0, 0, dp(8)) }); previewBlock = block }
         page.body.addView(block, matchWrap(top = 16))
         return block
     }

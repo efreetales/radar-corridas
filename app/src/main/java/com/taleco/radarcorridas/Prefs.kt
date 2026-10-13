@@ -179,6 +179,11 @@ class Prefs(context: Context) {
         get() = sp.getInt("bolha_y", 400)
         set(v) = sp.edit().putInt("bolha_y", v).apply()
 
+    /** Botão R travado: não sai do lugar ao arrastar (o carro balança). */
+    var bubbleLocked: Boolean
+        get() = sp.getBoolean("bolha_travada", false)
+        set(v) = sp.edit().putBoolean("bolha_travada", v).apply()
+
     // Dados
     var logOffers: Boolean
         get() = sp.getBoolean("salvar_ofertas", true)
