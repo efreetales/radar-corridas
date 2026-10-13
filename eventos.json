@@ -1,24 +1,8 @@
 {
- "gerado_em": "2026-10-13T13:54:31-03:00",
+ "gerado_em": "2026-10-13T20:15:05-03:00",
  "data": "2026-10-13",
  "observacao": "Gerado automaticamente (Ticket360, Sympla e revisão semanal). Saída estimada pelas regras de tools/casas.json.",
  "eventos": [
-  {
-   "nome": "Museu da Imaginação",
-   "local": "Museu da Imaginação",
-   "endereco": "Rua Virgilio Wey,100, São Paulo",
-   "tipo": "show",
-   "data": "2026-10-13",
-   "inicio": "17:00",
-   "fim_estimado": "18:45",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://bileto.sympla.com.br/event/116303",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.513035,
-   "lng": -46.696046
-  },
   {
    "nome": "Discopédia Especial House Music| 13 De Outubro | Cortina",
    "local": "Cineclube Cortina",
@@ -50,6 +34,22 @@
    "regra": "festa",
    "lat": -23.584485,
    "lng": -46.697814
+  },
+  {
+   "nome": "Farol Santander São Paulo 2026",
+   "local": "Farol Santander",
+   "endereco": "Rua João Brícola, 24, São Paulo",
+   "tipo": "show",
+   "data": "2026-10-13",
+   "inicio": "19:00",
+   "fim_estimado": "20:45",
+   "incerteza_min": 45,
+   "publico_estimado": null,
+   "fonte": "https://bileto.sympla.com.br/event/113861",
+   "origem": "sympla",
+   "regra": "show",
+   "lat": -23.545722,
+   "lng": -46.636328
   },
   {
    "nome": "Forró Na House - Hallowen Na House",
@@ -196,22 +196,6 @@
    "lng": -46.634712
   },
   {
-   "nome": "Malu Galli // Maravilhas Contemporâneas",
-   "local": "Casa de Francisca",
-   "endereco": "R. Quintino Bocaiúva,22 - 1º andar, São Paulo",
-   "tipo": "show",
-   "data": "2026-10-13",
-   "inicio": "21:30",
-   "fim_estimado": "23:15",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://bileto.sympla.com.br/event/126934",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.548776,
-   "lng": -46.634712
-  },
-  {
    "nome": "Cida Moreira // Me acalmo danando – A música de Angela Ro Ro",
    "local": "Casa de Francisca",
    "endereco": "R. Quintino Bocaiúva,22 - 1º andar, São Paulo",
@@ -222,6 +206,22 @@
    "incerteza_min": 45,
    "publico_estimado": null,
    "fonte": "https://bileto.sympla.com.br/event/114926",
+   "origem": "sympla",
+   "regra": "show",
+   "lat": -23.548776,
+   "lng": -46.634712
+  },
+  {
+   "nome": "Malu Galli // Maravilhas Contemporâneas",
+   "local": "Casa de Francisca",
+   "endereco": "R. Quintino Bocaiúva,22 - 1º andar, São Paulo",
+   "tipo": "show",
+   "data": "2026-10-13",
+   "inicio": "21:30",
+   "fim_estimado": "23:15",
+   "incerteza_min": 45,
+   "publico_estimado": null,
+   "fonte": "https://bileto.sympla.com.br/event/126934",
    "origem": "sympla",
    "regra": "show",
    "lat": -23.548776,
