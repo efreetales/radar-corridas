@@ -7,6 +7,7 @@ import android.media.AudioManager
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
 import android.speech.tts.UtteranceProgressListener
+import android.speech.tts.Voice
 import java.util.Locale
 
 /**
@@ -31,7 +32,9 @@ object Voz {
                 val t = tts ?: return@TextToSpeech
                 if (st == TextToSpeech.SUCCESS) {
                     t.language = Locale("pt", "BR")
-                    t.setSpeechRate(0.95f)
+                    escolherVoz(app, t)
+                    t.setSpeechRate(1.0f)
+                    t.setPitch(1.0f)
                     t.setAudioAttributes(ATTR)
                     t.setOnUtteranceProgressListener(object : UtteranceProgressListener() {
                         override fun onStart(id: String?) {}
@@ -48,7 +51,37 @@ object Voz {
         if (pronto) dizer(app, texto) else fila.add(texto)
     }
 
+    /** Vozes em português do Brasil instaladas no celular, da mais natural para a mais simples. */
+    fun vozes(): List<Voice> = (try { tts?.voices?.toList() } catch (_: Exception) { null } ?: emptyList())
+        .filter { it.locale.language == "pt" && (it.locale.country == "BR" || it.locale.country.isEmpty()) && !it.features.contains("notInstalled") }
+        .sortedWith(compareByDescending<Voice> { it.quality }.thenBy { it.isNetworkConnectionRequired }.thenBy { it.name })
+
+    /** Usa a voz escolhida pelo motorista; se não escolheu, a de melhor qualidade. */
+    private fun escolherVoz(ctx: Context, t: TextToSpeech) {
+        val salva = Prefs(ctx).voiceName
+        val v = vozes().firstOrNull { it.name == salva } ?: vozes().firstOrNull() ?: return
+        try { t.voice = v } catch (_: Exception) { }
+    }
+
+    /** Troca a voz e fala um exemplo com ela. */
+    fun usarVoz(ctx: Context, nome: String) {
+        Prefs(ctx).voiceName = nome
+        tts?.let { t -> vozes().firstOrNull { it.name == nome }?.let { try { t.voice = it } catch (_: Exception) { } } }
+        tts?.stop()
+        inicio(ctx, "Ana", "Avenida Paulista, 1000")
+    }
+
+    /** Prepara o motor de voz (para a lista de vozes ficar disponível). */
+    fun preparar(ctx: Context, pronto: () -> Unit) {
+        if (this.pronto) { pronto(); return }
+        fila.clear()
+        falar(ctx.applicationContext, "")
+        Thread { var n = 0; while (!this.pronto && n++ < 40) Thread.sleep(100)
+            android.os.Handler(android.os.Looper.getMainLooper()).post(pronto) }.start()
+    }
+
     private fun dizer(ctx: Context, texto: String) {
+        if (texto.isBlank()) return
         val am = ctx.getSystemService(AudioManager::class.java)
         if (am != null) {
             val r = AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK).setAudioAttributes(ATTR).build()
@@ -75,13 +108,14 @@ object Voz {
     fun inicio(ctx: Context, passageiro: String?, destino: String?) {
         val n = nome(passageiro)
         val r = rua(destino)
-        falar(ctx, (if (n != null) "Olá, $n! " else "Olá! ") + "Vamos começar. " +
-            (if (r != null) "Estamos indo para $r. " else "Estamos indo para o seu destino. ") + "Boa viagem!")
+        falar(ctx, (if (n != null) "Oi, $n, tudo bem? " else "Oi, tudo bem? ") +
+            (if (r != null) "Vamos lá, nosso destino é $r. " else "Vamos lá, já estamos a caminho do seu destino. ") +
+            "Se precisar de alguma coisa, é só me falar. Boa viagem!")
     }
 
     fun chegada(ctx: Context, passageiro: String?) {
         val n = nome(passageiro)
-        falar(ctx, "Chegamos" + (if (n != null) ", $n" else "") + "! Espero que tenha gostado da viagem. " +
-            "Por favor, não esqueça de avaliar a viagem no aplicativo da Uber. Obrigado e até a próxima!")
+        falar(ctx, "Pronto" + (if (n != null) ", $n" else "") + ", chegamos! Obrigado pela companhia, espero que tenha curtido a viagem. " +
+            "Se puder, deixa sua avaliação no aplicativo da Uber. Até a próxima!")
     }
 }
