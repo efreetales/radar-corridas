@@ -1,0 +1,25 @@
+name: Sondagem de fontes
+on: { workflow_dispatch: {} }
+permissions: { contents: write }
+jobs:
+  s:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          mkdir s && cd s
+          UA="Mozilla/5.0 (Linux; Android 14) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Mobile Safari/537.36"
+          get(){ curl -sL -m 40 -A "$UA" -H "Accept-Language: pt-BR,pt;q=0.9" -o "$1" -w "$1 %{http_code} %{size_download}\n" "$2" >> log.txt || echo "$1 FAIL" >> log.txt; }
+          get shotgun_city.html "https://shotgun.live/pt-br/cities/sao-paulo"
+          get shotgun_city2.html "https://shotgun.live/pt-br/cities/sao-paulo?page=2"
+          get shotgun_concerts.html "https://shotgun.live/pt-br/concerts"
+          get t360_city.html "https://www.ticket360.com.br/cidade/sp/sao-paulo"
+          get sympla_sp.html "https://www.sympla.com.br/eventos/sao-paulo-sp"
+          get sympla_hoje.html "https://www.sympla.com.br/eventos/sao-paulo-sp/hoje"
+          get catraca.html "https://catracalivre.com.br/agenda/"
+          get aovivo_archive.html "https://aovivo.substack.com/archive"
+          get aovivo_feed.xml "https://aovivo.substack.com/feed"
+          get eventim.html "https://www.eventim.com.br/city/sao-paulo-1/"
+          cat log.txt
+      - run: |
+          cd s && git init -q -b sondagem && git add . && git -c user.name=radar-bot -c user.email=radar-bot@users.noreply.github.com commit -qm sondagem
+          git push -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}" sondagem
