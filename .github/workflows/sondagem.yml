@@ -10,10 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with: { ref: eventos }
+      - run: python3 tools/mirror_ofm.py | tail -20; find m -type f | wc -l
       - run: |
-          mkdir -p /tmp/t && n=0
-          while read p; do mkdir -p /tmp/t/$(dirname $p); s=$(echo "abcd" | cut -c$(( (n % 4) + 1 ))); curl -sL -m 30 -A "Mozilla/5.0" -o /tmp/t/$p.png "https://$s.basemaps.cartocdn.com/dark_all/$p@2x.png"; n=$((n+1)); done < tools/tiles.txt
-          find /tmp/t -name '*.png' -size +1k | wc -l
-      - run: |
-          cd /tmp/t && git init -q -b mapas && git add . && git -c user.name=radar-bot -c user.email=radar-bot@users.noreply.github.com commit -qm tiles
+          cd m && git init -q -b mapas && git add . && git -c user.name=radar-bot -c user.email=radar-bot@users.noreply.github.com commit -qm ofm
           git push -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}" mapas
