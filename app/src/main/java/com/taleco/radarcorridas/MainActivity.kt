@@ -38,6 +38,14 @@ import kotlin.math.roundToInt
 /** Tela de configuração: status, prévia do cartão, faixas de ruim/bom, custos, aparência e dados. */
 class MainActivity : AppCompatActivity() {
 
+    // Importar correção de corridas (.json preparado a partir das ofertas, do GPS e do resumo da Uber)
+    private val importLauncher = registerForActivityResult(androidx.activity.result.contract.ActivityResultContracts.OpenDocument()) { uri ->
+        if (uri == null) return@registerForActivityResult
+        val msg = try { Correcao.importar(this, uri) } catch (e: Exception) { "Não deu para importar: ${e.message}" }
+        android.app.AlertDialog.Builder(this).setTitle("Importar correção").setMessage(msg).setPositiveButton("OK", null).show()
+    }
+
+
     private lateinit var prefs: Prefs
     private lateinit var statusDot: View
     private lateinit var statusText: TextView
@@ -500,6 +508,13 @@ class MainActivity : AppCompatActivity() {
                 if (!OfferLog.shareAll(ctx, files, "Dados — Radar Corridas")) toast("Nenhum dado salvo ainda")
             }
         }, matchWrap(top = 6))
+        card.addView(outlinedButton("Importar correção de corridas").apply {
+            setOnClickListener { importLauncher.launch(arrayOf("application/json", "application/octet-stream", "text/plain", "*/*")) }
+        }, matchWrap(top = 6))
+        card.addView(text(
+            "Para arquivos de correção preparados a partir das suas ofertas, do GPS e do resumo da Uber. Uma cópia dos dados anteriores fica guardada.",
+            12f, Colors.MUTED
+        ))
 
         val diag = SwitchMaterial(this).apply {
             text = "Modo diagnóstico"
