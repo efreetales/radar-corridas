@@ -696,6 +696,53 @@ class MainActivity : AppCompatActivity() {
             text = "Escolher outra voz"
             setOnClickListener { escolherVoz() }
         }, matchWrap(top = 8))
+
+        // Voz de estúdio (ElevenLabs): fala natural, com a chave do próprio motorista
+        card.addView(SwitchMaterial(this).apply {
+            text = "Voz de estúdio (ElevenLabs)"
+            setTextColor(Colors.TEXT)
+            isChecked = prefs.studioVoice
+            setOnCheckedChangeListener { _, checked -> prefs.studioVoice = checked }
+        }, matchWrap(top = 18))
+        card.addView(text(
+            "Fala como gente, sem as pausas da voz do celular. Usa a sua conta da ElevenLabs: cada corrida gasta cerca de 270 créditos " +
+                "(as duas falas, geradas logo no aceite). O primeiro nome do passageiro e a rua do destino vão para a ElevenLabs para gerar a fala. " +
+                "Sem internet ou sem créditos, o Radar usa a voz do celular.",
+            12f, Colors.MUTED
+        ))
+        val keyIn = EditText(this).apply {
+            hint = if (prefs.elevenKey.isBlank()) "Cole aqui a sua chave da ElevenLabs" else "Chave salva ✓ (cole outra para trocar)"
+            setHintTextColor(Colors.MUTED)
+            setTextColor(Colors.TEXT)
+            textSize = 16f
+            inputType = android.text.InputType.TYPE_CLASS_TEXT or android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD
+            minHeight = dp(56)
+            setOnFocusChangeListener { v, has ->
+                val t = (v as EditText).text.toString().trim()
+                if (!has && t.isNotBlank()) { prefs.elevenKey = t; v.setText(""); v.hint = "Chave salva ✓ (cole outra para trocar)" }
+            }
+            setOnEditorActionListener { v, _, _ -> v.clearFocus(); false }
+        }
+        card.addView(keyIn, matchWrap(top = 8))
+        val vozBtn = MaterialButton(this).apply { isAllCaps = false; letterSpacing = 0f }
+        fun nomeVoz() = VozEstudio.VOZES.firstOrNull { it.first == prefs.studioVoiceId } ?: VozEstudio.VOZES[0]
+        vozBtn.text = "Voz de estúdio: ${nomeVoz().second} ▸"
+        vozBtn.setOnClickListener {
+            keyIn.text.toString().trim().takeIf { it.isNotBlank() }?.let { prefs.elevenKey = it; keyIn.setText("") }
+            val vs = VozEstudio.VOZES
+            var sel = vs.indexOfFirst { it.first == nomeVoz().first }.coerceAtLeast(0)
+            androidx.appcompat.app.AlertDialog.Builder(this)
+                .setTitle("Voz de estúdio")
+                .setSingleChoiceItems(vs.map { "${it.second} · ${it.third}" }.toTypedArray(), sel) { _, w ->
+                    sel = w; prefs.studioVoiceId = vs[w].first
+                    if (prefs.elevenKey.isNotBlank()) VozEstudio.falar(this, Voz.textoInicio("Ana", "Avenida Paulista")) {
+                        Toast.makeText(this, "Não consegui gerar a voz: confira a chave e a internet", Toast.LENGTH_LONG).show()
+                    }
+                }
+                .setPositiveButton("Usar esta") { _, _ -> prefs.studioVoiceId = vs[sel].first; vozBtn.text = "Voz de estúdio: ${vs[sel].second} ▸" }
+                .show()
+        }
+        card.addView(vozBtn, matchWrap(top = 8))
         tripChecklist = text("", 14f, Colors.TEXT).apply { setPadding(0, dp(10), 0, 0) }
         card.addView(tripChecklist)
         tripPermBtn = MaterialButton(this).apply {

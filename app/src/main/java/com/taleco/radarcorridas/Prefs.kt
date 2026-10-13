@@ -190,6 +190,20 @@ class Prefs(context: Context) {
         get() = sp.getString("voz_nome", "") ?: ""
         set(v) = sp.edit().putString("voz_nome", v).apply()
 
+    /** Voz de estúdio (ElevenLabs) para falar com o passageiro. */
+    var studioVoice: Boolean
+        get() = sp.getBoolean("voz_estudio", false)
+        set(v) = sp.edit().putBoolean("voz_estudio", v).apply()
+
+    /** Chave da ElevenLabs do motorista (fica só no celular). */
+    var elevenKey: String
+        get() = sp.getString("eleven_chave", "") ?: ""
+        set(v) = sp.edit().putString("eleven_chave", v.trim()).apply()
+
+    var studioVoiceId: String
+        get() = sp.getString("voz_estudio_id", "") ?: ""
+        set(v) = sp.edit().putString("voz_estudio_id", v).apply()
+
     /** Ler notificações de compra do banco para achar gastos do carro. */
     var readBankNotifs: Boolean
         get() = sp.getBoolean("ler_notif_banco", true)

@@ -105,17 +105,32 @@ object Voz {
     /** "Avenida 9 de Julho, 2040, Bela Vista" -> "Avenida 9 de Julho" */
     private fun rua(d: String?): String? = d?.substringBefore(",")?.substringBefore(" - ")?.trim()?.takeIf { it.length >= 4 }
 
-    fun inicio(ctx: Context, passageiro: String?, destino: String?) {
+    fun textoInicio(passageiro: String?, destino: String?): String {
         val n = nome(passageiro)
         val r = rua(destino)
-        falar(ctx, (if (n != null) "Oi, $n, tudo bem? " else "Oi, tudo bem? ") +
+        return (if (n != null) "Oi, $n, tudo bem? " else "Oi, tudo bem? ") +
             (if (r != null) "Vamos lá, nosso destino é $r. " else "Vamos lá, já estamos a caminho do seu destino. ") +
-            "Se precisar de alguma coisa, é só me falar. Boa viagem!")
+            "Se precisar de alguma coisa, é só me falar. Boa viagem!"
     }
 
-    fun chegada(ctx: Context, passageiro: String?) {
+    fun textoChegada(passageiro: String?): String {
         val n = nome(passageiro)
-        falar(ctx, "Pronto" + (if (n != null) ", $n" else "") + ", chegamos! Obrigado pela companhia, espero que tenha curtido a viagem. " +
-            "Se puder, deixa sua avaliação no aplicativo da Uber. Até a próxima!")
+        return "Pronto" + (if (n != null) ", $n" else "") + ", chegamos! Obrigado pela companhia, espero que tenha curtido a viagem. " +
+            "Se puder, deixa sua avaliação no aplicativo da Uber. Até a próxima!"
     }
+
+    /** Voz de estúdio quando ligada (cai para a voz do celular se faltar internet ou crédito). */
+    private fun fala(ctx: Context, texto: String) {
+        if (VozEstudio.ativa(ctx)) VozEstudio.falar(ctx, texto) { falar(ctx, texto) } else falar(ctx, texto)
+    }
+
+    /** No aceite: já gera as duas falas da corrida, para tocarem na hora sem esperar a internet. */
+    fun adiantar(ctx: Context, passageiro: String?, destino: String?) {
+        VozEstudio.preparar(ctx, textoInicio(passageiro, destino))
+        VozEstudio.preparar(ctx, textoChegada(passageiro))
+    }
+
+    fun inicio(ctx: Context, passageiro: String?, destino: String?) = fala(ctx, textoInicio(passageiro, destino))
+
+    fun chegada(ctx: Context, passageiro: String?) = fala(ctx, textoChegada(passageiro))
 }

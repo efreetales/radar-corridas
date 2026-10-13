@@ -394,6 +394,7 @@ object TripTracker {
                 nextOffer = null
                 startTrip(ctx, q, at)
                 trip?.passenger = meet
+                if (prefs.talkToPassenger) Voz.adiantar(ctx, meet, q.destination)
             } else {
                 OfferLog.appendDiag(ctx, "CORRIDA: Uber mostra \"Encontro com $meet\", mas nenhuma oferta foi lida antes (card não apareceu)")
                 lastDonePassenger = meet; lastDoneAt = now
