@@ -207,8 +207,13 @@ class MainActivity : AppCompatActivity() {
         mapTile.setOnClickListener { startActivity(Intent(this, MapActivity::class.java)) }
         col.addView(mapTile, matchWrap(top = 12))
 
+        // Cartão e ganhos: card largo, como o do mapa
+        pages["Cartão e ganhos"]?.let { pg ->
+            col.addView(wideTile(pg.icon, pg.key, pg.hint) { showPage("Cartão e ganhos") }, matchWrap(top = 14))
+        }
+
         // Grade de cards, 2 por linha
-        val entries = pages.entries.filter { !it.value.hidden }
+        val entries = pages.entries.filter { !it.value.hidden && it.key != "Cartão e ganhos" }
         var i = 0
         while (i < entries.size) {
             val row = LinearLayout(this).apply { orientation = LinearLayout.HORIZONTAL }
@@ -237,6 +242,27 @@ class MainActivity : AppCompatActivity() {
             setPadding(0, dp(20), 0, 0)
         })
         return col
+    }
+
+    /** Card largo da tela inicial (ícone à esquerda, título e descrição). */
+    private fun wideTile(iconRes: Int, title: String, hint: String, onClick: () -> Unit): View {
+        val t = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            gravity = Gravity.CENTER_VERTICAL
+            setPadding(dp(18), dp(18), dp(18), dp(18))
+            background = rounded(Colors.SURFACE, 20f)
+            minimumHeight = dp(96)
+        }
+        ripple(t)
+        t.addView(icon(iconRes, 34, Colors.ACCENT).apply {
+            layoutParams = LinearLayout.LayoutParams(dp(34), dp(34)).apply { rightMargin = dp(16) }
+        })
+        val c = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
+        c.addView(text(title, 18f, Colors.TEXT, bold = true))
+        c.addView(text(hint, 12f, Colors.MUTED))
+        t.addView(c, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f))
+        t.setOnClickListener { onClick() }
+        return t
     }
 
     private fun ripple(v: View) {
@@ -1518,9 +1544,24 @@ class MainActivity : AppCompatActivity() {
     /** Aplica o estilo alto a todos os botões da tela (menos os pequenos de dias/limites). */
     private fun tallAll(v: View) {
         if (v is SwitchMaterial) {
-            // Chave com área de toque grande e texto legível
-            v.minHeight = dp(56)
-            v.minimumHeight = dp(56)
+            // Chave grande (o motorista pode estar no carro): área de toque de 64dp e trilho maior
+            v.minHeight = dp(64)
+            v.minimumHeight = dp(64)
+            v.switchMinWidth = dp(64)
+            val checked = arrayOf(intArrayOf(android.R.attr.state_checked), intArrayOf())
+            v.thumbDrawable = GradientDrawable().apply {
+                shape = GradientDrawable.OVAL
+                setSize(dp(30), dp(30))
+                setColor(Color.WHITE)
+                setStroke(dp(4), Color.TRANSPARENT)   // folga entre o botão e a borda do trilho
+            }
+            v.thumbTintList = ColorStateList(checked, intArrayOf(Color.WHITE, Color.parseColor("#C9D1D9")))
+            v.trackDrawable = GradientDrawable().apply {
+                cornerRadius = dp(19).toFloat()
+                setSize(dp(64), dp(38))
+                setColor(Color.WHITE)
+            }
+            v.trackTintList = ColorStateList(checked, intArrayOf(Colors.ACCENT, Color.parseColor("#3A434D")))
             v.textSize = maxOf(16f, v.textSize / resources.displayMetrics.scaledDensity)
             v.switchPadding = dp(12)
             return

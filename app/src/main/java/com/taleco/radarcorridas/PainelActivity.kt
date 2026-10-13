@@ -73,6 +73,12 @@ class PainelActivity : AppCompatActivity() {
 
         @JavascriptInterface
         fun close() { runOnUiThread { finish() } }
+
+        /** Abre o replay animado de uma corrida. */
+        @JavascriptInterface
+        fun replay(id: String) {
+            runOnUiThread { startActivity(android.content.Intent(this@PainelActivity, PainelActivity::class.java).putExtra(EXTRA_PAGE, "replay:$id")) }
+        }
     }
 
     /** Leva os custos da tela nova para o cálculo de lucro do cartão. */
@@ -98,7 +104,13 @@ class PainelActivity : AppCompatActivity() {
         web.webViewClient = WebViewClient()
         web.addJavascriptInterface(Bridge(), "Radar")
         setContentView(web)
-        val html = assets.open("painel.html").bufferedReader().use { it.readText() }
-        web.loadDataWithBaseURL("https://radarcorridas.app/painel?p=$page", html, "text/html", "utf-8", null)
+        if (page.startsWith("replay:")) {
+            // replay usa mapa vetorial (WebGL)
+            val html = assets.open("replay.html").bufferedReader().use { it.readText() }
+            web.loadDataWithBaseURL("https://radarcorridas.app/replay?id=${page.removePrefix("replay:")}", html, "text/html", "utf-8", null)
+        } else {
+            val html = assets.open("painel.html").bufferedReader().use { it.readText() }
+            web.loadDataWithBaseURL("https://radarcorridas.app/painel?p=$page", html, "text/html", "utf-8", null)
+        }
     }
 }

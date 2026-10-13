@@ -104,6 +104,18 @@
   .dghost { position:fixed; z-index:999; pointer-events:none; opacity:.92; transform:scale(1.06); box-shadow:0 8px 24px rgba(0,0,0,.5); }
   .slot.dragging, .tray button.dragging { opacity:.3; }
   .empty { color:var(--mu); text-align:center; padding:30px 8px; font-size:16px; }
+  /* ===== animações ===== */
+  @keyframes rise { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:none; } }
+  @keyframes growY { from { transform:scaleY(0); } to { transform:scaleY(1); } }
+  @keyframes growX { from { width:0; } }
+  @keyframes dash { to { stroke-dashoffset:0; } }
+  .anim { animation:rise .55s cubic-bezier(.2,.9,.3,1.1) both; }
+  .bars i, .hourbar i { transform-origin:50% 100%; animation:growY .8s cubic-bezier(.2,.9,.3,1.2) both; }
+  .track i, .stack i { animation:growX 1s cubic-bezier(.2,.9,.3,1) both; }
+  .draw { stroke-dasharray:1; stroke-dashoffset:1; animation:dash 2s cubic-bezier(.4,0,.2,1) forwards; }
+  .replay { display:flex; align-items:center; justify-content:center; gap:10px; width:100%; min-height:52px; margin-top:12px; border:0; border-radius:14px;
+            background:rgba(47,211,166,.14); color:var(--ac); font-weight:800; font-size:16px; }
+  @media (prefers-reduced-motion: reduce) { .anim, .bars i, .hourbar i, .track i, .stack i, .draw { animation:none !important; } }
 </style>
 </head>
 <body>
@@ -154,11 +166,13 @@ function drawMini(el, ids, free){
   const all = [];
   (free || []).forEach(seg => { if (seg.length > 1) { L.polyline(seg, { color:"#4C9AFF", weight:2.5, opacity:.7, dashArray:"5 5" }).addTo(m); all.push(...seg); } });
   ids.forEach(id => { const pts = ROUTES[id] || []; let seg = [], ph = null;
-    const flush = () => { if (seg.length > 1) L.polyline(seg, { color:PHC[ph] || "#888", weight:4 }).addTo(m); };
+    const flush = () => { if (seg.length > 1) L.polyline(seg, { color:PHC[ph] || "#888", weight:4, className:"draw" }).addTo(m); };
     pts.forEach(p => { all.push([p[0],p[1]]); if (p[2] !== ph) { if (seg.length) seg.push([p[0],p[1]]); flush(); seg = [[p[0],p[1]]]; ph = p[2]; } else seg.push([p[0],p[1]]); }); flush();
     if (pts.length) { L.circleMarker([pts[0][0],pts[0][1]], { radius:5, color:"#fff", weight:2, fillColor:"#8B949E", fillOpacity:1 }).addTo(m);
       const z = pts[pts.length-1]; L.circleMarker([z[0],z[1]], { radius:5, color:"#fff", weight:2, fillColor:"#E5484D", fillOpacity:1 }).addTo(m); } });
   if (all.length > 1) m.fitBounds(L.latLngBounds(all), { padding:[14,14], maxZoom:16 }); else el.remove();
+  // trajeto se desenhando: cada linha com comprimento normalizado (pathLength=1)
+  el.querySelectorAll("path.draw").forEach((p, i) => { p.setAttribute("pathLength", "1"); p.style.animationDelay = (300 + i * 120) + "ms"; });
 }
 function initMaps(){ document.querySelectorAll("[data-mini]").forEach(el => drawMini(el, el.dataset.mini.split("|"), null));
   document.querySelectorAll("[data-day]").forEach(el => { const k = el.dataset.day;
@@ -236,7 +250,8 @@ function historico(){
         <div class="sub"><b>${hm(o.t)}</b> · ${o.app==="99"?"99":"Uber"} ${o.cat||""} · ${(o.km||0).toFixed(1).replace(".",",")} km · ${Math.round(o.min||0)} min${nota}</div>
         <div class="mets"><div><b class="${cls(o.rskm,KMB,KMG)}">${brl(o.rskm)}</b><span>por km</span></div><div><b class="${cls(o.rsh,HB,HG)}">${brl(o.rsh,0)}</b><span>por hora</span></div><div><b>${o.lucro!=null?brl(o.lucro,0):"–"}</b><span>lucro</span></div></div>
         ${fixAddr(o.orig)||fixAddr(o.dest)?`<div class="addr">${fixAddr(o.orig)?"● "+fixAddr(o.orig):""}${fixAddr(o.orig)&&fixAddr(o.dest)?"<br>":""}${fixAddr(o.dest)?"■ "+fixAddr(o.dest):""}</div>`:""}
-        ${o.trip && (ROUTES[o.trip.id]||[]).length > 1 ? `<div class="mini" data-mini="${o.trip.id}"></div><div class="sm muted" style="margin-top:10px">${o.trip.st[0].toUpperCase()+o.trip.st.slice(1)} · ${(o.trip.km||0).toFixed(1).replace(".",",")} km rodados${o.trip.end?" · "+hm(o.trip.acc)+"–"+hm(o.trip.end):""}</div>` : ""}</div>`; });
+        ${o.trip && (ROUTES[o.trip.id]||[]).length > 1 ? `<div class="mini" data-mini="${o.trip.id}"></div><div class="sm muted" style="margin-top:10px">${o.trip.st[0].toUpperCase()+o.trip.st.slice(1)} · ${(o.trip.km||0).toFixed(1).replace(".",",")} km rodados${o.trip.end?" · "+hm(o.trip.acc)+"–"+hm(o.trip.end):""}</div>
+        ${o.trip.st.startsWith("concluída") ? `<button class="replay" onclick="openReplay('${o.trip.id}')">▶ Ver replay da corrida</button>` : ""}` : ""}</div>`; });
   });
   app.innerHTML = h; initMaps();
 }
@@ -438,7 +453,19 @@ function endDrag(e){
   save();
 }
 
-function render(){ ({historico, horarios, jornada, custos, cartao}[page] || historico)(); }
+function openReplay(id){ try { Radar.replay(id); } catch(e){ location.href = "replay.html?id=" + id; } }
+function countUp(el){ const t = el.textContent.trim(), m = /^(R\$\s)?([\d.]+)(,(\d+))?$/.exec(t); if (!m) return;
+  const dec = m[4] ? m[4].length : 0, target = parseFloat(m[2].replace(/\./g,"") + (dec ? "." + m[4] : "")); if (!isFinite(target) || target === 0) return;
+  const pre = m[1] || "", t0 = performance.now(), D = 900;
+  const fmt = v => pre + v.toLocaleString("pt-BR", { minimumFractionDigits:dec, maximumFractionDigits:dec });
+  const step = now => { const k = Math.min(1, (now - t0) / D), e = 1 - Math.pow(1 - k, 3); el.textContent = fmt(target * e); if (k < 1) requestAnimationFrame(step); else el.textContent = t; };
+  requestAnimationFrame(step); }
+function animate(){ if (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  if (!animate.done) { animate.done = true; [...app.children].slice(0, 14).forEach((el, i) => { el.classList.add("anim"); el.style.animationDelay = (i * 55) + "ms"; }); }
+  document.querySelectorAll(".bars i, .hourbar i").forEach((el, i) => el.style.animationDelay = (120 + i * 45) + "ms");
+  document.querySelectorAll(".track i, .stack i").forEach((el, i) => el.style.animationDelay = (200 + i * 90) + "ms");
+  document.querySelectorAll(".kpi b, .offer .val, .hero .big").forEach(countUp); }
+function render(){ ({historico, horarios, jornada, custos, cartao}[page] || historico)(); animate(); }
 render();
 </script>
 </body>

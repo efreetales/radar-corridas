@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Replay da corrida</title>
+<link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css">
+<script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+<style>
+  :root { --bg:#0B0F14; --s1:#141A21; --tx:#F1F5F9; --mu:#94A3B8; --ac:#2FD3A6; --good:#3DD68C; --mid:#F5C518; --bad:#FF6369; --blue:#4C9AFF; --pick:#B8C2CC; }
+  * { box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  html,body { margin:0; height:100%; background:var(--bg); color:var(--tx); font-family:system-ui,Roboto,sans-serif; overflow:hidden; }
+  #map { position:absolute; inset:0; background:#0E1116; }
+  .maplibregl-ctrl-attrib { font-size:10px; opacity:.6; }
+  /* topo */
+  .top { position:absolute; left:12px; right:12px; top:12px; z-index:600; display:flex; gap:10px; align-items:center; }
+  .back { width:52px; height:52px; border-radius:16px; border:0; background:rgba(20,26,33,.86); backdrop-filter:blur(8px); color:var(--tx); font-size:28px; flex:none; }
+  .clock { flex:1; height:52px; border-radius:16px; background:rgba(20,26,33,.86); backdrop-filter:blur(8px); display:flex; align-items:center; justify-content:space-between; padding:0 16px; }
+  .clock b { font-size:22px; font-variant-numeric:tabular-nums; } .clock span { color:var(--mu); font-size:14px; }
+  /* etapa atual */
+  .stage { position:absolute; left:50%; top:76px; transform:translateX(-50%); z-index:600; padding:10px 18px; border-radius:999px; font-weight:800; font-size:16px;
+           background:rgba(20,26,33,.9); border:1.5px solid rgba(255,255,255,.08); display:flex; gap:8px; align-items:center; white-space:nowrap; transition:all .35s cubic-bezier(.2,.9,.3,1.3); }
+  .stage i { width:10px; height:10px; border-radius:50%; display:block; box-shadow:0 0 12px currentColor; }
+  /* oferta */
+  .offer { position:absolute; left:14px; right:14px; bottom:190px; z-index:700; background:#000; border:4px solid var(--good); border-radius:22px; padding:16px 18px;
+           transform:translateY(40px) scale(.92); opacity:0; transition:all .45s cubic-bezier(.2,.9,.3,1.25); box-shadow:0 18px 50px rgba(0,0,0,.6); }
+  .offer.on { transform:none; opacity:1; }
+  .offer .v { font-size:30px; font-weight:900; } .offer .s { color:var(--mu); font-size:17px; margin-top:2px; }
+  .offer .m { display:flex; gap:16px; margin-top:12px; } .offer .m div span { display:block; color:var(--mu); font-size:14px; } .offer .m b { font-size:22px; }
+  .stamp { position:absolute; right:16px; top:14px; padding:8px 14px; border-radius:12px; background:var(--good); color:#06231B; font-weight:900; font-size:18px;
+           transform:scale(2.4) rotate(-14deg); opacity:0; transition:all .35s cubic-bezier(.2,.9,.3,1.5); }
+  .stamp.on { transform:rotate(-8deg); opacity:1; }
+  /* painel de baixo */
+  .panel { position:absolute; left:0; right:0; bottom:0; z-index:650; background:linear-gradient(180deg,rgba(11,15,20,0),rgba(11,15,20,.92) 22%,var(--bg)); padding:34px 16px 22px; }
+  .steps { display:flex; justify-content:space-between; margin-bottom:12px; }
+  .st { flex:1; text-align:center; font-size:12.5px; color:var(--mu); position:relative; transition:color .3s; }
+  .st b { display:block; width:34px; height:34px; margin:0 auto 6px; border-radius:50%; background:#1E2630; font-size:17px; line-height:34px; transition:all .35s cubic-bezier(.2,.9,.3,1.4); }
+  .st.on { color:var(--tx); font-weight:700; } .st.on b { transform:scale(1.18); box-shadow:0 0 0 4px rgba(47,211,166,.25); background:var(--ac); }
+  .st.past b { background:#24453C; } .st.past { color:#6EE7C7; }
+  .bar { height:8px; border-radius:4px; background:#1E2630; overflow:hidden; } .bar i { display:block; height:100%; width:0; background:linear-gradient(90deg,var(--pick),var(--mid),var(--good)); border-radius:4px; }
+  .ctrl { display:flex; gap:12px; margin-top:14px; }
+  .ctrl button { height:56px; border-radius:16px; border:0; font-weight:800; font-size:17px; background:#1E2630; color:var(--tx); }
+  .ctrl .play { flex:1; background:var(--ac); color:#06231B; }
+  .ctrl .sp { width:86px; }
+  /* resumo */
+  .done { position:absolute; inset:0; z-index:800; display:flex; align-items:center; justify-content:center; background:rgba(5,8,12,.55); opacity:0; pointer-events:none; transition:opacity .4s; }
+  .done.on { opacity:1; pointer-events:auto; }
+  .done .c { width:86%; background:var(--s1); border-radius:26px; padding:24px 22px; text-align:center; transform:scale(.8); transition:transform .5s cubic-bezier(.2,.9,.3,1.4); border:1px solid rgba(255,255,255,.06); }
+  .done.on .c { transform:none; }
+  .done .big { font-size:46px; font-weight:900; color:var(--good); margin:6px 0; }
+  .done .g { display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; margin-top:16px; } .done .g div { background:#1E2630; border-radius:14px; padding:12px 6px; }
+  .done .g b { display:block; font-size:19px; } .done .g span { font-size:13px; color:var(--mu); }
+  .burst { position:absolute; width:10px; height:10px; border-radius:2px; z-index:801; pointer-events:none; }
+  /* marcadores */
+  .car { width:46px; height:46px; display:block; filter:drop-shadow(0 4px 10px rgba(0,0,0,.6)); }
+  .pulse { position:absolute; left:50%; top:50%; width:46px; height:46px; margin:-23px 0 0 -23px; border-radius:50%; border:3px solid var(--ac); animation:pulse 1.4s ease-out infinite; }
+  @keyframes pulse { from { transform:scale(.6); opacity:1 } to { transform:scale(2.6); opacity:0 } }
+  .pin { width:44px; height:56px; transform-origin:50% 100%; animation:drop .6s cubic-bezier(.2,.9,.3,1.5) both; }
+  @keyframes drop { from { transform:translateY(-60px) scale(.5); opacity:0 } to { transform:none; opacity:1 } }
+  .pax { width:40px; height:40px; border-radius:50%; background:var(--blue); border:3px solid #fff; display:flex; align-items:center; justify-content:center; font-size:20px;
+         animation:pop .5s cubic-bezier(.2,.9,.3,1.6) both; box-shadow:0 0 0 0 rgba(76,154,255,.6); }
+  @keyframes pop { from { transform:scale(0) } to { transform:scale(1) } }
+  .wait { position:absolute; left:50%; top:-30px; transform:translateX(-50%); background:#000; color:var(--mid); font-weight:800; font-size:14px; padding:4px 9px; border-radius:10px; white-space:nowrap; }
+  /* escolha do ícone */
+  .icob { width:52px; height:52px; border-radius:16px; border:0; background:rgba(20,26,33,.86); backdrop-filter:blur(8px); flex:none; padding:7px; }
+  .icob svg { width:38px; height:38px; display:block; }
+  .sheet { position:absolute; inset:0; z-index:900; background:rgba(5,8,12,.55); display:flex; align-items:flex-end; opacity:0; pointer-events:none; transition:opacity .25s; }
+  .sheet.on { opacity:1; pointer-events:auto; }
+  .sheet .c { width:100%; background:var(--s1); border-radius:26px 26px 0 0; padding:22px 16px 26px; transform:translateY(40px); transition:transform .35s cubic-bezier(.2,.9,.3,1.2); }
+  .sheet.on .c { transform:none; }
+  .sheet h4 { margin:0 0 14px; font-size:19px; }
+  .ics { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
+  .ics button { height:96px; border-radius:18px; border:2px solid transparent; background:#1E2630; color:var(--tx); font-size:14px; font-weight:700; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; }
+  .ics button svg { width:44px; height:44px; } .ics button.sel { border-color:var(--ac); background:#173A33; }
+</style>
+</head>
+<body>
+<div id="map"></div>
+<div class="top"><button class="back" onclick="goBack()">‹</button><div class="clock"><b id="clk">--:--</b><span id="sub">Replay da corrida</span></div><button class="icob" id="icob" onclick="openIcons()" aria-label="Trocar ícone do carro"></button></div>
+<div class="sheet" id="sheet" onclick="if(event.target===this)closeIcons()"><div class="c"><h4>Ícone do motorista</h4><div class="ics" id="ics"></div></div></div>
+<div class="stage" id="stage"><i style="color:var(--blue);background:var(--blue)"></i><span>Livre</span></div>
+<div class="offer" id="offer"><div class="stamp" id="stamp">✓ ACEITA</div><div class="v" id="ov"></div><div class="s" id="os"></div><div class="m" id="om"></div></div>
+<div class="panel">
+  <div class="steps" id="steps"></div>
+  <div class="bar"><i id="bar"></i></div>
+  <div class="ctrl"><button class="play" id="play" onclick="toggle()">❚❚ Pausar</button><button class="sp" id="sp" onclick="speed()">1×</button><button class="sp" onclick="restart()">↺</button></div>
+</div>
+<div class="done" id="done" onclick="this.classList.remove('on')"><div class="c"><div class="muted" style="color:var(--mu)">Corrida concluída</div><div class="big" id="dv"></div><div id="dd" style="color:var(--mu);font-size:15px"></div><div class="g" id="dg"></div></div></div>
+<script>
+// ===== dados =====
+function raw(n){ try { return (window.Radar && Radar.file(n)) || ""; } catch(e){ return ""; } }
+function goBack(){ try { Radar.close(); } catch(e){ history.back(); } }
+function parseCsv(t){ const L=t.split(/\r?\n/).filter(l=>l.trim()); if(!L.length) return []; const sp=l=>{const o=[];let c="",q=false;for(const ch of l){if(ch=='"')q=!q;else if(ch==';'&&!q){o.push(c);c=""}else c+=ch}o.push(c);return o};
+  const h=sp(L[0]); return L.slice(1).map(l=>{const v=sp(l),o={};h.forEach((k,i)=>o[k]=v[i]??"");return o}); }
+const n2=s=>{ if(s==null||s==="") return null; const v=parseFloat(String(s).replace(",", ".")); return isNaN(v)?null:v; };
+const when=s=>s?new Date(s.replace(" ","T")):null, hm=d=>String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0");
+const brl=(v,d=2)=>"R$ "+(v||0).toLocaleString("pt-BR",{minimumFractionDigits:d,maximumFractionDigits:d});
+const trips=parseCsv(raw("corridas.csv")), offers=parseCsv(raw("ofertas.csv")), rotas=parseCsv(raw("rotas.csv"));
+const want=new URLSearchParams(location.search).get("id");
+const done=trips.filter(t=>t.status.startsWith("concluída") && rotas.some(r=>r.id===t.id));
+const T=done.find(t=>t.id===want) || done[done.length-1];
+const acc=when(T.aceite);
+const offer=offers.filter(o=>Math.abs(when(o.data_hora)-acc)<120e3).sort((a,b)=>Math.abs(n2(a.valor)-n2(T.valor))-Math.abs(n2(b.valor)-n2(T.valor)))[0];
+// pontos: trajeto livre antes da oferta (até 12 min) + a corrida
+const free=rotas.filter(r=>r.id.startsWith("livre")).map(r=>({t:when(r.data_hora),lat:+r.lat,lng:+r.lng,ph:"LIVRE"})).filter(p=>p.t<acc && acc-p.t<12*60e3);
+const ride=rotas.filter(r=>r.id===T.id).map(r=>({t:when(r.data_hora),lat:+r.lat,lng:+r.lng,ph:r.fase}));
+let pts=free.concat([{...(ride[0]||free[free.length-1]),t:acc,ph:"OFERTA"}],ride).sort((a,b)=>a.t-b.t);
+const PH={LIVRE:["Livre","var(--blue)","#4C9AFF"],OFERTA:["Oferta","var(--good)","#3DD68C"],A_CAMINHO:["Buscando passageiro","var(--pick)","#B8C2CC"],
+  NO_EMBARQUE:["Aguardando passageiro","var(--mid)","#F5C518"],EM_VIAGEM:["Em viagem","var(--ac)","#2FD3A6"],FIM:["Concluída","var(--good)","#3DD68C"]};
+// ===== linha do tempo do replay: cada fase com duração própria na tela =====
+const SEG=[]; { let cur=null; pts.forEach(p=>{ if(!cur||cur.ph!==p.ph){ cur={ph:p.ph,pts:[]}; SEG.push(cur);} cur.pts.push(p); }); }
+const PLAY={LIVRE:5,OFERTA:3.2,A_CAMINHO:6,NO_EMBARQUE:3.5,EM_VIAGEM:12};
+let total=0; SEG.forEach(s=>{ s.dur=PLAY[s.ph]||4; if(s.ph==="NO_EMBARQUE") s.dur=Math.max(3.5,Math.min(6,(s.pts[s.pts.length-1].t-s.pts[0].t)/60e3*1.5)); s.t0=total; total+=s.dur; });
+// ===== mapa (vetorial, OpenFreeMap: grátis e sem chave) =====
+const allLL=pts.map(p=>[p.lng,p.lat]);
+const bounds=allLL.reduce((b,c)=>b.extend(c), new maplibregl.LngLatBounds(allLL[0],allLL[0]));
+const map=new maplibregl.Map({container:"map",style:"https://tiles.openfreemap.org/styles/dark",bounds,fitBoundsOptions:{padding:70},
+  pitch:0,attributionControl:{compact:true},fadeDuration:0});
+// ícone do motorista: carro (várias cores) ou seta de navegação — escolha salva em "replay_icone"
+const ICONES=[["verde","Verde","#2FD3A6"],["branco","Branco","#E8EDF2"],["amarelo","Amarelo","#F5C518"],["vermelho","Vermelho","#FF5A5F"],["azul","Azul","#4C9AFF"],["preto","Preto","#2B323B"],["seta","Seta","#4C9AFF"],["seta_verde","Seta verde","#2FD3A6"]];
+function iconSvg(k){ const o=ICONES.find(x=>x[0]===k)||ICONES[0], c=o[2];
+  if(k.startsWith("seta")) return `<svg class="car" viewBox="0 0 64 64"><circle cx="32" cy="32" r="27" fill="${c}" opacity=".18"/><path d="M32 8 L50 52 L32 42 L14 52 Z" fill="${c}" stroke="#fff" stroke-width="4" stroke-linejoin="round"/></svg>`;
+  const dark=k==="branco"||k==="amarelo", glass=dark?"#1b2530":"#bfeee2";
+  return `<svg class="car" viewBox="0 0 64 64"><rect x="17" y="5" width="30" height="54" rx="11" fill="${c}" stroke="${k==="preto"?"#8b949e":"#0D1117"}" stroke-width="2.5"/>
+  <rect x="21" y="17" width="22" height="11" rx="3" fill="${glass}" opacity=".9"/><rect x="21" y="41" width="22" height="8" rx="3" fill="${glass}" opacity=".6"/>
+  <rect x="19" y="6" width="8" height="4" rx="2" fill="#fff59d"/><rect x="37" y="6" width="8" height="4" rx="2" fill="#fff59d"/>
+  <rect x="19" y="55" width="7" height="3" rx="1.5" fill="#ff4d4d"/><rect x="38" y="55" width="7" height="3" rx="1.5" fill="#ff4d4d"/></svg>`; }
+function prefGet(k){ try { return (window.Radar && Radar.pref && Radar.pref(k)) || ""; } catch(e){ return ""; } }
+let icone=new URLSearchParams(location.search).get("icone") || prefGet("replay_icone") || "verde";
+const carEl=document.createElement("div"); carEl.style.width="46px"; carEl.style.height="46px"; carEl.innerHTML=`<div style="position:relative;width:46px;height:46px"><div id="ico">${iconSvg(icone)}</div><div class="pulse" id="pulse" style="display:none"></div></div>`;
+const carMk=new maplibregl.Marker({element:carEl,rotationAlignment:"map",pitchAlignment:"map"}).setLngLat(allLL[0]).addTo(map);
+const LINES={}; let mapReady=false;
+map.on("load",()=>{
+  // deixa o mapa mais escuro e limpo para o trajeto brilhar
+  for (const l of map.getStyle().layers) { if (l.type==="symbol" && /poi/.test(l.id)) map.setLayoutProperty(l.id,"visibility","none"); }
+  SEG.forEach((sg,i)=>{ if(sg.ph==="OFERTA") return; const id="seg"+i, coords=sg.pts.map(p=>[p.lng,p.lat]); if(coords.length<2) coords.push(coords[0]);
+    // distância acumulada de cada ponto (0..1) para saber quanto da linha mostrar
+    let d=0; sg.cum=[0]; for(let j=1;j<sg.pts.length;j++){ d+=Math.hypot(sg.pts[j].lat-sg.pts[j-1].lat,(sg.pts[j].lng-sg.pts[j-1].lng)*.92); sg.cum.push(d); } sg.len=d||1;
+    map.addSource(id,{type:"geojson",lineMetrics:true,data:{type:"Feature",geometry:{type:"LineString",coordinates:coords}}});
+    const col=PH[sg.ph][2];
+    if(sg.ph==="EM_VIAGEM") map.addLayer({id:id+"g",type:"line",source:id,layout:{"line-cap":"round","line-join":"round"},paint:{"line-width":22,"line-blur":6,"line-gradient":grad(col,0,.35)}});
+    map.addLayer({id,type:"line",source:id,layout:{"line-cap":"round","line-join":"round"},paint:{"line-width":sg.ph==="LIVRE"?4:sg.ph==="EM_VIAGEM"?7:6,"line-gradient":grad(col,0,1)}});
+    sg.layer=id; });
+  mapReady=true; if(!CAPTURE) requestAnimationFrame(frame); else window.__ready=true;
+});
+// cor até "k" (0..1) do comprimento e transparente depois
+function grad(col,k,op){ const c=hexA(col,op), t=hexA(col,0); if(k<=0) return ["interpolate",["linear"],["line-progress"],0,t,1,t];
+  if(k>=1) return ["interpolate",["linear"],["line-progress"],0,c,1,c]; return ["step",["line-progress"],c,k,t]; }
+function hexA(h,a){ const n=parseInt(h.slice(1),16); return `rgba(${n>>16&255},${n>>8&255},${n&255},${a})`; }
+function reveal(sg,k){ if(!sg.layer||!mapReady) return; const col=PH[sg.ph][2]; map.setPaintProperty(sg.layer,"line-gradient",grad(col,k,1));
+  if(map.getLayer(sg.layer+"g")) map.setPaintProperty(sg.layer+"g","line-gradient",grad(col,k,.35)); }
+const CAPTURE=new URLSearchParams(location.search).has("capture");
+let pickupMk=null, destMk=null, paxMk=null, waitEl=null;
+const pinSvg=(c,ic)=>`<svg class="pin" viewBox="0 0 44 56"><path d="M22 55C22 55 3 33 3 21a19 19 0 0 1 38 0c0 12-19 34-19 34z" fill="${c}" stroke="#fff" stroke-width="3"/><text x="22" y="28" font-size="18" text-anchor="middle">${ic}</text></svg>`;
+function pin(ll,html,size){ const e=document.createElement("div"); e.innerHTML=html; e.style.lineHeight="0"; return new maplibregl.Marker({element:e,anchor:"bottom"}).setLngLat(ll).addTo(map); }
+// ===== interface =====
+const STEPS=[["LIVRE","🚗","Livre"],["OFERTA","💰","Oferta"],["A_CAMINHO","➜","Buscar"],["NO_EMBARQUE","⏱","Embarque"],["EM_VIAGEM","🧍","Viagem"],["FIM","✓","Fim"]];
+document.getElementById("steps").innerHTML=STEPS.map(s=>`<div class="st" data-k="${s[0]}"><b>${s[1]}</b>${s[2]}</div>`).join("");
+function setStage(ph){ const [l,c]=PH[ph]; const el=document.getElementById("stage"); el.innerHTML=`<i style="color:${c};background:${c}"></i><span>${l}</span>`;
+  el.style.transform="translateX(-50%) scale(1.12)"; setTimeout(()=>el.style.transform="translateX(-50%)",180);
+  let seen=true; document.querySelectorAll(".st").forEach(s=>{ s.classList.toggle("on",s.dataset.k===ph); if(s.dataset.k===ph) seen=false; s.classList.toggle("past",seen&&s.dataset.k!==ph); }); }
+if(offer){ const o=offer; document.getElementById("ov").textContent=brl(n2(o.valor));
+  document.getElementById("os").textContent=`Uber ${o.categoria} · ${(n2(o.km_total)||0).toFixed(1).replace(".",",")} km · ${Math.round(n2(o.min_total)||0)} min`;
+  document.getElementById("om").innerHTML=[["R$/km",brl(n2(o.rs_km))],["R$/hora",brl(n2(o.rs_hora),0)],["Lucro",brl(n2(o.lucro),0)]].map(([a,b])=>`<div><span>${a}</span><b>${b}</b></div>`).join(""); }
+// ===== animação =====
+let tPlay=0, last=null, playing=true, sp=1, stageNow=null, finished=false;
+function heading(a,b){ const c=Math.cos(a.lat*Math.PI/180); return Math.atan2((b.lng-a.lng)*c,b.lat-a.lat)*180/Math.PI; }
+let carAng=0, camZ=15, camB=0, camBusy=false, lastTp=null;
+const mtr=(a,b)=>Math.hypot((b.lat-a.lat)*111320,(b.lng-a.lng)*111320*Math.cos(a.lat*Math.PI/180));
+function aheadOf(P,i,pos){ for(let j=i;j<P.length;j++){ if(mtr(pos,P[j])>=18) return heading(pos,P[j]); }
+  // fim da fase: usa o trecho final (se for longo o bastante)
+  for(let j=P.length-2;j>=0;j--){ if(mtr(P[j],P[P.length-1])>=30) return heading(P[j],P[P.length-1]); } return null; }
+function frame(ts){
+  if(last==null) last=ts; const dt=Math.min(.05,(ts-last)/1000); last=ts;
+  if(playing && !finished) tPlay+=dt*sp;
+  renderAt(tPlay);
+  requestAnimationFrame(frame);
+}
+// gravação da prévia quadro a quadro: window.__seek(t)
+window.__seek=t=>{ tPlay=t; renderAt(t); return new Promise(r=>{ map.once("idle",r); map.triggerRepaint(); setTimeout(r,1500); }); };
+let lastSeg=-1;
+function renderAt(tp){
+  if(tp>=total && !finished){ finished=true; finish(); }
+  const t=Math.min(tp,total-1e-6);
+  const s=SEG.find(x=>t>=x.t0 && t<x.t0+x.dur)||SEG[SEG.length-1];
+  const k=Math.max(0,Math.min(1,(t-s.t0)/s.dur));
+  if(stageNow!==s.ph){ enter(s.ph,s); stageNow=s.ph; }
+  // posição: por tempo real dentro da fase (suavizado)
+  const P=s.pts, ease=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;
+  const tr=P[0].t.getTime()+(P[P.length-1].t-P[0].t)*(s.ph==="LIVRE"||s.ph==="EM_VIAGEM"||s.ph==="A_CAMINHO"?k:ease);
+  let i=P.findIndex(p=>p.t>=tr); if(i<=0) i=1; if(i>=P.length) i=P.length-1;
+  const a=P[i-1]||P[0], b=P[i]||P[0], f=b.t-a.t>0?(tr-a.t)/(b.t-a.t):1;
+  const pos={lat:a.lat+(b.lat-a.lat)*f,lng:a.lng+(b.lng-a.lng)*f};
+  carMk.setLngLat([pos.lng,pos.lat]);
+  // direção: aponta para um ponto ~18 m à frente no trajeto (ignora o tremido do GPS e as paradas)
+  const ah=aheadOf(P,i,pos); if(ah!=null){ const d=((ah-carAng+540)%360)-180, dts=lastTp==null?1:Math.min(1,Math.abs(tp-lastTp)/Math.max(sp,.5));
+    carAng+=d*(lastTp==null?1:1-Math.exp(-dts*9)); }
+  lastTp=tp;
+  carMk.setRotation(carAng);
+  // rastro: revela a linha da fase até o carro; fases anteriores ficam completas
+  const si=SEG.indexOf(s);
+  if(si!==lastSeg){ SEG.forEach((x,j)=>reveal(x, j<si?1:0)); lastSeg=si; }
+  if(s.cum){ const kk=((s.cum[i-1]||0)+((s.cum[i]||0)-(s.cum[i-1]||0))*Math.max(0,Math.min(1,f)))/s.len; reveal(s,Math.min(1,kk+.002)); }
+  // câmera de navegação: segue o carro, inclinada, girando com a direção
+  if((playing||CAPTURE) && !finished && s.ph!=="OFERTA" && !camBusy){ const zoom = s.ph==="LIVRE"?15.2: s.ph==="EM_VIAGEM"?15.6:16.3;
+    camZ += (zoom-camZ)*.04; camB += ((((carAng-camB)+540)%360)-180)*(CAPTURE?.35:.05);
+    map.jumpTo({center:[pos.lng,pos.lat],zoom:camZ,bearing:camB,pitch:58}); }
+  if(waitEl && s.ph==="NO_EMBARQUE"){ const sec=Math.round((tr-P[0].t)/1000); waitEl.textContent=`aguardando ${Math.floor(sec/60)}:${String(sec%60).padStart(2,"0")}`; }
+  document.getElementById("clk").textContent=hm(new Date(tr));
+  document.getElementById("bar").style.width=(100*t/total)+"%";
+}
+function enter(ph,s){
+  setStage(ph);
+  // a linha de cada fase continua de onde a anterior parou
+  const same=SEG.filter(x=>x.ph===ph && x!==s && x.t0<s.t0); s.prev=same.flatMap(x=>x.pts.map(p=>[p.lng,p.lat]));
+  const pulse=document.getElementById("pulse"); if(pulse) pulse.style.display = ph==="OFERTA"||ph==="NO_EMBARQUE" ? "block" : "none";
+  const of=document.getElementById("offer"), st=document.getElementById("stamp");
+  if(ph==="OFERTA"){ if(!CAPTURE){ camBusy=true; map.easeTo({center:carMk.getLngLat(),zoom:16.6,pitch:30,duration:900}); setTimeout(()=>camBusy=false,1000); } else map.jumpTo({center:carMk.getLngLat(),zoom:16.4,pitch:35});
+    of.classList.add("on"); setTimeout(()=>st.classList.add("on"),1500); }
+  else { of.classList.remove("on"); st.classList.remove("on"); }
+  if(ph==="A_CAMINHO"){ const pk=SEG.find(x=>x.ph==="NO_EMBARQUE")||s, p0=pk.pts[0]; pickupMk=pin([p0.lng,p0.lat],pinSvg("#F5C518","🧍")); }
+  if(ph==="NO_EMBARQUE"){ const p0=s.pts[0];
+    paxMk=pin([p0.lng,p0.lat],`<div style="position:relative;margin-bottom:6px"><div class="pax">🧍</div><div class="wait" id="wait">aguardando</div></div>`);
+    setTimeout(()=>waitEl=document.getElementById("wait"),30); }
+  if(ph==="EM_VIAGEM"){ if(pickupMk) pickupMk.remove(); if(paxMk){ paxMk.remove(); paxMk=null; } waitEl=null;
+    const z=s.pts[s.pts.length-1]; destMk=pin([z.lng,z.lat],pinSvg("#3DD68C","🏁")); }
+}
+function finish(){ setStage("FIM"); if(CAPTURE){ SEG.forEach(x=>reveal(x,1)); } const rb=ride.map(p=>[p.lng,p.lat]).reduce((b,c)=>b.extend(c), new maplibregl.LngLatBounds([ride[0].lng,ride[0].lat],[ride[0].lng,ride[0].lat]));
+  map.fitBounds(rb,{padding:{top:120,bottom:220,left:50,right:50},pitch:0,bearing:0,duration:CAPTURE?0:1600});
+  const mins=(when(T.fim)-acc)/60e3, val=n2(T.valor)||0;
+  document.getElementById("dv").textContent=brl(val);
+  document.getElementById("dd").textContent=`${hm(acc)} – ${hm(when(T.fim))} · Uber ${T.categoria}`;
+  document.getElementById("dg").innerHTML=[[Math.round(mins)+" min","tempo total"],[((n2(T.km_ate_embarque)||0)+(n2(T.km_viagem)||0)).toFixed(1).replace(".",",")+" km","rodados"],[brl(val/(mins/60),0),"por hora"]].map(([a,b])=>`<div><b>${a}</b><span>${b}</span></div>`).join("");
+  setTimeout(()=>{ document.getElementById("done").classList.add("on"); burst(); },900);
+  document.getElementById("play").textContent="▶ Ver de novo"; }
+function burst(){ const C=["#2FD3A6","#3DD68C","#F5C518","#4C9AFF","#fff"]; for(let i=0;i<46;i++){ const e=document.createElement("div"); e.className="burst"; e.style.background=C[i%5];
+  e.style.left="50%"; e.style.top="45%"; document.body.appendChild(e); const a=Math.random()*Math.PI*2, r=120+Math.random()*180;
+  e.animate([{transform:"translate(0,0) rotate(0)",opacity:1},{transform:`translate(${Math.cos(a)*r}px,${Math.sin(a)*r+160}px) rotate(${Math.random()*720}deg)`,opacity:0}],{duration:1400+Math.random()*600,easing:"cubic-bezier(.2,.8,.3,1)"}).onfinish=()=>e.remove(); } }
+function toggle(){ if(finished){ restart(); return; } playing=!playing; document.getElementById("play").textContent=playing?"❚❚ Pausar":"▶ Continuar"; }
+function speed(){ sp = sp===1?2:sp===2?0.5:1; document.getElementById("sp").textContent=(sp===0.5?"½":sp)+"×"; }
+function paintIcons(){ document.getElementById("icob").innerHTML=iconSvg(icone);
+  document.getElementById("ics").innerHTML=ICONES.map(o=>`<button class="${o[0]===icone?"sel":""}" onclick="pickIcon('${o[0]}')">${iconSvg(o[0])}<span>${o[1]}</span></button>`).join(""); }
+function openIcons(){ paintIcons(); document.getElementById("sheet").classList.add("on"); }
+function closeIcons(){ document.getElementById("sheet").classList.remove("on"); }
+function pickIcon(k){ icone=k; try { Radar.setPref("replay_icone",k); } catch(e){} document.getElementById("ico").innerHTML=iconSvg(k); paintIcons(); setTimeout(closeIcons,180); }
+paintIcons();
+function restart(){ location.reload(); }
+</script>
+</body>
+</html>

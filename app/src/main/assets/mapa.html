@@ -83,6 +83,13 @@
   .rgn { width:22px; height:22px; border-radius:50%; background:#2FD3A6; color:#06231B; font:800 12px/22px system-ui,sans-serif;
          text-align:center; border:2px solid #0D1117; box-shadow:0 1px 4px rgba(0,0,0,.5); }
   .rgn.sel { background:#fff; transform:scale(1.25); }
+  /* números do itinerário: grandes para o dedo (área de 52px) */
+  .num { width:52px; height:52px; display:flex; align-items:center; justify-content:center; animation:numpop .45s cubic-bezier(.2,.9,.3,1.5) both; }
+  .num::before { content:""; position:absolute; width:38px; height:38px; border-radius:50%; background:#2FD3A6; border:3px solid #0D1117; box-shadow:0 4px 12px rgba(0,0,0,.5); z-index:-1; }
+  .num { position:relative; color:#06231B; font:900 18px/1 system-ui,sans-serif; } .num { z-index:0; }
+  .num.sel::before { background:#fff; width:44px; height:44px; }
+  .num { text-shadow:none; } .num > * { position:relative; }
+  @keyframes numpop { from { transform:scale(0); } to { transform:scale(1); } }
   .leaflet-tooltip.rgtip { background:#0D1117; color:#E6EDF3; border:1px solid #2FD3A6; border-radius:8px; font:600 12px system-ui,sans-serif; padding:5px 8px; }
   .leaflet-tooltip.rgtip:before { border-top-color:#2FD3A6; }
   .reg .t small.w { color:#8B949E; }
@@ -447,7 +454,7 @@ function renderItin(){
     flush();
     if (pts.length) {
       const a = pts[0], pick = pts.find(p => p[2] === "EM_VIAGEM") || null, z = pts[pts.length-1];
-      L.marker([a[0],a[1]], { icon:L.divIcon({ className:"", iconSize:[22,22], html:`<div class="rgn${sel?" sel":""}">${i+1}</div>` }), zIndexOffset:800 })
+      L.marker([a[0],a[1]], { icon:L.divIcon({ className:"", iconSize:[52,52], html:`<div class="num${sel?" sel":""}" style="animation-delay:${i*60}ms">${i+1}</div>` }), zIndexOffset:800 })
         .on("click", () => pickTrip(c.id)).addTo(itLayer);
       if (pick) L.circleMarker([pick[0],pick[1]], { radius:6, color:"#fff", weight:2, fillColor:"#F5C518", fillOpacity:1 })
         .bindPopup(`Embarque ${hm(c.dep)}`).addTo(itLayer);
