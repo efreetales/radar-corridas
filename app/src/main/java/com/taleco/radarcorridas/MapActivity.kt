@@ -34,6 +34,12 @@ class MapActivity : AppCompatActivity() {
             } catch (_: Exception) { "" }
         }
 
+        /** Abre o replay animado da corrida. */
+        @JavascriptInterface
+        fun replay(id: String) {
+            runOnUiThread { startActivity(android.content.Intent(this@MapActivity, PainelActivity::class.java).putExtra(PainelActivity.EXTRA_PAGE, "replay:$id")) }
+        }
+
         @JavascriptInterface
         fun file(name: String): String {
             if (name !in allowed) return ""

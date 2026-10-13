@@ -20,7 +20,7 @@ class PainelActivity : AppCompatActivity() {
     private lateinit var prefs: Prefs
 
     inner class Bridge {
-        private val allowed = setOf("ofertas.csv", "corridas.csv", "rotas.csv", "sessoes_uber.csv")
+        private val allowed = setOf("ofertas.csv", "corridas.csv", "rotas.csv", "sessoes_uber.csv", "gastos.csv")
         private val sp get() = getSharedPreferences("radar", Context.MODE_PRIVATE)
 
         @JavascriptInterface
@@ -73,6 +73,23 @@ class PainelActivity : AppCompatActivity() {
 
         @JavascriptInterface
         fun close() { runOnUiThread { finish() } }
+
+        /** Gastos do carro: confirmar, descartar, trocar categoria ou apagar. */
+        @JavascriptInterface
+        fun gasto(id: String, status: String, cat: String) { Gastos.mudar(this@PainelActivity, id, status, cat.ifBlank { null }) }
+
+        /** Lança um gasto à mão (valor com ponto decimal). */
+        @JavascriptInterface
+        fun gastoNovo(valor: String, cat: String, local: String) {
+            val v = valor.replace(",", ".").toDoubleOrNull() ?: return
+            Gastos.guardar(this@PainelActivity, Gastos.Gasto(v, cat, local.ifBlank { Gastos.NOMES[cat] ?: cat }, "manual"), "confirmado", "manual")
+        }
+
+        @JavascriptInterface
+        fun notifAcesso(): Boolean = Gastos.temAcesso(this@PainelActivity)
+
+        @JavascriptInterface
+        fun abrirNotifAcesso() { Gastos.abrirPermissao(this@PainelActivity) }
 
         /** Abre o replay animado de uma corrida. */
         @JavascriptInterface
