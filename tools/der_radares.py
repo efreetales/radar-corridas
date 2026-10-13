@@ -80,7 +80,7 @@ def limit(tags):
 
 
 segs = []
-for w in overpass_ways([(la, lo) for la, lo, _ in cands]):
+for w in (overpass_ways([(la, lo) for la, lo, _ in cands]) if os.environ.get("COM_MAPA") else []):  # o app completa pelo mapa
     g, tags = w["geometry"], w.get("tags", {})
     ow = tags.get("oneway", "")
     oneway = -1 if ow == "-1" else 1 if ow in ("yes", "true", "1") or tags.get("highway", "").startswith("motorway") else 0

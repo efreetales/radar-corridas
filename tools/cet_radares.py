@@ -170,7 +170,8 @@ for r in out:
         continue
     cands.append((r, lat, lng))
 
-ways = overpass_ways([(la, lo) for _, la, lo in cands])
+# Sem consulta ao mapa aqui (servidores do OpenStreetMap vivem sobrecarregados): o app completa sentido e limite.
+ways = overpass_ways([(la, lo) for _, la, lo in cands]) if os.environ.get("COM_MAPA") else []
 print("vias do mapa:", len(ways))
 segs = []
 for w in ways:
