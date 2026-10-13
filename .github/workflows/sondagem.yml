@@ -21,8 +21,9 @@ jobs:
           get sympla_ev.html "https://www.sympla.com.br/eventos/sao-paulo-sp/hoje?page=2"
           get sympla_fds.html "https://www.sympla.com.br/eventos/sao-paulo-sp/este-fim-de-semana"
           get bares.html "https://baressp.com.br/eventos"
-      - run: |
-          cd s && npm i -s playwright@1.47.2 >/dev/null 2>&1 && npx playwright install chromium >/dev/null 2>&1
+      - continue-on-error: true
+        run: |
+          cd s && npm i playwright@1.47.2 && npx playwright install --with-deps chromium
           cat > p.js <<'JS'
           const { chromium } = require('playwright'); const fs = require('fs');
           (async () => { const b = await chromium.launch(); const c = await b.newContext({ locale:'pt-BR', userAgent:'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0 Safari/537.36' });
@@ -35,6 +36,7 @@ jobs:
             await b.close(); })();
           JS
           node p.js; cat log.txt
-      - run: |
+      - if: always()
+        run: |
           cd s && rm -rf node_modules package*.json && git init -q -b sondagem && git add . && git -c user.name=radar-bot -c user.email=radar-bot@users.noreply.github.com commit -qm sondagem
           git push -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}" sondagem
