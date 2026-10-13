@@ -5,12 +5,12 @@ def get(u):
 def save(u,data):
     p="m/"+re.sub(r"^https?://","",u).split("?")[0]
     os.makedirs(os.path.dirname(p),exist_ok=True); open(p,"wb").write(data)
-for name in ["dark","liberty","positron"]:
+for name in ["dark"]:
     su=f"https://tiles.openfreemap.org/styles/{name}"; st=get(su); save(su,st); st=json.loads(st)
     if name!="dark": continue
     for src in st["sources"].values():
         if "url" in src:
-            tj=get(src["url"]); save(src["url"],tj); tj=json.loads(tj); tiles=tj["tiles"][0]
+            tj=get(src["url"]); save(src["url"]+"/_tilejson.json",tj); tj=json.loads(tj); tiles=tj["tiles"][0]
             bb=(-23.66,-23.44,-46.78,-46.55)
             for z in range(0,15):
                 n=2**z

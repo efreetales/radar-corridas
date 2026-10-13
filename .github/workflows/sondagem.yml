@@ -10,7 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with: { ref: eventos }
-      - run: python3 tools/mirror_ofm.py | tail -20; find m -type f | wc -l
+      - run: python3 tools/mirror_ofm.py | tail -5; find m -type f | wc -l
       - run: |
           cd m && git init -q -b mapas && git add . && git -c user.name=radar-bot -c user.email=radar-bot@users.noreply.github.com commit -qm ofm
           git push -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}" mapas
