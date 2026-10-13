@@ -285,11 +285,18 @@ object SpeedCams {
                 OfferLog.appendDiag(app, "RADARES: lista da CET indisponível (${e.message})")
                 emptyList()
             }
+            // 1b) Rodovias estaduais (DER-SP, dados abertos), também extraídas todo mês pelo GitHub
+            val der: List<SpeedCam> = try {
+                fetchTsv(DER_URL)
+            } catch (e: Exception) {
+                OfferLog.appendDiag(app, "RADARES: lista do DER indisponível (${e.message})")
+                emptyList()
+            }
             // 2) OpenStreetMap: completa com o resto da Grande SP e dá o sentido das vias
             for (endpoint in ENDPOINTS) {
                 try {
                     val json = fetch(endpoint)
-                    val cams = parse(json, cet)
+                    val cams = parse(json, cet, der)
                     if (cams.isEmpty()) {
                         error = "o mapa não retornou radares"
                         continue
@@ -303,21 +310,27 @@ object SpeedCams {
                     error = "${e.javaClass.simpleName}: ${e.message}"
                 }
             }
-            if (result == null && cet.isNotEmpty()) {
-                // Mapa fora do ar: usa só a lista da CET
-                save(app, cet)
-                setAll(cet)
-                result = cet.size
+            if (result == null && (cet.isNotEmpty() || der.isNotEmpty())) {
+                // Mapa fora do ar: usa só as listas oficiais (CET + DER)
+                save(app, cet + der)
+                setAll(cet + der)
+                result = cet.size + der.size
                 error = null
             }
-            if (result != null) cetCount = cet.size
+            if (result != null) { cetCount = cet.size; derCount = der.size }
             downloading = false
-            OfferLog.appendDiag(app, if (result != null) "RADARES: lista atualizada, $result radares ($cetCount da CET, $osmDiscarded do mapa descartados)" else "RADARES: falha ao baixar ($error)")
+            OfferLog.appendDiag(app, if (result != null) "RADARES: lista atualizada, $result radares ($cetCount da CET, $derCount do DER, $osmDiscarded do mapa descartados)" else "RADARES: falha ao baixar ($error)")
             main.post { onDone?.invoke(result, error) }
         }.start()
     }
 
     private const val CET_URL = "https://raw.githubusercontent.com/efreetales/radar-corridas/cet-dados/radares_cet.tsv"
+    private const val DER_URL = "https://raw.githubusercontent.com/efreetales/radar-corridas/cet-dados/radares_der.tsv"
+
+    /** Quantos radares vieram do DER (rodovias estaduais) no último download. */
+    @Volatile
+    var derCount = 0
+        private set
 
     /** Radares do mapa colaborativo descartados por não estarem na lista da CET. */
     @Volatile
@@ -329,8 +342,10 @@ object SpeedCams {
     var cetCount = 0
         private set
 
-    private fun fetchCet(): List<SpeedCam> {
-        val conn = URL(CET_URL).openConnection() as HttpURLConnection
+    private fun fetchCet(): List<SpeedCam> = fetchTsv(CET_URL)
+
+    private fun fetchTsv(url: String): List<SpeedCam> {
+        val conn = URL(url).openConnection() as HttpURLConnection
         try {
             conn.connectTimeout = 20_000
             conn.readTimeout = 60_000
@@ -381,7 +396,7 @@ object SpeedCams {
         return if (v.contains("mph", ignoreCase = true)) (n * 1.609).toInt() else n
     }
 
-    private fun parse(text: String, cet: List<SpeedCam> = emptyList()): List<SpeedCam> {
+    private fun parse(text: String, cet: List<SpeedCam> = emptyList(), der: List<SpeedCam> = emptyList()): List<SpeedCam> {
         val elements = JSONObject(text).optJSONArray("elements") ?: return emptyList()
 
         class Node(val id: Long, val lat: Double, val lng: Double, val limit: Int?, val name: String)
@@ -469,11 +484,11 @@ object SpeedCams {
             out.add(cam)
             if (best?.highway?.startsWith("motorway") == true || best?.highway?.startsWith("trunk") == true) onRodovia.add(cam)
         }
-        if (cet.isEmpty()) return out
+        if (cet.isEmpty() && der.isEmpty()) return out
 
-        // Radares da CET: dados oficiais (limite certo). Pega o sentido da via no mapa quando ela é mão única.
+        // Radares da CET e do DER: dados oficiais. Pega o sentido (e, no DER, o limite) da via no mapa.
         val merged = ArrayList<SpeedCam>()
-        for (c in cet) {
+        for (c in cet + der) {
             var best: Seg? = null
             var bestD = 35.0
             for (dy in -1..1) for (dx in -1..1) {
@@ -505,9 +520,10 @@ object SpeedCams {
         val rodoviaName = Regex("(?i)^(rodovia|rod\\.|sp-|br-|anel )|rodoanel")
         var removed = 0
         for (o in out) {
-            val dup = cet.any { abs(it.lat - o.lat) < 0.0004 && abs(it.lng - o.lng) < 0.0004 }
+            val dup = cet.any { abs(it.lat - o.lat) < 0.0004 && abs(it.lng - o.lng) < 0.0004 } ||
+                der.any { abs(it.lat - o.lat) < 0.0006 && abs(it.lng - o.lng) < 0.0006 }   // ~60 m: vale o do DER
             val isRodovia = o in onRodovia && rodoviaName.containsMatchIn(o.name)
-            val insideCet = !isRodovia && cet.any { abs(it.lat - o.lat) < 0.0135 && abs(it.lng - o.lng) < 0.0147 }
+            val insideCet = !isRodovia && cet.isNotEmpty() && cet.any { abs(it.lat - o.lat) < 0.0135 && abs(it.lng - o.lng) < 0.0147 }
             if (dup || insideCet) {
                 removed++
                 continue
