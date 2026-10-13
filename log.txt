@@ -1,0 +1,6 @@
+linhas: 2125 completo: True
+vias do mapa: 0
+radares de velocidade ativos: 867 | com via do mesmo nome: 0
+com direção da via: 0
+DER na Grande SP: 231
+com limite do mapa: 0 de 231
