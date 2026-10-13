@@ -671,6 +671,24 @@ class MainActivity : AppCompatActivity() {
                 "O GPS desliga sozinho quando a Uber volta para a tela inicial.",
             12f, Colors.MUTED
         ))
+        // Voz para o passageiro
+        card.addView(SwitchMaterial(this).apply {
+            text = "Falar com o passageiro"
+            setTextColor(Colors.TEXT)
+            isChecked = prefs.talkToPassenger
+            setOnCheckedChangeListener { _, checked -> prefs.talkToPassenger = checked }
+        }, matchWrap(top = 14))
+        card.addView(text(
+            "Quando o passageiro embarca: \"Olá, Ana! Vamos começar. Estamos indo para Avenida Paulista. Boa viagem!\" " +
+                "Quando o carro para no destino: \"Chegamos, Ana! Espero que tenha gostado da viagem. Por favor, não esqueça de avaliar a viagem no aplicativo da Uber.\" " +
+                "Sai pelo som do carro quando o celular está conectado por Bluetooth ou Android Auto, abaixando a música enquanto fala.",
+            12f, Colors.MUTED
+        ))
+        card.addView(MaterialButton(this).apply {
+            isAllCaps = false
+            text = "🔊 Ouvir exemplo"
+            setOnClickListener { Voz.inicio(this@MainActivity, "Ana", "Avenida Paulista, 1000, Bela Vista") }
+        }, matchWrap(top = 8))
         tripChecklist = text("", 14f, Colors.TEXT).apply { setPadding(0, dp(10), 0, 0) }
         card.addView(tripChecklist)
         tripPermBtn = MaterialButton(this).apply {

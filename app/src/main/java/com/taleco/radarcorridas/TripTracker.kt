@@ -66,6 +66,7 @@ object TripTracker {
     private const val HOME_CONFIRM_MS = 45_000L   // Uber: tela inicial firme por 45 s = corrida terminou (vale a hora em que apareceu)
     private const val PICKUP_RADIUS_M = 120.0     // chegou ao embarque
     private const val LEAVE_PICKUP_M = 250.0      // saiu do embarque com o passageiro
+    private const val ARRIVE_TALK_M = 130.0       // voz de chegada: parado a até 130 m do destino
     private const val DROPOFF_RADIUS_M = 150.0    // chegou ao destino
     private const val MAX_TRIP_MS = 3 * 60 * 60 * 1000L
     private const val MIN_ACCURACY_M = 60f
@@ -91,6 +92,8 @@ object TripTracker {
         var kmTrip = 0.0
         var kmAfter = 0.0
         var passenger: String? = null   // nome lido na tela da Uber ("Encontro com X", "Destino de X")
+        var falouInicio = false          // voz: "Vamos começar…"
+        var falouFim = false             // voz: "Chegamos…"
         var ratedDone = false           // apareceu "Como foi a viagem?": corrida concluída de verdade
     }
 
@@ -256,6 +259,11 @@ object TripTracker {
         val t = trip ?: return
         if (loc.hasAccuracy() && loc.accuracy > MIN_ACCURACY_M) return
         val here = Geo.of(loc)
+        // Chegou: carro parado perto do destino -> "Chegamos…"
+        if (phase == Phase.EM_VIAGEM && !t.falouFim && loc.hasSpeed() && loc.speed < 1.5f) {
+            val d = t.destination; val saiu = t.leftPickupAt
+            if (d != null && saiu != null && loc.time - saiu > 60_000L && Geo.meters(here, d) <= ARRIVE_TALK_M) despedir(t)
+        }
         val prev = t.points.lastOrNull()
         // Com o alerta de radar o GPS manda um ponto por segundo; para o percurso, 1 a cada 3 s basta.
         if (prev != null && loc.time - prev.time < 2_500L) return
@@ -276,6 +284,7 @@ object TripTracker {
                     t.leftPickupAt = loc.time
                     phase = Phase.EM_VIAGEM
                     t.kmTrip += stepKm
+                    saudar(t)
                 } else {
                     t.kmToPickup += stepKm
                 }
@@ -294,8 +303,24 @@ object TripTracker {
         t.points.add(Point(loc.time, here.lat, here.lng, phase))
     }
 
+    /** Voz para o passageiro: no começo da viagem e na chegada (se estiver ligado). */
+    private fun saudar(t: Trip) {
+        val ctx = appContext ?: return
+        if (t.falouInicio || !Prefs(ctx).talkToPassenger) return
+        t.falouInicio = true
+        Voz.inicio(ctx, t.passenger, t.offer.destination)
+    }
+
+    private fun despedir(t: Trip) {
+        val ctx = appContext ?: return
+        if (t.falouFim || !t.falouInicio || !Prefs(ctx).talkToPassenger) return
+        t.falouFim = true
+        Voz.chegada(ctx, t.passenger)
+    }
+
     private fun finish(ctx: Context, reason: String?, endAt: Long? = null) {
         val t = trip ?: return
+        if (t.ratedDone) despedir(t)
         trip = null
         setPhase(Phase.LIVRE)
         TrackingService.onPoint = null
@@ -385,6 +410,7 @@ object TripTracker {
             if (t.arrivedPickupAt == null) t.arrivedPickupAt = now
             t.leftPickupAt = now
             phase = Phase.EM_VIAGEM
+            saudar(t)
         }
     }
 
