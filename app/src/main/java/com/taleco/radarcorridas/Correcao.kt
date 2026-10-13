@@ -58,6 +58,13 @@ object Correcao {
             }
             rf.writeText(rcab + "\n" + (rficam + pontos).joinToString("\n") + "\n")
         }
+        // resumo(s) da sessão da Uber
+        j.optJSONArray("sessoes")?.let { a ->
+            val sf = File(ctx.filesDir, "sessoes_uber.csv")
+            if (!sf.exists()) sf.writeText("periodo;valor;concluidas;oferecidas;lido_em\n")
+            val atual = sf.readText()
+            for (i in 0 until a.length()) { val l = a.getString(i); if (!atual.contains(l.substringBefore(';'))) sf.appendText(l + "\n") }
+        }
         val desc = j.optString("descricao")
         return "Correção importada: ${novas.size} corridas" + (if (remover.isNotEmpty()) ", ${remover.size} removidas" else "") +
             (if (desc.isNotBlank()) "\n$desc" else "")

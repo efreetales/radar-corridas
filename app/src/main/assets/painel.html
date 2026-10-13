@@ -118,7 +118,7 @@ function goBack(){ try { if (window.Radar && Radar.close) Radar.close(); else hi
 function parseCsv(text){ const lines = text.split(/\r?\n/).filter(l => l.trim()); if (!lines.length) return [];
   const split = l => { const o=[]; let c="", q=false; for (const ch of l){ if (ch === '"') q=!q; else if (ch === ';' && !q){ o.push(c); c=""; } else c+=ch; } o.push(c); return o; };
   const h = split(lines[0]); return lines.slice(1).map(l => { const v=split(l), o={}; h.forEach((k,i)=>o[k]=v[i]??""); return o; }); }
-const num = s => { if (s==null||s==="") return null; const n=parseFloat(String(s).replace(".", "").replace(",", ".")); return isNaN(n)?null:n; };
+const num = s => { if (s==null||s==="") return null; const n=parseFloat(String(s).replace(/[^\d,.-]/g,"").replace(/\./g, "").replace(",", ".")); return isNaN(n)?null:n; };
 const num2 = s => { if (s==null||s==="") return null; const n=parseFloat(String(s).replace(",", ".")); return isNaN(n)?null:n; };
 const when = s => s ? new Date(s.replace(" ","T")) : null;
 const brl = (v, d=2) => "R$ " + (v||0).toLocaleString("pt-BR",{minimumFractionDigits:d,maximumFractionDigits:d});
