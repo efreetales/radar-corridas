@@ -13,6 +13,8 @@ TZ = dt.timezone(dt.timedelta(hours=-3))
 AGORA = dt.datetime.now(TZ)
 # Antes das 5h ainda é a noite de ontem
 HOJE = (AGORA - dt.timedelta(hours=5)).date()
+import os
+if os.environ.get("AGENDA_DATA"): HOJE = dt.date.fromisoformat(os.environ["AGENDA_DATA"])  # para testes
 UA = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36",
       "Accept-Language": "pt-BR,pt;q=0.9"}
 LOG = []
