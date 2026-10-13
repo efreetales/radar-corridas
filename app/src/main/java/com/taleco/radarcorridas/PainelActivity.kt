@@ -15,7 +15,7 @@ import java.io.File
  */
 class PainelActivity : AppCompatActivity() {
 
-    companion object { const val EXTRA_PAGE = "pagina" }
+    companion object { const val EXTRA_PAGE = "pagina"; private const val HOST = "radarcorridas.app" }
 
     private lateinit var prefs: Prefs
 
@@ -98,6 +98,13 @@ class PainelActivity : AppCompatActivity() {
         }
     }
 
+    /** Carrega a página do app (painel ou replay) com o endereço dado como origem. */
+    private fun carregar(web: WebView, url: String) {
+        val replay = android.net.Uri.parse(url).path?.startsWith("/replay") == true
+        val html = assets.open(if (replay) "replay.html" else "painel.html").bufferedReader().use { it.readText() }
+        web.loadDataWithBaseURL(url, html, "text/html", "utf-8", null)
+    }
+
     /** Leva os custos da tela nova para o cálculo de lucro do cartão. */
     private fun syncCosts() {
         val sp = getSharedPreferences("radar", Context.MODE_PRIVATE)
@@ -118,16 +125,21 @@ class PainelActivity : AppCompatActivity() {
         val web = WebView(this)
         web.setBackgroundColor(Colors.BG)
         web.settings.javaScriptEnabled = true
-        web.webViewClient = WebViewClient()
+        web.webViewClient = object : WebViewClient() {
+            // O endereço radarcorridas.app é "de mentira" (só dá origem às páginas). Se a página tentar
+            // navegar ou recarregar, carrega de novo a página do próprio app em vez de ir à internet.
+            override fun shouldOverrideUrlLoading(view: WebView?, request: android.webkit.WebResourceRequest?): Boolean {
+                val u = request?.url ?: return false
+                if (u.host == HOST) { view?.let { carregar(it, u.toString()) }; return true }
+                return false
+            }
+            override fun onReceivedError(view: WebView?, request: android.webkit.WebResourceRequest?, error: android.webkit.WebResourceError?) {
+                val u = request?.url ?: return
+                if (request.isForMainFrame && u.host == HOST) view?.let { carregar(it, u.toString()) }
+            }
+        }
         web.addJavascriptInterface(Bridge(), "Radar")
         setContentView(web)
-        if (page.startsWith("replay:")) {
-            // replay usa mapa vetorial (WebGL)
-            val html = assets.open("replay.html").bufferedReader().use { it.readText() }
-            web.loadDataWithBaseURL("https://radarcorridas.app/replay?id=${page.removePrefix("replay:")}", html, "text/html", "utf-8", null)
-        } else {
-            val html = assets.open("painel.html").bufferedReader().use { it.readText() }
-            web.loadDataWithBaseURL("https://radarcorridas.app/painel?p=$page", html, "text/html", "utf-8", null)
-        }
+        carregar(web, if (page.startsWith("replay:")) "https://$HOST/replay?id=${page.removePrefix("replay:")}" else "https://$HOST/painel?p=$page")
     }
 }

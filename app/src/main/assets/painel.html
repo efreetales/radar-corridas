@@ -532,7 +532,7 @@ function endDrag(e){
   save();
 }
 
-function openReplay(id){ try { Radar.replay(id); } catch(e){ location.href = "replay.html?id=" + id; } }
+function openReplay(id){ try { Radar.replay(id); } catch(e){} }
 function countUp(el){ const t = el.textContent.trim(), m = /^(R\$\s)?([\d.]+)(,(\d+))?$/.exec(t); if (!m) return;
   const dec = m[4] ? m[4].length : 0, target = parseFloat(m[2].replace(/\./g,"") + (dec ? "." + m[4] : "")); if (!isFinite(target) || target === 0) return;
   const pre = m[1] || "", t0 = performance.now(), D = 900;

@@ -234,7 +234,7 @@ function finish(){ setStage("FIM"); if(CAPTURE){ SEG.forEach(x=>reveal(x,1)); } 
   document.getElementById("dv").textContent=brl(val);
   document.getElementById("dd").textContent=`${hm(acc)} – ${hm(when(T.fim))} · Uber ${T.categoria}`;
   document.getElementById("dg").innerHTML=[[Math.round(mins)+" min","tempo total"],[((n2(T.km_ate_embarque)||0)+(n2(T.km_viagem)||0)).toFixed(1).replace(".",",")+" km","rodados"],[brl(val/(mins/60),0),"por hora"]].map(([a,b])=>`<div><b>${a}</b><span>${b}</span></div>`).join("");
-  setTimeout(()=>{ document.getElementById("done").classList.add("on"); burst(); },900);
+  const run=runId; setTimeout(()=>{ if(run!==runId) return; document.getElementById("done").classList.add("on"); burst(); },900);
   document.getElementById("play").textContent="▶ Ver de novo"; }
 function burst(){ const C=["#2FD3A6","#3DD68C","#F5C518","#4C9AFF","#fff"]; for(let i=0;i<46;i++){ const e=document.createElement("div"); e.className="burst"; e.style.background=C[i%5];
   e.style.left="50%"; e.style.top="45%"; document.body.appendChild(e); const a=Math.random()*Math.PI*2, r=120+Math.random()*180;
@@ -247,7 +247,15 @@ function openIcons(){ paintIcons(); document.getElementById("sheet").classList.a
 function closeIcons(){ document.getElementById("sheet").classList.remove("on"); }
 function pickIcon(k){ icone=k; try { Radar.setPref("replay_icone",k); } catch(e){} document.getElementById("ico").innerHTML=iconSvg(k); paintIcons(); setTimeout(closeIcons,180); }
 paintIcons();
-function restart(){ location.reload(); }
+// recomeça sem recarregar a página (recarregar tenta buscar o endereço na internet e dá erro)
+let runId=0;
+function restart(){ runId++;
+  [pickupMk,destMk,paxMk].forEach(m=>{ if(m) m.remove(); }); pickupMk=destMk=paxMk=null; waitEl=null;
+  document.getElementById("done").classList.remove("on"); document.getElementById("offer").classList.remove("on"); document.getElementById("stamp").classList.remove("on");
+  SEG.forEach(x=>reveal(x,0)); tPlay=0; last=null; finished=false; playing=true; stageNow=null; lastSeg=-1; lastTp=null; camBusy=false;
+  carMk.setLngLat(allLL[0]); const p0=pts[0], ah=aheadOf(pts,1,p0); if(ah!=null) carAng=ah; camB=carAng;
+  map.jumpTo({center:allLL[0],zoom:15,bearing:camB,pitch:58}); camZ=15;
+  document.getElementById("play").textContent="❚❚ Pausar"; }
 </script>
 </body>
 </html>
