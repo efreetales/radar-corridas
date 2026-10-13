@@ -1,39 +1,23 @@
 {
- "gerado_em": "2026-10-13T00:16:45-03:00",
+ "gerado_em": "2026-10-13T13:54:31-03:00",
  "data": "2026-10-13",
  "observacao": "Gerado automaticamente (Ticket360, Sympla e revisão semanal). Saída estimada pelas regras de tools/casas.json.",
  "eventos": [
   {
-   "nome": "TEI-ANEFAC Tax Day",
-   "local": "Grand Hyatt São Paulo",
-   "endereco": "Avenida das Nações Unidas, São Paulo",
+   "nome": "Museu da Imaginação",
+   "local": "Museu da Imaginação",
+   "endereco": "Rua Virgilio Wey,100, São Paulo",
    "tipo": "show",
    "data": "2026-10-13",
-   "inicio": "08:00",
-   "fim_estimado": "09:45",
+   "inicio": "17:00",
+   "fim_estimado": "18:45",
    "incerteza_min": 45,
    "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/tei-anefac-tax-day/3537153",
+   "fonte": "https://bileto.sympla.com.br/event/116303",
    "origem": "sympla",
    "regra": "show",
-   "lat": -23.530466,
-   "lng": -46.747689
-  },
-  {
-   "nome": "EBEM Formações: Operação Fim de Ano: A Engrenagem Exata para Lucrar Ma",
-   "local": "Casa da Empresária",
-   "endereco": "Rua Pepiguari, Alto da Lapa, São Paulo",
-   "tipo": "show",
-   "data": "2026-10-13",
-   "inicio": "14:00",
-   "fim_estimado": "22:00",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/ebem-formacoes-operacao-fim-de-ano-a-engrenagem-exata-para-lucrar-mais/3597393",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.53542,
-   "lng": -46.710179
+   "lat": -23.513035,
+   "lng": -46.696046
   },
   {
    "nome": "Discopédia Especial House Music| 13 De Outubro | Cortina",
@@ -52,22 +36,6 @@
    "lng": -46.644514
   },
   {
-   "nome": "Harmonização Energética - 13 de outubro de 2026",
-   "local": "Cura-te Nova Sede",
-   "endereco": "Avenida Santa Catarina, São Paulo",
-   "tipo": "show",
-   "data": "2026-10-13",
-   "inicio": "18:00",
-   "fim_estimado": "19:30",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/harmonizacao-energetica-13-de-outubro-de-2026/3572710",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.642141,
-   "lng": -46.666045
-  },
-  {
    "nome": "Obsessão: A Felicidade é Relativa - 13/10 - Open Air Brasil - São Paul",
    "local": "Jockey Club – Portão 1 - Estacionamento",
    "endereco": "Rua Doutor José Augusto de Queiroz, São Paulo",
@@ -82,22 +50,6 @@
    "regra": "festa",
    "lat": -23.584485,
    "lng": -46.697814
-  },
-  {
-   "nome": "Oficina - Memória da Montação com Lufer Sattui Meija",
-   "local": "Av. São Luís, 120",
-   "endereco": "Avenida São Luís, República, São Paulo",
-   "tipo": "show",
-   "data": "2026-10-13",
-   "inicio": "18:30",
-   "fim_estimado": "21:00",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/oficina-memoria-da-montacao-com-lufer-sattui-meija/3608526",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.546145,
-   "lng": -46.643264
   },
   {
    "nome": "Forró Na House - Hallowen Na House",
@@ -162,6 +114,22 @@
    "regra": "show",
    "lat": -23.611652,
    "lng": -46.667876
+  },
+  {
+   "nome": "CCPC 13/10 TERÇA DUB - REGGAE ROOTS DUB E PSYTRANCE DA 20H AS 5H",
+   "local": "ESPAÇO CULTURAL CCPC GENERAL CLUB",
+   "endereco": "Rua General Jardim, Vila Buarque, São Paulo",
+   "tipo": "show",
+   "data": "2026-10-13",
+   "inicio": "20:00",
+   "fim_estimado": "05:00",
+   "incerteza_min": 45,
+   "publico_estimado": null,
+   "fonte": "https://www.sympla.com.br/evento/ccpc-13-10-terca-dub-reggae-roots-dub-e-psytrance-da-20h-as-5h/3615693",
+   "origem": "sympla",
+   "regra": "show",
+   "lat": -23.544848,
+   "lng": -46.647179
   },
   {
    "nome": "JUPER: EM CARÁTER EXPERIMENTAL - VERSOM (20h)",
@@ -261,7 +229,7 @@
   }
  ],
  "geocodificacao": {
-  "com_local": 16,
+  "com_local": 14,
   "sem_local": 0
  }
 }
