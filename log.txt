@@ -1,0 +1,3 @@
+der_pesquisa.html 200 54167
+dados_res1.html 200 24425
+radares.xlsx 200 99669

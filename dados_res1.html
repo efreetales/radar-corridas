@@ -1,0 +1,666 @@
+
+<!DOCTYPE html>
+<!--[if IE 9]> <html lang="pt_BR" class="ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html lang="pt_BR" > <!--<![endif]-->
+
+  <head>
+    <script>
+    (function () {
+      try {
+        if (localStorage.getItem('highlightLinksState') === 'true') {
+          document.documentElement.classList.add('highlight-links');
+        }
+        if (localStorage.getItem('contrastState') === 'true') {
+          document.documentElement.classList.add('contrast');
+        }
+        if (localStorage.getItem('inversedState') === 'true') {
+          document.documentElement.classList.add('inversed');
+        }
+      } catch (e) {}
+    })();
+    </script>
+    <meta property="og:type" content="Website" />
+    <meta property="og:title" content="Portal de Dados Abertos do Estado de São Paulo" />
+    
+    <meta property="og:description" content="Portal de Dados Abertos de SP" />
+    <meta name="description" content="Portal de Dados Abertos de SP" />
+    
+    <meta property="og:url" content="http://dadosabertos.sp.gov.br/" />
+    <meta property="og:site_name" content="Portal de Dados Abertos do Estado de São Paulo" />
+    <meta property="og:image" content="https://dadosabertos.sp.gov.br/images/thumbnail.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta charset="utf-8" />
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="keywords" content="" />
+    <meta name="author" content="" />
+    <meta name="robots" content="" />
+    <meta name="description" content="" />
+    <meta name="format-detection" content="telephone=no" />
+
+    <!-- FAVICONS ICON -->
+    <link rel="icon" href="/images/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" type="image/x-icon" href="/images/brasao-estado-sp.webp" />
+
+    <!-- MOBILE SPECIFIC -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--[if lt IE 9]>
+	<script src="js/html5shiv.min.js"></script>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+
+    <link href="https://fonts.cdnfonts.com/css/rawline" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/montserrat" rel="stylesheet">
+
+    <!-- STYLESHEETS -->
+    <link rel="stylesheet" type="text/css" href="/plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/plugins/fontawesome/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    
+
+    <meta charset="utf-8" />
+    <meta name="csrf_field_name" content="_csrf_token" />
+    <meta name="_csrf_token" content="IjAxMmMwZWIwMTE3MDA5OGMzNWU4NDBhZjI5ODA2N2Q0NTFlNzUwYjki.as3BPw.MS8p2rGeDg1TVbEjungKCPJJlAU" />
+
+    
+    <meta name="generator" content="ckan 2.11.3" />
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radar - Radar - Dados Abertos SP</title>
+
+    
+    <link rel="shortcut icon" href="/base/images/ckan.ico" />
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+
+    
+    <link href="/webassets/base/51d427fe_main.css" rel="stylesheet"/>
+<link href="/webassets/vendor/f3b8236b_select2.css" rel="stylesheet"/>
+<link href="/webassets/vendor/53df638c_fontawesome.css" rel="stylesheet"/>
+<link href="/webassets/ckanext-prodesp/43a10bc8_accessibility.css" rel="stylesheet"/>
+<link href="/webassets/ckanext-prodesp/8dd77216_activity.css" rel="stylesheet"/>
+<link href="/webassets/ckanext-prodesp/61b17c92_chatbot.css" rel="stylesheet"/>
+<link href="/webassets/ckanext-harvest/c95a0af2_harvest_css.css" rel="stylesheet"/>
+    
+    
+  
+  <meta property="og:title" content="Radar - Radar - Dados Abertos SP">
+  <meta property="og:description" content="Arquivo contendo a localização e informações relacionadas a radares instalados nas rodovias administradas pelo DER-SP.">
+
+
+  </head>
+
+  
+    
+  <body data-site-root="https://dadosabertos.sp.gov.br/"
+    data-locale-root="https://dadosabertos.sp.gov.br/" >
+
+    
+    <div class="visually-hidden-focusable" id="skipToContent" tabindex="0"><a href="#content">Pular para o conteúdo principal</a></div>
+  
+
+  
+    
+
+
+<div class="page-wraper">
+  <header class="site-header header pb-0 pb-md-auto">
+    
+    <div class="top-bar">
+      <div class=""></div>
+      <div class="container" style="padding: 0px!important;">
+        <div id="menuAcessibilidade" class="d-flex align-items-center justify-content-center text-center text-md-end justify-content-md-end me-md-3 gap-2 fonte_governo_alt" >
+          <a href="/manual#acessibilidade" style="background-image: none; width:32px; height:32px; margin-right: 1rem; padding:0" alt="Recursos de Acessibilidade">
+            <img class="" src="https://sp.gov.br/statics/img/acessibilidade.png" alt="Link de Acessibilidade">
+          </a>
+          <button id="resetFont" style="display:none;">
+            Resetar Fonte
+          </button>
+          <a href="#" id="increaseFont" accesskey="1" alt="Aumentar fonte">
+            <i class="fas fa-plus mr-2 d-none d-md-inline-block"></i>
+            <i class="fas fa-plus mr-4 d-md-none fs-4 text-white" ></i>
+            <span class="mr-2 d-none d-md-inline-block">Aumentar fonte</span>
+          </a>
+          <a href="#" id="reduceFont" accesskey="2" alt="Diminuir fonte">
+            <i class="fas fa-minus mr-2 d-none d-md-inline-block"></i>
+            <i class="fas fa-minus mr-4 d-md-none fs-4 text-white"></i>
+            <span class="mr-2 d-none d-md-inline-block">Diminuir fonte</span>
+          </a>
+          <a href="#" id="highContrast" accesskey="3" alt="Preto e branco">
+            <i class="fas fa-palette mr-2 d-none d-md-inline-block"></i>
+            <i class="fas fa-palette mr-4 d-md-none fs-4 text-white"></i>
+            <span class="mr-2 d-none d-md-inline-block">Preto e branco</span>
+          </a>
+          <a href="#" id="invertColors" accesskey="4" alt="Inverter cores">
+            <i class="fas fa-palette mr-2 d-none d-md-inline-block" style="opacity: 0.5;"></i>
+            <i class="fas fa-palette mr-4 d-md-none fs-4 text-white" style="opacity: 0.5;"></i>
+            <span class="mr-2 d-none d-md-inline-block">Inverter cores</span>
+          </a>
+          <a href="#" id="highlightLinks" accesskey="4" alt="Destacar links">
+            <i class="fas fa-magnet mr-2 d-none d-md-inline-block"></i>
+            <i class="fas fa-magnet mr-4 d-md-none fs-4 text-white"></i>
+            <span class="mr-2 d-none d-md-inline-block">Destacar links</span>
+          </a>
+		    </div>
+        <div class="d-flex justify-content-between inverter">
+          
+          <div class="dlab-topbar-left">
+            <h1 class="secretaria"><a href="/"><img src="/images/brasao-estado-sp-cge.webp" 
+                  height="128" alt="Dados Abertos SP" /></a></h1>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+    <!-- main header -->
+    <div class="sticky-header main-bar-wraper navbar-expand-lg">
+  
+      <div class="main-bar  bg-white">
+        <div class="container p-0">
+          <!-- main nav -->
+          <nav class="header-nav navbar-collapse collapse " id="navbarNavDropdown">
+            <ul class="nav navbar-nav text-black">
+              
+              
+              
+              
+
+              <li><a href="/dataset/">Conjuntos de Dados</a></li><li><a href="/organization/">Organizações</a></li><li><a href="/group/">Grupos</a></li>
+              <li class="dropdown">
+                <a class="dropdown-toggle" href="#" id="panelDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Painéis">
+                  Painéis
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="panelDropdown">
+                  <li>
+                    <a class="dropdown-item fonte_governo font-weight-bold" href="/paineis/pdas">Planos de Dados Abertos</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item fonte_governo font-weight-bold" href="/paineis/audiencia">Audiência dos Dados</a>
+                  </li>
+                </ul>
+              </li>
+              <li class=""><a href="/manual">Manual</a></li>
+
+              
+              
+              <li><a href="/about">Sobre</a></li>
+              
+            </ul>
+            
+            
+            <form class="d-flex site-search d-none" action="/dataset/" method="get">
+              <label class="d-none" for="field-sitewide-search">Search Datasets...</label>
+              <input id="field-sitewide-search" class="form-control me-2" type="text" name="q"
+                placeholder="Procurar"
+                aria-label="Pesquisar conjuntos de dados..." />
+              <button class="btn" type="submit" aria-label="Submit"><i class="fa fa-search"></i></button>
+            </form>
+            
+          </nav>
+          <!-- nav toggle button -->
+          <button class="navbar-toggler collapsed navicon" type="button" data-toggle="collapse"
+            data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
+            aria-label="Toggle navigation">
+
+            <span></span>
+            <span></span>
+            <span></span>
+            <p class="m-l30 m-b0 mt--6">Menu</p>
+          </button>
+          <!-- extra nav -->
+          <div class="extra-nav">
+             
+             
+            <nav class="account not-authed d-flex justify-content-center" aria-label="Account">
+              <ul class="list-unstyled">
+                
+                <li><a href="/user/sso" accesskey="e" class="btn btn-governo" ><i
+                      class="fa fa-user"></i> Entrar com <span class="font-weight-700">gov.br</span></a></li>
+                
+              </ul>
+            </nav>
+             
+            
+          </div>
+
+        </div>
+      </div>
+  </header>
+  
+  
+    <div class="main">
+      <div id="content" class="container">
+        
+          
+            <div class="flash-messages">
+              
+                
+              
+            </div>
+          
+
+          
+            <div class="toolbar" role="navigation" aria-label="Breadcrumb">
+              
+                
+                  <ol class="breadcrumb">
+                    
+<li class="home"><a href="/" aria-label="Início"><i class="fa fa-home"></i><span> Início</span></a></li>
+                    
+  
+  
+    
+    
+      
+      
+      <li><a href="/organization/">Organizações</a></li>
+      <li><a href="/organization/departamento-de-estradas-de-rodagem-der" title="Departamento de Estradas de Rodagem - DER">Departamento de Estradas...</a></li>
+    
+    <li><a href="/dataset/radar" title="Radar">Radar</a></li>
+  
+
+  <li class="active"><a href="" title="Radar">Radar</a></li>
+
+                  </ol>
+                
+              
+            </div>
+          
+
+          <div class="row wrapper">
+            
+            
+  
+    <section class="module module-resource px-0 " role="complementary">
+      
+      <div class="module-content px-3 px-md-2">
+        <div class="actions">
+          
+            <ul class="d-flex flex-wrap gap-1 resource-nav-buttons ps-0 gap-2">
+              
+                
+                  
+                
+            
+              <li>
+                <div class="btn-group">
+                <a class="btn btn-primary resource-url-analytics" href="https://dersp.der.sp.gov.br/WebSite/Arquivos/DadosAbertos/AtivosRodoviarios/Radar/radares.xlsx">
+                  
+                    <i class="fa fa-external-link"></i> Ir para recurso
+                  
+                </a>
+                
+                </div>
+              </li>
+            
+            
+          </ul>
+          
+        </div>
+        
+          <h1 class="page-heading" title="Radar">Radar</h1>
+          
+            
+              <p class="text-muted ellipsis">URL: <a class="resource-url-analytics" href="https://dersp.der.sp.gov.br/WebSite/Arquivos/DadosAbertos/AtivosRodoviarios/Radar/radares.xlsx" title="https://dersp.der.sp.gov.br/WebSite/Arquivos/DadosAbertos/AtivosRodoviarios/Radar/radares.xlsx">https://dersp.der.sp.gov.br/WebSite/Arquivos/DadosAbertos/AtivosRodoviarios/Radar/radares.xlsx</a></p>
+            
+          
+          <div class="prose notes" property="rdfs:label">
+            
+              <p>Arquivo contendo a localização e informações relacionadas a radares instalados nas rodovias administradas pelo DER-SP.</p>
+            
+            
+          </div>
+        
+      
+      
+        
+          
+        
+          
+            <div class="resource-view">
+              
+                
+                <div class="data-viewer-info">
+                  <p>Não há visões criadas para este recurso ainda.</p>
+                  
+                </div>
+              
+            </div>
+          
+        </div>
+      
+      
+      
+    </section>
+  
+
+
+            
+              <aside class="secondary col-md-3">
+                
+                
+
+  
+    
+
+
+
+  
+    <section class="module module-narrow resources d-none d-md-block">
+      
+        
+          <h2 class="module-heading"><i class="fa fa-bars"></i> Recursos</h2>
+        
+        
+          <ul class="list-unstyled nav nav-simple">
+            
+              
+              
+                <li class="nav-item">
+                  <a href="/dataset/radar/resource/6805ce1c-c608-4d0a-8549-c5701348412c" title="Pesquisa de Radares">Pesquisa de Radares</a>
+                </li>
+              
+            
+              
+              
+                <li class="nav-item active">
+                  <a href="#" title="Radar">Radar</a>
+                </li>
+              
+            
+          </ul>
+        
+      
+    </section>
+  
+
+
+
+  
+<div class="px-4 px-md-3 ">
+  <tr>
+          <th scope="row">Licença: </th>
+          <td>
+
+
+  
+    
+  
+    <a href="https://creativecommons.org/licenses/by/4.0/" rel="dc:rights">Creative Commons Attribution 4.0</a>
+  
+
+  
+</td>
+        </tr>
+  </div>
+
+              </aside>
+            
+
+            
+              <div class="primary col-md-9 col-xs-12 px-0 px-md-auto" role="main">
+                
+                
+  
+    
+      <section class="module">
+        
+  
+
+  <div class="module-content px-3 px-md-auto"><h2>Informações Adicionais</h2><table class="table table-striped table-bordered table-condensed" data-module="table-toggle-more"><thead>
+          <tr>
+            <th scope="col">Campo</th>
+            <th scope="col">Valor</th>
+          </tr>
+        </thead><tbody><tr>
+          <th scope="row">Dados atualizados pela última vez</th>
+          <td>15 de abril de 2025</td>
+        </tr><tr>
+          <th scope="row">Metadados atualizados pela última vez</th>
+          <td>13 de agosto de 2026</td>
+        </tr><tr>
+          <th scope="row">Criado</th>
+          <td>15 de abril de 2025</td>
+        </tr><tr>
+          <th scope="row">Formato</th>
+          <td>XLSX</td>
+        </tr><tr>
+          <th scope="row">Licença: </th>
+          <td>
+
+
+  
+    
+  
+    <a href="https://creativecommons.org/licenses/by/4.0/" rel="dc:rights">Creative Commons Attribution 4.0</a>
+  
+
+  
+</td>
+        </tr>
+            
+          
+            
+              <tr class="toggle-more"><th scope="row">Datastore active</th><td>False</td></tr>
+            
+          
+            
+          
+            
+              <tr class="toggle-more"><th scope="row">Has views</th><td>False</td></tr>
+            
+          
+            
+              <tr class="toggle-more"><th scope="row">Id</th><td>6b329482-759d-4d59-97d0-0557ee81b827</td></tr>
+            
+          
+            
+          
+            
+              <tr class="toggle-more"><th scope="row">Package id</th><td>948d2bab-2be9-4c34-b567-e100007baf81</td></tr>
+            
+          
+            
+              <tr class="toggle-more"><th scope="row">Position</th><td>1</td></tr>
+            
+          
+            
+              <tr class="toggle-more"><th scope="row">State</th><td>active</td></tr>
+            
+          
+            
+              <tr class="toggle-more"><th scope="row">Tracking summary</th><td>{&#39;total&#39;: 41, &#39;recent&#39;: 12}</td></tr>
+            
+          </tbody>
+    </table>
+
+
+  </div>
+
+      </section>
+    
+  
+
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <!-- Footer -->
+<footer class="footer-dark">
+	<div class="footer-top mobile_none">
+		<div class="container fonte_governo">
+			<div class="row">
+				<div class="col-lg-2 col-md-6 col-sm-6 wow fadeIn" data-wow-delay="0.2s">
+					<div class="widget border-0">
+						<h6 class="m-b20 text-white text-uppercase">INSTITUCIONAL</h6>
+						<ul style="list-style: none; padding-left: 0;">
+							<li style="list-style-position: outside;"><a href="https://www.controladoriageral.sp.gov.br/" target="_blank">Controladoria Geral do Estado</a></li>
+							<li style="list-style-position: outside;"><a href="https://www.controladoriageral.sp.gov.br/radar-anticorrupcao/" target="_blank">Radar Anticorrupção</a></li>
+							<li style="list-style-position: outside;"><a href="https://www.transparencia.sp.gov.br/" target="_blank">Portal da Transparência</a></li>
+							<li style="list-style-position: outside;"><a href="https://fala.sp.gov.br/privacidadeprotecaodedadoslgpd" target="_blank">Lei Geral de Proteção de Dados (LGPD)</a></li>
+							<li style="list-style-position: outside;"><a href="https://www.controladoriageral.sp.gov.br/comunicacao/" target="_blank">Comunicação</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-lg-2 col-md-6 col-sm-6 wow fadeIn" data-wow-delay="0.2s">
+					<div class="widget border-0">
+						<h6 class="m-b20 text-white text-uppercase">DADOS ABERTOS</h6>
+						<ul style="list-style: none; padding-left: 0;">
+							<li style="list-style-position: outside;"><a href="/about">Sobre o Portal</a></li>
+							<li style="list-style-position: outside;"><a href="/manual">Manual do Usuário</a></li>
+							<li style="list-style-position: outside;"><a href="/painel">Planos de Dados Abertos</a></li>
+							<li style="list-style-position: outside;"><a href="/manual#cookies">Declaração sobre uso de Cookies</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-lg-2 col-md-6 col-sm-6 wow fadeIn d-none" data-wow-delay="0.2s">
+					<div class="widget border-0">
+						<h6 class="m-b20 text-white text-uppercase">Categoria</h6>
+						<ul style="list-style: none; padding-left: 0;">
+							<li style="list-style-position: outside;"><a href="index.html">Texto de uma linha</a></li>
+							<li style="list-style-position: outside;"><a href="index.html">Textos de duas linhas com quebra de linas</a></li>
+							<li style="list-style-position: outside;"><a href="index.html">Texto de uma linha</a></li>
+							<li style="list-style-position: outside;"><a href="index.html">Textos de duas linhas com quebra de linas</a></li>
+							<li style="list-style-position: outside;"><a href="index.html">Texto de uma linha</a></li>
+
+						</ul>
+					</div>
+				</div>
+				<div class="col-lg-2 col-md-6 col-sm-6 wow fadeIn d-none" data-wow-delay="0.2s">
+					<div class="widget border-0">
+						<h6 class="m-b20 text-white text-uppercase">Categoria</h6>
+						<ul style="list-style: none; padding-left: 0;">
+							<li style="list-style-position: outside;"><a href="index.html">Texto de uma linha</a></li>
+							<li style="list-style-position: outside;"><a href="index.html">Textos de duas linhas com quebra de linas</a></li>
+							<li style="list-style-position: outside;"><a href="index.html">Texto de uma linha</a></li>
+							<li style="list-style-position: outside;"><a href="index.html">Textos de duas linhas com quebra de linas</a></li>
+							<li style="list-style-position: outside;"><a href="index.html">Texto de uma linha</a></li>
+
+						</ul>
+					</div>
+				</div>
+				<div class="col-lg-2 col-md-6 col-sm-6 wow fadeIn offset-lg-6" data-wow-delay="0.2s">
+					<div class="widget border-0">
+						<a href="https://fala.sp.gov.br/" target="_blank">
+							<h6 class="m-b20 text-white text-uppercase">Fala SP</h6>
+						</a>
+						<a href="https://www.transparencia.sp.gov.br/" target="_blank">
+							<h6 class="m-b20 text-white text-uppercase">Transparência</h6>
+						</a>
+						<a href="http://www.sic.sp.gov.br/" target="_blank">
+							<h6 class="m-b20 text-white text-uppercase">SIC</h6>
+						</a>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<!-- footer bottom part -->
+	<div class="footer-bottom">
+		<div class="container">
+			
+			<div class="row p-t20 p-b20">
+				<div class="col-md-6 col-12 text-center text-md-start d-flex align-items-center">
+					<img class ="secretaria_footer" src="/images/brasao-estado-sp.webp" 
+                  height="128" alt="Dados Abertos SP" />
+					<a class="ps-3 text-white fs-4 font-weight-600 fonte_governo" href="https://www.controladoriageral.sp.gov.br/" target="_blank">
+						Controladoria Geral do Estado de São Paulo
+					</a>
+				</div>
+				<div class="d-none col-md-6 text-center pr-0 text-md-end">
+					<ul class="list-inline mt-md-5">
+						<li><a href="https://www.flickr.com/governosp/" class="site-button sharp text-white"
+								target="_blank" title="Flickr Governo de São Paulo (nova janela)"><i
+									class="fa-brands fa-flickr"></i></a></li>
+						<li><a href="https://www.facebook.com/governosp/" class="site-button sharp text-white"
+								target="_blank" title="Acesse Facebook"><i
+									class="fa-brands fa-facebook-f"></i></a></li>
+						<li><a href="https://www.youtube.com/governosp/" class="site-button sharp text-white"
+								target="_blank" title="Youtube Governo de São Paulo (nova janela)"><i
+									class="fa-brands fa-youtube"></i></a></li>
+						<li><a href="https://www.tiktok.com/@governosp" class="site-button sharp text-white"
+								target="_blank" title="Tiktok Governo de São Paulo"><i
+									class="fa-brands fa-tiktok"></i></a></li>
+						<li><a href="https://www.linkedin.com/company/governosp/" class="site-button sharp text-white"
+								target="_blank" title="Acesse Linkedin"><i
+									class="fa-brands fa-linkedin-in"></i></a></li>
+						<li><a href="https://www.instagram.com/governosp/" class="site-button sharp text-white"
+								target="_blank" title="Acesse Instagram"><i
+									class="fa-brands fa-instagram"></i></a></li>
+						<li><a href="https://www.twitter.com/governosp/" class="site-button sharp text-white"
+								target="_blank" title="Acesse X"><i class="fa-brands fa-x-twitter"
+								></i></a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<center class="container">
+			<p>V 1.0.254 - © Copyright 2026 - Prodesp - Companhia de Processamento de Dados do Estado de São Paulo |
+				Governo
+				do Estado de São Paulo - Todos os direitos reservados.</p>
+		</center>
+	</div>
+</footer>
+<!-- Footer END-->
+  
+  
+  
+  
+
+    
+
+
+    
+    
+
+    
+    <script src="/webassets/vendor/240e5086_jquery.js" type="text/javascript"></script>
+<script src="/webassets/vendor/773d6354_vendor.js" type="text/javascript"></script>
+<script src="/webassets/vendor/6d1ad7e6_bootstrap.js" type="text/javascript"></script>
+<script src="/webassets/vendor/529a0eb7_htmx.js" type="text/javascript"></script>
+<script src="/webassets/base/a65ea3a0_main.js" type="text/javascript"></script>
+<script src="/webassets/prodesp/ee258fbf_accessibility.js" type="text/javascript"></script>
+<script src="/webassets/prodesp/0fdb5ee0_activity.js" type="text/javascript"></script>
+<script src="/webassets/prodesp/0d5d45ca_cookie.js" type="text/javascript"></script>
+<script src="/webassets/prodesp/a6d613fa_chatbot.js" type="text/javascript"></script>
+<script src="/webassets/tracking/8b59a308_tracking.js" type="text/javascript"></script>
+<script src="/webassets/base/b1def42f_ckan.js" type="text/javascript"></script>
+
+    <!--<script src="/js/jquery.min.js"></script>-->
+    <script src="/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/js/metadata-button.js"></script>
+      <div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+      <div class="vw-plugin-top-wrapper"></div>
+    </div>
+  </div>
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    <script>new window.VLibras.Widget('https://vlibras.gov.br/app');</script>
+
+
+</body>
+
+</html>
