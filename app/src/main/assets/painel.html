@@ -190,19 +190,46 @@ function historico(){
   let list = hDay ? inWeek.filter(o => key(shiftDay(o.t)) === hDay) : inWeek;
   const nAll = list.length, nAcc = list.filter(o => o.accepted).length;
   if (hTab === "aceitas") list = list.filter(o => o.accepted); if (hTab === "recusadas") list = list.filter(o => !o.accepted);
-  const tot = list.reduce((s,o)=>s+o.price,0), avg = f => { const a = list.map(f).filter(x => x!=null); return a.length ? a.reduce((s,x)=>s+x,0)/a.length : null; };
+  // Viagens feitas sem oferta lida (reconstruídas pelo GPS / conciliação) entram nas aceitas
+  const inRange = c => { const d = shiftDay(c.acc); return hDay ? key(d) === hDay : d >= ws && d < we; };
+  const gpsTrips = hTab === "recusadas" ? [] : trips.filter(c => c.st.startsWith("concluída") && !offerOfTrip[c.id] && inRange(c) && (hApp === "todos" || (c.app||"").toUpperCase() === hApp))
+    .map(c => ({ gps:true, t:c.acc, price:c.price||0, trip:c, accepted:true }));
+  const offerList = list; list = list.concat(gpsTrips).sort((a,b) => a.t - b.t);
+  // Por dia: o que a Uber contou (resumo da sessão) x o que o Radar registrou
+  const dayKeys = [...new Set(list.map(o => key(shiftDay(o.t))))];
+  const dayInfo = {}; dayKeys.forEach(k => { const S = sessionOf(k), dn = list.filter(o => o.accepted && key(shiftDay(o.t)) === k);
+    const reg = dn.reduce((x,o)=>x+o.price,0); dayInfo[k] = { S, n: dn.length, reg, ok: dn.filter(o=>!o.gps).length, gps: dn.filter(o=>o.gps) }; });
+  const accN = Object.values(dayInfo).reduce((x,i)=>x+(i.S&&i.S.concl&&hApp!=="99"?Math.max(i.S.concl,i.n):i.n),0);
+  const accV = Object.values(dayInfo).reduce((x,i)=>x+(i.S&&i.S.valor&&hApp!=="99"?Math.max(i.S.valor,i.reg):i.reg),0);
+  const tot = offerList.reduce((s,o)=>s+o.price,0), avg = f => { const a = offerList.map(f).filter(x => x!=null); return a.length ? a.reduce((s,x)=>s+x,0)/a.length : null; };
+  const nAccShow = hTab === "aceitas" ? accN : nAcc;
   const e = new Date(we); e.setDate(e.getDate()-1);
   let h = `<div class="card"><div class="weeknav"><button onclick="hWeek--;hDay=null;render()">‹</button>${ws.getDate()} ${MO[ws.getMonth()]} – ${e.getDate()} ${MO[e.getMonth()]}<button onclick="if(hWeek<0){hWeek++;hDay=null;render()}" ${hWeek>=0?"disabled style=opacity:.3":""}>›</button></div>
     <div class="bars">${perDay.map(x => `<div class="${hDay===key(x.d)?"sel":""}" onclick="hDay=hDay==='${key(x.d)}'?null:'${key(x.d)}';render()"><i class="${x.n?"has":""}" style="height:${Math.max(4, 64*x.n/maxN)}px;${hDay&&hDay!==key(x.d)?"opacity:.35":""}"></i><span>${x.d.getDate()}</span></div>`).join("")}</div></div>
     <div class="pillrow">${[["todos","Todos"],["UBER","Uber"],["99","99"]].map(([k,l]) => `<button class="pill ${hApp===k?"on":""}" onclick="hApp='${k}';render()">${l}</button>`).join("")}</div>
-    <div class="seg">${[["todas","Todas",nAll],["aceitas","Aceitas",nAcc],["recusadas","Recusadas",nAll-nAcc]].map(([k,l,n]) => `<button class="${hTab===k?"on":""}" onclick="hTab='${k}';render()">${l}<i>${n}</i></button>`).join("")}</div>
-    <div class="grid2" style="margin-bottom:12px"><div class="kpi"><span>ofertas</span><b>${list.length}</b></div><div class="kpi"><span>total ofertado</span><b>${brl(tot,0)}</b></div>
+    <div class="seg">${[["todas","Todas",nAll],["aceitas","Aceitas",nAcc],["recusadas","Recusadas",nAll-nAcc]].map(([k,l,n]) => `<button class="${hTab===k?"on":""}" onclick="hTab='${k}';render()">${l}<i>${k==="aceitas"&&hTab==="aceitas"?accN:n}</i></button>`).join("")}</div>
+    <div class="grid2" style="margin-bottom:12px">${hTab==="aceitas"
+      ? `<div class="kpi"><span>viagens</span><b>${accN}</b></div><div class="kpi"><span>ganhos</span><b>${brl(accV,0)}</b></div>`
+      : `<div class="kpi"><span>ofertas</span><b>${offerList.length}</b></div><div class="kpi"><span>total ofertado</span><b>${brl(tot,0)}</b></div>`}
     <div class="kpi"><span>média por km</span><b class="${cls(avg(o=>o.rskm),KMB,KMG)}">${brl(avg(o=>o.rskm))}</b></div><div class="kpi"><span>média por hora</span><b class="${cls(avg(o=>o.rsh),HB,HG)}">${brl(avg(o=>o.rsh),0)}</b></div></div>`;
   if (!list.length) h += `<div class="empty">Nenhuma oferta nesse filtro.</div>`;
   const byDay = {}; list.slice().reverse().forEach(o => { const k = key(shiftDay(o.t)); (byDay[k] = byDay[k] || []).push(o); });
-  Object.values(byDay).forEach(arr => { const d = shiftDay(arr[0].t);
-    h += `<div class="dayhd"><span>${WD[d.getDay()]}, ${d.getDate()} ${MO[d.getMonth()]}</span><span>${brl(arr.reduce((s,o)=>s+o.price,0))}</span></div>`;
-    arr.forEach(o => { const vc = o.v==="BOM"?"good":o.v==="RUIM"?"bad":"mid", vl = o.v==="BOM"?"Boa":o.v==="RUIM"?"Ruim":"Média";
+  Object.entries(byDay).forEach(([k, arr]) => { const d = shiftDay(arr[0].t), I = dayInfo[k];
+    const uber = hTab === "aceitas" && I.S && I.S.valor && hApp !== "99";
+    h += `<div class="dayhd"><span>${WD[d.getDay()]}, ${d.getDate()} ${MO[d.getMonth()]}</span><span>${brl(uber ? Math.max(I.S.valor, I.reg) : arr.reduce((s,o)=>s+o.price,0))}</span></div>`;
+    if (hTab === "aceitas") {
+      const falta = uber && I.S.concl ? Math.max(0, I.S.concl - I.n) : 0, faltaV = uber ? Math.max(0, I.S.valor - I.reg) : 0;
+      h += `<div class="card" style="padding:14px 16px">${uber ? `<div style="display:flex;justify-content:space-between;font-size:16px"><b>Uber</b><b>${I.S.concl||"?"} viagens · ${brl(I.S.valor)}</b></div>` : ""}
+        <div class="sm" style="display:flex;justify-content:space-between;margin-top:${uber?8:0}px"><span class="muted">Com oferta lida pelo Radar</span><span>${I.ok} · ${brl(I.reg - I.gps.reduce((x,o)=>x+o.price,0))}</span></div>
+        ${I.gps.length ? `<div class="sm" style="display:flex;justify-content:space-between;margin-top:6px"><span class="muted">Reconstruídas pelo GPS</span><span>${I.gps.length} · ${brl(I.gps.reduce((x,o)=>x+o.price,0))}</span></div>` : ""}
+        ${falta || faltaV > 0.5 ? `<div class="sm" style="display:flex;justify-content:space-between;margin-top:6px;color:var(--mid)"><span>Sem registro no Radar</span><span>${falta} · ${brl(faltaV)}</span></div>` : ""}</div>`;
+    }
+    arr.forEach(o => { if (o.gps) { const c = o.trip;
+        h += `<div class="offer accepted"><div class="top"><div class="val">${brl(o.price)}</div><div class="chips"><span class="chip mid">GPS · valor estimado</span></div></div>
+          <div class="sub"><b>${hm(c.acc)}</b> · ${c.app==="99"?"99":"Uber"} · viagem sem oferta lida (o card não apareceu)</div>
+          ${(ROUTES[c.id]||[]).length > 1 ? `<div class="mini" data-mini="${c.id}"></div>` : ""}
+          <div class="sm muted" style="margin-top:10px">${(c.km||0).toFixed(1).replace(".",",")} km rodados${c.end?" · "+hm(c.acc)+"–"+hm(c.end):""}</div></div>`; return; }
+      const vc = o.v==="BOM"?"good":o.v==="RUIM"?"bad":"mid", vl = o.v==="BOM"?"Boa":o.v==="RUIM"?"Ruim":"Média";
       const nota = o.nota ? " · ★ " + o.nota.toFixed(2).replace(".",",") : "";
       h += `<div class="offer ${o.accepted?"accepted":""}">
         <div class="top"><div class="val">${brl(o.price)}</div><div class="chips">${o.accepted?`<span class="chip acc">✓ Aceita</span>`:""}<span class="chip ${vc}">● ${vl}</span></div></div>
