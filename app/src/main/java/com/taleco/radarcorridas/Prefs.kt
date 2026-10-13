@@ -180,6 +180,11 @@ class Prefs(context: Context) {
         set(v) = sp.edit().putInt("bolha_y", v).apply()
 
     /** Botão R travado: não sai do lugar ao arrastar (o carro balança). */
+    /** Falar com o passageiro no começo e no fim da viagem (pelo som do carro). */
+    var talkToPassenger: Boolean
+        get() = sp.getBoolean("falar_passageiro", true)
+        set(v) = sp.edit().putBoolean("falar_passageiro", v).apply()
+
     /** Ler notificações de compra do banco para achar gastos do carro. */
     var readBankNotifs: Boolean
         get() = sp.getBoolean("ler_notif_banco", true)
