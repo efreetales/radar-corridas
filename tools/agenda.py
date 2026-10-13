@@ -80,9 +80,14 @@ def saida(regra, inicio, fim_informado=None):
     return inicio + dt.timedelta(minutes=105), 45
 
 EVENTOS = {}
+# Não interessa ao motorista: cursos, workshops, eventos corporativos e terapias
+FORA = re.compile(r"\b(oficina|workshop|curso|formacao|formacoes|palestra|treinamento|mentoria|imersao|retiro|meditacao|harmonizacao|terapia|constelacao|inscricao|inscricoes|tax day|webinar|aula|seminario|reuniao|encontro de negocios)\b")
 
 def add(nome, local, endereco, inicio, regra, fonte, origem, lat=None, lng=None, fim_informado=None, publico=None):
     if not nome or not inicio: return
+    if FORA.search(norm(nome)): return
+    # de dia, só se for até a noite (festa, show longo)
+    if inicio.hour < 17 and not (fim_informado and fim_informado.hour >= 20 or fim_informado and fim_informado.date() > inicio.date()) and regra != "futebol": return
     if (inicio - dt.timedelta(hours=5)).date() != HOJE: return
     chave = norm(nome)[:40] + "|" + norm(local)[:20]
     if chave in EVENTOS: return
@@ -155,7 +160,6 @@ def sympla():
                 # temporada (teatro, exposição): a sessão de hoje não vem na lista; só entra se começa hoje
                 if (ini - dt.timedelta(hours=5)).date() != HOJE: continue
                 fim = None
-            if ini.hour < 12 and not (fim and fim.hour >= 18): continue  # matinê/evento de dia: pouco útil à noite
             endereco = ", ".join(x for x in [loc.get("address", "").strip(), (loc.get("neighborhood") or "").strip(), "São Paulo"] if x)
             regra = classificar(e.get("name", ""), loc.get("name", ""))
             antes = len(EVENTOS)
