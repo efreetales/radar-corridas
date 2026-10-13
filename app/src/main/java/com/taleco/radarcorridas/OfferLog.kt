@@ -16,7 +16,7 @@ object OfferLog {
     private const val HEADER =
         "data_hora;app;categoria;valor;km_total;min_total;km_busca;min_busca;km_viagem;min_viagem;nota;rs_km;rs_hora;lucro;veredito;origem;destino;" +
             "motorista_lat;motorista_lng;origem_lat;origem_lng"
-    private const val DIAG_MAX_BYTES = 800_000L
+    private const val DIAG_MAX_BYTES = 3_000_000L
 
     fun offersFile(ctx: Context) = File(ctx.filesDir, "ofertas.csv")
     fun diagFile(ctx: Context) = File(ctx.filesDir, "diagnostico.txt")
@@ -62,7 +62,11 @@ object OfferLog {
     fun appendDiag(ctx: Context, text: String) {
         try {
             val f = diagFile(ctx)
-            if (f.exists() && f.length() > DIAG_MAX_BYTES) f.writeText("")
+            if (f.exists() && f.length() > DIAG_MAX_BYTES) {
+                // guarda a metade mais recente (antes apagava tudo e perdia a noite inteira)
+                val keep = f.readText().takeLast((DIAG_MAX_BYTES / 2).toInt())
+                f.writeText(keep.substring(keep.indexOf("\n[").coerceAtLeast(0)))
+            }
             f.appendText("[" + now() + "]\n" + text + "\n\n")
         } catch (_: Exception) {
         }

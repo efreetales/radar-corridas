@@ -40,6 +40,8 @@ class RadarService : AccessibilityService() {
         private const val MIN_VISIBLE_TEXTS = 3
         private const val IMAGE_READ_INTERVAL_MS = 1000L
         private const val MAX_HIDDEN_READ_MS = 25_000L
+        /** Depois dos 25 s, continua olhando a tela escondida, mais devagar (uma oferta pode chegar a qualquer hora). */
+        private const val SLOW_IMAGE_READ_MS = 3_000L
     }
 
     private lateinit var prefs: Prefs
@@ -52,6 +54,7 @@ class RadarService : AccessibilityService() {
     private var lastLoggedSig: String? = null
     private var lastLoggedAt = 0L
     private var lastDiag: String? = null
+    private var lastDiagAt = 0L
 
     private val scanRunnable: Runnable = Runnable {
         scanPending = false
@@ -79,6 +82,7 @@ class RadarService : AccessibilityService() {
     private var watchPending = false
     private var lastImageDiag: String? = null
     private var hiddenSince = 0L
+    private var hiddenSig: String? = null
 
     private val watchRunnable: Runnable = Runnable {
         watchPending = false
@@ -86,15 +90,15 @@ class RadarService : AccessibilityService() {
     }
 
     /** Enquanto a tela da Uber estiver "vazia", continua olhando a cada segundo. */
-    private fun keepWatchingHiddenScreen() {
+    private fun keepWatchingHiddenScreen(delay: Long = IMAGE_READ_INTERVAL_MS) {
         if (watchPending) return
         watchPending = true
-        handler.postDelayed(watchRunnable, IMAGE_READ_INTERVAL_MS)
+        handler.postDelayed(watchRunnable, delay)
     }
 
-    private fun requestImageRead(app: String) {
+    private fun requestImageRead(app: String, minGap: Long = IMAGE_READ_INTERVAL_MS) {
         val now = System.currentTimeMillis()
-        if (imageReadBusy || now - lastImageReadAt < IMAGE_READ_INTERVAL_MS) return
+        if (imageReadBusy || now - lastImageReadAt < minGap) return
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) return
         imageReadBusy = true
         lastImageReadAt = now
@@ -289,6 +293,7 @@ class RadarService : AccessibilityService() {
         val now = System.currentTimeMillis()
         if (offer != null) {
             hiddenSince = 0L
+            hiddenSig = null
             handleOffer(offer)
             TripTracker.onScreen(this, prefs, ScreenState.OFERTA, offer)
             return
@@ -299,16 +304,21 @@ class RadarService : AccessibilityService() {
         // para não gastar bateria quando a tela escondida não é uma oferta).
         val hidden = screens.firstOrNull { it.second.size < MIN_VISIBLE_TEXTS }
         if (hidden != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            if (hiddenSince == 0L) hiddenSince = now
+            // Mudou a tela escondida (ex.: chegou uma oferta por cima)? Volta a ler rápido.
+            val sig = screens.size.toString() + "|" + screens.joinToString("#") { it.first + ":" + it.second.size + ":" + it.second.take(3).joinToString(",") }
+            if (hiddenSince == 0L || sig != hiddenSig) { hiddenSince = now; hiddenSig = sig }
             if (now - hiddenSince <= MAX_HIDDEN_READ_MS) {
                 requestImageRead(hidden.first)
                 keepWatchingHiddenScreen()
             } else {
+                requestImageRead(hidden.first, SLOW_IMAGE_READ_MS)
+                keepWatchingHiddenScreen(SLOW_IMAGE_READ_MS)
                 handleNoOffer()
             }
             return
         }
         hiddenSince = 0L
+        hiddenSig = null
 
         val state = when {
             screens.isEmpty() -> ScreenState.FORA
@@ -434,8 +444,12 @@ class RadarService : AccessibilityService() {
             screens.joinToString("\n") { (app, texts) -> "$app: " + texts.joinToString(" | ") }
         }
         val dump = "janelas: $packages\n$body"
-        if (dump == lastDiag) return
-        lastDiag = dump
+        // Só grava quando a tela muda de verdade (distância/tempo mudando a cada segundo não conta), ou a cada 1 min
+        val key = dump.replace(Regex("\\d"), "#")
+        val now = System.currentTimeMillis()
+        if (key == lastDiag && now - lastDiagAt < 60_000L) return
+        lastDiag = key
+        lastDiagAt = now
         OfferLog.appendDiag(this, dump)
     }
 

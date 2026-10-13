@@ -32,7 +32,7 @@ enum class ScreenState {
  * Vale até a Uber voltar para "Procurando viagens" sem nada disso, ou 15 min sem ver a tela da Uber.
  */
 object RideScreen {
-    private val PREFIXES = listOf("Destino de ", "Embarque em ", "Insira o código")
+    private val PREFIXES = listOf("Destino de ", "Embarque em ", "Insira o código", "Encontro com ")
     private val HOME = listOf("Procurando viagens", "Você está online", "Você está offline")
     private const val GRACE_MS = 15 * 60_000L
 
@@ -60,7 +60,10 @@ object RideScreen {
 
 object TripTracker {
 
-    private const val DECISION_MS = 4_000L        // tempo sem a tela inicial para considerar "aceita"
+    private const val DECISION_MS = 4_000L        // 99: tempo sem a tela inicial para considerar "aceita"
+    private const val UBER_ACCEPT_WAIT_MS = 120_000L // Uber: espera o "Encontro com X" depois que a oferta some
+    private const val RECENT_OFFER_MS = 150_000L  // oferta vista há até 2,5 min pode ser a aceita
+    private const val HOME_CONFIRM_MS = 45_000L   // Uber: tela inicial firme por 45 s = corrida terminou (vale a hora em que apareceu)
     private const val PICKUP_RADIUS_M = 120.0     // chegou ao embarque
     private const val LEAVE_PICKUP_M = 250.0      // saiu do embarque com o passageiro
     private const val DROPOFF_RADIUS_M = 150.0    // chegou ao destino
@@ -104,6 +107,26 @@ object TripTracker {
     private var trip: Trip? = null
     private var appContext: Context? = null
 
+    // Uber: ofertas vistas há pouco (a aceita é a última antes do "Encontro com X")
+    private val recent = ArrayDeque<Pair<Long, Offer>>()
+    private var homeSince = 0L          // tela inicial vista durante a corrida (confirma o fim depois de 8 s)
+    private var lastRideTextAt = 0L     // última vez que a Uber mostrou sinal de corrida
+    private var lastDonePassenger: String? = null
+    private var lastDoneAt = 0L
+
+    private fun remember(offer: Offer, now: Long) {
+        recent.removeAll { it.second.signature() == offer.signature() || now - it.first > RECENT_OFFER_MS }
+        recent.addLast(now to offer)
+    }
+
+    private fun forget(offer: Offer?) { if (offer != null) recent.removeAll { it.second.signature() == offer.signature() } }
+
+    /** A oferta aceita: a mais recente vista nos últimos 2,5 min. */
+    private fun pickRecent(now: Long): Pair<Long, Offer>? =
+        recent.lastOrNull { now - it.first <= RECENT_OFFER_MS }
+
+    private val Offer.isUber get() = app.equals("UBER", ignoreCase = true)
+
     private val tick = object : Runnable {
         override fun run() {
             checkTimeouts()
@@ -130,17 +153,19 @@ object TripTracker {
         when (phase) {
             Phase.LIVRE -> if (state == ScreenState.OFERTA && offer != null) {
                 lastOffer = offer
+                remember(offer, now)
                 offerGoneAt = 0L
                 setPhase(Phase.OFERTA)
             }
 
             Phase.OFERTA -> when (state) {
                 ScreenState.OFERTA -> {
-                    if (offer != null) lastOffer = offer
+                    if (offer != null) { lastOffer = offer; remember(offer, now) }
                     offerGoneAt = 0L
                 }
                 ScreenState.INICIO -> {
                     // Recusada ou expirada.
+                    forget(lastOffer)
                     lastOffer = null
                     setPhase(Phase.LIVRE)
                 }
@@ -151,8 +176,13 @@ object TripTracker {
 
             Phase.A_CAMINHO, Phase.NO_EMBARQUE, Phase.EM_VIAGEM -> {
                 when {
-                    state == ScreenState.OFERTA && offer != null -> { nextOffer = offer; nextGoneAt = 0L }
-                    state == ScreenState.INICIO -> { nextOffer = null; queued = null; finish(ctx, null) }
+                    state == ScreenState.OFERTA && offer != null -> { nextOffer = offer; nextGoneAt = 0L; remember(offer, now) }
+                    state == ScreenState.INICIO -> {
+                        if (trip?.offer?.isUber == true) {
+                            // Uber: a tela inicial pisca por cima da navegação; só encerra se ficar 8 s sem sinal de corrida
+                            if (homeSince == 0L) homeSince = now
+                        } else { nextOffer = null; queued = null; finish(ctx, null) }
+                    }
                     nextOffer != null -> {
                         if (nextGoneAt == 0L) nextGoneAt = now
                         else if (now - nextGoneAt >= DECISION_MS) {
@@ -170,9 +200,24 @@ object TripTracker {
     private fun checkTimeouts() {
         val ctx = appContext ?: return
         val now = System.currentTimeMillis()
-        if (phase == Phase.OFERTA && offerGoneAt > 0 && now - offerGoneAt >= DECISION_MS) {
+        if (phase == Phase.OFERTA && offerGoneAt > 0) {
             val offer = lastOffer
-            if (offer != null) startTrip(ctx, offer, offerGoneAt) else setPhase(Phase.LIVRE)
+            if (offer == null) setPhase(Phase.LIVRE)
+            else if (!offer.isUber) {
+                if (now - offerGoneAt >= DECISION_MS) startTrip(ctx, offer, offerGoneAt)
+            } else if (now - offerGoneAt >= UBER_ACCEPT_WAIT_MS) {
+                // A Uber não mostrou "Encontro com …": não foi aceita
+                lastOffer = null
+                setPhase(Phase.LIVRE)
+            }
+        }
+        // Uber: tela inicial firme, sem sinal de corrida = a corrida acabou (sem avaliação na tela)
+        if (trip?.offer?.isUber == true && homeSince > 0 && now - homeSince >= HOME_CONFIRM_MS && now - lastRideTextAt >= HOME_CONFIRM_MS) {
+            val endAt = homeSince
+            homeSince = 0L
+            nextOffer = null
+            queued = null
+            finish(ctx, null, endAt)
         }
         val t = trip
         if (t != null && now - t.acceptedAt > MAX_TRIP_MS) finish(ctx, "tempo máximo")
@@ -193,6 +238,8 @@ object TripTracker {
         val t = Trip(id, offer, acceptedAt)
         trip = t
         lastOffer = null
+        forget(offer)
+        homeSince = 0L
         setPhase(Phase.A_CAMINHO)
         OfferLog.appendDiag(ctx, "CORRIDA $id: aceita (R$ ${offer.price}) — ligando o GPS")
 
@@ -247,13 +294,13 @@ object TripTracker {
         t.points.add(Point(loc.time, here.lat, here.lng, phase))
     }
 
-    private fun finish(ctx: Context, reason: String?) {
+    private fun finish(ctx: Context, reason: String?, endAt: Long? = null) {
         val t = trip ?: return
         trip = null
         setPhase(Phase.LIVRE)
         TrackingService.onPoint = null
         TrackingService.stop(ctx, TrackingService.CORRIDA)
-        val endedAt = System.currentTimeMillis()
+        val endedAt = endAt ?: System.currentTimeMillis()
         // Quando o endereço da oferta não pôde ser localizado, as fases não são detectadas.
         // Aí usamos o quanto o carro andou e o tempo: se bate com a corrida, ela foi feita.
         val moved = t.kmToPickup + t.kmTrip + t.kmAfter
@@ -271,6 +318,8 @@ object TripTracker {
             t.kmToPickup, t.kmTrip, t.origin, t.destination, status,
             t.points.map { TripLog.RoutePoint(it.time, it.lat, it.lng, it.phase.name) })
         OfferLog.appendDiag(ctx, "CORRIDA ${t.id}: $status${t.passenger?.let { " ($it)" } ?: ""}, ${t.points.size} pontos de GPS")
+        lastDonePassenger = t.passenger
+        lastDoneAt = endedAt
     }
 
     /**
@@ -290,6 +339,8 @@ object TripTracker {
         val atPickup = tt.any { it.contains("Aguardando", ignoreCase = true) || it.startsWith("Perto de ") }
         val ri = tt.indexOfFirst { it.startsWith("Como foi a viagem") }
         val rated = if (ri >= 0) tt.getOrNull(ri + 1) else null
+        val pickupScreen = tt.any { it.startsWith("Embarque em ") }
+        if (meet != null || dest != null || pickupScreen || RideScreen.isRide(tt)) { lastRideTextAt = now; homeSince = 0L }
 
         // 1) Avaliação = a corrida (de quem foi avaliado) terminou
         val cur = trip
@@ -299,14 +350,28 @@ object TripTracker {
             if (cur.arrivedDestAt == null) cur.arrivedDestAt = now
             finish(ctx, null)
         }
-        // 2) Começa a próxima (emendada) quando a tela já mostra o próximo passageiro
-        if (trip == null && meet != null && meet != rated) {
-            val q = queued ?: lastOffer.takeIf { phase == Phase.OFERTA }
+        // 1b) Emendada sem tela de avaliação: a Uber já está indo buscar outra pessoa
+        val cur2 = trip
+        if (cur2 != null && meet != null && cur2.passenger != null && meet != cur2.passenger && cur2.leftPickupAt != null) {
+            if (cur2.arrivedDestAt == null) cur2.arrivedDestAt = now
+            finish(ctx, null)
+        }
+        // 2) Aceite na Uber = a tela mostra "Encontro com X" (indo buscar).
+        //    A oferta aceita é a guardada durante a corrida anterior (emendada) ou a última vista antes disso.
+        val justDone = meet != null && meet == lastDonePassenger && now - lastDoneAt < 10 * 60_000L
+        if (trip == null && meet != null && meet != rated && !justDone) {
+            // a mais recente entre a emendada guardada e as ofertas vistas
+            val best = listOfNotNull(queued?.let { queuedAt to it }, pickRecent(now)).maxByOrNull { it.first }
+            val q = best?.second
             if (q != null) {
-                val at = if (queued != null) queuedAt else now
+                val at = if (phase == Phase.OFERTA && offerGoneAt > 0 && q === lastOffer) offerGoneAt else best.first
                 queued = null
+                nextOffer = null
                 startTrip(ctx, q, at)
                 trip?.passenger = meet
+            } else {
+                OfferLog.appendDiag(ctx, "CORRIDA: Uber mostra \"Encontro com $meet\", mas nenhuma oferta foi lida antes (card não apareceu)")
+                lastDonePassenger = meet; lastDoneAt = now
             }
         }
         // 3) Fases da corrida atual
