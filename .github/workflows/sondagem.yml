@@ -8,15 +8,12 @@ jobs:
   s:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+        with: { ref: eventos }
       - run: |
-          mkdir s && cd s
-          UA="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36"
-          get(){ curl -sL -m 60 -A "$UA" -c cj -b cj -o "$1" -w "$1 %{http_code} %{size_download}\n" "$2" >> log.txt || echo "$1 FAIL" >> log.txt; }
-          get der_pesquisa.html "https://dersp.der.sp.gov.br/WebSite/MalhaRodoviaria/PesquisaRadar.aspx"
-          get dados_res1.html "https://dadosabertos.sp.gov.br/dataset/radar/resource/6b329482-759d-4d59-97d0-0557ee81b827"
-          get radares.xlsx "https://dersp.der.sp.gov.br/WebSite/Arquivos/DadosAbertos/AtivosRodoviarios/Radar/radares.xlsx"
-          cat log.txt
-      - if: always()
-        run: |
-          cd s && git init -q -b sondagem && git add . && git -c user.name=radar-bot -c user.email=radar-bot@users.noreply.github.com commit -qm sondagem
-          git push -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}" sondagem
+          mkdir -p /tmp/t && n=0
+          while read p; do mkdir -p /tmp/t/$(dirname $p); s=$(echo "abcd" | cut -c$(( (n % 4) + 1 ))); curl -sL -m 30 -A "Mozilla/5.0" -o /tmp/t/$p.png "https://$s.basemaps.cartocdn.com/dark_all/$p@2x.png"; n=$((n+1)); done < tools/tiles.txt
+          find /tmp/t -name '*.png' -size +1k | wc -l
+      - run: |
+          cd /tmp/t && git init -q -b mapas && git add . && git -c user.name=radar-bot -c user.email=radar-bot@users.noreply.github.com commit -qm tiles
+          git push -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}" mapas
