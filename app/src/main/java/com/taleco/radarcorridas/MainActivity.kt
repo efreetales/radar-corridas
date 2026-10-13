@@ -679,15 +679,22 @@ class MainActivity : AppCompatActivity() {
             setOnCheckedChangeListener { _, checked -> prefs.talkToPassenger = checked }
         }, matchWrap(top = 14))
         card.addView(text(
-            "Quando o passageiro embarca: \"Olá, Ana! Vamos começar. Estamos indo para Avenida Paulista. Boa viagem!\" " +
-                "Quando o carro para no destino: \"Chegamos, Ana! Espero que tenha gostado da viagem. Por favor, não esqueça de avaliar a viagem no aplicativo da Uber.\" " +
+            "Quando o passageiro embarca: \"Oi, Ana, tudo bem? Vamos lá, nosso destino é Avenida Paulista. Se precisar de alguma coisa, é só me falar. Boa viagem!\" " +
+                "Quando o carro para no destino: \"Pronto, Ana, chegamos! Obrigado pela companhia, espero que tenha curtido a viagem. Se puder, deixa sua avaliação no aplicativo da Uber. Até a próxima!\" " +
                 "Sai pelo som do carro quando o celular está conectado por Bluetooth ou Android Auto, abaixando a música enquanto fala.",
             12f, Colors.MUTED
         ))
         card.addView(MaterialButton(this).apply {
             isAllCaps = false
+            letterSpacing = 0f
             text = "🔊 Ouvir exemplo"
             setOnClickListener { Voz.inicio(this@MainActivity, "Ana", "Avenida Paulista, 1000, Bela Vista") }
+        }, matchWrap(top = 8))
+        card.addView(MaterialButton(this).apply {
+            isAllCaps = false
+            letterSpacing = 0f
+            text = "Escolher outra voz"
+            setOnClickListener { escolherVoz() }
         }, matchWrap(top = 8))
         tripChecklist = text("", 14f, Colors.TEXT).apply { setPadding(0, dp(10), 0, 0) }
         card.addView(tripChecklist)
@@ -697,6 +704,33 @@ class MainActivity : AppCompatActivity() {
         }
         card.addView(tripPermBtn, matchWrap(top = 8))
         updateTripChecklist()
+    }
+
+    /** Lista as vozes em português do celular; tocar numa delas fala o exemplo e guarda a escolha. */
+    private fun escolherVoz() {
+        Voz.preparar(this) {
+            val vs = Voz.vozes()
+            if (vs.isEmpty()) { abrirConfigVoz(); return@preparar }
+            val atual = prefs.voiceName.ifBlank { vs.first().name }
+            val nomes = vs.mapIndexed { i, v ->
+                val q = when { v.quality >= 400 -> "muito natural"; v.quality >= 300 -> "natural"; else -> "simples" }
+                "Voz ${i + 1} · $q" + (if (v.isNetworkConnectionRequired) " · usa internet" else "")
+            }.toTypedArray()
+            var sel = vs.indexOfFirst { it.name == atual }.coerceAtLeast(0)
+            androidx.appcompat.app.AlertDialog.Builder(this)
+                .setTitle("Voz para o passageiro")
+                .setSingleChoiceItems(nomes, sel) { _, w -> sel = w; Voz.usarVoz(this, vs[w].name) }
+                .setPositiveButton("Usar esta") { _, _ -> prefs.voiceName = vs[sel].name }
+                .setNeutralButton("Mais vozes") { _, _ -> abrirConfigVoz() }
+                .show()
+        }
+    }
+
+    /** Configurações de voz do Android (para baixar vozes melhores ou trocar o motor). */
+    private fun abrirConfigVoz() {
+        try { startActivity(Intent("com.android.settings.TTS_SETTINGS")) } catch (_: Exception) {
+            try { startActivity(Intent(android.provider.Settings.ACTION_SETTINGS)) } catch (_: Exception) { }
+        }
     }
 
     private fun updateTripChecklist() {
@@ -1573,12 +1607,12 @@ class MainActivity : AppCompatActivity() {
             v.minimumHeight = dp(64)
             v.switchMinWidth = dp(64)
             val checked = arrayOf(intArrayOf(android.R.attr.state_checked), intArrayOf())
-            v.thumbDrawable = GradientDrawable().apply {
+            // bolinha de 28dp com 5dp de folga em volta: não encosta na borda do trilho (38dp de altura)
+            v.thumbDrawable = android.graphics.drawable.InsetDrawable(GradientDrawable().apply {
                 shape = GradientDrawable.OVAL
-                setSize(dp(30), dp(30))
+                setSize(dp(28), dp(28))
                 setColor(Color.WHITE)
-                setStroke(dp(4), Color.TRANSPARENT)   // folga entre o botão e a borda do trilho
-            }
+            }, dp(5))
             v.thumbTintList = ColorStateList(checked, intArrayOf(Color.WHITE, Color.parseColor("#C9D1D9")))
             v.trackDrawable = GradientDrawable().apply {
                 cornerRadius = dp(19).toFloat()

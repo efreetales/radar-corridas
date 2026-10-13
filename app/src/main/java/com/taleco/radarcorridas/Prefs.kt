@@ -185,6 +185,11 @@ class Prefs(context: Context) {
         get() = sp.getBoolean("falar_passageiro", true)
         set(v) = sp.edit().putBoolean("falar_passageiro", v).apply()
 
+    /** Nome da voz escolhida para falar com o passageiro ("" = a melhor disponível). */
+    var voiceName: String
+        get() = sp.getString("voz_nome", "") ?: ""
+        set(v) = sp.edit().putString("voz_nome", v).apply()
+
     /** Ler notificações de compra do banco para achar gastos do carro. */
     var readBankNotifs: Boolean
         get() = sp.getBoolean("ler_notif_banco", true)
