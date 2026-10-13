@@ -19,7 +19,12 @@ def http(url, body=None):
     req = urllib.request.Request(url, data=data, method="POST" if data else "GET",
                                  headers={**H, "Content-Type": "application/json"})
     with urllib.request.urlopen(req, timeout=180) as r:
-        return r.read()
+        data = r.read()
+        # O Power BI às vezes responde compactado (gzip)
+        if data[:2] == b"\x1f\x8b" or r.headers.get("Content-Encoding", "") == "gzip":
+            import gzip
+            data = gzip.decompress(data)
+        return data
 
 
 html = http(VIEW).decode("utf-8", "ignore")

@@ -23,6 +23,11 @@ jobs:
         run: |
           git config user.name "radar-bot"
           git config user.email "radar-bot@users.noreply.github.com"
+          # Se uma das fontes falhar, mantém o arquivo do mês anterior (nunca publica sem a lista da CET)
+          git fetch -q origin cet-dados || true
+          for f in radares_cet.tsv radares_der.tsv; do
+            if [ ! -s "out/$f" ]; then git show "origin/cet-dados:$f" > "out/$f" 2>/dev/null && echo "mantido $f anterior" >> out/log.txt || rm -f "out/$f"; fi
+          done
           mv out /tmp/out
           git checkout --orphan cet-dados
           git rm -rf . -q
