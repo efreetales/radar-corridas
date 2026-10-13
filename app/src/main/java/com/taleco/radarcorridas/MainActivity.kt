@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity() {
 
     /** Ordem e ícones dos cards da tela inicial. "Prévia do cartão" fica dentro de Ganhos. */
     private val pages = linkedMapOf(
-        "Cartão e ganhos" to Page("Cartão e ganhos", R.drawable.ic_money, "Faixas, campos do cartão e custos"),
+        "Cartão e ganhos" to Page("Cartão e ganhos", R.drawable.ic_money, "Faixas, campos do cartão, custos e gastos"),
         "Cálculo de ganhos" to Page("Faixas de ganhos", R.drawable.ic_money, "Quando cada número fica vermelho, amarelo ou verde", hidden = true),
         "Radares de velocidade" to Page("Radares", R.drawable.ic_speed, "Aviso, bipe e distância"),
         "Valetas e buracos" to Page("Valetas", R.drawable.ic_warning, "Marcar e avisar"),
@@ -72,6 +72,7 @@ class MainActivity : AppCompatActivity() {
         "Melhores horários" to Page("Horários", R.drawable.ic_clock, "Quando mais paga", web = "horarios"),
         "Jornada" to Page("Jornada", R.drawable.ic_timer, "Tempo por fase", web = "jornada"),
         "Custos do carro" to Page("Custos do carro", R.drawable.ic_fuel, "Seu custo por km e o mínimo para aceitar", web = "custos", hidden = true),
+        "Gastos do carro" to Page("Gastos do carro", R.drawable.ic_fuel, "Lidos das notificações do banco: posto, pedágio, oficina", web = "gastos", hidden = true),
         "Estilo do cartão" to Page("Campos do cartão", R.drawable.ic_tune, "O que aparece no cartão e em que ordem", web = "cartao", hidden = true),
         "Corridas e percurso" to Page("Corridas", R.drawable.ic_car, "Registro e permissões"),
         "Aparência" to Page("Aparência", R.drawable.ic_palette, "Posição e botão R"),
@@ -94,7 +95,7 @@ class MainActivity : AppCompatActivity() {
     /** Página "Cartão e ganhos": prévia do cartão + submenu (faixas, campos, custos). */
     private fun buildCardHub() {
         val hub = pages["Cartão e ganhos"] ?: return
-        for (key in listOf("Cálculo de ganhos", "Estilo do cartão", "Custos do carro")) {
+        for (key in listOf("Cálculo de ganhos", "Estilo do cartão", "Custos do carro", "Gastos do carro")) {
             val pg = pages[key] ?: continue
             val row = LinearLayout(this).apply {
                 orientation = LinearLayout.HORIZONTAL
@@ -211,6 +212,11 @@ class MainActivity : AppCompatActivity() {
         pages["Cartão e ganhos"]?.let { pg ->
             col.addView(wideTile(pg.icon, pg.key, pg.hint) { showPage("Cartão e ganhos") }, matchWrap(top = 14))
         }
+
+        // Replay animado da última corrida concluída
+        col.addView(wideTile(R.drawable.ic_car, "Replay da última corrida", "Reveja a última corrida animada no mapa, etapa por etapa") {
+            startActivity(Intent(this, PainelActivity::class.java).putExtra(PainelActivity.EXTRA_PAGE, "replay:"))
+        }, matchWrap(top = 14))
 
         // Grade de cards, 2 por linha
         val entries = pages.entries.filter { !it.value.hidden && it.key != "Cartão e ganhos" }

@@ -180,6 +180,11 @@ class Prefs(context: Context) {
         set(v) = sp.edit().putInt("bolha_y", v).apply()
 
     /** Botão R travado: não sai do lugar ao arrastar (o carro balança). */
+    /** Ler notificações de compra do banco para achar gastos do carro. */
+    var readBankNotifs: Boolean
+        get() = sp.getBoolean("ler_notif_banco", true)
+        set(v) = sp.edit().putBoolean("ler_notif_banco", v).apply()
+
     var bubbleLocked: Boolean
         get() = sp.getBoolean("bolha_travada", false)
         set(v) = sp.edit().putBoolean("bolha_travada", v).apply()

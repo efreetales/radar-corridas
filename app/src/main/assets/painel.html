@@ -103,6 +103,19 @@
   .slot[data-key], .tray button { touch-action:none; user-select:none; -webkit-user-select:none; }
   .dghost { position:fixed; z-index:999; pointer-events:none; opacity:.92; transform:scale(1.06); box-shadow:0 8px 24px rgba(0,0,0,.5); }
   .slot.dragging, .tray button.dragging { opacity:.3; }
+  .gx { background:var(--s1); border:1px solid var(--line); border-radius:18px; padding:16px; margin-bottom:12px; }
+  .gx.pend { border-color:rgba(245,197,24,.45); background:linear-gradient(180deg,#1e1c12,var(--s1)); }
+  .gx .top { display:flex; justify-content:space-between; align-items:center; gap:10px; } .gx .v { font-size:28px; font-weight:800; white-space:nowrap; } .gx .top select { min-width:0; flex:0 1 auto; }
+  .gx .sub { color:var(--mu); font-size:15px; margin-top:4px; }
+  .gx select { height:44px; border-radius:12px; background:var(--s2); color:var(--tx); border:1px solid var(--line); font-size:15px; font-weight:700; padding:0 10px; }
+  .gx .acts { display:flex; gap:10px; margin-top:14px; } .gx .acts button { flex:1; min-height:56px; border:0; border-radius:14px; font-weight:800; font-size:17px; }
+  .gx .acts .yes { background:var(--ac); color:#06231B; } .gx .acts .no { background:var(--s2); color:var(--tx); }
+  .grow { display:flex; align-items:center; gap:12px; padding:12px 0; border-bottom:1px solid var(--line); } .grow:last-child { border-bottom:0; }
+  .grow .ic { width:44px; height:44px; border-radius:12px; background:var(--s2); display:flex; align-items:center; justify-content:center; font-size:22px; flex:none; }
+  .grow .t { flex:1; min-width:0; } .grow .t b { display:block; font-size:16px; } .grow .t small { color:var(--mu); font-size:13px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; display:block; }
+  .grow .val { font-weight:800; font-size:17px; white-space:nowrap; } .grow .x { width:44px; height:44px; border:0; border-radius:12px; background:none; color:var(--mu); font-size:20px; }
+  .perm { background:linear-gradient(180deg,#132033,#111821); border:1px solid #23406a; border-radius:20px; padding:20px 18px; margin-bottom:14px; }
+  .perm b { font-size:19px; display:block; margin-bottom:6px; } .perm p { margin:0; color:var(--mu); font-size:15px; line-height:1.5; }
   .empty { color:var(--mu); text-align:center; padding:30px 8px; font-size:16px; }
   /* ===== animações ===== */
   @keyframes rise { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:none; } }
@@ -185,7 +198,7 @@ const fixAddr = a => { const t = (a||"").replace(/,\s*$/,"").replace(/S[äa]o( P
 
 // ===== telas =====
 const PAGES = { historico:["Histórico de ofertas","Tudo o que o Radar avaliou"], horarios:["Melhores horários","Quando rolam as corridas que mais pagam"],
-  jornada:["Jornada","Quanto tempo você roda, por fase"], custos:["Custos do carro","Quanto o seu carro custa por km"], cartao:["Estilo do cartão","Monte o cartão do jeito que você lê melhor"] };
+  jornada:["Jornada","Quanto tempo você roda, por fase"], custos:["Custos do carro","Quanto o seu carro custa por km"], gastos:["Gastos do carro","Lidos das notificações do seu banco"], cartao:["Estilo do cartão","Monte o cartão do jeito que você lê melhor"] };
 const page = (new URLSearchParams(location.search).get("p") || location.hash.slice(1) || "historico");
 document.getElementById("ttl").innerHTML = `${PAGES[page]?.[0]||"Radar"}<small>${PAGES[page]?.[1]||""}</small>`;
 const app = document.getElementById("app");
@@ -242,7 +255,8 @@ function historico(){
         h += `<div class="offer accepted"><div class="top"><div class="val">${brl(o.price)}</div><div class="chips"><span class="chip mid">GPS · valor estimado</span></div></div>
           <div class="sub"><b>${hm(c.acc)}</b> · ${c.app==="99"?"99":"Uber"} · viagem sem oferta lida (o card não apareceu)</div>
           ${(ROUTES[c.id]||[]).length > 1 ? `<div class="mini" data-mini="${c.id}"></div>` : ""}
-          <div class="sm muted" style="margin-top:10px">${(c.km||0).toFixed(1).replace(".",",")} km rodados${c.end?" · "+hm(c.acc)+"–"+hm(c.end):""}</div></div>`; return; }
+          <div class="sm muted" style="margin-top:10px">${(c.km||0).toFixed(1).replace(".",",")} km rodados${c.end?" · "+hm(c.acc)+"–"+hm(c.end):""}</div>
+          ${(ROUTES[c.id]||[]).length > 1 && (c.st||"").startsWith("concluída") ? `<button class="replay" onclick="openReplay('${c.id}')">▶ Ver replay da corrida</button>` : ""}</div>`; return; }
       const vc = o.v==="BOM"?"good":o.v==="RUIM"?"bad":"mid", vl = o.v==="BOM"?"Boa":o.v==="RUIM"?"Ruim":"Média";
       const nota = o.nota ? " · ★ " + o.nota.toFixed(2).replace(".",",") : "";
       h += `<div class="offer ${o.accepted?"accepted":""}">
@@ -394,6 +408,71 @@ function custos(){
   app.innerHTML = h;
 }
 
+// ---------- GASTOS DO CARRO (notificações do banco) ----------
+const GCAT = { combustivel:["Combustível","⛽","#F5C518"], pedagio:["Pedágio","🛣","#4C9AFF"], estacionamento:["Estacionamento","🅿️","#9775FA"], lavagem:["Lavagem","🧽","#5DD3F3"],
+  manutencao:["Manutenção","🔧","#FF8A4C"], seguro:["Seguro","🛡","#3DD68C"], documentos:["IPVA e documentos","📄","#C9D1D9"], aluguel:["Aluguel","🔑","#FF6369"] };
+const VARIAVEIS = ["combustivel","pedagio","estacionamento","lavagem","manutencao"];
+let G = [], gMonth = 0, gNovo = false;
+function loadG(){ G = parseCsv(raw("gastos.csv")).map(r => ({ id:r.id, t:when(r.data_hora), v:num2(r.valor)||0, cat:r.categoria, local:r.estabelecimento, banco:r.banco, st:r.status, origem:r.origem }))
+  .filter(g => g.t && g.st !== "descartado").sort((a,b) => b.t - a.t); }
+const hav = (a, b) => { const R = 6371, dLa = (b[0]-a[0])*Math.PI/180, dLo = (b[1]-a[1])*Math.PI/180, x = Math.sin(dLa/2)**2 + Math.cos(a[0]*Math.PI/180)*Math.cos(b[0]*Math.PI/180)*Math.sin(dLo/2)**2; return 2*R*Math.asin(Math.sqrt(x)); };
+// km rodados entre duas datas: corridas + trajeto livre gravado
+function kmEntre(a, b){ let km = trips.filter(c => c.acc >= a && c.acc < b).reduce((s,c) => s + (c.km||0), 0);
+  const fp = FREE.filter(p => p[2] >= a && p[2] < b).sort((x,y) => x[2]-y[2]);
+  for (let i = 1; i < fp.length; i++) if (fp[i][2] - fp[i-1][2] < 180e3) { const d = hav(fp[i-1], fp[i]); if (d < 3) km += d; }
+  return km; }
+function gAcao(id, st, cat){ try { Radar.gasto(id, st, cat || ""); } catch(e){} loadG(); render(); }
+function gSalvar(){ const v = num2(document.getElementById("gv").value), c = document.getElementById("gc").value, l = document.getElementById("gl").value;
+  if (!v) { document.getElementById("gv").focus(); return; } try { Radar.gastoNovo(String(v), c, l); } catch(e){} gNovo = false; loadG(); render(); }
+function usarReais(kml, maint){ if (kml) pset("c_kml", kml.toFixed(1)); pset("c_maint", maint.toFixed(2)); document.getElementById("usar").textContent = "Custos do cartão atualizados ✓"; }
+function gastos(){
+  let acesso = false; try { acesso = !!(window.Radar && Radar.notifAcesso && Radar.notifAcesso()); } catch(e){}
+  const now = new Date(), m0 = new Date(now.getFullYear(), now.getMonth() + gMonth, 1), m1 = new Date(m0.getFullYear(), m0.getMonth() + 1, 1);
+  const pend = G.filter(g => g.st === "pendente"), conf = G.filter(g => g.st === "confirmado");
+  const doMes = conf.filter(g => g.t >= m0 && g.t < m1), total = doMes.reduce((s,g) => s + g.v, 0);
+  const porCat = Object.keys(GCAT).map(k => [k, doMes.filter(g => g.cat === k).reduce((s,g) => s + g.v, 0)]).filter(x => x[1] > 0).sort((a,b) => b[1]-a[1]);
+  // custo real por km: últimos 30 dias
+  const d30 = new Date(now - 30*86400e3), km30 = kmEntre(d30, now), c30 = conf.filter(g => g.t >= d30);
+  const fuel30 = c30.filter(g => g.cat === "combustivel").reduce((s,g) => s + g.v, 0), var30 = c30.filter(g => VARIAVEIS.includes(g.cat) && g.cat !== "combustivel").reduce((s,g) => s + g.v, 0);
+  const temBase = km30 >= 200 && fuel30 > 0, fuelKm = temBase ? fuel30 / km30 : null, outrosKm = km30 >= 200 ? var30 / km30 : null;
+  const cfgFuel = (num2(pget("c_fuel", 6)) || 6) / Math.max(1, num2(pget("c_kml", 10)) || 10), cfgMaint = num2(pget("c_maint", 0)) || 0;
+  let h = "";
+  if (!acesso) h += `<div class="perm"><b>🔔 Ligue a leitura das notificações</b><p>O Radar lê as notificações de compra do seu banco e separa só o que é do carro: posto, pedágio, estacionamento, lava-rápido, oficina. O resto é ignorado e nada sai do seu celular.</p>
+    <button class="btn" onclick="try{Radar.abrirNotifAcesso()}catch(e){}">Ligar leitura das notificações</button></div>`;
+  if (pend.length) { h += `<h2>Para confirmar <span class="chip mid" style="margin-left:6px">${pend.length}</span></h2>`;
+    pend.forEach(g => { const c = GCAT[g.cat] || ["Outro","•"];
+      h += `<div class="gx pend"><div class="top"><div class="v">${brl(g.v)}</div><select onchange="gAcao('${g.id}','pendente',this.value)">${Object.entries(GCAT).map(([k,x]) => `<option value="${k}"${k===g.cat?" selected":""}>${x[1]} ${x[0]}</option>`).join("")}</select></div>
+        <div class="sub">${g.local||c[0]} · ${g.banco||""} · ${g.t.getDate()} ${MO[g.t.getMonth()]} ${hm(g.t)}</div>
+        <div class="acts"><button class="yes" onclick="gAcao('${g.id}','confirmado')">✓ É do carro</button><button class="no" onclick="gAcao('${g.id}','descartado')">Não é</button></div></div>`; }); }
+  h += `<div class="weeknav"><button onclick="gMonth--;render()">‹</button><span>${MO[m0.getMonth()]} ${m0.getFullYear()}</span><button onclick="if(gMonth<0){gMonth++;render()}" style="${gMonth<0?"":"opacity:.3"}">›</button></div>`;
+  const kmMes = kmEntre(m0, m1);
+  h += `<div class="hero"><div class="sm muted">Gastos do carro no mês</div><div class="big">${brl(total)}</div>
+    <div class="grid3" style="margin-top:14px"><div class="kpi" style="padding:12px 10px"><span>lançamentos</span><b style="font-size:18px">${doMes.length}</b></div><div class="kpi" style="padding:12px 10px"><span>km no mês</span><b style="font-size:18px">${Math.round(kmMes)}</b></div><div class="kpi" style="padding:12px 10px"><span>por km</span><b style="font-size:18px">${kmMes >= 50 ? brl(total/kmMes) : "–"}</b></div></div></div>`;
+  if (porCat.length) { const mx = porCat[0][1];
+    h += `<div class="card">${porCat.map(([k,v]) => `<div style="margin:6px 0 14px"><div style="display:flex;justify-content:space-between;font-size:16px"><span>${GCAT[k][1]} ${GCAT[k][0]}</span><b>${brl(v)}</b></div><div class="track"><i style="width:${Math.max(3,100*v/mx)}%;background:${GCAT[k][2]}"></i></div></div>`).join("")}</div>`; }
+  // real x configurado
+  h += `<h2>Seu custo real por km</h2><div class="card">`;
+  if (km30 < 200) h += `<div class="sm muted" style="line-height:1.5">Precisa de pelo menos 200 km rodados com o Radar ligado nos últimos 30 dias para calcular (agora: ${Math.round(km30)} km).</div>`;
+  else { const kmlReal = fuelKm ? (num2(pget("c_fuel", 6)) || 6) / fuelKm : null;
+    h += `<div class="grid2" style="margin:0"><div class="kpi"><span>combustível/km real</span><b>${fuelKm ? brl(fuelKm) : "–"}</b><span>no cartão: ${brl(cfgFuel)}</span></div>
+      <div class="kpi"><span>outros/km real</span><b>${brl(outrosKm)}</b><span>no cartão: ${brl(cfgMaint)}</span></div></div>
+      <div class="sm muted" style="margin-top:10px;line-height:1.5">Últimos 30 dias: ${Math.round(km30)} km · ${brl(fuel30 + var30)} em combustível, pedágio, estacionamento, lavagem e manutenção.${!fuelKm ? " Ainda sem abastecimento confirmado." : ""}</div>
+      <button class="btn" id="usar" onclick="usarReais(${kmlReal ? kmlReal.toFixed(2) : 0}, ${outrosKm.toFixed(3)})">Usar meus gastos reais no cartão</button>`; }
+  h += `</div><div class="note">Seguro, IPVA e aluguel entram como custo fixo do mês em Custos do carro. Os km vêm das corridas e do trajeto livre que o Radar gravou.</div>`;
+  // lançar à mão
+  h += gNovo ? `<div class="gx"><b style="font-size:18px">Novo gasto</b>
+      <div class="field"><label>Valor</label><input id="gv" inputmode="decimal" placeholder="0,00"></div>
+      <div class="field"><label>Tipo</label><select id="gc" style="height:52px;flex:1;max-width:220px">${Object.entries(GCAT).map(([k,x]) => `<option value="${k}">${x[1]} ${x[0]}</option>`).join("")}</select></div>
+      <div class="field"><label>Onde</label><input id="gl" class="txt" placeholder="opcional"></div>
+      <div class="acts"><button class="yes" onclick="gSalvar()">Salvar</button><button class="no" onclick="gNovo=false;render()">Cancelar</button></div></div>`
+    : `<button class="btn alt" onclick="gNovo=true;render();setTimeout(()=>document.getElementById('gv').focus(),50)">+ Lançar gasto à mão</button>`;
+  if (doMes.length) h += `<h2>Lançamentos do mês</h2><div class="card" style="padding:4px 14px">${doMes.map(g => { const c = GCAT[g.cat] || ["Outro","•"];
+    return `<div class="grow"><div class="ic">${c[1]}</div><div class="t"><b>${g.local||c[0]}</b><small>${g.t.getDate()} ${MO[g.t.getMonth()]} · ${c[0]}${g.banco?" · "+g.banco:""}</small></div><div class="val">${brl(g.v)}</div><button class="x" onclick="gAcao('${g.id}','apagar')" aria-label="Apagar">✕</button></div>`; }).join("")}</div>`;
+  else if (!pend.length) h += `<div class="empty">Nenhum gasto neste mês ainda.<br>Quando você pagar no posto, ele aparece aqui.</div>`;
+  app.innerHTML = h;
+}
+if (page === "gastos") { loadG(); document.addEventListener("visibilitychange", () => { if (!document.hidden) { loadG(); render(); } }); }
+
 // ---------- ESTILO DO CARTÃO ----------
 const TOPF = { tempo:"Tempo total", dist:"Distância total", valor:"Valor da corrida", cat:"Categoria", app:"App" };
 const BOTF = { km:"R$/Km", hora:"R$/Hora", min:"R$/Min", nota:"Nota", lucro:"Lucro", lucrohora:"Lucro/Hora" };
@@ -465,7 +544,7 @@ function animate(){ if (window.matchMedia && matchMedia("(prefers-reduced-motion
   document.querySelectorAll(".bars i, .hourbar i").forEach((el, i) => el.style.animationDelay = (120 + i * 45) + "ms");
   document.querySelectorAll(".track i, .stack i").forEach((el, i) => el.style.animationDelay = (200 + i * 90) + "ms");
   document.querySelectorAll(".kpi b, .offer .val, .hero .big").forEach(countUp); }
-function render(){ ({historico, horarios, jornada, custos, cartao}[page] || historico)(); animate(); }
+function render(){ ({historico, horarios, jornada, custos, cartao, gastos}[page] || historico)(); animate(); }
 render();
 </script>
 </body>
