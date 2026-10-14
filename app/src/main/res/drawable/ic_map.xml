@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Mynaui icons (mynaui.com/icons, MIT): map -->
+<!-- Material Symbols Rounded: map (Apache 2.0) -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="24dp" android:height="24dp" android:viewportWidth="24" android:viewportHeight="24">
-    <path android:fillColor="#00000000" android:strokeColor="#FFFFFFFF" android:strokeWidth="1.5" android:strokeLineCap="round" android:strokeLineJoin="round" android:pathData="M 3 8.593 c 0 -1.527 0 -2.29 .393 -2.735 .139 -.159 .308 -.285 .497 -.372 1.416 -.653 3.272 1.066 4.77 1.013 q .297 -.011 .587 -.082 c 2.184 -.535 3.552 -3.08 5.798 -3.39 1.287 -.18 2.7 .598 3.904 1.014 .99 .342 1.485 .513 1.768 .92 S 21 5.91 21 6.99 v 8.422 c 0 1.526 0 2.29 -.393 2.735 a 1.5 1.5 0 0 1 -.497 .371 c -1.416 .653 -3.272 -1.065 -4.77 -1.012 a 3 3 0 0 0 -.587 .081 c -2.184 .535 -3.552 3.08 -5.798 3.391 -1.281 .178 -4.847 -.75 -5.672 -1.935 C 3 18.636 3 18.096 3 17.014 z m 6 -2.052 v 14.255 m 6 -17.615 v 14.255"/>
+    android:width="24dp" android:height="24dp" android:viewportWidth="960" android:viewportHeight="960">
+    <group android:translateY="960">
+        <path android:fillColor="#FFFFFFFF" android:pathData="m 592 -127 -243 -86 -188 75 q -8 3 -15 1.5 t -13 -5.5 q -6 -4 -9.5 -10 t -3.5 -14 v -565 q 0 -13 7.5 -23 t 19.5 -15 l 182 -64 q 5 -2 10 -2.5 t 10 -.5 q 5 0 10 .5 t 10 2.5 l 243 85 187 -75 q 8 -3 15 -2 t 13 5 q 6 4 9.5 10.5 T 840 -795 v 572 q 0 11 -7.5 19 T 814 -192 l -182 65 q -5 2 -10 2.5 t -10 .5 q -5 0 -10 -.5 t -10 -2.5 Z m -14 -68 v -505 l -196 -66 v 505 l 196 66 Z m 60 0 142 -47 v -512 l -142 54 v 505 Z m -458 -12 142 -54 v -505 l -142 47 v 512 Z m 458 -493 v 505 -505 Z m -316 -66 v 505 -505 Z"/>
+    </group>
 </vector>

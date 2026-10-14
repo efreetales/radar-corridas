@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Material Symbols Rounded: lock (Apache 2.0) -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp" android:height="24dp" android:viewportWidth="960" android:viewportHeight="960">
+    <group android:translateY="960">
+        <path android:fillColor="#FFFFFFFF" android:pathData="M 220 -80 q -24.75 0 -42.37 -17.63 Q 160 -115.25 160 -140 v -434 q 0 -24.75 17.63 -42.38 Q 195.25 -634 220 -634 h 70 v -96 q 0 -78.85 55.61 -134.42 Q 401.21 -920 480.11 -920 q 78.89 0 134.39 55.58 Q 670 -808.85 670 -730 v 96 h 70 q 24.75 0 42.38 17.62 Q 800 -598.75 800 -574 v 434 q 0 24.75 -17.62 42.37 Q 764.75 -80 740 -80 H 220 Z m 0 -60 h 520 v -434 H 220 v 434 Z m 314.5 -162.03 Q 557 -324.06 557 -355 q 0 -30 -22.67 -54.5 t -54.5 -24.5 q -31.83 0 -54.33 24.5 t -22.5 55 q 0 30.5 22.67 52.5 t 54.5 22 q 31.83 0 54.33 -22.03 Z M 350 -634 h 260 v -96 q 0 -54.17 -37.88 -92.08 -37.88 -37.92 -92 -37.92 T 388 -822.08 q -38 37.91 -38 92.08 v 96 Z M 220 -140 v -434 434 Z"/>
+    </group>
+</vector>

@@ -112,7 +112,7 @@ class MainActivity : AppCompatActivity() {
             t.addView(text(pg.key, 18f, Colors.TEXT, bold = true))
             t.addView(text(pg.hint, 13f, Colors.MUTED))
             row.addView(t, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f))
-            row.addView(icon(R.drawable.mi_chevron_right, 24, Colors.MUTED).apply {
+            row.addView(icon(R.drawable.ic_chevron_right, 24, Colors.MUTED).apply {
                 layoutParams = LinearLayout.LayoutParams(dp(24), dp(24)).apply { leftMargin = dp(8) }
             })
             row.setOnClickListener {
@@ -216,7 +216,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         // Replay animado da última corrida concluída
-        col.addView(wideTile(R.drawable.mi_play_circle, "Replay da última corrida", "Reveja a última corrida animada no mapa, etapa por etapa") {
+        col.addView(wideTile(R.drawable.ic_play_circle, "Replay da última corrida", "Reveja a última corrida animada no mapa, etapa por etapa") {
             startActivity(Intent(this, PainelActivity::class.java).putExtra(PainelActivity.EXTRA_PAGE, "replay:"))
         }, matchWrap(top = 14))
 
@@ -708,7 +708,7 @@ class MainActivity : AppCompatActivity() {
             }
             card.addView(ed, matchWrap(top = 6))
             val row = LinearLayout(this).apply { orientation = LinearLayout.HORIZONTAL }
-            row.addView(MaterialButton(this).apply { isAllCaps = false; letterSpacing = 0f; text = "Ouvir"; setIconResource(R.drawable.mi_volume); iconGravity = MaterialButton.ICON_GRAVITY_TEXT_START; setOnClickListener { ed.clearFocus(); ouvir() } },
+            row.addView(MaterialButton(this).apply { isAllCaps = false; letterSpacing = 0f; text = "Ouvir"; setIconResource(R.drawable.ic_volume_up); iconGravity = MaterialButton.ICON_GRAVITY_TEXT_START; setOnClickListener { ed.clearFocus(); ouvir() } },
                 LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f).apply { rightMargin = dp(6) })
             row.addView(MaterialButton(this, null, com.google.android.material.R.attr.materialButtonOutlinedStyle).apply {
                 isAllCaps = false; letterSpacing = 0f; text = "Voltar ao original"; setOnClickListener { ed.setText(padrao) } },
@@ -740,7 +740,7 @@ class MainActivity : AppCompatActivity() {
             isAllCaps = false
             letterSpacing = 0f
             text = "Ouvir exemplo"
-            setIconResource(R.drawable.mi_volume); iconGravity = MaterialButton.ICON_GRAVITY_TEXT_START
+            setIconResource(R.drawable.ic_volume_up); iconGravity = MaterialButton.ICON_GRAVITY_TEXT_START
             setOnClickListener { Voz.inicio(this@MainActivity, "Ana", "Avenida Paulista, 1000, Bela Vista") }
         }, matchWrap(top = 8))
         card.addView(MaterialButton(this).apply {
@@ -778,7 +778,7 @@ class MainActivity : AppCompatActivity() {
         }
         card.addView(keyIn, matchWrap(top = 8))
         val vozBtn = MaterialButton(this).apply { isAllCaps = false; letterSpacing = 0f
-            setIconResource(R.drawable.mi_chevron_right); iconGravity = MaterialButton.ICON_GRAVITY_TEXT_END }
+            setIconResource(R.drawable.ic_chevron_right); iconGravity = MaterialButton.ICON_GRAVITY_TEXT_END }
         fun nomeVoz() = VozEstudio.VOZES.firstOrNull { it.first == prefs.studioVoiceId } ?: VozEstudio.VOZES[0]
         vozBtn.text = "Voz de estúdio: ${nomeVoz().second}"
         vozBtn.setOnClickListener {
@@ -1753,7 +1753,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun text(s: String, size: Float, color: Int, bold: Boolean = false) = TextView(this).apply {
         textSize = readable(size, color)
-        text = Icones.texto(this@MainActivity, s, textSize)   // "{nome}" vira ícone Mynaui
+        text = Icones.texto(this@MainActivity, s, textSize)   // "{nome}" vira ícone
         setLineSpacing(0f, 1.12f)
         setTextColor(color)
         if (bold) typeface = Typeface.DEFAULT_BOLD

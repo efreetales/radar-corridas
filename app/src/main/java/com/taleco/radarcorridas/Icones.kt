@@ -10,21 +10,21 @@ import android.text.style.ReplacementSpan
 import androidx.core.content.ContextCompat
 
 /**
- * Ícones da biblioteca Mynaui (mynaui.com/icons) no lugar de símbolos de fonte (✓ ✕ ★ ⚠ emojis).
+ * Ícones Material Symbols (arredondado) no lugar de símbolos de fonte. O radar é desenho próprio no mesmo estilo.
  * Em qualquer texto, "{nome}" vira o ícone, do tamanho da letra e da cor do texto:
  *   Icones.texto(ctx, "{check} Valeta marcada", textSizePx, cor)
  */
 object Icones {
     private val RES = mapOf(
-        "check" to R.drawable.mi_check, "x" to R.drawable.mi_x, "undo" to R.drawable.mi_undo,
-        "star" to R.drawable.mi_star, "valeta" to R.drawable.mi_danger, "alerta" to R.drawable.mi_danger_outline,
-        "camera" to R.drawable.mi_camera, "navigation" to R.drawable.mi_navigation,
-        "lock" to R.drawable.mi_lock, "lock_open" to R.drawable.mi_lock_open, "mobile" to R.drawable.mi_mobile,
-        "volume" to R.drawable.mi_volume, "chevron" to R.drawable.mi_chevron_right, "like" to R.drawable.mi_like,
-        "check_circle" to R.drawable.mi_check_circle, "pin" to R.drawable.mi_map_pin,
+        "check" to R.drawable.ic_check, "x" to R.drawable.ic_close, "undo" to R.drawable.ic_undo,
+        "star" to R.drawable.ic_star_fill, "valeta" to R.drawable.ic_warning_fill, "alerta" to R.drawable.ic_warning,
+        "camera" to R.drawable.ic_radar, "navigation" to R.drawable.ic_near_me,
+        "lock" to R.drawable.ic_lock, "lock_open" to R.drawable.ic_lock_open, "mobile" to R.drawable.ic_mobile,
+        "volume" to R.drawable.ic_volume_up, "chevron" to R.drawable.ic_chevron_right, "like" to R.drawable.ic_thumb_up,
+        "check_circle" to R.drawable.ic_check_circle, "pin" to R.drawable.ic_location_on,
         // eventos (Events.icon)
-        "sparkles" to R.drawable.mi_sparkles, "music" to R.drawable.mi_music, "users-group" to R.drawable.mi_users_group,
-        "building" to R.drawable.mi_building, "graduation-cap" to R.drawable.mi_graduation_cap, "ticket" to R.drawable.mi_ticket,
+        "theater_comedy" to R.drawable.ic_theater_comedy, "music_note" to R.drawable.ic_music_note, "sports_soccer" to R.drawable.ic_sports_soccer,
+        "church" to R.drawable.ic_church, "school" to R.drawable.ic_school, "confirmation_number" to R.drawable.ic_confirmation_number,
     )
     private val TOKEN = Regex("\\{([a-z_-]+)\\}")
 

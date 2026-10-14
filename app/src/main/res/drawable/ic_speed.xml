@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Mynaui icons (mynaui.com/icons, MIT): camera -->
+<!-- Radar: photo_camera do Material + 3 ondas (desenho próprio) -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="24dp" android:height="24dp" android:viewportWidth="24" android:viewportHeight="24">
-    <path android:fillColor="#00000000" android:strokeColor="#FFFFFFFF" android:strokeWidth="1.5" android:strokeLineCap="round" android:strokeLineJoin="round" android:pathData="M 20.52 20.414 c .308 -.375 .48 -.884 .48 -1.414 V 7 c 0 -.53 -.172 -1.04 -.48 -1.414 C 20.215 5.21 19.799 5 19.365 5 h -8.981 C 8.659 5 8.325 3.269 6.827 3.026 6.563 2.983 6.289 3 6.022 3 c -.953 0 -1.429 0 -1.804 .159 a 2 2 0 0 0 -1.059 1.06 C 3 4.592 3 5.068 3 6.021 V 19 c 0 .53 .172 1.04 .48 1.414 .306 .375 .722 .586 1.156 .586 h 14.728 c .434 0 .85 -.21 1.157 -.586 M 16 3 h 3"/>
-    <path android:fillColor="#00000000" android:strokeColor="#FFFFFFFF" android:strokeWidth="1.5" android:strokeLineCap="round" android:strokeLineJoin="round" android:pathData="M 13.5 17 a 4 4 0 1 0 0 -8 4 4 0 0 0 0 8"/>
+    android:width="24dp" android:height="24dp" android:viewportWidth="960" android:viewportHeight="960">
+    <group android:translateX="-40" android:translateY="150" android:scaleX="0.72" android:scaleY="0.72">
+        <group android:translateY="960">
+            <path android:fillColor="#FFFFFFFF" android:pathData="M 479.5 -267 q 72.5 0 121.5 -49 t 49 -121.5 q 0 -72.5 -49 -121 T 479.5 -607 q -72.5 0 -121 48.5 t -48.5 121 q 0 72.5 48.5 121.5 t 121 49 Z m 0 -60 q -47.5 0 -78.5 -31.5 t -31 -79 q 0 -47.5 31 -78.5 t 78.5 -31 q 47.5 0 79 31 t 31.5 78.5 q 0 47.5 -31.5 79 t -79 31.5 Z M 140 -120 q -24 0 -42 -18 t -18 -42 v -513 q 0 -23 18 -41.5 t 42 -18.5 h 147 l 55 -66 q 8 -11 20 -16 t 26 -5 h 184 q 14 0 26 5 t 20 16 l 55 66 h 147 q 23 0 41.5 18.5 T 880 -693 v 513 q 0 24 -18.5 42 T 820 -120 H 140 Z m 0 -60 h 680 v -513 H 645 l -73 -87 H 388 l -73 87 H 140 v 513 Z m 340 -257 Z"/>
+        </group>
+    </group>
+    <path android:fillColor="#00000000" android:strokeColor="#FFFFFFFF" android:strokeWidth="58" android:strokeLineCap="round" android:pathData="M 671 380 A 150 150 0 0 1 671 580"/>
+    <path android:fillColor="#00000000" android:strokeColor="#FFFFFFFF" android:strokeWidth="58" android:strokeLineCap="round" android:pathData="M 746 313 A 250 250 0 0 1 746 647"/>
+    <path android:fillColor="#00000000" android:strokeColor="#FFFFFFFF" android:strokeWidth="58" android:strokeLineCap="round" android:pathData="M 820 246 A 350 350 0 0 1 820 714"/>
 </vector>

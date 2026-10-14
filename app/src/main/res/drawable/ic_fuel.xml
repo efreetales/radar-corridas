@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Mynaui icons (mynaui.com/icons, MIT): droplet -->
+<!-- Material Symbols Rounded: local_gas_station (Apache 2.0) -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="24dp" android:height="24dp" android:viewportWidth="24" android:viewportHeight="24">
-    <path android:fillColor="#00000000" android:strokeColor="#FFFFFFFF" android:strokeWidth="1.5" android:strokeLineCap="round" android:strokeLineJoin="round" android:pathData="M 11.995 3 C 14 8 21.34 10.602 18.927 16.397 17.775 19.163 14.992 21 12 21 s -5.775 -1.837 -6.927 -4.603 C 2.661 10.607 10 8 11.995 3"/>
-    <path android:fillColor="#00000000" android:strokeColor="#FFFFFFFF" android:strokeWidth="1.5" android:strokeLineCap="round" android:strokeLineJoin="round" android:pathData="M 8 15.5 c .333 1 2 2.5 4 2.5"/>
+    android:width="24dp" android:height="24dp" android:viewportWidth="960" android:viewportHeight="960">
+    <group android:translateY="960">
+        <path android:fillColor="#FFFFFFFF" android:pathData="M 160 -150 v -630 q 0 -24 18 -42 t 42 -18 h 269 q 24 0 42 18 t 18 42 v 288 h 65 q 20.63 0 35.31 14.69 Q 664 -462.63 664 -442 v 219 q 0 21.68 15.5 36.34 Q 695 -172 717 -172 t 37.5 -14.66 Q 770 -201.32 770 -223 v -295 q -11 6 -23 9 t -24 3 q -39.48 0 -66.74 -27.26 Q 629 -560.52 629 -600 q 0 -31.61 18 -56.81 Q 665 -682 695 -690 l -77 -77 q -8 -7.64 -8 -17.82 t 8 -18.18 q 8 -8 18 -7.5 t 18 8.5 l 135 135 q 14 14 22.5 30.5 T 820 -600 v 377 q 0 43.26 -29.82 73.13 -29.81 29.87 -73 29.87 Q 674 -120 644 -149.87 q -30 -29.87 -30 -73.13 v -219 h -65 v 292 q 0 12.75 -8.62 21.37 Q 531.75 -120 519 -120 H 190 q -12.75 0 -21.37 -8.63 Q 160 -137.25 160 -150 Z m 60 -402 h 269 v -228 H 220 v 228 Z m 503 -4 q 18 0 31 -13 t 13 -31 q 0 -18 -13 -31 t -31 -13 q -18 0 -31 13 t -13 31 q 0 18 13 31 t 31 13 Z M 220 -180 h 269 v -312 H 220 v 312 Z m 269 0 H 220 h 269 Z"/>
+    </group>
 </vector>
