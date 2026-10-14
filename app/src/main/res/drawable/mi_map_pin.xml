@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Mynaui icons (mynaui.com/icons, MIT): map-pin -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp" android:height="24dp" android:viewportWidth="24" android:viewportHeight="24">
+    <path android:fillColor="#00000000" android:strokeColor="#FFFFFFFF" android:strokeWidth="1.5" android:strokeLineCap="round" android:strokeLineJoin="round" android:pathData="M 12.597 21.8 a .995 .995 0 0 1 -1.194 0 C 6.253 17.976 .785 10.109 6.31 4.425 A 7.93 7.93 0 0 1 12 2 c 2.134 0 4.18 .872 5.689 2.424 5.526 5.684 .059 13.55 -5.092 17.377"/>
+    <path android:fillColor="#00000000" android:strokeColor="#FFFFFFFF" android:strokeWidth="1.5" android:strokeLineCap="round" android:strokeLineJoin="round" android:pathData="M 12 12 a 2 2 0 1 0 0 -4 2 2 0 0 0 0 4"/>
+</vector>
