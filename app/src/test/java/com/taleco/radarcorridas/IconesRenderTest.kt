@@ -40,6 +40,8 @@ class IconesRenderTest {
         val tv = TextView(ctx).apply { textSize = 22f; setTextColor(Color.WHITE); text = Icones.texto(ctx, "{lock}", textSize, Color.WHITE) }
         println("RENDER span só ícone: ${count(tv, 120, 120)} px  texto='${tv.text}' len=${tv.text.length}")
         val tv2 = TextView(ctx).apply { textSize = 16f; setTextColor(Color.WHITE); text = Icones.texto(ctx, "{check} Valeta", textSize) }
+        val tvA = TextView(ctx).apply { textSize = 16f; setTextColor(Color.WHITE); text = Icones.texto(ctx, "{alerta} Provável multa", textSize) }
+        println("RENDER alerta+texto: ${count(tvA, 400, 80)} px")
         val tv2b = TextView(ctx).apply { textSize = 16f; setTextColor(Color.WHITE); text = " Valeta" }
         println("RENDER span+texto: ${count(tv2, 300, 80)} px vs só texto ${count(tv2b, 300, 80)} px")
         val d2 = ContextCompat.getDrawable(ctx, R.drawable.ic_lock)!!.mutate(); d2.setTint(Color.WHITE); d2.setBounds(0, 0, 60, 60)
