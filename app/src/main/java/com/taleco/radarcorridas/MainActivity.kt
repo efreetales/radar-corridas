@@ -684,6 +684,16 @@ class MainActivity : AppCompatActivity() {
                 "Sai pelo som do carro quando o celular está conectado por Bluetooth ou Android Auto, abaixando a música enquanto fala.",
             12f, Colors.MUTED
         ))
+        val volLabel = text("", 15f, Colors.TEXT).apply { setPadding(0, dp(12), 0, 0) }
+        fun volText(v: Int) { volLabel.text = if (v == 0) "Volume da voz: o mesmo do celular" else "Volume da voz: sobe a mídia para $v% enquanto fala" }
+        volText(prefs.voiceVolume)
+        card.addView(volLabel)
+        card.addView(Slider(this).apply {
+            valueFrom = 0f; valueTo = 100f; stepSize = 5f
+            value = prefs.voiceVolume.toFloat().coerceIn(0f, 100f)
+            addOnChangeListener { _, v, _ -> prefs.voiceVolume = v.toInt(); volText(v.toInt()) }
+        }, matchWrap(top = 2))
+        card.addView(text("Depois da fala o volume volta ao que estava. A música abaixa enquanto a voz fala.", 12f, Colors.MUTED))
         card.addView(MaterialButton(this).apply {
             isAllCaps = false
             letterSpacing = 0f

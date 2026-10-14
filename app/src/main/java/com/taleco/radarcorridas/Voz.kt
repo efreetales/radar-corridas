@@ -88,7 +88,9 @@ object Voz {
             foco = r
             am.requestAudioFocus(r)
         }
+        Volume.subir(ctx)
         val p = Bundle()
+        p.putFloat(TextToSpeech.Engine.KEY_PARAM_VOLUME, 1.0f)
         tts?.speak(texto, TextToSpeech.QUEUE_ADD, p, "radar-" + System.currentTimeMillis())
     }
 
@@ -97,6 +99,7 @@ object Voz {
         if (tts?.isSpeaking == true) return
         ctx.getSystemService(AudioManager::class.java)?.abandonAudioFocusRequest(r)
         foco = null
+        Volume.voltar(ctx)
     }
 
     /** Só o primeiro nome, como aparece na Uber ("Gabriel", "Ana Paula" -> "Ana"). */
