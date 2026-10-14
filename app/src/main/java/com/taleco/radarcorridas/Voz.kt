@@ -30,6 +30,7 @@ object Voz {
         if (tts == null) {
             tts = TextToSpeech(app) { st ->
                 val t = tts ?: return@TextToSpeech
+                if (st != TextToSpeech.SUCCESS) OfferLog.appendDiag(app, "VOZ: motor de voz do celular não iniciou ($st)")
                 if (st == TextToSpeech.SUCCESS) {
                     t.language = Locale("pt", "BR")
                     escolherVoz(app, t)
@@ -40,7 +41,8 @@ object Voz {
                         override fun onStart(id: String?) {}
                         override fun onDone(id: String?) { soltarFoco(app) }
                         @Deprecated("Deprecated in Java")
-                        override fun onError(id: String?) { soltarFoco(app) }
+                        override fun onError(id: String?) { soltarFoco(app); OfferLog.appendDiag(app, "VOZ: erro do motor de voz do celular") }
+                        override fun onError(id: String?, code: Int) { soltarFoco(app); OfferLog.appendDiag(app, "VOZ: erro do motor de voz do celular ($code)") }
                     })
                     pronto = true
                     fila.forEach { dizer(app, it) }

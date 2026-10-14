@@ -112,6 +112,8 @@ object TripTracker {
 
     // Uber: ofertas vistas há pouco (a aceita é a última antes do "Encontro com X")
     private val recent = ArrayDeque<Pair<Long, Offer>>()
+    /** Oferta que sumiu com a tela inicial piscando: ainda pode ser a aceita por 20 s (a Uber pisca antes do "Encontro com"). */
+    private val dismissedAt = HashMap<String, Long>()
     private var homeSince = 0L          // tela inicial vista durante a corrida (confirma o fim depois de 8 s)
     private var lastRideTextAt = 0L     // última vez que a Uber mostrou sinal de corrida
     private var lastDonePassenger: String? = null
@@ -126,7 +128,7 @@ object TripTracker {
 
     /** A oferta aceita: a mais recente vista nos últimos 2,5 min. */
     private fun pickRecent(now: Long): Pair<Long, Offer>? =
-        recent.lastOrNull { now - it.first <= RECENT_OFFER_MS }
+        recent.lastOrNull { now - it.first <= RECENT_OFFER_MS && (dismissedAt[it.second.signature()]?.let { d -> now - d <= 20_000L } ?: true) }
 
     private val Offer.isUber get() = app.equals("UBER", ignoreCase = true)
 
@@ -167,8 +169,9 @@ object TripTracker {
                     offerGoneAt = 0L
                 }
                 ScreenState.INICIO -> {
-                    // Recusada ou expirada.
-                    forget(lastOffer)
+                    // Recusada ou expirada (ou a tela inicial piscou logo antes do "Encontro com"): vale por mais 20 s
+                    lastOffer?.let { dismissedAt[it.signature()] = now }
+                    dismissedAt.entries.removeAll { now - it.value > RECENT_OFFER_MS }
                     lastOffer = null
                     setPhase(Phase.LIVRE)
                 }
@@ -310,6 +313,7 @@ object TripTracker {
         val ctx = appContext ?: return
         if (t.falouInicio || !Prefs(ctx).talkToPassenger) return
         t.falouInicio = true
+        OfferLog.appendDiag(ctx, "VOZ: saudação (${t.passenger ?: "sem nome"}) ${Volume.estado(ctx)}")
         Voz.inicio(ctx, t.passenger, t.offer.destination)
     }
 
@@ -317,6 +321,7 @@ object TripTracker {
         val ctx = appContext ?: return
         if (t.falouFim || !t.falouInicio || !Prefs(ctx).talkToPassenger) return
         t.falouFim = true
+        OfferLog.appendDiag(ctx, "VOZ: chegada (${t.passenger ?: "sem nome"}) ${Volume.estado(ctx)}")
         Voz.chegada(ctx, t.passenger)
     }
 
@@ -398,8 +403,12 @@ object TripTracker {
                 trip?.passenger = meet
                 if (prefs.talkToPassenger) Voz.adiantar(ctx, meet, q.destination)
             } else {
-                OfferLog.appendDiag(ctx, "CORRIDA: Uber mostra \"Encontro com $meet\", mas nenhuma oferta foi lida antes (card não apareceu)")
-                lastDonePassenger = meet; lastDoneAt = now
+                // O cartão não leu a oferta, mas a corrida existe: registra mesmo assim (percurso, tempos e voz).
+                // O valor vem depois da tela "Última viagem de … R$ …" ou do resumo da sessão.
+                val cat = tt.firstOrNull { it.startsWith("Iniciar ") }?.removePrefix("Iniciar ")?.trim()
+                OfferLog.appendDiag(ctx, "CORRIDA: Uber mostra \"Encontro com $meet\" sem oferta lida (card não apareceu) — registrando sem valor")
+                startTrip(ctx, Offer("UBER", cat, 0.0, 0.0, 0.0, 0.0, 0.0, null, null, null), now)
+                trip?.passenger = meet
             }
         }
         // 3) Fases da corrida atual
@@ -522,6 +531,51 @@ object FreeTrack {
  */
 object UberSession {
     private var lastKey = ""
+    private var lastTripKey = ""
+
+    /** Card da Uber depois da corrida: "Última viagem de Black | R$ 24,35". Guarda o valor real e completa a corrida sem valor. */
+    fun readLastTrip(ctx: android.content.Context, texts: List<String>) {
+        val tt = texts.map { it.trim() }
+        val i = tt.indexOfFirst { it.startsWith("Última viagem de ") }
+        if (i < 0) return
+        val cat = tt[i].removePrefix("Última viagem de ").trim()
+        val money = tt.drop(i + 1).take(3).firstOrNull { it.startsWith("R$") } ?: return
+        val v = money.removePrefix("R$").trim().replace(".", "").replace(",", ".").toDoubleOrNull() ?: return
+        val key = "$cat|$money"
+        if (key == lastTripKey) return
+        lastTripKey = key
+        try {
+            val now = System.currentTimeMillis()
+            val fmt = java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss", java.util.Locale.US)
+            val g = java.io.File(ctx.filesDir, "ganhos_uber.csv")
+            if (!g.exists()) g.writeText("lido_em;categoria;valor;corrida\n")
+            // mesmo card lido de novo nos próximos minutos: ignora
+            val dup = g.readLines().drop(1).lastOrNull()?.split(';')?.let { c -> c.size >= 3 && c[1] == cat && c[2] == money.removePrefix("R$").trim() &&
+                (try { now - fmt.parse(c[0])!!.time < 30 * 60_000L } catch (_: Exception) { false }) } ?: false
+            if (dup) return
+            // corrida que terminou há pouco (até 15 min)
+            val tf = TripLog.tripsFile(ctx)
+            val lines = if (tf.exists()) tf.readLines().toMutableList() else mutableListOf()
+            var id = ""
+            val j = lines.indexOfLast { it.isNotBlank() && !it.startsWith("id;") }
+            if (j > 0) {
+                val c = lines[j].split(';').toMutableList()
+                val fim = try { fmt.parse(c.getOrNull(10) ?: "")?.time } catch (_: Exception) { null }
+                if (fim != null && now - fim in 0..15 * 60_000L && (c.getOrNull(18) ?: "").contains("concluída")) {
+                    id = c[0]
+                    if ((c[3].replace(",", ".").toDoubleOrNull() ?: 0.0) <= 0.0) {   // corrida registrada sem oferta: põe o valor real
+                        c[2] = "\"$cat\""
+                        c[3] = String.format(java.util.Locale("pt", "BR"), "%.2f", v)
+                        lines[j] = c.joinToString(";")
+                        tf.writeText(lines.joinToString("\n") + "\n")
+                    }
+                }
+            }
+            g.appendText("${fmt.format(java.util.Date(now))};$cat;${money.removePrefix("R$").trim()};$id\n")
+            OfferLog.appendDiag(ctx, "ÚLTIMA VIAGEM: $cat $money${if (id.isNotEmpty()) " → corrida $id" else ""}")
+        } catch (_: Exception) {
+        }
+    }
 
     fun read(ctx: android.content.Context, texts: List<String>) {
         val tt = texts.map { it.trim() }

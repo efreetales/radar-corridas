@@ -26,6 +26,14 @@ object Volume {
         } catch (_: Exception) { }
     }
 
+    /** Para o diagnóstico: volume da mídia e se o "Não perturbe" está ligado. */
+    fun estado(ctx: Context): String = try {
+        val am = ctx.getSystemService(AudioManager::class.java)
+        val nm = ctx.getSystemService(android.app.NotificationManager::class.java)
+        val dnd = nm?.currentInterruptionFilter?.let { it != android.app.NotificationManager.INTERRUPTION_FILTER_ALL } ?: false
+        "[volume ${am?.getStreamVolume(AudioManager.STREAM_MUSIC)}/${am?.getStreamMaxVolume(AudioManager.STREAM_MUSIC)}${if (dnd) ", não perturbe ligado" else ""}]"
+    } catch (_: Exception) { "" }
+
     /** Volta ao volume de antes da fala. */
     fun voltar(ctx: Context) {
         if (antes < 0) return
