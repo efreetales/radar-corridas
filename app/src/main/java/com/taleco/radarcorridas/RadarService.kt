@@ -286,6 +286,7 @@ class RadarService : AccessibilityService() {
             TripTracker.onUberTexts(this, prefs, it.second)
             UberSession.read(this, it.second)
             UberSession.readLastTrip(this, it.second)
+            UberEventos.registrar(this, it.second)
         }
         for ((app, texts) in screens) {
             offer = OfferParser.parse(app, texts)

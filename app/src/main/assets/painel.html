@@ -128,6 +128,13 @@
   .draw { stroke-dasharray:1; stroke-dashoffset:1; animation:dash 2s cubic-bezier(.4,0,.2,1) forwards; }
   .replay { display:flex; align-items:center; justify-content:center; gap:10px; width:100%; min-height:52px; margin-top:12px; border:0; border-radius:14px;
             background:rgba(47,211,166,.14); color:var(--ac); font-weight:800; font-size:16px; }
+  .grid3 .kpi { padding:10px 6px; } .grid3 .kpi b { font-size:17px; white-space:nowrap; }
+  .cf { background:var(--s2); border-left:4px solid var(--mid); border-radius:12px; padding:12px 14px; margin-top:10px; }
+  .cf.ok { border-color:var(--good); } .cf.off { opacity:.5; }
+  .cf input[type=checkbox] { accent-color:var(--ac); width:22px; height:22px; margin:0; }
+  .cfv { font-weight:800; font-size:18px; white-space:nowrap; } .cfv input { width:84px; background:transparent; border:0; border-bottom:1px dashed var(--line); color:var(--tx); font:inherit; text-align:right; padding:2px 0; }
+  .tag { font-size:12px; padding:2px 9px; border-radius:20px; background:var(--s3); color:var(--mid); } .tag.ok { color:var(--good); }
+  .btn2 { display:block; width:100%; min-height:50px; margin-top:10px; border:1px solid var(--line); border-radius:14px; background:transparent; color:var(--mu); font-size:16px; }
   @media (prefers-reduced-motion: reduce) { .anim, .bars i, .hourbar i, .track i, .stack i, .draw { animation:none !important; } }
 </style>
 </head>
@@ -198,7 +205,7 @@ const fixAddr = a => { const t = (a||"").replace(/,\s*$/,"").replace(/S[äa]o( P
 
 // ===== telas =====
 const PAGES = { historico:["Histórico de ofertas","Tudo o que o Radar avaliou"], horarios:["Melhores horários","Quando rolam as corridas que mais pagam"],
-  jornada:["Jornada","Quanto tempo você roda, por fase"], custos:["Custos do carro","Quanto o seu carro custa por km"], gastos:["Gastos do carro","Lidos das notificações do seu banco"], cartao:["Estilo do cartão","Monte o cartão do jeito que você lê melhor"] };
+  jornada:["Jornada","Quanto tempo você roda, por fase"], custos:["Custos do carro","Quanto o seu carro custa por km"], gastos:["Gastos do carro","Lidos das notificações do seu banco"], conferir:["Conferir com a Uber","Corridas e ganhos do turno"], cartao:["Estilo do cartão","Monte o cartão do jeito que você lê melhor"] };
 const page = (new URLSearchParams(location.search).get("p") || location.hash.slice(1) || "historico");
 document.getElementById("ttl").innerHTML = `${PAGES[page]?.[0]||"Radar"}<small>${PAGES[page]?.[1]||""}</small>`;
 const app = document.getElementById("app");
@@ -255,7 +262,8 @@ function historico(){
         ${I.gps.length ? `<div class="sm" style="display:flex;justify-content:space-between;margin-top:6px"><span class="muted">Sem oferta lida (corrigidas)</span><span>${I.gps.length} · ${brl(I.gps.reduce((x,o)=>x+o.price,0))}</span></div>` : ""}
         ${I.canc.length ? `<div class="sm" style="display:flex;justify-content:space-between;margin-top:6px"><span class="muted">Canceladas (não contam)</span><span class="muted">${I.canc.length} · ${brl(I.canc.reduce((x,o)=>x+o.price,0))}</span></div>` : ""}
         ${sobra > 0.5 ? `<div class="sm" style="display:flex;justify-content:space-between;margin-top:6px;color:var(--mid)"><span>Radar acima da Uber</span><span>${brl(sobra)}</span></div>` : ""}
-        ${falta || faltaV > 0.5 ? `<div class="sm" style="display:flex;justify-content:space-between;margin-top:6px;color:var(--mid)"><span>Sem registro no Radar</span><span>${falta} · ${brl(faltaV)}</span></div>` : ""}</div>`;
+        ${falta || faltaV > 0.5 ? `<div class="sm" style="display:flex;justify-content:space-between;margin-top:6px;color:var(--mid)"><span>Sem registro no Radar</span><span>${falta} · ${brl(faltaV)}</span></div>` : ""}</div>
+        ${falta || faltaV > 0.5 || sobra > 0.5 ? `<button class="replay" style="min-height:44px;margin-top:10px" onclick="try{Radar.abrir('conferir')}catch(e){}">Conferir com a Uber</button>` : ""}`;
     }
     arr.forEach(o => { if (o.gps) { const c = o.trip;
         h += `<div class="offer accepted"><div class="top"><div class="val">${brl(o.price)}</div><div class="chips"><span class="chip mid">${(c.st||"").includes("corrigida") ? "Corrigida pela Uber" : "GPS · valor estimado"}</span></div></div>
@@ -479,6 +487,162 @@ function gastos(){
 }
 if (page === "gastos") { loadG(); document.addEventListener("visibilitychange", () => { if (!document.hidden) { loadG(); render(); } }); }
 
+// ---------- CONFERIR COM A UBER ----------
+// Junta o diário das telas da Uber (eventos_uber.csv), o card "Última viagem" (ganhos_uber.csv), as ofertas,
+// o GPS livre e o resumo da sessão para achar corridas que faltam ou estão sem valor. Tudo no celular.
+const pad2 = n => String(n).padStart(2,"0");
+const fmtDT = d => `${d.getFullYear()}-${pad2(d.getMonth()+1)}-${pad2(d.getDate())} ${pad2(d.getHours())}:${pad2(d.getMinutes())}:${pad2(d.getSeconds())}`;
+const idOf = d => `${d.getFullYear()}${pad2(d.getMonth()+1)}${pad2(d.getDate())}-${pad2(d.getHours())}${pad2(d.getMinutes())}${pad2(d.getSeconds())}`;
+const nbr = v => v == null ? "" : v.toFixed(2).replace(".", ",");
+const kmOf = pts => { let k = 0; for (let i = 1; i < pts.length; i++) { const d = hav(pts[i-1], pts[i]); if (d < 3) k += d; } return k; };
+const ruaKey = a => { const m = /([^,]+), (\d[\d.]*)/.exec(a || ""); return m ? (m[1].trim() + " " + m[2]).toLowerCase() : (a || "").toLowerCase(); };
+const shortAddr = a => { const m = /([^,]+), (\d[\d.]*)/.exec(a || ""); const p = m ? m[1].trim() + ", " + m[2] : fixAddr(a || "").split(" - ")[0]; return p.length > 38 ? p.slice(0, 36) + "…" : p; };
+function allSessions(){
+  const out = [];
+  sessions.forEach(x => { const m = /(\d{1,2}) de (\w{3})\.?,?\s*(\d{1,2}):(\d{2})\s*[–-]\s*(?:(\d{1,2}) de (\w{3})\.?,?\s*)?(\d{1,2}):(\d{2})/.exec(x.periodo||"");
+    if (!m || !(m[2].toLowerCase() in MES3)) return;
+    const y = (when(x.lido_em) || new Date()).getFullYear(), a = new Date(y, MES3[m[2].toLowerCase()], +m[1], +m[3], +m[4]);
+    const b = new Date(y, MES3[(m[6]||m[2]).toLowerCase()], +(m[5]||m[1]), +m[7], +m[8]); if (b < a) b.setDate(b.getDate()+1);
+    if (out.some(s => Math.abs(s.start - a) < 60e3 && Math.abs(s.end - b) < 60e3)) { const s = out.find(s => Math.abs(s.start - a) < 60e3); s.valor = num(x.valor); s.concl = +x.concluidas||s.concl; return; }
+    out.push({ start:a, end:b, valor:num(x.valor), concl:+x.concluidas||null, label:`${WD[a.getDay()]} ${a.getDate()}/${pad2(a.getMonth()+1)} · ${hm(a)} – ${hm(b)}` }); });
+  return out.sort((a,b) => b.start - a.start);
+}
+function conferirCalc(S){
+  const t0 = new Date(S.start.getTime() - 10*60e3), t1 = new Date(S.end.getTime() + 30*60e3), inW = t => t && t >= t0 && t <= t1;
+  const EV = parseCsv(raw("eventos_uber.csv")).map(e => ({ t:when(e.data_hora), ev:e.evento, nome:e.nome, cat:e.categoria, end:e.endereco })).filter(e => inW(e.t)).sort((a,b)=>a.t-b.t);
+  const GAN = parseCsv(raw("ganhos_uber.csv")).map(g => ({ t:when(g.lido_em), cat:g.categoria, v:num(g.valor) })).filter(g => inW(g.t) && g.v);
+  // 1) corridas segundo a Uber
+  const C = []; const open = () => C.filter(c => !c.closed);
+  EV.forEach(e => {
+    if (e.ev === "CANCELADA") { open().filter(c => !c.start).forEach(c => { c.closed = true; c.cancel = true; c.fim = e.t; }); return; }
+    if (e.ev === "AVALIACAO") { const c = open().find(c => c.nome === e.nome); if (c) { c.closed = true; c.done = true; c.fim = e.t; } return; }
+    let c = open().find(c => c.nome === e.nome);
+    if (!c) { const prev = C.filter(c => c.nome === e.nome).pop(); if (prev && e.t - prev.fim < 10*60e3) return;
+      // emendada: a Uber já foi buscar outra pessoa, a anterior (que já tinha começado) acabou
+      // a Uber já foi buscar outra pessoa: a que estava em viagem terminou; a que nem começou foi cancelada
+      open().forEach(o => { o.closed = true; o.fim = o.last; if (o.start) o.done = true; else o.cancel = true; });
+      c = { nome:e.nome, acc:e.t, cat:"", origem:"", destino:"", last:e.t }; C.push(c); }
+    c.last = e.t; if (e.cat && !c.cat) c.cat = e.cat;
+    if (e.ev === "ENCONTRO" && e.end && !c.origem) c.origem = e.end;
+    if (e.ev === "EMBARQUE") { c.arr = c.arr || e.t; if (e.end && !c.origem) c.origem = e.end; }
+    // logo depois de "Destino de" a tela ainda mostra o embarque: o destino é o último endereço diferente da origem
+    if (e.ev === "DESTINO") { c.start = c.start || e.t; c.arr = c.arr || e.t; if (e.end && ruaKey(e.end) !== ruaKey(c.origem)) c.destino = e.end; }
+  });
+  open().forEach(c => { c.closed = true; c.fim = c.last; if (c.start) { c.done = true; c.semFim = true; } else c.cancel = true; });
+  // oferta de cada corrida (inclusive das canceladas, para não emprestar o valor a outra): a última antes do "Encontro com", da mesma categoria
+  const catOk = (a, b) => !a || !b || a.toLowerCase().includes(b.toLowerCase()) || b.toLowerCase().includes(a.toLowerCase());
+  const usedOffer = new Set(trips.filter(r => offerOfTrip[r.id] && inW(r.acc)).map(r => offerOfTrip[r.id]));
+  C.forEach(c => { const o = offers.filter(o => !usedOffer.has(o) && o.t <= new Date(c.acc.getTime() + 15e3) && c.acc - o.t < 150e3 && catOk(c.cat, o.cat)).pop();
+    if (o) { usedOffer.add(o); c.offer = o; if (!c.cat && o.cat) c.cat = o.cat;
+      if (!c.origem && fixAddr(o.orig)) c.origem = fixAddr(o.orig); if (!c.destino && fixAddr(o.dest)) c.destino = fixAddr(o.dest); } });
+  // 2) o que o Radar gravou nesse turno
+  const rawTrips = raw("corridas.csv").split(/\r?\n/), head = rawTrips[0] || "", rows = {};
+  rawTrips.slice(1).forEach(l => { if (l.trim()) rows[l.split(";")[0]] = l; });
+  const rec = trips.filter(c => inW(c.acc)); const used = new Set();
+  const near = (r, c) => Math.abs(r.acc - c.acc) < 4*60e3 || (c.done && r.acc >= c.acc && r.acc <= (c.fim||c.acc));
+  // primeiro as concluídas, depois as canceladas (pra uma cancelada não "roubar" a corrida de outra)
+  C.filter(c => c.done).concat(C.filter(c => !c.done)).forEach(c => { const r = rec.filter(r => !used.has(r.id) && near(r, c))
+      .sort((a,b) => Math.abs(a.acc-c.acc) - Math.abs(b.acc-c.acc))[0]; if (r) { used.add(r.id); c.rec = r; } });
+  const usedGan = new Set();
+  const items = [];
+  C.forEach(c => {
+    const done = c.done, r = c.rec, rOk = r && r.st.startsWith("concluída");
+    if (!done) { items.push({ c, kind: r && rOk ? "info" : "cancelada", msg: r && rOk ? "a Uber mostrou cancelamento; o Radar tem como concluída" : "cancelada" }); return; }
+    // valor: card "Última viagem" > oferta aceita > (depois) sobra do total da Uber
+    let v = null, src = "";
+    const g = GAN.filter(g => !usedGan.has(g) && g.t >= new Date(c.fim - 2*60e3) && g.t - c.fim < 20*60e3 && (!c.cat || !g.cat || c.cat.toLowerCase().includes(g.cat.toLowerCase()) || g.cat.toLowerCase().includes(c.cat.toLowerCase())))[0];
+    if (g) { usedGan.add(g); v = g.v; src = "valor do card \"Última viagem\""; }
+    if (v == null && !(r && r.price) && c.offer) { v = c.offer.price; src = "valor da oferta aceita"; }
+    if (r && rOk && r.price) {
+      if (v != null && Math.abs(v - r.price) > 0.05 && src.startsWith("valor do card")) items.push({ c, kind:"dif", v, src, msg:`Radar tinha ${brl(r.price)}` });
+      else items.push({ c, kind:"ok", v:r.price }); return; }
+    items.push({ c, kind: r ? (rOk ? "semvalor" : "statusx") : "falta", v, src });
+  });
+  // corridas que o Radar tem e a Uber não mostrou no diário (ex.: antes de existir o diário): contam como estão
+  const extra = rec.filter(r => !used.has(r.id) && r.st.startsWith("concluída"));
+  const known = items.filter(i => i.kind !== "cancelada" && i.kind !== "info" && i.v != null).reduce((x,i) => x + i.v, 0) + extra.reduce((x,r) => x + (r.price||0), 0);
+  const semV = items.filter(i => ["falta","semvalor","statusx"].includes(i.kind) && i.v == null);
+  const resto = S.valor ? S.valor - known : null;
+  if (semV.length === 1 && resto != null && resto > 0.5) { semV[0].v = Math.round(resto*100)/100; semV[0].src = "valor = total da Uber − outras corridas"; }
+  const doneN = items.filter(i => !["cancelada","info"].includes(i.kind)).length + extra.length;
+  return { S, C, items, extra, head, rows, resto, semV: semV.length, doneN, temDiario: EV.length > 0 };
+}
+function buildFix(R, sel){
+  const corr = [], rotas = []; let de = null, ate = null;
+  sel.forEach(i => { const c = i.c, v = i.v || 0;
+    if (i.kind === "semvalor" || i.kind === "dif" || i.kind === "statusx") {
+      const col = R.rows[c.rec.id].split(";"); col[3] = nbr(v); if (!col[2].replace(/"/g,"") && c.cat) col[2] = `"${c.cat}"`;
+      if (i.kind === "statusx") col[18] = '"concluída (conferida com a Uber)"';
+      const tot = num2(col[14]); col[17] = tot ? nbr(v / (tot/60)) : col[17]; corr.push(col.join(";")); return; }
+    // corrida que faltou: monta a linha e o trajeto com o GPS livre do horário
+    let acc = c.acc, id = idOf(acc); while (R.rows[id] || corr.some(l => l.startsWith(id + ";"))) { acc = new Date(acc.getTime() + 1000); id = idOf(acc); }
+    const fim = c.fim, arr = c.arr || c.start, st = c.start;
+    const pts = FREE.filter(p => p[2] >= c.acc && p[2] <= fim).sort((a,b) => a[2]-b[2]);
+    const kmA = kmOf(pts.filter(p => p[2] <= st).map(p => [p[0],p[1]])), kmV = kmOf(pts.filter(p => p[2] >= st).map(p => [p[0],p[1]]));
+    pts.forEach(p => rotas.push(`${id};${fmtDT(p[2])};${p[0].toFixed(6)};${p[1].toFixed(6)};${p[2] < arr ? "A_CAMINHO" : p[2] < st ? "NO_EMBARQUE" : "EM_VIAGEM"}`));
+    const m = (a, b) => a && b ? (b - a)/60e3 : null, tot = m(c.acc, fim), q = s => `"${(s||"").replace(/"/g,"'")}"`;
+    const o = pts.find(p => p[2] >= st) || pts[0], z = pts[pts.length-1];
+    corr.push([id, "UBER", q(c.cat), nbr(v), "", "", fmtDT(c.acc), arr ? fmtDT(arr) : "", st ? fmtDT(st) : "", fmtDT(fim), fmtDT(fim),
+      nbr(m(c.acc, arr)), nbr(m(arr, st)), nbr(m(st, fim)), nbr(tot), pts.length > 1 ? nbr(kmA) : "", pts.length > 1 ? nbr(kmV) : "",
+      tot ? nbr(v / (tot/60)) : "", q("concluída (conferida com a Uber)"), q(c.origem), q(c.destino),
+      o ? o[0].toFixed(6) : "", o ? o[1].toFixed(6) : "", z ? z[0].toFixed(6) : "", z ? z[1].toFixed(6) : ""].join(";"));
+    if (!de || c.acc < de) de = c.acc; if (!ate || fim > ate) ate = fim; });
+  return { tipo:"radar-correcao", remover:[], corridas_header:R.head, corridas:corr, rotas, rotas_de: de ? fmtDT(de) : "", rotas_ate: ate ? fmtDT(ate) : "", sessoes:[],
+    descricao:`Conferido com a Uber: ${R.S.label}` };
+}
+let cSes = 0, cR = null, cOff = {}, cVal = {};
+function conferir(){
+  const SS = allSessions();
+  let h = "";
+  const msg = pget("conf_msg", ""); if (msg) { h += `<div class="card" style="border-color:var(--ac)"><b>${msg}</b></div>`; pset("conf_msg", ""); }
+  if (!SS.length) { app.innerHTML = h + `<div class="empty">Ainda não há resumo de sessão da Uber.<br><br>Ao ficar offline, abra a tela de resumo da Uber (ganhos e viagens concluídas) com o Radar ligado: ela é a referência para conferir.</div>`; return; }
+  const S = SS[Math.min(cSes, SS.length-1)], R = cR = conferirCalc(S);
+  const pend = R.items.filter(i => ["falta","semvalor","statusx","dif"].includes(i.kind));
+  const radarV = trips.filter(c => c.acc >= new Date(S.start - 10*60e3) && c.acc <= new Date(S.end.getTime() + 30*60e3) && c.st.startsWith("concluída")).reduce((x,c) => x + (c.price||0), 0);
+  const faltaN = S.concl ? Math.max(0, S.concl - (R.doneN - R.items.filter(i => i.kind === "falta").length)) : pend.length;
+  h += `<div class="sm muted" style="margin:-4px 2px 12px">Compara o que o Radar gravou com o que a Uber mostrou na tela. Tudo no celular, sem internet.</div>
+    <div class="card">${SS.length > 1 ? `<select onchange="cSes=+this.value;cOff={};cVal={};render()" style="width:100%;background:var(--s2);color:var(--tx);border:1px solid var(--line);border-radius:12px;padding:10px;font-size:16px;font-weight:700">${SS.map((s,i) => `<option value="${i}" ${i===cSes?"selected":""}>${s.label}</option>`).join("")}</select>` : `<b style="font-size:17px">${S.label}</b>`}
+      <div class="grid3" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:12px;--kb:17px">
+        <div class="kpi" style="text-align:center"><b>${brl(S.valor)}</b><span>Uber</span></div>
+        <div class="kpi" style="text-align:center"><b>${brl(radarV)}</b><span>Radar</span></div>
+        <div class="kpi" style="text-align:center"><b class="${pend.length?"m":"g"}">${pend.length ? `${faltaN || pend.length} de ${S.concl || "?"}` : "✓"}</b><span>${pend.length ? "a corrigir" : "tudo certo"}</span></div></div></div>`;
+  if (!R.temDiario) h += `<div class="card"><b>Sem anotações da Uber neste turno</b><div class="sm muted" style="margin-top:6px">O Radar começou a anotar as telas da Uber (Encontro com, Destino de, Como foi a viagem) a partir desta versão. Nos próximos turnos a conferência acha sozinha as corridas que faltarem.</div></div>`;
+  const okItems = R.items.filter(i => i.kind === "ok"), canc = R.items.filter(i => i.kind === "cancelada");
+  if (pend.length) {
+    h += `<div class="card"><b style="font-size:17px">O que vou corrigir</b>`;
+    pend.forEach((i, k) => { const c = i.c, on = cOff[k] !== true, val = cVal[k] != null ? cVal[k] : i.v;
+      const tag = { falta:"faltando", semvalor:"sem valor", statusx:"concluída na Uber", dif:"valor diferente" }[i.kind];
+      const km = c.fim && c.acc ? kmOf(FREE.filter(p => p[2] >= (c.start||c.acc) && p[2] <= c.fim).map(p => [p[0],p[1]])) : 0;
+      h += `<div class="cf ${on?"":"off"}"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
+          <label style="display:flex;align-items:center;gap:10px;font-size:17px"><input type="checkbox" ${on?"checked":""} onchange="cOff[${k}]=!this.checked;render()">${c.nome}${c.cat?" · "+c.cat:""}</label>
+          <span class="cfv">R$ <input inputmode="decimal" value="${val!=null?nbr(val):""}" placeholder="0,00" onchange="cVal[${k}]=num2(this.value.replace(/\\./g,''));render()"></span></div>
+        <div class="sm muted" style="margin-top:6px">${hm(c.acc)} → ${c.fim?hm(c.fim):"?"}${c.origem&&c.destino?` · ${shortAddr(c.origem)} → ${shortAddr(c.destino)}`:c.destino?` · até ${shortAddr(c.destino)}`:c.origem?` · de ${shortAddr(c.origem)}`:""}${km>0.3?` · ${km.toFixed(0)} km`:""}</div>
+        <div class="sm" style="margin-top:6px"><span class="tag">${tag}</span> <span class="muted">${val==null?"digite o valor (veja no app da Uber)":cVal[k]!=null?"valor digitado por você":i.src||i.msg||""}${i.kind==="falta"&&!FREE.some(p => p[2] >= c.acc && p[2] <= c.fim)?" · sem GPS do trajeto":""}</span></div></div>`; });
+    if (R.semV > 1 && R.resto > 0.5) h += `<div class="sm" style="color:var(--mid);margin-top:10px">Faltam ${brl(R.resto)} do total da Uber para dividir entre as corridas sem valor.</div>`;
+    h += `</div>`;
+  }
+  if (okItems.length || R.extra.length) h += `<div class="cf ok"><div style="display:flex;justify-content:space-between;gap:8px"><span>${okItems.map(i => i.c.nome).concat(R.extra.length?[`+${R.extra.length} sem anotação`]:[]).join(", ")}</span><span class="tag ok">conferem</span></div></div>`;
+  if (canc.length) h += `<div class="cf ok"><div style="display:flex;justify-content:space-between;gap:8px"><span>${canc.map(i => i.c.nome).join(", ")}</span><span class="tag ok">cancelada · ok</span></div></div>`;
+  const sel = pend.filter((_, k) => cOff[k] !== true).map((i, _, a) => i);
+  const nSel = pend.filter((_, k) => cOff[k] !== true).length;
+  if (pend.length) h += `<button class="replay" ${nSel?"":"disabled style=opacity:.4"} onclick="aplicarConf()">Aplicar ${nSel} ${nSel===1?"correção":"correções"}</button>`;
+  let undo = false; try { undo = !!(window.Radar && Radar.podeDesfazer && Radar.podeDesfazer()); } catch(e){}
+  if (undo) h += `<button class="btn2" onclick="desfazerConf()">Desfazer última correção</button>`;
+  if (pend.length || undo) h += `<div class="sm muted" style="margin-top:10px">Antes de aplicar, o Radar guarda uma cópia. Você pode desfazer a última correção.</div>`;
+  app.innerHTML = h;
+}
+function aplicarConf(){
+  const R = cR; const pend = R.items.filter(i => ["falta","semvalor","statusx","dif"].includes(i.kind));
+  const sel = pend.map((i, k) => cOff[k] === true ? null : Object.assign({}, i, { v: cVal[k] != null ? cVal[k] : i.v })).filter(Boolean);
+  if (sel.some(i => i.v == null || !(i.v > 0))) { alertCard("Falta o valor de alguma corrida marcada. Digite o valor (está no app da Uber, em Ganhos) ou desmarque."); return; }
+  let res = ""; try { res = Radar.aplicarCorrecao(JSON.stringify(buildFix(R, sel))); } catch(e){ res = "Não deu para aplicar"; }
+  reabrir(res.replace(/^Correção importada: (\d+) corridas/, (_, n) => `Pronto: ${n} ${n==="1"?"corrida corrigida":"corridas corrigidas"}`).split("\n")[0]);
+}
+function desfazerConf(){ let res = ""; try { res = Radar.desfazerCorrecao(); } catch(e){ res = "Não deu para desfazer"; } reabrir(res); }
+function reabrir(msg){ pset("conf_msg", msg); try { Radar.abrir("conferir"); Radar.close(); } catch(e){ location.reload(); } }
+function alertCard(t){ const d = document.createElement("div"); d.className = "card"; d.style.borderColor = "var(--mid)"; d.innerHTML = `<b style="color:var(--mid)">${t}</b>`;
+  app.prepend(d); window.scrollTo(0, 0); }
+
 // ---------- ESTILO DO CARTÃO ----------
 const TOPF = { tempo:"Tempo total", dist:"Distância total", valor:"Valor da corrida", cat:"Categoria", app:"App" };
 const BOTF = { km:"R$/Km", hora:"R$/Hora", min:"R$/Min", nota:"Nota", lucro:"Lucro", lucrohora:"Lucro/Hora" };
@@ -550,7 +714,7 @@ function animate(){ if (window.matchMedia && matchMedia("(prefers-reduced-motion
   document.querySelectorAll(".bars i, .hourbar i").forEach((el, i) => el.style.animationDelay = (120 + i * 45) + "ms");
   document.querySelectorAll(".track i, .stack i").forEach((el, i) => el.style.animationDelay = (200 + i * 90) + "ms");
   document.querySelectorAll(".kpi b, .offer .val, .hero .big").forEach(countUp); }
-function render(){ ({historico, horarios, jornada, custos, cartao, gastos}[page] || historico)(); animate(); }
+function render(){ ({historico, horarios, jornada, custos, cartao, gastos, conferir}[page] || historico)(); animate(); }
 render();
 </script>
 </body>

@@ -17,6 +17,22 @@ object Correcao {
     fun importar(ctx: Context, uri: Uri): String {
         val text = ctx.contentResolver.openInputStream(uri)?.use { it.bufferedReader(Charsets.UTF_8).readText() }
             ?: return "Não consegui abrir o arquivo"
+        return importarTexto(ctx, text)
+    }
+
+    /** Volta corridas e rotas para como estavam antes da última correção. */
+    fun desfazer(ctx: Context): String {
+        val c = File(ctx.filesDir, "corridas_antes_correcao.csv"); val r = File(ctx.filesDir, "rotas_antes_correcao.csv")
+        if (!c.exists() && !r.exists()) return "Não há correção para desfazer"
+        if (c.exists()) { c.copyTo(TripLog.tripsFile(ctx), overwrite = true); c.delete() }
+        if (r.exists()) { r.copyTo(TripLog.routesFile(ctx), overwrite = true); r.delete() }
+        OfferLog.appendDiag(ctx, "CONFERÊNCIA: última correção desfeita")
+        return "Correção desfeita"
+    }
+
+    fun podeDesfazer(ctx: Context) = File(ctx.filesDir, "corridas_antes_correcao.csv").exists()
+
+    fun importarTexto(ctx: Context, text: String): String {
         val j = try { JSONObject(text) } catch (_: Exception) { return "Arquivo inválido" }
         if (j.optString("tipo") != "radar-correcao") return "Este arquivo não é uma correção do Radar"
 
@@ -44,11 +60,12 @@ object Correcao {
             val linhas = if (rf.exists()) rf.readLines() else listOf("id;data_hora;lat;lng;fase")
             if (rf.exists()) rf.copyTo(File(ctx.filesDir, "rotas_antes_correcao.csv"), overwrite = true)
             val rcab = linhas.firstOrNull()?.takeIf { it.startsWith("id;") } ?: "id;data_hora;lat;lng;fase"
-            val janelas = novas.mapNotNull { l -> val c = l.split(';'); if (c.size > 10 && c[6].isNotBlank() && c[10].isNotBlank()) c[6] to c[10] else null }
+            val idsComPontos = pontos.map { it.substringBefore(';') }.toSet()
+            val janelas = novas.filter { it.substringBefore(';') in idsComPontos }.mapNotNull { l -> val c = l.split(';'); if (c.size > 10 && c[6].isNotBlank() && c[10].isNotBlank()) c[6] to c[10] else null }
             val rficam = linhas.drop(1).filter { l ->
                 if (l.isBlank()) return@filter false
                 val id = l.substringBefore(';')
-                if (id in remover || id in idsNovas) return@filter false
+                if (id in remover || id in idsComPontos) return@filter false
                 if (id.startsWith("livre")) {
                     val t = l.split(';').getOrNull(1) ?: return@filter true
                     // o trajeto "livre" que na verdade era corrida sai (a correção traz esses pontos como corrida)

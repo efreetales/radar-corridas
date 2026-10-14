@@ -20,7 +20,7 @@ class PainelActivity : AppCompatActivity() {
     private lateinit var prefs: Prefs
 
     inner class Bridge {
-        private val allowed = setOf("ofertas.csv", "corridas.csv", "rotas.csv", "sessoes_uber.csv", "gastos.csv")
+        private val allowed = setOf("ofertas.csv", "corridas.csv", "rotas.csv", "sessoes_uber.csv", "gastos.csv", "eventos_uber.csv", "ganhos_uber.csv")
         private val sp get() = getSharedPreferences("radar", Context.MODE_PRIVATE)
 
         @JavascriptInterface
@@ -90,6 +90,22 @@ class PainelActivity : AppCompatActivity() {
 
         @JavascriptInterface
         fun abrirNotifAcesso() { Gastos.abrirPermissao(this@PainelActivity) }
+
+        /** Conferir com a Uber: aplica a correção montada na tela (mesmo formato do arquivo de correção). */
+        @JavascriptInterface
+        fun aplicarCorrecao(json: String): String = try { Correcao.importarTexto(this@PainelActivity, json) } catch (e: Exception) { "Não deu para aplicar: ${e.message}" }
+
+        @JavascriptInterface
+        fun desfazerCorrecao(): String = try { Correcao.desfazer(this@PainelActivity) } catch (e: Exception) { "Não deu para desfazer: ${e.message}" }
+
+        @JavascriptInterface
+        fun podeDesfazer(): Boolean = Correcao.podeDesfazer(this@PainelActivity)
+
+        /** Abre outra tela do painel (ex.: do Histórico para Conferir). */
+        @JavascriptInterface
+        fun abrir(pagina: String) {
+            runOnUiThread { startActivity(android.content.Intent(this@PainelActivity, PainelActivity::class.java).putExtra(EXTRA_PAGE, pagina)) }
+        }
 
         /** Abre o replay animado de uma corrida. */
         @JavascriptInterface
