@@ -582,9 +582,12 @@ class MainActivity : AppCompatActivity() {
         card.addView(outlinedButton("Exportar dados (ofertas, corridas, rotas, radares e valetas)").apply {
             setOnClickListener {
                 val ctx = this@MainActivity
-                val files = listOf(OfferLog.offersFile(ctx), TripLog.tripsFile(ctx), TripLog.routesFile(ctx), PassLog.file(ctx), Hazards.file(ctx), Spots.file(ctx), SpeedCams.reportFile(ctx), java.io.File(ctx.filesDir, "sessoes_uber.csv"))
+                val files = listOf(OfferLog.offersFile(ctx), TripLog.tripsFile(ctx), TripLog.routesFile(ctx), PassLog.file(ctx), Hazards.file(ctx), Spots.file(ctx), SpeedCams.reportFile(ctx), java.io.File(ctx.filesDir, "sessoes_uber.csv"), java.io.File(ctx.filesDir, "eventos_uber.csv"), java.io.File(ctx.filesDir, "ganhos_uber.csv"))
                 if (!OfferLog.shareAll(ctx, files, "Dados — Radar Corridas")) toast("Nenhum dado salvo ainda")
             }
+        }, matchWrap(top = 6))
+        card.addView(outlinedButton("Conferir corridas com a Uber").apply {
+            setOnClickListener { startActivity(Intent(this@MainActivity, PainelActivity::class.java).putExtra(PainelActivity.EXTRA_PAGE, "conferir")) }
         }, matchWrap(top = 6))
         card.addView(outlinedButton("Importar correção de corridas").apply {
             setOnClickListener { importLauncher.launch(arrayOf("application/json", "application/octet-stream", "text/plain", "*/*")) }
