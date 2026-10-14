@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Mynaui icons (mynaui.com/icons, MIT): sparkles -->
-<vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="24dp" android:height="24dp" android:viewportWidth="24" android:viewportHeight="24">
-    <path android:fillColor="#00000000" android:strokeColor="#FFFFFFFF" android:strokeWidth="1.5" android:strokeLineCap="round" android:strokeLineJoin="round" android:pathData="M 14.77 21 c 1.123 -4.649 2.486 -6.099 6.23 -7.364 -3.934 -1.328 -5.16 -2.94 -6.23 -7.363 -1.124 4.649 -2.488 6.098 -6.232 7.363 3.93 1.327 5.163 2.95 6.231 7.364 m -8.308 -9.818 c .512 -2.42 1.502 -3.512 3.461 -4.091 C 7.963 6.512 6.973 5.42 6.462 3 5.972 5.315 5.047 6.485 3 7.09 c 1.959 .58 2.95 1.672 3.462 4.092"/>
-</vector>

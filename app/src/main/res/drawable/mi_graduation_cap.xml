@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Mynaui icons (mynaui.com/icons, MIT): graduation-cap -->
-<vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="24dp" android:height="24dp" android:viewportWidth="24" android:viewportHeight="24">
-    <path android:fillColor="#00000000" android:strokeColor="#FFFFFFFF" android:strokeWidth="1.5" android:strokeLineCap="round" android:strokeLineJoin="round" android:pathData="M 14.217 3.5 a 5.17 5.17 0 0 0 -4.434 0 L 3.092 6.637 c -1.456 .682 -1.456 3.044 0 3.726 l 6.69 3.137 a 5.17 5.17 0 0 0 4.435 0 l 6.691 -3.137 c 1.456 -.682 1.456 -3.044 0 -3.726 z M 22 8.5 v 5"/>
-    <path android:fillColor="#00000000" android:strokeColor="#FFFFFFFF" android:strokeWidth="1.5" android:strokeLineCap="round" android:strokeLineJoin="round" android:pathData="M 5 11.5 v 5.125 C 5 19.543 9.694 21 12 21 s 7 -1.457 7 -4.375 V 11.5"/>
-</vector>

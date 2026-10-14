@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Mynaui icons (mynaui.com/icons, MIT): power -->
+<!-- Material Symbols Rounded: power_settings_new (Apache 2.0) -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="24dp" android:height="24dp" android:viewportWidth="24" android:viewportHeight="24">
-    <path android:fillColor="#00000000" android:strokeColor="#FFFFFFFF" android:strokeWidth="1.5" android:strokeLineCap="round" android:strokeLineJoin="round" android:pathData="M 17.953 5.25 a 9 9 0 1 1 -11.906 0 M 12 3 v 9"/>
+    android:width="24dp" android:height="24dp" android:viewportWidth="960" android:viewportHeight="960">
+    <group android:translateY="960">
+        <path android:fillColor="#FFFFFFFF" android:pathData="M 480 -80 q -82 0 -155 -31.5 t -127.5 -86 Q 143 -252 111.5 -325 T 80 -480 q 0 -75 26 -142 t 72 -120 q 9 -11 21 -10.5 t 20 8.5 q 8 8 10.5 20 t -8.5 24 q -38 45 -59.5 101 T 140 -480 q 0 141 99.5 240.5 T 480 -140 q 142 0 241 -99.5 T 820 -480 q 0 -63 -21 -119 t -59 -101 q -11 -12 -9 -24 t 10 -20 q 8 -8 20 -8.5 t 21 10.5 q 46 53 72 120 t 26 142 q 0 82 -31.5 155 T 763 -197.5 q -54 54.5 -127 86 T 480 -80 Z m -21.5 -368.5 Q 450 -457 450 -470 v -380 q 0 -13 8.5 -21.5 T 480 -880 q 13 0 21.5 8.5 T 510 -850 v 380 q 0 13 -8.5 21.5 T 480 -440 q -13 0 -21.5 -8.5 Z"/>
+    </group>
 </vector>

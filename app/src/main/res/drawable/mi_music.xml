@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Mynaui icons (mynaui.com/icons, MIT): music -->
-<vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="24dp" android:height="24dp" android:viewportWidth="24" android:viewportHeight="24">
-    <path android:fillColor="#00000000" android:strokeColor="#FFFFFFFF" android:strokeWidth="1.5" android:strokeLineCap="round" android:strokeLineJoin="round" android:pathData="M 8.625 17.65 c 0 1.574 -1.26 2.85 -2.812 2.85 C 4.259 20.5 3 19.224 3 17.65 c 0 -1.573 1.26 -2.849 2.813 -2.849 s 2.812 1.276 2.812 2.85 m 0 0 V 5.462 c 0 -.52 .394 -.954 .909 -1.001 l 10.375 -.956 A 1 1 0 0 1 21 4.506 V 16.51 m 0 0 c 0 1.573 -1.26 2.85 -2.812 2.85 -1.554 0 -2.813 -1.277 -2.813 -2.85 s 1.26 -2.85 2.813 -2.85 S 21 14.938 21 16.512"/>
-</vector>

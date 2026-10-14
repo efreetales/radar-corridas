@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Mynaui icons (mynaui.com/icons, MIT): alarm-clock -->
+<!-- Material Symbols Rounded: timer (Apache 2.0) -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="24dp" android:height="24dp" android:viewportWidth="24" android:viewportHeight="24">
-    <path android:fillColor="#00000000" android:strokeColor="#FFFFFFFF" android:strokeWidth="1.5" android:strokeLineCap="round" android:strokeLineJoin="round" android:pathData="M 3 5.231 6.15 3 M 21 5.231 17.85 3 M 20 13 a 8 8 0 1 1 -16 0 8 8 0 0 1 16 0"/>
-    <path android:fillColor="#00000000" android:strokeColor="#FFFFFFFF" android:strokeWidth="1.5" android:strokeLineCap="round" android:strokeLineJoin="round" android:pathData="M 12 8.5 v 5 l 3 2"/>
+    android:width="24dp" android:height="24dp" android:viewportWidth="960" android:viewportHeight="960">
+    <group android:translateY="960">
+        <path android:fillColor="#FFFFFFFF" android:pathData="M 390 -860 q -13 0 -21.5 -8.5 T 360 -890 q 0 -13 8.5 -21.5 T 390 -920 h 180 q 13 0 21.5 8.5 T 600 -890 q 0 13 -8.5 21.5 T 570 -860 H 390 Z m 111.5 438.5 Q 510 -430 510 -443 v -170 q 0 -13 -8.5 -21.5 T 480 -643 q -13 0 -21.5 8.5 T 450 -613 v 170 q 0 13 8.5 21.5 T 480 -413 q 13 0 21.5 -8.5 Z m -161 312 Q 275 -138 226 -187 t -77.5 -114.5 Q 120 -367 120 -441 t 28.5 -139.5 Q 177 -646 226 -695 t 114.5 -77.5 Q 406 -801 480 -801 q 67 0 126 22.5 T 711 -716 l 30 -30 q 9 -9 21 -9 t 21 9 q 9 9 9 21 t -9 21 l -30 30 q 36 40 61.5 97 T 840 -441 q 0 74 -28.5 139.5 T 734 -187 q -49 49 -114.5 77.5 T 480 -81 q -74 0 -139.5 -28.5 Z m 352 -119 Q 780 -316 780 -441 t -87.5 -212.5 Q 605 -741 480 -741 t -212.5 87.5 Q 180 -566 180 -441 t 87.5 212.5 Q 355 -141 480 -141 t 212.5 -87.5 Z M 480 -440 Z"/>
+    </group>
 </vector>

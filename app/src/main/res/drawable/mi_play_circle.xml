@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Mynaui icons (mynaui.com/icons, MIT): play-circle -->
-<vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="24dp" android:height="24dp" android:viewportWidth="24" android:viewportHeight="24">
-    <path android:fillColor="#00000000" android:strokeColor="#FFFFFFFF" android:strokeWidth="1.5" android:strokeLineCap="round" android:strokeLineJoin="round" android:pathData="M 21 12 a 9 9 0 1 1 -18 0 9 9 0 0 1 18 0"/>
-    <path android:fillColor="#00000000" android:strokeColor="#FFFFFFFF" android:strokeWidth="1.5" android:strokeLineCap="round" android:strokeLineJoin="round" android:pathData="M 13.242 10.71 c .672 .547 1.008 .821 1.008 1.29 s -.336 .743 -1.008 1.29 c -.185 .152 -.37 .295 -.538 .413 a 9 9 0 0 1 -.49 .318 c -.67 .407 -1.006 .611 -1.306 .385 s -.328 -.697 -.383 -1.642 A 14 14 0 0 1 10.5 12 c 0 -.235 .01 -.497 .025 -.764 .055 -.945 .082 -1.417 .383 -1.642 .3 -.226 .636 -.022 1.306 .385 .174 .106 .341 .214 .49 .318 .169 .118 .353 .261 .538 .412"/>
-</vector>

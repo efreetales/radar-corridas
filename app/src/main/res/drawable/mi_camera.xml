@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Mynaui icons (mynaui.com/icons, MIT): camera -->
-<vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="24dp" android:height="24dp" android:viewportWidth="24" android:viewportHeight="24">
-    <path android:fillColor="#00000000" android:strokeColor="#FFFFFFFF" android:strokeWidth="1.5" android:strokeLineCap="round" android:strokeLineJoin="round" android:pathData="M 20.52 20.414 c .308 -.375 .48 -.884 .48 -1.414 V 7 c 0 -.53 -.172 -1.04 -.48 -1.414 C 20.215 5.21 19.799 5 19.365 5 h -8.981 C 8.659 5 8.325 3.269 6.827 3.026 6.563 2.983 6.289 3 6.022 3 c -.953 0 -1.429 0 -1.804 .159 a 2 2 0 0 0 -1.059 1.06 C 3 4.592 3 5.068 3 6.021 V 19 c 0 .53 .172 1.04 .48 1.414 .306 .375 .722 .586 1.156 .586 h 14.728 c .434 0 .85 -.21 1.157 -.586 M 16 3 h 3"/>
-    <path android:fillColor="#00000000" android:strokeColor="#FFFFFFFF" android:strokeWidth="1.5" android:strokeLineCap="round" android:strokeLineJoin="round" android:pathData="M 13.5 17 a 4 4 0 1 0 0 -8 4 4 0 0 0 0 8"/>
-</vector>

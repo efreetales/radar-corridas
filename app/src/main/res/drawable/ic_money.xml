@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Mynaui icons (mynaui.com/icons, MIT): dollar -->
+<!-- Material Symbols Rounded: payments (Apache 2.0) -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="24dp" android:height="24dp" android:viewportWidth="24" android:viewportHeight="24">
-    <path android:fillColor="#00000000" android:strokeColor="#FFFFFFFF" android:strokeWidth="1.5" android:strokeLineCap="round" android:strokeLineJoin="round" android:pathData="M 17 5 h -5 m 0 0 H 9.5 a 3.5 3.5 0 1 0 0 7 H 12 m 0 -7 V 3 m 0 2 v 7 m 0 0 h 2.5 a 3.5 3.5 0 1 1 0 7 H 12 m 0 -7 v 7 m 0 0 H 6 m 6 0 v 2"/>
+    android:width="24dp" android:height="24dp" android:viewportWidth="960" android:viewportHeight="960">
+    <group android:translateY="960">
+        <path android:fillColor="#FFFFFFFF" android:pathData="M 540 -420 q -50 0 -85 -35 t -35 -85 q 0 -50 35 -85 t 85 -35 q 50 0 85 35 t 35 85 q 0 50 -35 85 t -85 35 Z M 220 -280 q -24.75 0 -42.37 -17.63 Q 160 -315.25 160 -340 v -400 q 0 -24.75 17.63 -42.38 Q 195.25 -800 220 -800 h 640 q 24.75 0 42.38 17.62 Q 920 -764.75 920 -740 v 400 q 0 24.75 -17.62 42.37 Q 884.75 -280 860 -280 H 220 Z m 100 -60 h 440 q 0 -42 29 -71 t 71 -29 v -200 q -42 0 -71 -29 t -29 -71 H 320 q 0 42 -29 71 t -71 29 v 200 q 42 0 71 29 t 29 71 Z m 450 180 H 100 q -24.75 0 -42.37 -17.63 Q 40 -195.25 40 -220 v -430 q 0 -12.75 8.68 -21.38 8.67 -8.62 21.5 -8.62 12.82 0 21.32 8.62 8.5 8.63 8.5 21.38 v 430 h 670 q 12.75 0 21.38 8.68 8.62 8.67 8.62 21.5 0 12.82 -8.62 21.32 -8.63 8.5 -21.38 8.5 Z M 220 -340 v -400 400 Z"/>
+    </group>
 </vector>

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Mynaui icons (mynaui.com/icons, MIT): swatches -->
+<!-- Material Symbols Rounded: palette (Apache 2.0) -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="24dp" android:height="24dp" android:viewportWidth="24" android:viewportHeight="24">
-    <path android:fillColor="#00000000" android:strokeColor="#FFFFFFFF" android:strokeWidth="1.5" android:strokeLineCap="round" android:strokeLineJoin="round" android:pathData="M 6.5 21 H 18 c 1.657 0 3 -1.398 3 -3.123 0 -1.308 .13 -2.63 -1.297 -3.253 M 7.98 20.664 l 10.287 -4.67 a 3.04 3.04 0 0 0 1.436 -1.37 m -7.613 -3.787 3.013 -1.718 c 1.553 -.886 3.5 -.186 4.198 1.509 l .525 1.273 a 3.23 3.23 0 0 1 -.123 2.723 m -9.821 3.718 c -.5 1.912 -2.42 3.047 -4.287 2.535 -1.867 -.513 -2.975 -2.478 -2.475 -4.39 L 6.18 5.27 c .452 -1.661 2.114 -2.624 3.71 -2.15 l 1.17 .348 c 1.615 .48 2.536 2.246 2.045 3.918 z M 6.5 17 l -.242 .854"/>
+    android:width="24dp" android:height="24dp" android:viewportWidth="960" android:viewportHeight="960">
+    <group android:translateY="960">
+        <path android:fillColor="#FFFFFFFF" android:pathData="M 480 -80 q -82 0 -155 -31.5 t -127.5 -86 Q 143 -252 111.5 -325 T 80 -480 q 0 -85 32 -158 t 87.5 -127 q 55.5 -54 130 -84.5 T 489 -880 q 79 0 150 26.5 T 763.5 -780 q 53.5 47 85 111.5 T 880 -527 q 0 108 -63 170.5 T 650 -294 h -75 q -18 0 -31 14 t -13 31 q 0 27 14.5 46 t 14.5 44 q 0 38 -21 58.5 T 480 -80 Z m 0 -400 Z m -198 11 q 15 -15 15 -35 t -15 -35 q -15 -15 -35 -15 t -35 15 q -15 15 -15 35 t 15 35 q 15 15 35 15 t 35 -15 Z m 126 -170 q 15 -15 15 -35 t -15 -35 q -15 -15 -35 -15 t -35 15 q -15 15 -15 35 t 15 35 q 15 15 35 15 t 35 -15 Z m 214 0 q 15 -15 15 -35 t -15 -35 q -15 -15 -35 -15 t -35 15 q -15 15 -15 35 t 15 35 q 15 15 35 15 t 35 -15 Z m 131 170 q 15 -15 15 -35 t -15 -35 q -15 -15 -35 -15 t -35 15 q -15 15 -15 35 t 15 35 q 15 15 35 15 t 35 -15 Z M 480 -140 q 11 0 15.5 -4.5 T 500 -159 q 0 -14 -14.5 -26 T 471 -238 q 0 -46 30 -81 t 76 -35 h 73 q 76 0 123 -44.5 T 820 -527 q 0 -132 -100 -212.5 T 489 -820 q -146 0 -247.5 98.5 T 140 -480 q 0 141 99.5 240.5 T 480 -140 Z"/>
+    </group>
 </vector>

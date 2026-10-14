@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Material Symbols Rounded: undo (Apache 2.0) -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp" android:height="24dp" android:viewportWidth="960" android:viewportHeight="960">
+    <group android:translateY="960">
+        <path android:fillColor="#FFFFFFFF" android:pathData="M 289 -200 q -13 0 -21.5 -8.5 T 259 -230 q 0 -13 8.5 -21.5 T 289 -260 h 280 q 70 0 120.5 -46.5 T 740 -422 q 0 -69 -50.5 -115.5 T 569 -584 H 274 l 93 93 q 9 9 9 21 t -9 21 q -9 9 -21 9 t -21 -9 L 181 -593 q -5 -5 -7 -10 t -2 -11 q 0 -6 2 -11 t 7 -10 l 144 -144 q 9 -9 21 -9 t 21 9 q 9 9 9 21 t -9 21 l -93 93 h 294 q 95 0 163.5 64 T 800 -422 q 0 94 -68.5 158 T 568 -200 H 289 Z"/>
+    </group>
+</vector>
