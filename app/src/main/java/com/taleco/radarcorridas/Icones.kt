@@ -54,7 +54,7 @@ object Icones {
             val r = RES[m.groupValues[1]] ?: return@forEach
             val d = ContextCompat.getDrawable(ctx, r)?.mutate() ?: return@forEach
             val px = (sizePx * 1.15f).toInt()
-            out.replace(m.range.first, m.range.last + 1, "⁠")   // um caractere invisível segura o ícone
+            out.replace(m.range.first, m.range.last + 1, "\uFFFC")   // caractere de objeto (o mesmo que o ImageSpan usa) segura o ícone
             out.setSpan(IconSpan(d, px, cor), m.range.first, m.range.first + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         }
         return out
