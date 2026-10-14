@@ -15,6 +15,9 @@
   body { padding:0 0 40px; }
   button { font-family:inherit; cursor:pointer; }
   header { position:sticky; top:0; z-index:500; background:var(--bg); padding:14px 16px 14px; display:flex; align-items:center; gap:14px; }
+  .mi { width:1.15em; height:1.15em; vertical-align:-0.2em; flex:none; display:inline-block; }
+  .mi.sm { width:1em; height:1em; vertical-align:-0.12em; }
+  .dot { display:inline-block; width:9px; height:9px; border-radius:50%; background:currentColor; flex:none; }
   header button.back { width:52px; height:52px; border-radius:14px; border:0; background:var(--s2); color:var(--tx); font-size:28px; flex:none; }
   header h1 { margin:0; font-size:23px; line-height:1.15; } header small { display:block; color:var(--mu); font-size:14px; font-weight:400; margin-top:3px; }
   main { padding:0 16px; }
@@ -34,6 +37,8 @@
   .pillrow { display:flex; gap:10px; margin-bottom:12px; overflow-x:auto; }
   .pill { min-height:48px; border:1px solid var(--line); background:var(--s1); color:var(--tx); border-radius:999px; padding:0 22px; font-weight:700; font-size:16px; flex:none; }
   .pill.on { background:var(--tx); color:var(--bg); }
+  .pill.soon { color:var(--mu); border-style:dashed; display:flex; align-items:center; gap:8px; }
+  .pill.soon i { font-style:normal; font-size:11px; font-weight:700; color:var(--mid); background:rgba(245,197,24,.12); border-radius:999px; padding:3px 8px; }
   /* Histórico */
   .weeknav { display:flex; align-items:center; justify-content:space-between; gap:8px; font-weight:700; font-size:18px; margin:0 0 12px; }
   .weeknav button { width:52px; height:52px; border-radius:14px; border:0; background:var(--s2); color:var(--ac); font-size:28px; flex:none; }
@@ -139,9 +144,12 @@
 </style>
 </head>
 <body>
-<header><button class="back" onclick="goBack()">‹</button><h1 id="ttl">Radar</h1></header>
+<header><button class="back" onclick="goBack()" aria-label="Voltar"><svg class="mi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 6-6 6 6 6"/></svg></button><h1 id="ttl">Radar</h1></header>
 <main id="app"></main>
 <script>
+// Ícones Mynaui (mynaui.com/icons, licença MIT): contorno 1.5; "s:" = versão preenchida
+const ICO={"chevron-left":"<path d=\"m15 6-6 6 6 6\"/>","chevron-right":"<path d=\"m9 18 6-6-6-6\"/>","s:play":"<path d=\"m12.503 7.01-.066-.04c-.748-.455-1.406-.856-1.97-1.058a2.4 2.4 0 0 0-.976-.157 1.8 1.8 0 0 0-.963.37c-.579.434-.829 1.073-.966 1.78-.133.685-.184 1.577-.247 2.663l-.003.056c-.038.65-.062 1.293-.062 1.876s.024 1.227.062 1.877l.003.055c.063 1.086.114 1.978.247 2.662.137.708.387 1.346.966 1.781.286.215.607.343.963.37.342.025.67-.047.976-.157.564-.202 1.222-.603 1.97-1.057l.066-.04c.426-.26.844-.527 1.217-.79a24 24 0 0 0 1.335-1.022l.05-.041c.764-.623 1.412-1.152 1.86-1.672.488-.57.785-1.182.785-1.966s-.297-1.397-.786-1.966c-.447-.52-1.095-1.05-1.858-1.672l-.05-.041c-.454-.37-.91-.724-1.336-1.022a23 23 0 0 0-1.217-.79\"/>","s:star":"<path d=\"M13.51 3.139c-.652-1.185-2.368-1.185-3.021 0a28 28 0 0 0-2.114 4.894.35.35 0 0 1-.33.223 30 30 0 0 0-4.375.436c-1.337.233-1.926 1.837-.91 2.83q.192.188.388.374a32 32 0 0 0 3.103 2.587.274.274 0 0 1 .11.31 27.6 27.6 0 0 0-1.172 5.065c-.19 1.424 1.318 2.298 2.495 1.694a29.3 29.3 0 0 0 4.085-2.537.4.4 0 0 1 .462 0 29 29 0 0 0 4.085 2.537c1.177.604 2.685-.27 2.495-1.694a27.6 27.6 0 0 0-1.171-5.065.274.274 0 0 1 .11-.31 32 32 0 0 0 3.49-2.96c1.016-.994.427-2.598-.91-2.831a30 30 0 0 0-4.376-.436.35.35 0 0 1-.329-.223 27.7 27.7 0 0 0-2.114-4.894\"/>","check":"<path d=\"m6 13.626 1.606 1.722c.886.95 1.329 1.424 1.825 1.574.436.131.9.096 1.315-.1.473-.224.852-.761 1.612-1.836L18 7\"/>","x":"<path d=\"M18 6 6 18M6 6l12 12\"/>","check-circle":"<path d=\"M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0\"/><path d=\"m8.667 12.633 1.505 1.721a1 1 0 0 0 1.564-.073L15.333 9.3\"/>","circle":"<path d=\"M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0\"/>","map-pin":"<path d=\"M12.597 21.8a.995.995 0 0 1-1.194 0C6.253 17.976.785 10.109 6.31 4.425A7.93 7.93 0 0 1 12 2c2.134 0 4.18.872 5.689 2.424 5.526 5.684.059 13.55-5.092 17.377\"/><path d=\"M12 12a2 2 0 1 0 0-4 2 2 0 0 0 0 4\"/>","trending-up":"<path d=\"m20 7-5.846 5.938c-1.964 1.983-4.106-2.148-6.153-.001L4 17m9-10h7v7\"/>","trending-down":"<path d=\"m20 17-5.846-5.938c-1.964-1.983-4.106 2.148-6.153.001L4 7m9 10h7v-7\"/>","droplet":"<path d=\"M11.995 3C14 8 21.34 10.602 18.927 16.397 17.775 19.163 14.992 21 12 21s-5.775-1.837-6.927-4.603C2.661 10.607 10 8 11.995 3\"/><path d=\"M8 15.5c.333 1 2 2.5 4 2.5\"/>","path":"<path d=\"M8.121 15.879a3 3 0 1 0-4.243 4.243 3 3 0 0 0 4.243-4.243m0 0L15.88 8.12m0 0a3 3 0 1 0 4.243-4.243A3 3 0 0 0 15.88 8.12m0 0 .004-.004\"/>","parking":"<path d=\"M10.5 15v-2.4m0 0h2.276c2.299 0 2.299-3.6 0-3.6H10.5z\"/><path d=\"M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0\"/>","droplets":"<path d=\"M11.995 3C10 8 2.661 10.606 5.073 16.397 6.225 19.163 9.008 21 12 21s5.775-1.837 6.927-4.603M14.997 5c-.186.481-.46.922-.777 1.34-1.515 1.992-4.037 3.443-2.96 6.103C11.882 13.979 13.384 15 15 15c1.615 0 3.118-1.02 3.74-2.557q.101-.25.162-.488C19.639 9.07 16.023 7.633 14.997 5\"/>","wrench":"<path d=\"M9.917 7.076a.947.947 0 0 1 0 1.326L8.402 9.917a.947.947 0 0 1-1.326 0L4.528 7.37c-.495-.494-1.327-.333-1.446.356a5.682 5.682 0 0 0 6.626 6.554c.82-.15 1.707-.022 2.296.566l5.566 5.567a2.01 2.01 0 1 0 2.842-2.842l-5.567-5.566c-.588-.589-.716-1.477-.566-2.296a5.684 5.684 0 0 0-6.554-6.626c-.689.12-.85.951-.356 1.446z\"/>","shield":"<path d=\"M11.467 20.82a.88.88 0 0 0 1.066 0C14.168 19.593 19 15.586 19 11.016v-4.93a.514.514 0 0 0-.457-.515 12.05 12.05 0 0 1-5.582-2.046l-.61-.417a.62.62 0 0 0-.702 0l-.61.417a12.05 12.05 0 0 1-5.582 2.046.514.514 0 0 0-.457.515v4.93c0 4.57 4.832 8.577 6.467 9.802\"/>","file-text":"<path d=\"M9.478 3H7.25A2.25 2.25 0 0 0 5 5.25v13.5A2.25 2.25 0 0 0 7.25 21h9a2.25 2.25 0 0 0 2.25-2.25V12M9.478 3c1.243 0 2.272 1.007 2.272 2.25V7.5A2.25 2.25 0 0 0 14 9.75h2.25A2.25 2.25 0 0 1 18.5 12M9.478 3c3.69 0 9.022 5.36 9.022 9M9 16.5h6m-6-3h4\"/>","key":"<path d=\"m15.362 9.065 1.32 1.32c.995.995 1.345-.84 2.734-1.07.466-.078.877-.236 1.053-.752.156-.456-.021-.885-.574-1.438L18.5 5.731M7.5 21a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9m3.5-8L21 3\"/>","bell":"<path d=\"M15.019 17h-6.04m6.04 0h3.614c1.876 0 1.559-1.86.61-2.804C15.825 10.801 20.68 3 11.999 3s-3.825 7.8-7.243 11.196c-.913.908-1.302 2.804.61 2.804H8.98m6.039 0c0 1.925-.648 4-3.02 4s-3.02-2.075-3.02-4\"/>","dots":"<path d=\"M12 12.313v-.626m5 .626v-.626m-10 .626v-.626\"/>","grip-vertical":"<path d=\"M9.667 12H9m6 0h-.667M9.667 7H9m6 0h-.667M9.667 17H9m6 0h-.667\"/>","arrow-up":"<path d=\"M12 19.5v-15m6 5.625L12 4.5l-6 5.625\"/>","arrow-down":"<path d=\"M12 4.5v15m6-5.625L12 19.5l-6-5.625\"/>","arrow-right":"<path d=\"M4.5 12h15m-5.625 6 5.625-6-5.625-6\"/>"};
+function ic(n,c){const s=n.startsWith('s:');return `<svg class="mi ${c||''}" viewBox="0 0 24 24" ${s?'fill="currentColor"':'fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"'} aria-hidden="true">${ICO[n]||''}</svg>`;}
 // ===== dados do app =====
 function raw(n){ try { return (window.Radar && Radar.file(n)) || ""; } catch(e){ return ""; } }
 function pget(k, d){ try { const v = window.Radar && Radar.pref && Radar.pref(k); return v === undefined || v === null || v === "" ? d : v; } catch(e){ return d; } }
@@ -241,9 +249,9 @@ function historico(){
   const tot = offerList.reduce((s,o)=>s+o.price,0), avg = f => { const a = offerList.map(f).filter(x => x!=null); return a.length ? a.reduce((s,x)=>s+x,0)/a.length : null; };
   const nAccShow = hTab === "aceitas" ? accN : nAcc;
   const e = new Date(we); e.setDate(e.getDate()-1);
-  let h = `<div class="card"><div class="weeknav"><button onclick="hWeek--;hDay=null;render()">‹</button>${ws.getDate()} ${MO[ws.getMonth()]} – ${e.getDate()} ${MO[e.getMonth()]}<button onclick="if(hWeek<0){hWeek++;hDay=null;render()}" ${hWeek>=0?"disabled style=opacity:.3":""}>›</button></div>
+  let h = `<div class="card"><div class="weeknav"><button onclick="hWeek--;hDay=null;render()" aria-label="Semana anterior">${ic("chevron-left")}</button>${ws.getDate()} ${MO[ws.getMonth()]} – ${e.getDate()} ${MO[e.getMonth()]}<button onclick="if(hWeek<0){hWeek++;hDay=null;render()}" ${hWeek>=0?"disabled style=opacity:.3":""} aria-label="Próxima semana">${ic("chevron-right")}</button></div>
     <div class="bars">${perDay.map(x => `<div class="${hDay===key(x.d)?"sel":""}" onclick="hDay=hDay==='${key(x.d)}'?null:'${key(x.d)}';render()"><i class="${x.n?"has":""}" style="height:${Math.max(4, 64*x.n/maxN)}px;${hDay&&hDay!==key(x.d)?"opacity:.35":""}"></i><span>${x.d.getDate()}</span></div>`).join("")}</div></div>
-    <div class="pillrow">${[["todos","Todos"],["UBER","Uber"],["99","99"]].map(([k,l]) => `<button class="pill ${hApp===k?"on":""}" onclick="hApp='${k}';render()">${l}</button>`).join("")}</div>
+    <div class="pillrow">${[["todos","Todos"],["UBER","Uber"]].map(([k,l]) => `<button class="pill ${hApp===k?"on":""}" onclick="hApp='${k}';render()">${l}</button>`).join("")}<button class="pill soon" disabled>99 <i>em breve</i></button></div>
     <div class="seg">${[["todas","Todas",nAll],["aceitas","Aceitas",nAcc],["recusadas","Recusadas",nAll-nAcc]].map(([k,l,n]) => `<button class="${hTab===k?"on":""}" onclick="hTab='${k}';render()">${l}<i>${k==="aceitas"&&hTab==="aceitas"?accN:n}</i></button>`).join("")}</div>
     <div class="grid2" style="margin-bottom:12px">${hTab==="aceitas"
       ? `<div class="kpi"><span>viagens</span><b>${accN}</b></div><div class="kpi"><span>ganhos</span><b>${brl(accV,0)}</b></div>`
@@ -270,16 +278,16 @@ function historico(){
           <div class="sub"><b>${hm(c.acc)}</b> · ${c.app==="99"?"99":"Uber"} · viagem sem oferta lida (o card não apareceu)</div>
           ${(ROUTES[c.id]||[]).length > 1 ? `<div class="mini" data-mini="${c.id}"></div>` : ""}
           <div class="sm muted" style="margin-top:10px">${(c.km||0).toFixed(1).replace(".",",")} km rodados${c.end?" · "+hm(c.acc)+"–"+hm(c.end):""}</div>
-          ${(ROUTES[c.id]||[]).length > 1 && (c.st||"").startsWith("concluída") ? `<button class="replay" onclick="openReplay('${c.id}')">▶ Ver replay da corrida</button>` : ""}</div>`; return; }
+          ${(ROUTES[c.id]||[]).length > 1 && (c.st||"").startsWith("concluída") ? `<button class="replay" onclick="openReplay('${c.id}')">${ic("s:play")} Ver replay da corrida</button>` : ""}</div>`; return; }
       const vc = o.v==="BOM"?"good":o.v==="RUIM"?"bad":"mid", vl = o.v==="BOM"?"Boa":o.v==="RUIM"?"Ruim":"Média";
-      const nota = o.nota ? " · ★ " + o.nota.toFixed(2).replace(".",",") : "";
+      const nota = o.nota ? " · " + ic("s:star","sm") + " " + o.nota.toFixed(2).replace(".",",") : "";
       h += `<div class="offer ${o.accepted?"accepted":""}">
-        <div class="top"><div class="val">${brl(o.price)}</div><div class="chips">${o.accepted?(paid(o)?`<span class="chip acc">✓ Aceita</span>`:`<span class="chip bad">✕ Cancelada</span>`):""}<span class="chip ${vc}">● ${vl}</span></div></div>
+        <div class="top"><div class="val">${brl(o.price)}</div><div class="chips">${o.accepted?(paid(o)?`<span class="chip acc">${ic("check")} Aceita</span>`:`<span class="chip bad">${ic("x")} Cancelada</span>`):""}<span class="chip ${vc}"><i class="dot"></i>${vl}</span></div></div>
         <div class="sub"><b>${hm(o.t)}</b> · ${o.app==="99"?"99":"Uber"} ${o.cat||""} · ${(o.km||0).toFixed(1).replace(".",",")} km · ${Math.round(o.min||0)} min${nota}</div>
         <div class="mets"><div><b class="${cls(o.rskm,KMB,KMG)}">${brl(o.rskm)}</b><span>por km</span></div><div><b class="${cls(o.rsh,HB,HG)}">${brl(o.rsh,0)}</b><span>por hora</span></div><div><b>${o.lucro!=null?brl(o.lucro,0):"–"}</b><span>lucro</span></div></div>
-        ${fixAddr(o.orig)||fixAddr(o.dest)?`<div class="addr">${fixAddr(o.orig)?"● "+fixAddr(o.orig):""}${fixAddr(o.orig)&&fixAddr(o.dest)?"<br>":""}${fixAddr(o.dest)?"■ "+fixAddr(o.dest):""}</div>`:""}
+        ${fixAddr(o.orig)||fixAddr(o.dest)?`<div class="addr">${fixAddr(o.orig)?ic("circle","sm")+" "+fixAddr(o.orig):""}${fixAddr(o.orig)&&fixAddr(o.dest)?"<br>":""}${fixAddr(o.dest)?ic("map-pin","sm")+" "+fixAddr(o.dest):""}</div>`:""}
         ${o.trip && (ROUTES[o.trip.id]||[]).length > 1 ? `<div class="mini" data-mini="${o.trip.id}"></div><div class="sm muted" style="margin-top:10px">${o.trip.st[0].toUpperCase()+o.trip.st.slice(1)} · ${(o.trip.km||0).toFixed(1).replace(".",",")} km rodados${o.trip.end?" · "+hm(o.trip.acc)+"–"+hm(o.trip.end):""}</div>
-        ${o.trip.st.startsWith("concluída") ? `<button class="replay" onclick="openReplay('${o.trip.id}')">▶ Ver replay da corrida</button>` : ""}` : ""}</div>`; });
+        ${o.trip.st.startsWith("concluída") ? `<button class="replay" onclick="openReplay('${o.trip.id}')">${ic("s:play")} Ver replay da corrida</button>` : ""}` : ""}</div>`; });
   });
   app.innerHTML = h; initMaps();
 }
@@ -299,8 +307,8 @@ function horarios(){
   const tag = b => b.km >= KMG ? ["Ótima","g"] : b.km <= KMB ? ["Ruim","r"] : ["Média","m"];
   let h = `<div class="seg">${[["semana","Semana"],["mes","Mês"],["tudo","Tudo"]].map(([k,l]) => `<button class="${rPer===k?"on":""}" onclick="rPer='${k}';render()">${l}</button>`).join("")}</div>`;
   if (!valid.length) { app.innerHTML = h + `<div class="empty">Poucas ofertas nesse período. Rode mais um pouco que o ranking aparece.</div>`; return; }
-  h += `<div class="grid2" style="margin-bottom:14px"><div class="kpi"><span>↑ Melhor horário</span><b style="font-size:26px">${lab(best)}</b><b class="g" style="font-size:18px">${brl(best.km)}/km</b><span>${best.n} ofertas</span></div>
-    <div class="kpi"><span>↓ Pior horário</span><b style="font-size:26px">${lab(worst)}</b><b class="r" style="font-size:18px">${brl(worst.km)}/km</b><span>${worst.n} ofertas</span></div></div>
+  h += `<div class="grid2" style="margin-bottom:14px"><div class="kpi"><span>${ic("trending-up")} Melhor horário</span><b style="font-size:26px">${lab(best)}</b><b class="g" style="font-size:18px">${brl(best.km)}/km</b><span>${best.n} ofertas</span></div>
+    <div class="kpi"><span>${ic("trending-down")} Pior horário</span><b style="font-size:26px">${lab(worst)}</b><b class="r" style="font-size:18px">${brl(worst.km)}/km</b><span>${worst.n} ofertas</span></div></div>
     <div class="card"><div class="sm muted">Valor por km médio das ofertas, por faixa de 2 horas</div>
     <div class="hourbar">${bands.map(b => `<i style="height:${b.km?Math.max(4,66*b.km/maxKm):3}px;background:${b.km==null?"var(--s3)":b.km>=KMG?"var(--good)":b.km<=KMB?"var(--bad)":"var(--mid)"};${b.n<2?"opacity:.35":""}"></i>`).join("")}</div>
     <div class="hourlab">${bands.map(b => `<span>${b.i*2}h</span>`).join("")}</div></div>`;
@@ -309,7 +317,7 @@ function horarios(){
   h += `<div class="seg">${[["melhores","Melhores"],["intermediarios","Intermediários"],["piores","Piores"]].map(([k,l]) => `<button class="${rTab===k?"on":""}" onclick="rTab='${k}';render()">${l}</button>`).join("")}</div>`;
   (groups[rTab].length ? groups[rTab] : valid).forEach(b => { const [t,c] = tag(b), pos = valid.indexOf(b)+1;
     h += `<div class="rank"><div class="n" style="background:${c==="g"?"rgba(61,214,140,.15)":c==="r"?"rgba(229,72,77,.15)":"rgba(245,197,24,.15)"};color:var(--${c==="g"?"good":c==="r"?"bad":"mid"})">${pos}</div>
-      <div class="t"><b>${lab(b)}</b><small>${b.n} ofertas${b.h?" · "+brl(b.h,0)+"/h":""}</small></div><div class="v"><b>${brl(b.km)}/km</b><span class="chip ${c==="g"?"good":c==="r"?"bad":"mid"}">● ${t}</span></div></div>`; });
+      <div class="t"><b>${lab(b)}</b><small>${b.n} ofertas${b.h?" · "+brl(b.h,0)+"/h":""}</small></div><div class="v"><b>${brl(b.km)}/km</b><span class="chip ${c==="g"?"good":c==="r"?"bad":"mid"}"><i class="dot"></i>${t}</span></div></div>`; });
   h += `<div class="note">Pelas ofertas que o Radar leu. Faixas com menos de 2 ofertas ficam apagadas no gráfico e fora do ranking.</div>`;
   app.innerHTML = h;
 }
@@ -366,7 +374,7 @@ function jornada(){
   const P = [["Aguardando viagens", S.free, "var(--mid)"], ["Buscando passageiro", S.pick, "var(--purple)"], ["Aguardando passageiro", S.wait, "var(--blue)"], ["Em viagem", S.ride, "var(--good)"]];
   const tot = Math.max(1, P.reduce((x,p)=>x+p[1],0));
   const reg = S.done.reduce((x,c)=>x+(c.price||0),0);
-  let h = `<div class="weeknav"><button onclick="if(jDay<${days.length-1}){jDay++;render()}">‹</button>${WD[d.getDay()]}, ${d.getDate()} ${MO[d.getMonth()]} (turno)<button onclick="if(jDay>0){jDay--;render()}" ${jDay?"":"disabled style=opacity:.3"}>›</button></div>
+  let h = `<div class="weeknav"><button onclick="if(jDay<${days.length-1}){jDay++;render()}" aria-label="Dia anterior">${ic("chevron-left")}</button>${WD[d.getDay()]}, ${d.getDate()} ${MO[d.getMonth()]} (turno)<button onclick="if(jDay>0){jDay--;render()}" ${jDay?"":"disabled style=opacity:.3"} aria-label="Próximo dia">${ic("chevron-right")}</button></div>
     <div class="card"><div style="display:flex;justify-content:space-between;font-size:18px"><b>${WD[d.getDay()]}, ${d.getDate()} ${MO[d.getMonth()]}</b><b>${S.ts.reduce((x,c)=>x+(c.km||0),0).toFixed(0)} km</b></div>
       <div class="daymap" data-day="${k}"></div>
       <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap" class="sm"><span class="muted">${S.t0?hm(S.t0)+"–"+hm(S.t1)+" · ":""}${dur(S.online)}</span><b>${brl(S.s && S.s.valor ? Math.max(S.s.valor, reg) : reg)}</b></div>
@@ -375,7 +383,7 @@ function jornada(){
     <div class="card"><div class="sm muted" style="letter-spacing:.04em">TEMPO ONLINE NO TURNO</div><div style="font-size:38px;font-weight:800;margin:6px 0 4px">${dur(S.online)}</div><div class="sm muted">${S.t0?hm(S.t0)+"–"+hm(S.t1)+" · ":""}${S.src}</div>
     ${S.extra ? `<div class="sm" style="margin-top:12px;padding:12px 14px;border-radius:12px;background:rgba(245,197,24,.1);color:var(--mid)">A Uber contou ${S.extra.uber} viagens e o Radar registrou ${S.extra.radar}. Os tempos abaixo foram completados com a média das registradas.</div>` : ""}
     ${P.map(([l,v,c]) => `<div class="phase"><div class="row1"><span class="dot" style="background:${c}"></span>${l}<em>${Math.round(100*v/tot)}%</em><b>${dur(v)}</b></div><div class="track"><i style="width:${100*v/tot}%;background:${c}"></i></div></div>`).join("")}
-    <div class="sm" style="color:var(--ac);margin-top:10px">↗ ${Math.round(100*S.ride/tot)}% do tempo online foi em viagem · ${S.extra ? S.extra.uber : S.done.length} corridas</div></div>`;
+    <div class="sm" style="color:var(--ac);margin-top:10px">${ic("trending-up")} ${Math.round(100*S.ride/tot)}% do tempo online foi em viagem · ${S.extra ? S.extra.uber : S.done.length} corridas</div></div>`;
   h += `<h2>Por turno</h2>`;
   days.slice(0, 7).forEach((dd, i) => { const T = dayStats(key(dd)), on = Math.max(1, T.online);
     h += `<div class="card" onclick="jDay=${i};render();scrollTo(0,0)"><div style="display:flex;justify-content:space-between;font-size:17px"><b>${WD[dd.getDay()]}, ${dd.getDate()} ${MO[dd.getMonth()]}</b><b>${dur(T.online)}</b></div>
@@ -417,14 +425,14 @@ function custos(){
       <div class="kpi"><span>custo/hora</span><b class="r">${brl(custos/Math.max(1,horasMes))}</b></div><div class="kpi"><span>lucro/hora</span><b class="g">${brl(v.lucro/Math.max(1,horasMes))}</b></div></div>
     <h2>Seu carro e seus gastos</h2><div class="card" style="padding:4px 16px">${CF.map(([k,l,s,t]) => `<div class="field"><label>${l}${s?`<small>${s}</small>`:""}</label>
       <input class="${t==="txt"?"txt":""}" ${t==="n"?'inputmode="decimal"':""} value="${t==="txt"?v[k]:String(v[k]).replace(".",",")}" onchange="pset('c_${k}', this.value.replace(',', '.'));render()"></div>`).join("")}</div>
-    <button class="btn" onclick="pset('bad_km', ${(minKm).toFixed(2)});pset('good_km', ${(minKm*1.35).toFixed(2)});this.textContent='Semáforo ajustado ✓'">Usar ${brl(minKm)}/km como mínimo no semáforo</button>
+    <button class="btn" onclick="pset('bad_km', ${(minKm).toFixed(2)});pset('good_km', ${(minKm*1.35).toFixed(2)});this.innerHTML='Semáforo ajustado '+ic('check')">Usar ${brl(minKm)}/km como mínimo no semáforo</button>
     <div class="note">Mínimo por km = (custos do mês + lucro desejado) ÷ km do mês. O botão ajusta a faixa do R$/Km do card: abaixo do mínimo fica vermelho, 35% acima fica verde.</div>`;
   app.innerHTML = h;
 }
 
 // ---------- GASTOS DO CARRO (notificações do banco) ----------
-const GCAT = { combustivel:["Combustível","⛽","#F5C518"], pedagio:["Pedágio","🛣","#4C9AFF"], estacionamento:["Estacionamento","🅿️","#9775FA"], lavagem:["Lavagem","🧽","#5DD3F3"],
-  manutencao:["Manutenção","🔧","#FF8A4C"], seguro:["Seguro","🛡","#3DD68C"], documentos:["IPVA e documentos","📄","#C9D1D9"], aluguel:["Aluguel","🔑","#FF6369"] };
+const GCAT = { combustivel:["Combustível","droplet","#F5C518"], pedagio:["Pedágio","path","#4C9AFF"], estacionamento:["Estacionamento","parking","#9775FA"], lavagem:["Lavagem","droplets","#5DD3F3"],
+  manutencao:["Manutenção","wrench","#FF8A4C"], seguro:["Seguro","shield","#3DD68C"], documentos:["IPVA e documentos","file-text","#C9D1D9"], aluguel:["Aluguel","key","#FF6369"] };
 const VARIAVEIS = ["combustivel","pedagio","estacionamento","lavagem","manutencao"];
 let G = [], gMonth = 0, gNovo = false;
 function loadG(){ G = parseCsv(raw("gastos.csv")).map(r => ({ id:r.id, t:when(r.data_hora), v:num2(r.valor)||0, cat:r.categoria, local:r.estabelecimento, banco:r.banco, st:r.status, origem:r.origem }))
@@ -438,7 +446,7 @@ function kmEntre(a, b){ let km = trips.filter(c => c.acc >= a && c.acc < b).redu
 function gAcao(id, st, cat){ try { Radar.gasto(id, st, cat || ""); } catch(e){} loadG(); render(); }
 function gSalvar(){ const v = num2(document.getElementById("gv").value), c = document.getElementById("gc").value, l = document.getElementById("gl").value;
   if (!v) { document.getElementById("gv").focus(); return; } try { Radar.gastoNovo(String(v), c, l); } catch(e){} gNovo = false; loadG(); render(); }
-function usarReais(kml, maint){ if (kml) pset("c_kml", kml.toFixed(1)); pset("c_maint", maint.toFixed(2)); document.getElementById("usar").textContent = "Custos do cartão atualizados ✓"; }
+function usarReais(kml, maint){ if (kml) pset("c_kml", kml.toFixed(1)); pset("c_maint", maint.toFixed(2)); document.getElementById("usar").innerHTML = "Custos do cartão atualizados " + ic("check"); }
 function gastos(){
   let acesso = false; try { acesso = !!(window.Radar && Radar.notifAcesso && Radar.notifAcesso()); } catch(e){}
   const now = new Date(), m0 = new Date(now.getFullYear(), now.getMonth() + gMonth, 1), m1 = new Date(m0.getFullYear(), m0.getMonth() + 1, 1);
@@ -451,19 +459,19 @@ function gastos(){
   const temBase = km30 >= 200 && fuel30 > 0, fuelKm = temBase ? fuel30 / km30 : null, outrosKm = km30 >= 200 ? var30 / km30 : null;
   const cfgFuel = (num2(pget("c_fuel", 6)) || 6) / Math.max(1, num2(pget("c_kml", 10)) || 10), cfgMaint = num2(pget("c_maint", 0)) || 0;
   let h = "";
-  if (!acesso) h += `<div class="perm"><b>🔔 Ligue a leitura das notificações</b><p>O Radar lê as notificações de compra do seu banco e separa só o que é do carro: posto, pedágio, estacionamento, lava-rápido, oficina. O resto é ignorado e nada sai do seu celular.</p>
+  if (!acesso) h += `<div class="perm"><b>${ic("bell")} Ligue a leitura das notificações</b><p>O Radar lê as notificações de compra do seu banco e separa só o que é do carro: posto, pedágio, estacionamento, lava-rápido, oficina. O resto é ignorado e nada sai do seu celular.</p>
     <button class="btn" onclick="try{Radar.abrirNotifAcesso()}catch(e){}">Ligar leitura das notificações</button></div>`;
   if (pend.length) { h += `<h2>Para confirmar <span class="chip mid" style="margin-left:6px">${pend.length}</span></h2>`;
-    pend.forEach(g => { const c = GCAT[g.cat] || ["Outro","•"];
-      h += `<div class="gx pend"><div class="top"><div class="v">${brl(g.v)}</div><select onchange="gAcao('${g.id}','pendente',this.value)">${Object.entries(GCAT).map(([k,x]) => `<option value="${k}"${k===g.cat?" selected":""}>${x[1]} ${x[0]}</option>`).join("")}</select></div>
+    pend.forEach(g => { const c = GCAT[g.cat] || ["Outro","dots"];
+      h += `<div class="gx pend"><div class="top"><div class="v">${brl(g.v)}</div><select onchange="gAcao('${g.id}','pendente',this.value)">${Object.entries(GCAT).map(([k,x]) => `<option value="${k}"${k===g.cat?" selected":""}>${x[0]}</option>`).join("")}</select></div>
         <div class="sub">${g.local||c[0]} · ${g.banco||""} · ${g.t.getDate()} ${MO[g.t.getMonth()]} ${hm(g.t)}</div>
-        <div class="acts"><button class="yes" onclick="gAcao('${g.id}','confirmado')">✓ É do carro</button><button class="no" onclick="gAcao('${g.id}','descartado')">Não é</button></div></div>`; }); }
-  h += `<div class="weeknav"><button onclick="gMonth--;render()">‹</button><span>${MO[m0.getMonth()]} ${m0.getFullYear()}</span><button onclick="if(gMonth<0){gMonth++;render()}" style="${gMonth<0?"":"opacity:.3"}">›</button></div>`;
+        <div class="acts"><button class="yes" onclick="gAcao('${g.id}','confirmado')">${ic("check")} É do carro</button><button class="no" onclick="gAcao('${g.id}','descartado')">Não é</button></div></div>`; }); }
+  h += `<div class="weeknav"><button onclick="gMonth--;render()" aria-label="Mês anterior">${ic("chevron-left")}</button><span>${MO[m0.getMonth()]} ${m0.getFullYear()}</span><button onclick="if(gMonth<0){gMonth++;render()}" style="${gMonth<0?"":"opacity:.3"}" aria-label="Próximo mês">${ic("chevron-right")}</button></div>`;
   const kmMes = kmEntre(m0, m1);
   h += `<div class="hero"><div class="sm muted">Gastos do carro no mês</div><div class="big">${brl(total)}</div>
     <div class="grid3" style="margin-top:14px"><div class="kpi" style="padding:12px 10px"><span>lançamentos</span><b style="font-size:18px">${doMes.length}</b></div><div class="kpi" style="padding:12px 10px"><span>km no mês</span><b style="font-size:18px">${Math.round(kmMes)}</b></div><div class="kpi" style="padding:12px 10px"><span>por km</span><b style="font-size:18px">${kmMes >= 50 ? brl(total/kmMes) : "–"}</b></div></div></div>`;
   if (porCat.length) { const mx = porCat[0][1];
-    h += `<div class="card">${porCat.map(([k,v]) => `<div style="margin:6px 0 14px"><div style="display:flex;justify-content:space-between;font-size:16px"><span>${GCAT[k][1]} ${GCAT[k][0]}</span><b>${brl(v)}</b></div><div class="track"><i style="width:${Math.max(3,100*v/mx)}%;background:${GCAT[k][2]}"></i></div></div>`).join("")}</div>`; }
+    h += `<div class="card">${porCat.map(([k,v]) => `<div style="margin:6px 0 14px"><div style="display:flex;justify-content:space-between;font-size:16px"><span>${ic(GCAT[k][1])} ${GCAT[k][0]}</span><b>${brl(v)}</b></div><div class="track"><i style="width:${Math.max(3,100*v/mx)}%;background:${GCAT[k][2]}"></i></div></div>`).join("")}</div>`; }
   // real x configurado
   h += `<h2>Seu custo real por km</h2><div class="card">`;
   if (km30 < 200) h += `<div class="sm muted" style="line-height:1.5">Precisa de pelo menos 200 km rodados com o Radar ligado nos últimos 30 dias para calcular (agora: ${Math.round(km30)} km).</div>`;
@@ -480,8 +488,8 @@ function gastos(){
       <div class="field"><label>Onde</label><input id="gl" class="txt" placeholder="opcional"></div>
       <div class="acts"><button class="yes" onclick="gSalvar()">Salvar</button><button class="no" onclick="gNovo=false;render()">Cancelar</button></div></div>`
     : `<button class="btn alt" onclick="gNovo=true;render();setTimeout(()=>document.getElementById('gv').focus(),50)">+ Lançar gasto à mão</button>`;
-  if (doMes.length) h += `<h2>Lançamentos do mês</h2><div class="card" style="padding:4px 14px">${doMes.map(g => { const c = GCAT[g.cat] || ["Outro","•"];
-    return `<div class="grow"><div class="ic">${c[1]}</div><div class="t"><b>${g.local||c[0]}</b><small>${g.t.getDate()} ${MO[g.t.getMonth()]} · ${c[0]}${g.banco?" · "+g.banco:""}</small></div><div class="val">${brl(g.v)}</div><button class="x" onclick="gAcao('${g.id}','apagar')" aria-label="Apagar">✕</button></div>`; }).join("")}</div>`;
+  if (doMes.length) h += `<h2>Lançamentos do mês</h2><div class="card" style="padding:4px 14px">${doMes.map(g => { const c = GCAT[g.cat] || ["Outro","dots"];
+    return `<div class="grow"><div class="ic">${ic(c[1])}</div><div class="t"><b>${g.local||c[0]}</b><small>${g.t.getDate()} ${MO[g.t.getMonth()]} · ${c[0]}${g.banco?" · "+g.banco:""}</small></div><div class="val">${brl(g.v)}</div><button class="x" onclick="gAcao('${g.id}','apagar')" aria-label="Apagar">${ic("x")}</button></div>`; }).join("")}</div>`;
   else if (!pend.length) h += `<div class="empty">Nenhum gasto neste mês ainda.<br>Quando você pagar no posto, ele aparece aqui.</div>`;
   app.innerHTML = h;
 }
@@ -605,7 +613,7 @@ function conferir(){
       <div class="grid3" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:12px;--kb:17px">
         <div class="kpi" style="text-align:center"><b>${brl(S.valor)}</b><span>Uber</span></div>
         <div class="kpi" style="text-align:center"><b>${brl(radarV)}</b><span>Radar</span></div>
-        <div class="kpi" style="text-align:center"><b class="${pend.length?"m":"g"}">${pend.length ? `${faltaN || pend.length} de ${S.concl || "?"}` : "✓"}</b><span>${pend.length ? "a corrigir" : "tudo certo"}</span></div></div></div>`;
+        <div class="kpi" style="text-align:center"><b class="${pend.length?"m":"g"}">${pend.length ? `${faltaN || pend.length} de ${S.concl || "?"}` : ic("check-circle")}</b><span>${pend.length ? "a corrigir" : "tudo certo"}</span></div></div></div>`;
   if (!R.temDiario) h += `<div class="card"><b>Sem anotações da Uber neste turno</b><div class="sm muted" style="margin-top:6px">O Radar começou a anotar as telas da Uber (Encontro com, Destino de, Como foi a viagem) a partir desta versão. Nos próximos turnos a conferência acha sozinha as corridas que faltarem.</div></div>`;
   const okItems = R.items.filter(i => i.kind === "ok"), canc = R.items.filter(i => i.kind === "cancelada");
   if (pend.length) {
@@ -616,7 +624,7 @@ function conferir(){
       h += `<div class="cf ${on?"":"off"}"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
           <label style="display:flex;align-items:center;gap:10px;font-size:17px"><input type="checkbox" ${on?"checked":""} onchange="cOff[${k}]=!this.checked;render()">${c.nome}${c.cat?" · "+c.cat:""}</label>
           <span class="cfv">R$ <input inputmode="decimal" value="${val!=null?nbr(val):""}" placeholder="0,00" onchange="cVal[${k}]=num2(this.value.replace(/\\./g,''));render()"></span></div>
-        <div class="sm muted" style="margin-top:6px">${hm(c.acc)} → ${c.fim?hm(c.fim):"?"}${c.origem&&c.destino?` · ${shortAddr(c.origem)} → ${shortAddr(c.destino)}`:c.destino?` · até ${shortAddr(c.destino)}`:c.origem?` · de ${shortAddr(c.origem)}`:""}${km>0.3?` · ${km.toFixed(0)} km`:""}</div>
+        <div class="sm muted" style="margin-top:6px">${hm(c.acc)} ${ic("arrow-right","sm")} ${c.fim?hm(c.fim):"?"}${c.origem&&c.destino?` · ${shortAddr(c.origem)} ${ic("arrow-right","sm")} ${shortAddr(c.destino)}`:c.destino?` · até ${shortAddr(c.destino)}`:c.origem?` · de ${shortAddr(c.origem)}`:""}${km>0.3?` · ${km.toFixed(0)} km`:""}</div>
         <div class="sm" style="margin-top:6px"><span class="tag">${tag}</span> <span class="muted">${val==null?"digite o valor (veja no app da Uber)":cVal[k]!=null?"valor digitado por você":i.src||i.msg||""}${i.kind==="falta"&&!FREE.some(p => p[2] >= c.acc && p[2] <= c.fim)?" · sem GPS do trajeto":""}</span></div></div>`; });
     if (R.semV > 1 && R.resto > 0.5) h += `<div class="sm" style="color:var(--mid);margin-top:10px">Faltam ${brl(R.resto)} do total da Uber para dividir entre as corridas sem valor.</div>`;
     h += `</div>`;
@@ -656,13 +664,13 @@ function cartao(){
   let h = `<h2 style="margin-top:6px">Prévia</h2><div class="preview">
     <div class="tl">${cTop.map((k,i) => i===0 && k==="valor" ? `<b style="font-size:22px">${SAMPLE[k]}</b>` : `<span>${SAMPLE[k]}</span>`).join(" · ")}</div>
     <div class="ml">${cBot.map(k => `<div><span>${BOTF[k]}</span><b><i style="background:${colr(SAMPLE[k][1])}"></i>${SAMPLE[k][0]}</b></div>`).join("")}</div></div>`;
-  const slots = (arr, max, F, name) => `<div class="slots">${Array.from({length:max}, (_, i) => arr[i] ? `<div class="slot" data-row="${name}" data-i="${i}" data-key="${arr[i]}"><span class="no">${i+1}</span><span class="hd">⠿</span><span class="lb">${F[arr[i]]}</span>
-      <div class="mv"><button aria-label="Tirar" onclick="${name}.splice(${i},1);save()">✕</button></div></div>` : `<div class="slot empty" data-row="${name}" data-i="${i}">+</div>`).join("")}</div>`;
+  const slots = (arr, max, F, name) => `<div class="slots">${Array.from({length:max}, (_, i) => arr[i] ? `<div class="slot" data-row="${name}" data-i="${i}" data-key="${arr[i]}"><span class="no">${i+1}</span><span class="hd">${ic("grip-vertical")}</span><span class="lb">${F[arr[i]]}</span>
+      <div class="mv"><button aria-label="Tirar" onclick="${name}.splice(${i},1);save()">${ic("x")}</button></div></div>` : `<div class="slot empty" data-row="${name}" data-i="${i}">+</div>`).join("")}</div>`;
   h += `<h2 style="display:flex;justify-content:space-between">Linha de cima <span>${cTop.length}/3</span></h2>${slots(cTop, 3, TOPF, "cTop").replace('class="slots"','class="slots" style="grid-template-columns:1fr"')}
     <h2 style="display:flex;justify-content:space-between">Linha de baixo (com cor) <span>${cBot.length}/4</span></h2>${slots(cBot, 4, BOTF, "cBot")}
     <h2>Disponíveis</h2><div class="tray">
-    ${Object.keys(TOPF).filter(k => !cTop.includes(k)).map(k => `<button data-tray="cTop" data-key="${k}">⠿ ${TOPF[k]} ↑</button>`).join("")}
-    ${Object.keys(BOTF).filter(k => !cBot.includes(k)).map(k => `<button data-tray="cBot" data-key="${k}">⠿ ${BOTF[k]} ↓</button>`).join("")}</div>
+    ${Object.keys(TOPF).filter(k => !cTop.includes(k)).map(k => `<button data-tray="cTop" data-key="${k}">${ic("grip-vertical")} ${TOPF[k]} ${ic("arrow-up","sm")}</button>`).join("")}
+    ${Object.keys(BOTF).filter(k => !cBot.includes(k)).map(k => `<button data-tray="cBot" data-key="${k}">${ic("grip-vertical")} ${BOTF[k]} ${ic("arrow-down","sm")}</button>`).join("")}</div>
     <div class="note">Segure e arraste um campo para mudar de lugar. Toque num disponível para colocar no fim da linha, ou arraste para cima de um campo para trocar.</div>
     <button class="btn alt" onclick="cTop=['valor','tempo','dist'];cBot=['km','hora','nota','lucro'];save()">Restaurar padrão</button>`;
   app.innerHTML = h;

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Mynaui icons (mynaui.com/icons, MIT): mobile -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp" android:height="24dp" android:viewportWidth="24" android:viewportHeight="24">
+    <path android:fillColor="#00000000" android:strokeColor="#FFFFFFFF" android:strokeWidth="1.5" android:strokeLineCap="round" android:strokeLineJoin="round" android:pathData="M 16.286 3 H 7.714 C 6.768 3 6 3.806 6 4.8 v 14.4 c 0 .994 .768 1.8 1.714 1.8 h 8.572 c .947 0 1.714 -.806 1.714 -1.8 V 4.8 c 0 -.994 -.767 -1.8 -1.714 -1.8 M 10.5 6 h 3"/>
+</vector>

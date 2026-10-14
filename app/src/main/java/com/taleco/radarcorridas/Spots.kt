@@ -155,8 +155,8 @@ object GoingTo {
         since = System.currentTimeMillis()
         val e = s.event
         val txt = if (e != null)
-            "Indo para: ${s.name} · ${e.place.ifBlank { e.address }} · saída ~${Spot.hhmm(e.endMin)}   ✕"
-        else "Indo para: ★ ${s.name} · bom até ${Spot.hhmm(s.endMin)}   ✕"
+            "Indo para: ${s.name} · ${e.place.ifBlank { e.address }} · saída ~${Spot.hhmm(e.endMin)}   {x}"
+        else "Indo para: {star} ${s.name} · bom até ${Spot.hhmm(s.endMin)}   {x}"
         RadarService.instance?.showGoing(txt, if (e != null) 0xFF9C1B4A.toInt() else 0xFF5232B8.toInt())
     }
 
@@ -193,9 +193,9 @@ object SpotMatch {
 
     fun note(s: Spot, d: Double): String =
         if (s.event != null)
-            String.format(PT_BR, "★ Destino a %.1f km de %s · saída ~%s", d / 1000.0, s.name, Spot.hhmm(s.event.endMin))
+            String.format(PT_BR, "{star} Destino a %.1f km de %s · saída ~%s", d / 1000.0, s.name, Spot.hhmm(s.event.endMin))
         else
-            String.format(PT_BR, "★ Destino a %.1f km de %s · bom até %s", d / 1000.0, s.name, Spot.hhmm(s.endMin))
+            String.format(PT_BR, "{star} Destino a %.1f km de %s · bom até %s", d / 1000.0, s.name, Spot.hhmm(s.endMin))
 }
 
 /**
@@ -284,7 +284,7 @@ object SpotWatch {
                     " · a $dist ${if (unit == "metros") "m" else unit}",
                 if (s.event != null) PINK else PURPLE,
                 null, (1.0 - d / s.radiusM).coerceIn(0.0, 1.0).toFloat(),
-                sign = "★", title = s.name, action = "Waze"
+                sign = "{star}", title = s.name, action = "Waze"
             )
         )
         showing = true

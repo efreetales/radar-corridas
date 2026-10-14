@@ -88,8 +88,8 @@ class OverlayManager(private val service: AccessibilityService) {
         speedBase?.setColor(b.color)
         speedFillShape?.setColor(darker(b.color))
         speedFill?.level = (b.progress.coerceIn(0f, 1f) * 10_000).toInt()
-        speedSign?.text = b.sign ?: b.limit?.toString() ?: "?"
         speedSign?.textSize = if (b.sign != null) 26f else 20f
+        speedSign?.let { it.text = Icones.texto(service, b.sign ?: b.limit?.toString() ?: "?", it.textSize) }
         (speedSign?.background as? GradientDrawable)?.setStroke(
             service.dp(5), if (b.sign != null) Color.parseColor("#E8590C") else Color.parseColor("#D62828")
         )
@@ -98,13 +98,13 @@ class OverlayManager(private val service: AccessibilityService) {
         speedValue?.textSize = if (b.action != null) 18f else 24f
         speedValue?.maxLines = if (b.action != null) 2 else 1
         speedValue?.setTextColor(fg)
-        speedLine?.text = b.line
+        speedLine?.let { it.text = Icones.texto(service, b.line, it.textSize) }
         speedLine?.setTextColor(fg)
         speedDist?.setTextColor(fg)
         speedDistUnit?.setTextColor(fg)
         speedAction?.let { a ->
             a.visibility = if (b.action != null) View.VISIBLE else View.GONE
-            a.text = "➜\n${b.action ?: ""}"
+            a.text = Icones.texto(service, "{navigation}\n${b.action ?: ""}", a.textSize)
             a.setTextColor(b.color)
         }
         if (b.distText != null) {
@@ -292,7 +292,7 @@ class OverlayManager(private val service: AccessibilityService) {
             width,
             WindowManager.LayoutParams.WRAP_CONTENT,
             WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY,
-            // Só o próprio aviso recebe toque (para o ✕); o resto da tela continua normal.
+            // Só o próprio aviso recebe toque (para o botão de fechar); o resto da tela continua normal.
             WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
                 WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL or
                 WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN,
@@ -328,8 +328,8 @@ class OverlayManager(private val service: AccessibilityService) {
     fun showGoing(textLine: String, color: Int) {
         hideGoing()
         val v = TextView(service).apply {
-            text = textLine
             textSize = 13f
+            text = Icones.texto(service, textLine, textSize)
             typeface = Typeface.DEFAULT_BOLD
             setTextColor(Color.WHITE)
             maxLines = 2
@@ -389,8 +389,8 @@ class OverlayManager(private val service: AccessibilityService) {
         }
         view.addView(r, android.widget.FrameLayout.LayoutParams(service.dp(52), service.dp(52), Gravity.CENTER))
         val lock = TextView(service).apply {
-            text = "🔒"
             textSize = 11f
+            text = Icones.texto(service, "{lock}", textSize, Color.parseColor("#111111"))
             gravity = Gravity.CENTER
             background = GradientDrawable().apply { shape = GradientDrawable.OVAL; setColor(Color.WHITE) }
             visibility = if (prefs.bubbleLocked) View.VISIBLE else View.GONE
@@ -489,7 +489,7 @@ class OverlayManager(private val service: AccessibilityService) {
                 setOnClickListener { onTap() }
             }
             col.addView(TextView(service).apply {
-                text = icon; textSize = 22f; gravity = Gravity.CENTER
+                textSize = 22f; text = Icones.texto(service, icon, textSize, Color.WHITE); gravity = Gravity.CENTER
                 background = GradientDrawable().apply { shape = GradientDrawable.OVAL; setColor(Color.parseColor("#2B323B")) }
             }, LinearLayout.LayoutParams(btn, btn))
             col.addView(TextView(service).apply {
@@ -498,14 +498,14 @@ class OverlayManager(private val service: AccessibilityService) {
             row.addView(col)
         }
         val locked = prefs.bubbleLocked
-        item(if (locked) "🔓" else "🔒", if (locked) "Destravar" else "Travar") {
+        item(if (locked) "{lock_open}" else "{lock}", if (locked) "Destravar" else "Travar") {
             prefs.bubbleLocked = !locked
             r.background = bubbleBg(prefs.bubbleLocked)
             lock.visibility = if (prefs.bubbleLocked) View.VISIBLE else View.GONE
             hideBubbleMenu()
         }
-        item("⚠️", "Valeta") { hideBubbleMenu(); HazardWatch.markManual(service) }
-        item("📱", "Abrir Radar") { hideBubbleMenu(); openApp() }
+        item("{alerta}", "Valeta") { hideBubbleMenu(); HazardWatch.markManual(service) }
+        item("{mobile}", "Abrir Radar") { hideBubbleMenu(); openApp() }
         val lp = WindowManager.LayoutParams(
             WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT,
             WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY,

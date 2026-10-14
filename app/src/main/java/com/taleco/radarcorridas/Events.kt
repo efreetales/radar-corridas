@@ -33,12 +33,12 @@ class CityEvent(
     val spreadMin: Int? = null     // incerteza da saída (min). Show em balada: saída espalhada por mais tempo
 ) {
     val icon: String get() = when (type.lowercase(Locale.ROOT)) {
-        "teatro", "musical", "danca", "dança", "ópera", "opera" -> "🎭"
-        "show", "musica", "música", "festa", "balada" -> "🎵"
-        "futebol", "jogo", "esporte" -> "⚽"
-        "igreja", "culto", "missa" -> "⛪"
-        "formatura", "faculdade", "universidade", "palestra", "feira", "congresso" -> "🎓"
-        else -> "🎟"
+        "teatro", "musical", "danca", "dança", "ópera", "opera" -> "sparkles"
+        "show", "musica", "música", "festa", "balada" -> "music"
+        "futebol", "jogo", "esporte" -> "users-group"
+        "igreja", "culto", "missa" -> "building"
+        "formatura", "faculdade", "universidade", "palestra", "feira", "congresso" -> "graduation-cap"
+        else -> "ticket"
     }
 
     /** Vira um "ponto bom" temporário: vale de 20 min antes até 40 min depois do término. */

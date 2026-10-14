@@ -143,9 +143,9 @@ object CardView {
         })
         eval.spotNote?.let { note ->
             root.addView(TextView(ctx).apply {
-                text = note
-                setTextColor(Color.parseColor("#C4B5FD"))
                 textSize = 17f
+                text = Icones.texto(ctx, note, textSize)
+                setTextColor(Color.parseColor("#C4B5FD"))
                 typeface = Typeface.DEFAULT_BOLD
                 setPadding(0, ctx.dp(8), 0, 0)
             })
