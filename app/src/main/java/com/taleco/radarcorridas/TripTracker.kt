@@ -280,7 +280,9 @@ object TripTracker {
             }
             Phase.NO_EMBARQUE -> {
                 val o = t.origin
-                if (o != null && Geo.meters(here, o) > LEAVE_PICKUP_M) {
+                // Uber: a viagem só começa quando a tela mostra "Destino de X" (você tocou em Iniciar).
+                // O GPS sozinho errava: o endereço do embarque às vezes cai a mais de 250 m do ponto real.
+                if (!t.offer.isUber && o != null && Geo.meters(here, o) > LEAVE_PICKUP_M) {
                     t.leftPickupAt = loc.time
                     phase = Phase.EM_VIAGEM
                     t.kmTrip += stepKm

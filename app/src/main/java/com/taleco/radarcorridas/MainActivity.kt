@@ -679,11 +679,58 @@ class MainActivity : AppCompatActivity() {
             setOnCheckedChangeListener { _, checked -> prefs.talkToPassenger = checked }
         }, matchWrap(top = 14))
         card.addView(text(
-            "Quando o passageiro embarca: \"Oi, Ana, tudo bem? Vamos lá, nosso destino é Avenida Paulista. Se precisar de alguma coisa, é só me falar. Boa viagem!\" " +
-                "Quando o carro para no destino: \"Pronto, Ana, chegamos! Obrigado pela companhia, espero que tenha curtido a viagem. Se puder, deixa sua avaliação no aplicativo da Uber. Até a próxima!\" " +
+            "O Radar fala com o passageiro quando ele embarca e quando o carro para no destino. " +
                 "Sai pelo som do carro quando o celular está conectado por Bluetooth ou Android Auto, abaixando a música enquanto fala.",
             12f, Colors.MUTED
         ))
+        // Textos da voz (editáveis)
+        fun editor(titulo: String, atual: String, padrao: String, salvar: (String) -> Unit, ouvir: () -> Unit) {
+            card.addView(text(titulo, 15f, Colors.TEXT, bold = true).apply { setPadding(0, dp(14), 0, 0) })
+            val ed = EditText(this).apply {
+                setText(atual.ifBlank { padrao })
+                setTextColor(Colors.TEXT)
+                textSize = 16f
+                minLines = 3
+                gravity = Gravity.TOP or Gravity.START
+                inputType = android.text.InputType.TYPE_CLASS_TEXT or android.text.InputType.TYPE_TEXT_FLAG_MULTI_LINE or android.text.InputType.TYPE_TEXT_FLAG_CAP_SENTENCES
+                background = rounded(Colors.SURFACE_2, 14f)
+                setPadding(dp(14), dp(12), dp(14), dp(12))
+                addTextChangedListener(object : android.text.TextWatcher {
+                    override fun beforeTextChanged(a: CharSequence?, b: Int, c: Int, d: Int) {}
+                    override fun onTextChanged(a: CharSequence?, b: Int, c: Int, d: Int) {}
+                    override fun afterTextChanged(e: android.text.Editable?) { val t = e?.toString()?.trim() ?: ""; salvar(if (t == padrao) "" else t) }
+                })
+            }
+            card.addView(ed, matchWrap(top = 6))
+            val row = LinearLayout(this).apply { orientation = LinearLayout.HORIZONTAL }
+            row.addView(MaterialButton(this).apply { isAllCaps = false; letterSpacing = 0f; text = "🔊 Ouvir"; setOnClickListener { ed.clearFocus(); ouvir() } },
+                LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f).apply { rightMargin = dp(6) })
+            row.addView(MaterialButton(this, null, com.google.android.material.R.attr.materialButtonOutlinedStyle).apply {
+                isAllCaps = false; letterSpacing = 0f; text = "Voltar ao original"; setOnClickListener { ed.setText(padrao) } },
+                LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f).apply { leftMargin = dp(6) })
+            card.addView(row, matchWrap(top = 6))
+        }
+        card.addView(text(
+            "Edite como a voz fala: tire ou ponha vírgulas para mudar as pausas, use ! para mais animação. " +
+                "{nome} vira o primeiro nome do passageiro e {rua} a rua do destino.",
+            12f, Colors.MUTED
+        ).apply { setPadding(0, dp(12), 0, 0) })
+        editor("Quando o passageiro embarca", prefs.voiceStart, Voz.PADRAO_INICIO, { prefs.voiceStart = it }) {
+            Voz.inicio(this, "Ana", "Avenida Paulista, 1000, Bela Vista")
+        }
+        editor("Quando chega ao destino", prefs.voiceEnd, Voz.PADRAO_CHEGADA, { prefs.voiceEnd = it }) {
+            Voz.chegada(this, "Ana")
+        }
+        val volLabel = text("", 15f, Colors.TEXT).apply { setPadding(0, dp(12), 0, 0) }
+        fun volText(v: Int) { volLabel.text = if (v == 0) "Volume da voz: o mesmo do celular" else "Volume da voz: sobe a mídia para $v% enquanto fala" }
+        volText(prefs.voiceVolume)
+        card.addView(volLabel)
+        card.addView(Slider(this).apply {
+            valueFrom = 0f; valueTo = 100f; stepSize = 5f
+            value = prefs.voiceVolume.toFloat().coerceIn(0f, 100f)
+            addOnChangeListener { _, v, _ -> prefs.voiceVolume = v.toInt(); volText(v.toInt()) }
+        }, matchWrap(top = 2))
+        card.addView(text("Depois da fala o volume volta ao que estava. A música abaixa enquanto a voz fala.", 12f, Colors.MUTED))
         card.addView(MaterialButton(this).apply {
             isAllCaps = false
             letterSpacing = 0f
@@ -735,7 +782,7 @@ class MainActivity : AppCompatActivity() {
                 .setTitle("Voz de estúdio")
                 .setSingleChoiceItems(vs.map { "${it.second} · ${it.third}" }.toTypedArray(), sel) { _, w ->
                     sel = w; prefs.studioVoiceId = vs[w].first
-                    if (prefs.elevenKey.isNotBlank()) VozEstudio.falar(this, Voz.textoInicio("Ana", "Avenida Paulista")) {
+                    if (prefs.elevenKey.isNotBlank()) VozEstudio.falar(this, Voz.textoInicio(this, "Ana", "Avenida Paulista")) {
                         Toast.makeText(this, "Não consegui gerar a voz: confira a chave e a internet", Toast.LENGTH_LONG).show()
                     }
                 }

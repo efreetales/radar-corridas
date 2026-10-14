@@ -190,6 +190,19 @@ class Prefs(context: Context) {
         get() = sp.getString("voz_nome", "") ?: ""
         set(v) = sp.edit().putString("voz_nome", v).apply()
 
+    /** Textos que a voz fala (vazio = o texto padrão). {nome} e {rua} são trocados na hora. */
+    var voiceStart: String
+        get() = sp.getString("voz_texto_inicio", "") ?: ""
+        set(v) = sp.edit().putString("voz_texto_inicio", v).apply()
+    var voiceEnd: String
+        get() = sp.getString("voz_texto_chegada", "") ?: ""
+        set(v) = sp.edit().putString("voz_texto_chegada", v).apply()
+
+    /** Volume da fala para o passageiro: sobe a mídia até X% enquanto fala (0 = não mexe). */
+    var voiceVolume: Int
+        get() = sp.getInt("voz_volume", 85)
+        set(v) = sp.edit().putInt("voz_volume", v).apply()
+
     /** Voz de estúdio (ElevenLabs) para falar com o passageiro. */
     var studioVoice: Boolean
         get() = sp.getBoolean("voz_estudio", false)
