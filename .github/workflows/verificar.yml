@@ -26,7 +26,7 @@ jobs:
       - name: Compilar
         run: |
           set -o pipefail
-          gradle :app:assembleDebug --console=plain 2>&1 | tee build.log
+          gradle :app:assembleDebug :app:testDebugUnitTest --tests "*IconesRenderTest*" -i --console=plain 2>&1 | tee build.log; grep RENDER build.log || true
 
       - name: Mostrar erros da compilação
         if: failure()
