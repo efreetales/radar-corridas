@@ -238,7 +238,7 @@ class OverlayManager(private val service: AccessibilityService) {
         // Segurar o aviso de radar por 1 s: "radar errado" (some e não aparece mais)
         var longDone = false
         val longPress = Runnable {
-            if (SpeedWatch.reportWrong()) longDone = true
+            if (SpeedWatch.reportWrong() || HazardWatch.reportWrong()) longDone = true
         }
         root.setOnTouchListener { v, ev ->
             when (ev.actionMasked) {

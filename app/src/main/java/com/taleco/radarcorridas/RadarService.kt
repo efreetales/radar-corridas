@@ -281,7 +281,7 @@ class RadarService : AccessibilityService() {
         var offer: Offer? = null
         for ((_, texts) in screens) UberRoad.update(texts)
         // Corrida em andamento pela tela da Uber (só a Uber; outros apps não mexem nisso)
-        screens.filter { it.first == "com.ubercab.driver" }.forEach {
+        screens.filter { it.first == TARGETS["com.ubercab.driver"] }.forEach {
             RideScreen.update(it.second)
             TripTracker.onUberTexts(this, prefs, it.second)
             UberSession.read(this, it.second)
@@ -303,7 +303,8 @@ class RadarService : AccessibilityService() {
         // Nesse caso, lemos a oferta pela imagem da tela (por no máximo 25 s seguidos,
         // para não gastar bateria quando a tela escondida não é uma oferta).
         val hidden = screens.firstOrNull { it.second.size < MIN_VISIBLE_TEXTS }
-        if (hidden != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+        // Só lê a imagem da tela se a Uber/99 estiver na frente (nunca fotografa outro app aberto por cima)
+        if (hidden != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && !otherAppOnTop()) {
             // Mudou a tela escondida (ex.: chegou uma oferta por cima)? Volta a ler rápido.
             val sig = screens.size.toString() + "|" + screens.joinToString("#") { it.first + ":" + it.second.size + ":" + it.second.take(3).joinToString(",") }
             if (hiddenSince == 0L || sig != hiddenSig) { hiddenSince = now; hiddenSig = sig }
@@ -393,6 +394,13 @@ class RadarService : AccessibilityService() {
     }
 
     /** Lê os textos de todas as janelas da Uber/99 que estão na tela. */
+    /** Outro app (WhatsApp, Claude, navegador…) está aberto na frente da Uber/99? */
+    private fun otherAppOnTop(): Boolean = try {
+        val active = windows?.firstOrNull { it.isActive && it.type == android.view.accessibility.AccessibilityWindowInfo.TYPE_APPLICATION }
+        val pkg = active?.root?.packageName?.toString()
+        pkg != null && pkg !in TARGETS && pkg != packageName
+    } catch (_: Exception) { false }
+
     private fun collectTargetTexts(): List<Pair<String, List<String>>> {
         val roots = mutableListOf<AccessibilityNodeInfo>()
         try {
