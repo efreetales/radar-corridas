@@ -14,10 +14,13 @@ object OfferParser {
     private val PRICE_FULL = Regex("""^R\$\s*(\d{1,3}(?:\.\d{3})*,\d{2})$""")
     private val PRICE_ANY = Regex("""(?<!\+)R\$\s*(\d{1,3}(?:\.\d{3})*,\d{2})(?!\s*/\s*km)""")
     // Números podem vir com letras parecidas (leitura por imagem): "l.l km" = "1.1 km", "1l minutos" = "11 minutos".
+    // Aceita "4 min (1.3 km)", "12 minutos (5.9 km)", "1h 25 min (113 km)", "1h (22.2 km)" e "<1 min (0 km)".
     private val LEG = Regex(
-        """(?:(?<![A-Za-z\d])(\d[\dlI]?)\s*h(?:oras?)?\s*)?(?<![A-Za-z\d])(\d[\dlI]{0,2})\s*m[ií]n(?:utos?|s)?\.?\s*[(\[{]\s*([\dlIoO.,]{1,6})\s*(km|m)\b\s*[)\]}]?""",
+        """(?<![A-Za-z\d])<?\s*(?:([\dlI]{1,2})\s*h(?:oras?)?\s*(?:e\s*)?)?(?:([\dlI]{1,3})\s*m[ií]n(?:utos?|s)?\.?\s*)?[(\[{]\s*([\dlIoO.,]{1,6})\s*(km|m)\b\s*[)\]}]?""",
         RegexOption.IGNORE_CASE
     )
+    /** Valor sem centavos ("R$ 31"): a Uber às vezes mostra assim. Só vale se o R$/km confirmar. */
+    private val PRICE_INT = Regex("""^R\$\s*(\d{1,3})$""")
     /** "R$3,51/km aprox." — a Uber informa quanto paga por km somando busca e viagem. */
     private val RATE_KM = Regex("""R\$\s*([\dlI]{1,2}[.,][\dlIoO]{2})\s*/\s*km""", RegexOption.IGNORE_CASE)
     /** Tolerância na conferência entre os km lidos e o "R$/km aprox." da Uber. */
@@ -29,7 +32,7 @@ object OfferParser {
     /** Categorias curtas, aceitas só quando a linha tem apenas o nome. */
     private val CATEGORY_EXACT = listOf("Moto", "Pet", "XL", "Pop", "Top", "Plus", "Entrega", "Taxi", "Táxi", "Black Bag")
 
-    private data class Leg(val minutes: Double, val km: Double, val index: Int, val rest: String)
+    private data class Leg(val minutes: Double, val km: Double, val index: Int, val rest: String, val rawKm: String = "")
 
     // Erros comuns da leitura por imagem: "R$" lido como "RS", "R5" ou "R §".
     private val OCR_CURRENCY = Regex("""(?<![A-Za-z])R\s?[S5§]\s?(?=\d)""")
@@ -62,17 +65,19 @@ object OfferParser {
         val texts = normalize(rawTexts)
         if (texts.isEmpty()) return null
 
-        val price = findPrice(texts) ?: return null
+        val cents = findPrice(texts)
+        val price = cents ?: texts.firstNotNullOfOrNull { PRICE_INT.find(it)?.groupValues?.get(1)?.toDoubleOrNull() } ?: return null
 
         val legs = mutableListOf<Leg>()
         for ((i, t) in texts.withIndex()) {
             for (m in LEG.findAll(t)) {
+                if (m.groupValues[1].isEmpty() && m.groupValues[2].isEmpty()) continue
                 val hours = if (m.groupValues[1].isEmpty()) 0.0 else (parseOcrNumber(m.groupValues[1]) ?: continue)
-                val mins = parseOcrNumber(m.groupValues[2]) ?: continue
+                val mins = if (m.groupValues[2].isEmpty()) 0.0 else (parseOcrNumber(m.groupValues[2]) ?: continue)
                 var dist = parseOcrNumber(m.groupValues[3]) ?: continue
                 if (m.groupValues[4].equals("m", ignoreCase = true)) dist /= 1000.0
                 val rest = t.removeRange(m.range).trim(' ', ',', '-', '·', '•')
-                legs.add(Leg(hours * 60 + mins, dist, i, rest))
+                legs.add(Leg(hours * 60 + mins, dist, i, rest, m.groupValues[3]))
             }
         }
         if (legs.isEmpty()) return null
@@ -80,6 +85,8 @@ object OfferParser {
         val rate = texts.firstNotNullOfOrNull { t ->
             RATE_KM.find(t)?.groupValues?.get(1)?.let { parseOcrNumber(it) }
         }?.takeIf { it > 0.0 }
+        // Valor sem centavos só com a conferência do R$/km
+        if (cents == null && rate == null) return null
 
         val chosen = chooseLegs(legs, price, rate) ?: return null
         val pickup: Leg? = chosen.first
@@ -118,9 +125,13 @@ object OfferParser {
         }
         val expectedKm = price / rate
         fun matches(km: Double) = kotlin.math.abs(km - expectedKm) <= expectedKm * RATE_TOLERANCE + 0.05
-        val candidates = legs.take(6)
+        // A leitura por imagem às vezes perde a vírgula dos km ("74 km" no lugar de "7.4 km"): testa as duas
+        val candidates = legs.take(6).flatMap { l ->
+            if (l.km >= 10 && l.rawKm.none { it == '.' || it == ',' }) listOf(l, l.copy(km = l.km / 10)) else listOf(l)
+        }
         for (i in candidates.indices) {
             for (j in i + 1 until candidates.size) {
+                if (candidates[i].index == candidates[j].index && candidates[i].minutes == candidates[j].minutes) continue
                 if (matches(candidates[i].km + candidates[j].km)) return Pair(candidates[i], candidates[j])
             }
         }
