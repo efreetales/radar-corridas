@@ -109,10 +109,15 @@ object Hazards {
         load(ctx)
         val here = Location("v").apply { latitude = lat; longitude = lng }
         val now = System.currentTimeMillis()
+        loadIgnored(ctx)
+        val blocked = ignored.firstOrNull { here.distanceTo(Location("v").apply { latitude = it.first; longitude = it.second }) <= IGNORE_M }
+        if (blocked != null) {
+            if (auto) return Hazard(now, lat, lng, null, 0, true, now) to false   // solavanco num lugar que você disse não ter valeta
+            ignored.remove(blocked); saveIgnored(ctx)                             // marcou de novo à mão: volta a valer
+        }
         val existing = list.firstOrNull { h ->
             val hl = Location("v").apply { latitude = h.lat; longitude = h.lng }
-            here.distanceTo(hl) <= MERGE_M &&
-                (h.heading == null || heading == null || angleDiff(h.heading, heading) <= 60f)
+            here.distanceTo(hl) <= MERGE_M   // valeta pega a rua toda: vale para os dois sentidos
         }
         if (existing != null) {
             existing.count++
@@ -133,6 +138,32 @@ object Hazards {
         load(ctx)
         if (wasNew) list.remove(h) else h.count = (h.count - 1).coerceAtLeast(1)
         save(ctx)
+    }
+
+    // Lugares que você disse que não têm valeta (segurou o aviso): não voltam a aparecer
+    private const val IGNORE_M = 40f
+    private val ignored = mutableListOf<Pair<Double, Double>>()
+    private var ignoredLoaded = false
+    private fun ignoredFile(ctx: Context) = java.io.File(ctx.filesDir, "valetas_ignoradas.csv")
+    private fun loadIgnored(ctx: Context) {
+        if (ignoredLoaded) return
+        ignoredLoaded = true
+        try { ignoredFile(ctx).takeIf { it.exists() }?.readLines()?.forEach { l ->
+            val p = l.split(';'); val a = p.getOrNull(0)?.toDoubleOrNull(); val b = p.getOrNull(1)?.toDoubleOrNull()
+            if (a != null && b != null) ignored.add(a to b) } } catch (_: Exception) { }
+    }
+    private fun saveIgnored(ctx: Context) {
+        try { ignoredFile(ctx).writeText(ignored.joinToString("\n") { String.format(Locale.US, "%.6f;%.6f", it.first, it.second) } + "\n") } catch (_: Exception) { }
+    }
+
+    /** "Essa valeta não existe": apaga e não deixa o solavanco automático marcar de novo ali. */
+    @Synchronized
+    fun ignore(ctx: Context, h: Hazard) {
+        load(ctx); loadIgnored(ctx)
+        val hl = Location("v").apply { latitude = h.lat; longitude = h.lng }
+        list.removeAll { hl.distanceTo(Location("v").apply { latitude = it.lat; longitude = it.lng }) <= IGNORE_M }
+        ignored.add(h.lat to h.lng)
+        save(ctx); saveIgnored(ctx)
     }
 
     /** Apaga a valeta marcada por último. */
@@ -279,7 +310,6 @@ object HazardWatch {
             val hl = locOf(h)
             val d = loc.distanceTo(hl).toDouble()
             if (d > bestD) continue
-            if (h.heading != null && angleDiff(heading, h.heading) > 60f) continue
             if (d > 25) {
                 val ang = angleDiff(heading, (loc.bearingTo(hl) + 360f) % 360f)
                 if (ang > 40f) continue
@@ -342,11 +372,31 @@ object HazardWatch {
         handler.postDelayed(hideBanner, UNDO_MS)
     }
 
+    /** Segurar o aviso de valeta: "essa valeta não existe" (some e não aparece mais). */
+    fun reportWrong(): Boolean {
+        val ctx = appContext ?: return false
+        val t = target ?: return false
+        if (!showing) return false
+        Hazards.ignore(ctx, t)
+        OfferLog.appendDiag(ctx, "VALETAS: marcada como inexistente")
+        recentlyPassed[t] = System.currentTimeMillis()
+        target = null
+        showing = false
+        if (Prefs(ctx).speedSound) Beeper.play(ctx, Beeper.Kind.MARCADA)
+        RadarService.instance?.showSpeedBanner(
+            SpeedBanner(null, 0, "Valeta removida · não vai mais aparecer", Colors.SURFACE_2, null, 0f, sign = "✕", title = "Valeta errada")
+        )
+        handler.removeCallbacks(hideBanner)
+        handler.postDelayed(hideBanner, 3_000L)
+        return true
+    }
+
     /** Marcação automática pelo solavanco. */
     fun markAuto(ctx: Context) {
         val loc = history.lastOrNull() ?: return
         if (System.currentTimeMillis() - loc.time > 5_000L) return
         val (h, isNew) = Hazards.mark(ctx, loc.latitude, loc.longitude, lastHeading, auto = true)
+        if (h.count == 0) return   // lugar que você marcou como "não tem valeta"
         OfferLog.appendDiag(ctx, "VALETAS: solavanco a ${lastKmh.roundToInt()} km/h (${if (isNew) "novo ponto" else "${h.count}x"})")
         confirm(ctx, h, isNew, if (isNew) "Solavanco registrado · toque para desfazer" else "Valeta confirmada (${h.count}x) · toque para desfazer")
     }

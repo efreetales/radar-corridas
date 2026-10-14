@@ -1384,6 +1384,11 @@ class MainActivity : AppCompatActivity() {
             13f, Colors.TEXT
         ).apply { setPadding(0, dp(10), 0, 0) })
         card.addView(text(
+            "A valeta vale para os dois sentidos da rua. Apareceu uma valeta que não existe? Segure o aviso por 1 segundo: " +
+                "ela some e não volta, nem pelo solavanco automático.",
+            13f, Colors.TEXT
+        ).apply { setPadding(0, dp(8), 0, 0) })
+        card.addView(text(
             "O volume só vira atalho enquanto a Uber/99 está aberta (GPS ligado). Fora disso, funciona normal. " +
                 "Depois de instalar esta versão, desligue e ligue de novo o Radar em Acessibilidade para liberar o atalho do volume.",
             12f, Colors.MUTED
