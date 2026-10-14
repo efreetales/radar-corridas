@@ -6,7 +6,9 @@ import android.graphics.Paint
 import android.graphics.drawable.Drawable
 import android.text.SpannableStringBuilder
 import android.text.Spanned
-import android.text.style.ReplacementSpan
+import android.os.Build
+import android.text.style.DynamicDrawableSpan
+import android.text.style.ImageSpan
 import androidx.core.content.ContextCompat
 
 /**
@@ -30,18 +32,13 @@ object Icones {
 
     fun res(nome: String): Int? = RES[nome]
 
-    /** Ícone desenhado no meio da linha, na cor do texto (ou na cor dada). */
-    private class IconSpan(val d: Drawable, val size: Int, val cor: Int?) : ReplacementSpan() {
-        override fun getSize(p: Paint, t: CharSequence?, s: Int, e: Int, fm: Paint.FontMetricsInt?): Int = size
+    /** Ícone no meio da linha, centralizado na altura do texto e pintado na cor do texto (ou na cor dada).
+     *  É um ImageSpan (o jeito padrão do Android de pôr imagem em texto). */
+    private class IconSpan(d: Drawable, private val cor: Int?) :
+        ImageSpan(d, if (Build.VERSION.SDK_INT >= 29) DynamicDrawableSpan.ALIGN_CENTER else DynamicDrawableSpan.ALIGN_BASELINE) {
         override fun draw(c: Canvas, t: CharSequence?, s: Int, e: Int, x: Float, top: Int, y: Int, bottom: Int, p: Paint) {
-            d.setTint(cor ?: p.color)
-            val fm = p.fontMetricsInt
-            val mid = y + (fm.ascent + fm.descent) / 2f
-            c.save()
-            c.translate(x, mid - size / 2f)
-            d.setBounds(0, 0, size, size)
-            d.draw(c)
-            c.restore()
+            drawable.setTint(cor ?: p.color)
+            super.draw(c, t, s, e, x, top, y, bottom, p)
         }
     }
 
@@ -54,8 +51,9 @@ object Icones {
             val r = RES[m.groupValues[1]] ?: return@forEach
             val d = ContextCompat.getDrawable(ctx, r)?.mutate() ?: return@forEach
             val px = (sizePx * 1.15f).toInt()
+            d.setBounds(0, 0, px, px)
             out.replace(m.range.first, m.range.last + 1, "\uFFFC")   // caractere de objeto (o mesmo que o ImageSpan usa) segura o ícone
-            out.setSpan(IconSpan(d, px, cor), m.range.first, m.range.first + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            out.setSpan(IconSpan(d, cor), m.range.first, m.range.first + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         }
         return out
     }
