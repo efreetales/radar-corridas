@@ -108,19 +108,24 @@ object Voz {
     /** "Avenida 9 de Julho, 2040, Bela Vista" -> "Avenida 9 de Julho" */
     private fun rua(d: String?): String? = d?.substringBefore(",")?.substringBefore(" - ")?.trim()?.takeIf { it.length >= 4 }
 
-    fun textoInicio(passageiro: String?, destino: String?): String {
+    const val PADRAO_INICIO = "Oi, {nome}, tudo bem? Vamos lá, nosso destino é {rua}. Se precisar de alguma coisa, é só me falar. Boa viagem!"
+    const val PADRAO_CHEGADA = "Pronto, {nome}, chegamos! Obrigado pela companhia, espero que tenha curtido a viagem. Se puder, deixa sua avaliação no aplicativo da Uber. Até a próxima!"
+
+    /** Troca {nome} e {rua}; se faltar o nome tira só ele, se faltar a rua tira a frase do destino. */
+    fun montar(modelo: String, passageiro: String?, destino: String?): String {
+        var t = modelo
         val n = nome(passageiro)
+        t = if (n != null) t.replace("{nome}", n) else t.replace(Regex(",?\\s*\\{nome\\}"), "")
         val r = rua(destino)
-        return (if (n != null) "Oi, $n, tudo bem? " else "Oi, tudo bem? ") +
-            (if (r != null) "Vamos lá, nosso destino é $r. " else "Vamos lá, já estamos a caminho do seu destino. ") +
-            "Se precisar de alguma coisa, é só me falar. Boa viagem!"
+        t = if (r != null) t.replace("{rua}", r) else t.replace(Regex("[^.!?]*\\{rua\\}[^.!?]*[.!?]?\\s*"), " ")   // sem destino: tira a frase do destino
+        return t.replace(Regex("\\s+([,.!?])"), "$1").replace(Regex("\\s{2,}"), " ").trim()
     }
 
-    fun textoChegada(passageiro: String?): String {
-        val n = nome(passageiro)
-        return "Pronto" + (if (n != null) ", $n" else "") + ", chegamos! Obrigado pela companhia, espero que tenha curtido a viagem. " +
-            "Se puder, deixa sua avaliação no aplicativo da Uber. Até a próxima!"
-    }
+    fun textoInicio(ctx: Context, passageiro: String?, destino: String?) =
+        montar(Prefs(ctx).voiceStart.ifBlank { PADRAO_INICIO }, passageiro, destino)
+
+    fun textoChegada(ctx: Context, passageiro: String?) =
+        montar(Prefs(ctx).voiceEnd.ifBlank { PADRAO_CHEGADA }, passageiro, null)
 
     /** Voz de estúdio quando ligada (cai para a voz do celular se faltar internet ou crédito). */
     private fun fala(ctx: Context, texto: String) {
@@ -129,11 +134,11 @@ object Voz {
 
     /** No aceite: já gera as duas falas da corrida, para tocarem na hora sem esperar a internet. */
     fun adiantar(ctx: Context, passageiro: String?, destino: String?) {
-        VozEstudio.preparar(ctx, textoInicio(passageiro, destino))
-        VozEstudio.preparar(ctx, textoChegada(passageiro))
+        VozEstudio.preparar(ctx, textoInicio(ctx, passageiro, destino))
+        VozEstudio.preparar(ctx, textoChegada(ctx, passageiro))
     }
 
-    fun inicio(ctx: Context, passageiro: String?, destino: String?) = fala(ctx, textoInicio(passageiro, destino))
+    fun inicio(ctx: Context, passageiro: String?, destino: String?) = fala(ctx, textoInicio(ctx, passageiro, destino))
 
-    fun chegada(ctx: Context, passageiro: String?) = fala(ctx, textoChegada(passageiro))
+    fun chegada(ctx: Context, passageiro: String?) = fala(ctx, textoChegada(ctx, passageiro))
 }
