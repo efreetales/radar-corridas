@@ -23,7 +23,7 @@ object Icones {
         "volume" to R.drawable.mi_volume, "chevron" to R.drawable.mi_chevron_right, "like" to R.drawable.mi_like,
         "check_circle" to R.drawable.mi_check_circle, "pin" to R.drawable.mi_map_pin,
         // eventos (Events.icon)
-        "mask" to R.drawable.mi_mask, "music" to R.drawable.mi_music, "users-group" to R.drawable.mi_users_group,
+        "sparkles" to R.drawable.mi_sparkles, "music" to R.drawable.mi_music, "users-group" to R.drawable.mi_users_group,
         "building" to R.drawable.mi_building, "graduation-cap" to R.drawable.mi_graduation_cap, "ticket" to R.drawable.mi_ticket,
     )
     private val TOKEN = Regex("\\{([a-z_-]+)\\}")
