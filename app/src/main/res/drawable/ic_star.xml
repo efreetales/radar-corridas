@@ -1,4 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Mynaui icons (mynaui.com/icons, MIT): star -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="24dp" android:height="24dp" android:viewportWidth="24" android:viewportHeight="24">
-    <path android:fillColor="#FFFFFFFF" android:pathData="M12,17.27L18.18,21l-1.64,-7.03L22,9.24l-7.19,-0.61L12,2 9.19,8.63 2,9.24l5.46,4.73L5.82,21z"/>
+    <path android:fillColor="#00000000" android:strokeColor="#FFFFFFFF" android:strokeWidth="1.5" android:strokeLineCap="round" android:strokeLineJoin="round" android:pathData="M 12.854 3.5 a .979 .979 0 0 0 -1.708 0 q -.3 .546 -.577 1.106 a 27 27 0 0 0 -1.48 3.656 c -.139 .431 -.551 .73 -1.023 .743 a 29.4 29.4 0 0 0 -4.267 .425 c -.774 .136 -1.065 1.018 -.515 1.556 q .188 .185 .38 .365 a 32 32 0 0 0 3.03 2.527 c .367 .269 .518 .73 .378 1.152 a 27 27 0 0 0 -1.14 4.927 c -.1 .755 .708 1.288 1.41 .928 a 28.6 28.6 0 0 0 3.98 -2.472 1.15 1.15 0 0 1 1.356 0 28.5 28.5 0 0 0 3.98 2.472 c .701 .36 1.51 -.173 1.41 -.928 q -.058 -.425 -.127 -.845 a 27 27 0 0 0 -1.013 -4.082 c -.14 -.422 .01 -.883 .378 -1.152 a 31.5 31.5 0 0 0 3.41 -2.892 c .55 -.538 .26 -1.42 -.515 -1.556 a 29 29 0 0 0 -4.267 -.425 1.1 1.1 0 0 1 -1.023 -.743 27 27 0 0 0 -2.057 -4.761"/>
 </vector>

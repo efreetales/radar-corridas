@@ -59,7 +59,7 @@ class SpeedBanner(
     val color: Int,
     val distanceM: Int? = null,   // metros até o radar (null depois de passar)
     val progress: Float = 0f,     // 0 = acabou de avistar o radar, 1 = em cima dele
-    val sign: String? = null,     // no lugar da placa de limite (ex.: "⚠" para valeta)
+    val sign: String? = null,     // no lugar da placa de limite: ícone "{nome}" (ex.: "{valeta}"), ver Icones
     val title: String? = null,    // no lugar da velocidade (ex.: nome do ponto)
     val distText: String? = null, // distância já formatada (ex.: "1,8")
     val distUnit: String = "metros",
@@ -383,14 +383,14 @@ object SpeedWatch {
         clearTarget()
         Beeper.play(ctx, Beeper.Kind.MARCADA)
         RadarService.instance?.showSpeedBanner(
-            SpeedBanner(null, 0, "Radar removido · não vai mais aparecer", Colors.SURFACE_2, null, 0f, sign = "✕", title = "Radar errado")
+            SpeedBanner(null, 0, "Radar removido · não vai mais aparecer", Colors.SURFACE_2, null, 0f, sign = "{x}", title = "Radar errado")
         )
         handler.removeCallbacks(hideResult)
         handler.postDelayed(hideResult, 3_000L)
         return true
     }
 
-    /** Fecha o aviso do radar atual (o botão ✕). Ele volta no próximo radar. */
+    /** Fecha o aviso do radar atual (o botão de fechar). Ele volta no próximo radar. */
     fun dismiss() {
         target?.let { dismissedCam = it }
         handler.removeCallbacks(hideResult)
@@ -437,9 +437,9 @@ object SpeedWatch {
 
         val line = when {
             limit == null -> "Passou a $kmh km/h (limite desconhecido)"
-            kmh > toleratedUpTo(limit) -> "⚠️ Provável multa: $kmh no limite de $limit"
+            kmh > toleratedUpTo(limit) -> "{alerta} Provável multa: $kmh no limite de $limit"
             kmh > limit -> "Passou a $kmh no limite de $limit (tolera até ${toleratedUpTo(limit)})"
-            else -> "✓ Passou a $kmh no limite de $limit"
+            else -> "{check} Passou a $kmh no limite de $limit"
         }
         val wasDismissed = dismissedCam === cam
         dismissedCam = null
@@ -468,7 +468,7 @@ object SpeedWatch {
             )
             val n = NotificationCompat.Builder(ctx, CHANNEL)
                 .setSmallIcon(R.drawable.ic_stat_radar)
-                .setContentTitle("⚠️ Possível multa: $kmh km/h (limite $limit)")
+                .setContentTitle("Possível multa: $kmh km/h (limite $limit)")
                 .setContentText("$where · $time · o radar tolera até ${toleratedUpTo(limit)} km/h")
                 .setStyle(
                     NotificationCompat.BigTextStyle().bigText(
@@ -513,7 +513,7 @@ object SpeedWatch {
             SpeedBanner(50, 55, "Av. Exemplo", Colors.YELLOW, 200, 0.5f),
             SpeedBanner(50, 63, "Av. Exemplo", Colors.RED, 100, 0.75f),
             SpeedBanner(50, 63, "Av. Exemplo", Colors.RED, 30, 0.93f),
-            SpeedBanner(50, 63, "⚠️ Provável multa: 63 no limite de 50", Colors.RED, null, 1f)
+            SpeedBanner(50, 63, "{alerta} Provável multa: 63 no limite de 50", Colors.RED, null, 1f)
         )
         steps.forEachIndexed { i, b ->
             handler.postDelayed({

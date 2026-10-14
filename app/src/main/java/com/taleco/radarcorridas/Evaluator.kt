@@ -9,7 +9,7 @@ data class Evaluation(
     val results: List<MetricResult>,
     val overall: Verdict,
     val profit: Double,
-    val spotNote: String? = null   // "★ perto de um ponto bom", quando o destino cai perto de um
+    val spotNote: String? = null   // "{star} perto de um ponto bom" (ícone, ver Icones), quando o destino cai perto de um
 )
 
 object Evaluator {

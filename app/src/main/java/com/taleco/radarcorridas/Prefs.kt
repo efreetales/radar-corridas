@@ -139,7 +139,7 @@ class Prefs(context: Context) {
         get() = sp.getBoolean("alerta_eventos", true)
         set(v) = sp.edit().putBoolean("alerta_eventos", v).apply()
 
-    /** Mostrar "★ destino perto de evento" no card da oferta (ponto bom sempre aparece e tem prioridade). */
+    /** Mostrar "destino perto de evento" (com estrela) no card da oferta (ponto bom sempre aparece e tem prioridade). */
     var eventsInOffer: Boolean
         get() = sp.getBoolean("eventos_no_card", true)
         set(v) = sp.edit().putBoolean("eventos_no_card", v).apply()

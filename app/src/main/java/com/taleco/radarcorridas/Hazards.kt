@@ -284,7 +284,7 @@ object HazardWatch {
                 null, kmh.roundToInt(), where, ORANGE,
                 if (d >= 100) (d / 10).roundToInt() * 10 else d.roundToInt(),
                 (1.0 - d / startDist).coerceIn(0.0, 1.0).toFloat(),
-                sign = "⚠"
+                sign = "{valeta}"
             )
         )
         showing = true
@@ -336,14 +336,14 @@ object HazardWatch {
         if (loc == null || System.currentTimeMillis() - loc.time > 30_000L) {
             Beeper.play(ctx, Beeper.Kind.ERRO)
             RadarService.instance?.showSpeedBanner(
-                SpeedBanner(null, lastKmh.roundToInt(), "Sem GPS agora: abra a Uber/99 para marcar valetas", Colors.SURFACE_2, sign = "⚠")
+                SpeedBanner(null, lastKmh.roundToInt(), "Sem GPS agora: abra a Uber/99 para marcar valetas", Colors.SURFACE_2, sign = "{valeta}")
             )
             handler.removeCallbacks(hideBanner)
             handler.postDelayed(hideBanner, 3_000L)
             return
         }
         val (h, isNew) = Hazards.mark(ctx, loc.latitude, loc.longitude, lastHeading, auto = false)
-        confirm(ctx, h, isNew, if (isNew) "✓ Valeta marcada · toque para desfazer" else "✓ Valeta confirmada (${h.count}x) · toque para desfazer")
+        confirm(ctx, h, isNew, if (isNew) "Valeta marcada · toque para desfazer" else "Valeta confirmada (${h.count}x) · toque para desfazer")
     }
 
     /** Marca um radar que faltava no mapa (volume + duas vezes). */
@@ -353,7 +353,7 @@ object HazardWatch {
         if (loc == null || System.currentTimeMillis() - loc.time > 30_000L) {
             Beeper.play(ctx, Beeper.Kind.ERRO)
             RadarService.instance?.showSpeedBanner(
-                SpeedBanner(null, lastKmh.roundToInt(), "Sem GPS agora: abra a Uber/99 para marcar radares", Colors.SURFACE_2, sign = "📷")
+                SpeedBanner(null, lastKmh.roundToInt(), "Sem GPS agora: abra a Uber/99 para marcar radares", Colors.SURFACE_2, sign = "{camera}")
             )
             handler.removeCallbacks(hideBanner)
             handler.postDelayed(hideBanner, 3_000L)
@@ -365,8 +365,8 @@ object HazardWatch {
         undoHazard = null
         undoUntil = System.currentTimeMillis() + UNDO_MS
         RadarService.instance?.showSpeedBanner(
-            SpeedBanner(null, lastKmh.roundToInt(), "✓ Radar marcado · defina o limite no app · toque para desfazer",
-                Colors.SURFACE_2, null, 1f, sign = "📷")
+            SpeedBanner(null, lastKmh.roundToInt(), "Radar marcado · defina o limite no app · toque para desfazer",
+                Colors.SURFACE_2, null, 1f, sign = "{camera}")
         )
         handler.removeCallbacks(hideBanner)
         handler.postDelayed(hideBanner, UNDO_MS)
@@ -384,7 +384,7 @@ object HazardWatch {
         showing = false
         if (Prefs(ctx).speedSound) Beeper.play(ctx, Beeper.Kind.MARCADA)
         RadarService.instance?.showSpeedBanner(
-            SpeedBanner(null, 0, "Valeta removida · não vai mais aparecer", Colors.SURFACE_2, null, 0f, sign = "✕", title = "Valeta errada")
+            SpeedBanner(null, 0, "Valeta removida · não vai mais aparecer", Colors.SURFACE_2, null, 0f, sign = "{x}", title = "Valeta errada")
         )
         handler.removeCallbacks(hideBanner)
         handler.postDelayed(hideBanner, 3_000L)
@@ -409,7 +409,7 @@ object HazardWatch {
         undoUntil = System.currentTimeMillis() + UNDO_MS
         recentlyPassed[h] = System.currentTimeMillis()
         RadarService.instance?.showSpeedBanner(
-            SpeedBanner(null, lastKmh.roundToInt(), text, ORANGE, null, 1f, sign = "✓")
+            SpeedBanner(null, lastKmh.roundToInt(), text, ORANGE, null, 1f, sign = "{check}")
         )
         handler.removeCallbacks(hideBanner)
         handler.postDelayed(hideBanner, UNDO_MS)
@@ -444,7 +444,7 @@ object HazardWatch {
             undoCam = null
             undoUntil = 0L
             RadarService.instance?.showSpeedBanner(
-                SpeedBanner(null, lastKmh.roundToInt(), "Marcação desfeita", Colors.SURFACE_2, null, 0f, sign = "↺")
+                SpeedBanner(null, lastKmh.roundToInt(), "Marcação desfeita", Colors.SURFACE_2, null, 0f, sign = "{undo}")
             )
             handler.removeCallbacks(hideBanner)
             handler.postDelayed(hideBanner, 2_000L)
@@ -457,7 +457,7 @@ object HazardWatch {
             undoUntil = 0L
             recentlyPassed.remove(u)
             RadarService.instance?.showSpeedBanner(
-                SpeedBanner(null, lastKmh.roundToInt(), "Marcação desfeita", Colors.SURFACE_2, null, 0f, sign = "↺")
+                SpeedBanner(null, lastKmh.roundToInt(), "Marcação desfeita", Colors.SURFACE_2, null, 0f, sign = "{undo}")
             )
             handler.removeCallbacks(hideBanner)
             handler.postDelayed(hideBanner, 2_000L)
@@ -481,11 +481,11 @@ object HazardWatch {
         appContext = ctx.applicationContext
         val s = RadarService.instance ?: return
         val steps = listOf(
-            SpeedBanner(null, 32, "Valeta · marcada 3x", ORANGE, 200, 0.2f, sign = "⚠"),
-            SpeedBanner(null, 25, "Valeta · marcada 3x", ORANGE, 120, 0.5f, sign = "⚠"),
-            SpeedBanner(null, 18, "Valeta · marcada 3x", ORANGE, 50, 0.8f, sign = "⚠"),
-            SpeedBanner(null, 12, "Valeta · marcada 3x", ORANGE, 10, 0.96f, sign = "⚠"),
-            SpeedBanner(null, 12, "✓ Valeta marcada · toque para desfazer", ORANGE, null, 1f, sign = "✓")
+            SpeedBanner(null, 32, "Valeta · marcada 3x", ORANGE, 200, 0.2f, sign = "{valeta}"),
+            SpeedBanner(null, 25, "Valeta · marcada 3x", ORANGE, 120, 0.5f, sign = "{valeta}"),
+            SpeedBanner(null, 18, "Valeta · marcada 3x", ORANGE, 50, 0.8f, sign = "{valeta}"),
+            SpeedBanner(null, 12, "Valeta · marcada 3x", ORANGE, 10, 0.96f, sign = "{valeta}"),
+            SpeedBanner(null, 12, "Valeta marcada · toque para desfazer", ORANGE, null, 1f, sign = "{check}")
         )
         steps.forEachIndexed { i, b ->
             handler.postDelayed({

@@ -112,7 +112,9 @@ class MainActivity : AppCompatActivity() {
             t.addView(text(pg.key, 18f, Colors.TEXT, bold = true))
             t.addView(text(pg.hint, 13f, Colors.MUTED))
             row.addView(t, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f))
-            row.addView(text("›", 30f, Colors.MUTED).apply { setPadding(dp(8), 0, 0, 0) })
+            row.addView(icon(R.drawable.mi_chevron_right, 24, Colors.MUTED).apply {
+                layoutParams = LinearLayout.LayoutParams(dp(24), dp(24)).apply { leftMargin = dp(8) }
+            })
             row.setOnClickListener {
                 val w = pg.web
                 if (w != null) startActivity(Intent(this, PainelActivity::class.java).putExtra(PainelActivity.EXTRA_PAGE, w))
@@ -214,7 +216,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         // Replay animado da última corrida concluída
-        col.addView(wideTile(R.drawable.ic_car, "Replay da última corrida", "Reveja a última corrida animada no mapa, etapa por etapa") {
+        col.addView(wideTile(R.drawable.mi_play_circle, "Replay da última corrida", "Reveja a última corrida animada no mapa, etapa por etapa") {
             startActivity(Intent(this, PainelActivity::class.java).putExtra(PainelActivity.EXTRA_PAGE, "replay:"))
         }, matchWrap(top = 14))
 
@@ -390,7 +392,7 @@ class MainActivity : AppCompatActivity() {
 
         card.addView(text(
             "Em Acessibilidade, procure \"Radar Corridas\" (às vezes dentro de \"Apps instalados\") e ative.\n\n" +
-                "Se a opção aparecer bloqueada: abra Configurações → Apps → Radar Corridas → menu ⋮ → " +
+                "Se a opção aparecer bloqueada: abra Configurações {chevron} Apps {chevron} Radar Corridas {chevron} menu de três pontinhos {chevron} " +
                 "\"Permitir configurações restritas\" e tente de novo.",
             13f, Colors.MUTED
         ).apply { setPadding(0, dp(8), 0, 0) })
@@ -706,7 +708,7 @@ class MainActivity : AppCompatActivity() {
             }
             card.addView(ed, matchWrap(top = 6))
             val row = LinearLayout(this).apply { orientation = LinearLayout.HORIZONTAL }
-            row.addView(MaterialButton(this).apply { isAllCaps = false; letterSpacing = 0f; text = "🔊 Ouvir"; setOnClickListener { ed.clearFocus(); ouvir() } },
+            row.addView(MaterialButton(this).apply { isAllCaps = false; letterSpacing = 0f; text = "Ouvir"; setIconResource(R.drawable.mi_volume); iconGravity = MaterialButton.ICON_GRAVITY_TEXT_START; setOnClickListener { ed.clearFocus(); ouvir() } },
                 LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f).apply { rightMargin = dp(6) })
             row.addView(MaterialButton(this, null, com.google.android.material.R.attr.materialButtonOutlinedStyle).apply {
                 isAllCaps = false; letterSpacing = 0f; text = "Voltar ao original"; setOnClickListener { ed.setText(padrao) } },
@@ -737,7 +739,8 @@ class MainActivity : AppCompatActivity() {
         card.addView(MaterialButton(this).apply {
             isAllCaps = false
             letterSpacing = 0f
-            text = "🔊 Ouvir exemplo"
+            text = "Ouvir exemplo"
+            setIconResource(R.drawable.mi_volume); iconGravity = MaterialButton.ICON_GRAVITY_TEXT_START
             setOnClickListener { Voz.inicio(this@MainActivity, "Ana", "Avenida Paulista, 1000, Bela Vista") }
         }, matchWrap(top = 8))
         card.addView(MaterialButton(this).apply {
@@ -761,7 +764,7 @@ class MainActivity : AppCompatActivity() {
             12f, Colors.MUTED
         ))
         val keyIn = EditText(this).apply {
-            hint = if (prefs.elevenKey.isBlank()) "Cole aqui a sua chave da ElevenLabs" else "Chave salva ✓ (cole outra para trocar)"
+            hint = if (prefs.elevenKey.isBlank()) "Cole aqui a sua chave da ElevenLabs" else "Chave salva. Cole outra para trocar"
             setHintTextColor(Colors.MUTED)
             setTextColor(Colors.TEXT)
             textSize = 16f
@@ -769,14 +772,15 @@ class MainActivity : AppCompatActivity() {
             minHeight = dp(56)
             setOnFocusChangeListener { v, has ->
                 val t = (v as EditText).text.toString().trim()
-                if (!has && t.isNotBlank()) { prefs.elevenKey = t; v.setText(""); v.hint = "Chave salva ✓ (cole outra para trocar)" }
+                if (!has && t.isNotBlank()) { prefs.elevenKey = t; v.setText(""); v.hint = "Chave salva. Cole outra para trocar" }
             }
             setOnEditorActionListener { v, _, _ -> v.clearFocus(); false }
         }
         card.addView(keyIn, matchWrap(top = 8))
-        val vozBtn = MaterialButton(this).apply { isAllCaps = false; letterSpacing = 0f }
+        val vozBtn = MaterialButton(this).apply { isAllCaps = false; letterSpacing = 0f
+            setIconResource(R.drawable.mi_chevron_right); iconGravity = MaterialButton.ICON_GRAVITY_TEXT_END }
         fun nomeVoz() = VozEstudio.VOZES.firstOrNull { it.first == prefs.studioVoiceId } ?: VozEstudio.VOZES[0]
-        vozBtn.text = "Voz de estúdio: ${nomeVoz().second} ▸"
+        vozBtn.text = "Voz de estúdio: ${nomeVoz().second}"
         vozBtn.setOnClickListener {
             keyIn.text.toString().trim().takeIf { it.isNotBlank() }?.let { prefs.elevenKey = it; keyIn.setText("") }
             val vs = VozEstudio.VOZES
@@ -789,7 +793,7 @@ class MainActivity : AppCompatActivity() {
                         Toast.makeText(this, "Não consegui gerar a voz: confira a chave e a internet", Toast.LENGTH_LONG).show()
                     }
                 }
-                .setPositiveButton("Usar esta") { _, _ -> prefs.studioVoiceId = vs[sel].first; vozBtn.text = "Voz de estúdio: ${vs[sel].second} ▸" }
+                .setPositiveButton("Usar esta") { _, _ -> prefs.studioVoiceId = vs[sel].first; vozBtn.text = "Voz de estúdio: ${vs[sel].second}" }
                 .show()
         }
         card.addView(vozBtn, matchWrap(top = 8))
@@ -832,13 +836,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun updateTripChecklist() {
         if (!::tripChecklist.isInitialized) return
-        fun mark(ok: Boolean) = if (ok) "✅" else "❌"
-        tripChecklist.text = listOf(
+        fun mark(ok: Boolean) = if (ok) "{check}" else "{x}"
+        tripChecklist.text = Icones.texto(this, listOf(
             "${mark(hasLocation())} Localização precisa",
             "${mark(hasBackgroundLocation())} Localização \"o tempo todo\"",
             "${mark(hasNotifications())} Notificações (aviso de GPS ligado)",
             "${mark(batteryFree())} Sem restrição de bateria"
-        ).joinToString("\n")
+        ).joinToString("\n"), tripChecklist.textSize)
         val done = hasLocation() && hasBackgroundLocation() && hasNotifications() && batteryFree()
         tripPermBtn.text = if (done) "Tudo pronto" else "Liberar próxima permissão"
         tripPermBtn.isEnabled = !done
@@ -890,7 +894,7 @@ class MainActivity : AppCompatActivity() {
                 setPadding(dp(12), dp(10), dp(12), dp(10))
                 background = rounded(Colors.SURFACE_2, 12f)
             }
-            val title = "📷 Radar ${mine.size - i} · marcado em ${fmt.format(java.util.Date(c.id))}" +
+            val title = "{camera} Radar ${mine.size - i} · marcado em ${fmt.format(java.util.Date(c.id))}" +
                 (if (c.limit == null) " · sem limite definido" else " · ${c.limit} km/h")
             box.addView(text(title, 14f, if (c.limit == null) Colors.YELLOW else Colors.TEXT, bold = true))
             box.addView(text(String.format(java.util.Locale.US, "%.5f, %.5f", c.lat, c.lng), 11f, Colors.MUTED))
@@ -1030,7 +1034,7 @@ class MainActivity : AppCompatActivity() {
         card.addView(text(
             "Todo dia à tarde eu pesquiso os eventos de São Paulo (teatros, shows, jogos, SESCs, formaturas) e calculo o horário " +
                 "provável de saída do público. Com a Uber/99 aberta, quando você estiver perto de um evento perto da hora da saída, " +
-                "aparece um aviso rosa. A oferta também ganha ★ se o destino for perto de uma saída.",
+                "aparece um aviso rosa. A oferta também ganha {star} se o destino for perto de uma saída.",
             12f, Colors.MUTED
         ))
         card.addView(SwitchMaterial(this).apply {
@@ -1091,7 +1095,7 @@ class MainActivity : AppCompatActivity() {
                 setPadding(dp(12), dp(10), dp(12), dp(10))
                 background = rounded(Colors.SURFACE_2, 12f)
             }
-            box.addView(text("${e.icon} ${e.name}", 15f, Colors.TEXT, bold = true))
+            box.addView(text("{${e.icon}} ${e.name}", 15f, Colors.TEXT, bold = true))
             val start = e.startMin?.let { "começa ${Spot.hhmm(it)} · " } ?: ""
             val aud = e.audience?.let { " · ~$it pessoas" } ?: ""
             box.addView(text("${e.place}\n${start}saída ~${Spot.hhmm(e.endMin)}$aud", 13f, Colors.MUTED))
@@ -1128,7 +1132,7 @@ class MainActivity : AppCompatActivity() {
         }, matchWrap(top = 8))
         val starLbl = text("", 14f, Colors.TEXT).apply { setPadding(0, dp(12), 0, 0) }
         fun setStar(v: Float) {
-            starLbl.text = String.format(PT_BR, "★ na oferta quando o destino ficar a até %.0f km de um ponto no horário dele", v)
+            starLbl.text = Icones.texto(this@MainActivity, String.format(PT_BR, "{star} na oferta quando o destino ficar a até %.0f km de um ponto no horário dele", v), starLbl.textSize)
         }
         setStar(prefs.spotStarKm)
         card.addView(starLbl)
@@ -1182,7 +1186,7 @@ class MainActivity : AppCompatActivity() {
                 orientation = LinearLayout.HORIZONTAL
                 gravity = Gravity.CENTER_VERTICAL
             }
-            header.addView(text("★ " + sp.name, 16f, Colors.TEXT, bold = true),
+            header.addView(text("{star} " + sp.name, 16f, Colors.TEXT, bold = true),
                 LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f))
             header.addView(SwitchMaterial(this).apply {
                 isChecked = sp.enabled
@@ -1292,7 +1296,7 @@ class MainActivity : AppCompatActivity() {
                 .show()
             return
         }
-        val items = places.map { (if (it.exact) "" else "⚠ só a região: ") + it.label }.toTypedArray()
+        val items = places.map { (if (it.exact) "" else "(só a região) ") + it.label }.toTypedArray()
         val anyExact = places.any { it.exact }
         androidx.appcompat.app.AlertDialog.Builder(this)
             .setTitle(if (anyExact) "Qual é o lugar?" else "Achei só a região, não o endereço")
@@ -1428,8 +1432,8 @@ class MainActivity : AppCompatActivity() {
         ))
         card.addView(text(
             "Como marcar sem olhar para o celular:\n" +
-                "• Aperte o volume − duas vezes rápido logo depois de passar pela valeta\n" +
-                "• Ou segure o botão \"R\" por meio segundo\n" +
+                "1. Aperte o volume − duas vezes rápido logo depois de passar pela valeta\n" +
+                "2. Ou segure o botão \"R\" por meio segundo\n" +
                 "Aparece \"Valeta marcada\" com um bipe. Errou? Toque no aviso para desfazer.",
             13f, Colors.TEXT
         ).apply { setPadding(0, dp(10), 0, 0) })
@@ -1597,11 +1601,11 @@ class MainActivity : AppCompatActivity() {
         }
         val fines = PassLog.recentFines(this)
         val total = PassLog.count(this)
-        finesText.text = if (fines.isEmpty()) {
-            if (total == 0) "Nenhuma passagem por radar registrada ainda." else "Nenhuma nas $total passagens registradas. 👍"
+        finesText.text = Icones.texto(this, if (fines.isEmpty()) {
+            if (total == 0) "Nenhuma passagem por radar registrada ainda." else "Nenhuma nas $total passagens registradas. {like}"
         } else {
-            fines.joinToString("\n") { "⚠️ $it" }
-        }
+            fines.joinToString("\n") { "{alerta} $it" }
+        }, finesText.textSize)
     }
 
     private fun updateCostSummary() {
@@ -1748,8 +1752,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun text(s: String, size: Float, color: Int, bold: Boolean = false) = TextView(this).apply {
-        text = s
         textSize = readable(size, color)
+        text = Icones.texto(this@MainActivity, s, textSize)   // "{nome}" vira ícone Mynaui
         setLineSpacing(0f, 1.12f)
         setTextColor(color)
         if (bold) typeface = Typeface.DEFAULT_BOLD
