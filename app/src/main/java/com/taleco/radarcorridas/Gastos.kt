@@ -51,7 +51,7 @@ object Gastos {
         "com.btgpactual.pf" to "BTG", "br.com.original.bank" to "Original", "com.xpi.xpcard" to "XP", "br.com.digio" to "Digio",
         "com.porto.cartaoporto" to "Porto Bank", "com.samsung.android.spay" to "Samsung Pay", "com.google.android.apps.walletnfcrel" to "Google Wallet"
     )
-    private val COMPRA = Regex("COMPRA|APROVAD|PAGAMENTO|PAGO|DEBITO|DEBITADO|PIX ENVIADO|TRANSACAO|GASTO|CARTAO")
+    private val COMPRA = Regex("COMPRA|APROVAD|PAGAMENTO|PAGO|DEBITO|DEBITADO|PIX|TRANSFERENCIA ENVIADA|TRANSACAO|GASTO|CARTAO|PASSAGEM|UTILIZACAO|COBRANCA|TARIFA")
     private val NAO_E_GASTO = Regex("RECEB|ESTORN|CASHBACK|REEMBOLS|NEGAD|RECUSAD|CANCELAD|DEPOSITO|RENDIMENTO|FATURA FECHOU|LIMITE DISPON")
     private val VALOR = Regex("R\\$\\s?(\\d{1,3}(?:\\.\\d{3})*,\\d{2}|\\d+,\\d{2})")
     private val LOCAL = Regex("\\b(?:[Ee][Mm]|[Nn][OoAa]|[Ee]stabelecimento|ESTABELECIMENTO|[Pp]ara|PARA|[Ll]oja|LOJA)\\s*:?\\s+([A-Z0-9*][A-Z0-9 *&.\\-']{2,40})")
@@ -70,17 +70,30 @@ object Gastos {
         return CAT_RX.entries.firstOrNull { (_, rs) -> rs.any { it.containsMatchIn(t) } }?.key
     }
 
+    /** Apps de tag (pedágio e estacionamento): a própria notificação deles já é do carro. */
+    private val TAG_APP = Regex("CONECTCAR|CONECT CAR|SEM PARAR|SEMPARAR|VELOE|MOVE MAIS|TAGGY|GREENPASS|C6 TAG")
+    fun appDeTag(pkg: String, appNome: String?) = TAG_APP.containsMatchIn(norm("${appNome ?: ""} ${pkg.replace('.', ' ')}"))
+
+    /** Notificação com R$ de app de banco ou de tag, para registrar no diagnóstico quando não vira gasto. */
+    fun financeiro(pkg: String, appNome: String?) = pkg in BANCOS || appDeTag(pkg, appNome) ||
+        Regex("BANK|BANCO|PAY|PAGO|CARTEIRA|WALLET|CARD").containsMatchIn(norm("${appNome ?: ""} $pkg"))
+
     /** Lê uma notificação; devolve o gasto se for compra ligada ao carro. */
     fun ler(pkg: String, titulo: String, texto: String, appNome: String?): Gasto? {
         val full = "$titulo $texto"
         val n = norm(full)
-        if (!COMPRA.containsMatchIn(n) || NAO_E_GASTO.containsMatchIn(n)) return null
+        val tag = appDeTag(pkg, appNome)
+        if (!tag && !COMPRA.containsMatchIn(n)) return null
+        if (NAO_E_GASTO.containsMatchIn(n) || n.contains("RECARGA")) return null
         val v = VALOR.find(full)?.groupValues?.get(1)?.replace(".", "")?.replace(",", ".")?.toDoubleOrNull() ?: return null
         if (v <= 0.5 || v > 20000) return null
-        val cat = categoria(full) ?: return null
+        // App de tag: estacionamento se o texto falar disso; senão pedágio
+        val cat = categoria(full) ?: (if (tag) "pedagio" else null) ?: return null
+        if (tag && cat != "estacionamento" && cat != "pedagio" && cat != "combustivel") return Gasto(v, "pedagio", appNome ?: "Tag", appNome ?: pkg)
         val local = LOCAL.findAll(full).map { it.groupValues[1].replace(Regex("\\s+\\d[\\d/:. ]*$"), "").trim().trimEnd('.', ',', '-') }
             .firstOrNull { it.length >= 3 && categoria(it) != null }
-            ?: CATS[cat]!!.zip(CAT_RX[cat]!!).first { it.second.containsMatchIn(n) }.first.trim()
+            ?: CATS[cat]!!.zip(CAT_RX[cat]!!).firstOrNull { it.second.containsMatchIn(n) }?.first?.trim()
+            ?: (appNome ?: NOMES[cat] ?: cat)
         return Gasto(v, cat, local.take(40), BANCOS[pkg] ?: appNome ?: pkg)
     }
 
