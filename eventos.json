@@ -1,5 +1,5 @@
 {
- "gerado_em": "2026-10-14T11:28:39-03:00",
+ "gerado_em": "2026-10-14T19:13:10-03:00",
  "data": "2026-10-14",
  "observacao": "Gerado automaticamente (Ticket360, Sympla e revisão semanal). Saída estimada pelas regras de tools/casas.json.",
  "eventos": [
@@ -98,6 +98,22 @@
    "regra": "show",
    "lat": -23.627883,
    "lng": -46.710776
+  },
+  {
+   "nome": "20/10 Great Books Great Tits",
+   "local": "CRN 932",
+   "endereco": "Rua Cônego Eugênio Leite, São Paulo",
+   "tipo": "show",
+   "data": "2026-10-14",
+   "inicio": "18:00",
+   "fim_estimado": "19:45",
+   "incerteza_min": 45,
+   "publico_estimado": null,
+   "fonte": "https://www.sympla.com.br/evento/20-10-great-books-great-tits/3618769",
+   "origem": "sympla",
+   "regra": "show",
+   "lat": -23.561223,
+   "lng": -46.682777
   },
   {
    "nome": "Akira (35 anos Relançamento 4K) - 14/10 - Open Air Brasil - São Paulo",
@@ -596,6 +612,22 @@
    "lng": -46.634712
   },
   {
+   "nome": "MUSEU DAS ILUSÕES SP SHOPPING SP MARKET",
+   "local": "Shopping SP Market",
+   "endereco": "Av. das Nações Unidas,22540 -  ao lado do Cinemark, São Paulo",
+   "tipo": "show",
+   "data": "2026-10-14",
+   "inicio": "22:00",
+   "fim_estimado": "23:45",
+   "incerteza_min": 45,
+   "publico_estimado": null,
+   "fonte": "https://bileto.sympla.com.br/event/104934",
+   "origem": "sympla",
+   "regra": "show",
+   "lat": -23.678634,
+   "lng": -46.698674
+  },
+  {
    "nome": "CCPC 14/10 QUARTA PROIBIDA - FUNKHALL, DANCEHALL E SHATTA + TECHNO das",
    "local": "ESPAÇO CULTURAL CCPC GENERAL CLUB",
    "endereco": "Rua General Jardim, Vila Buarque, São Paulo",
@@ -613,7 +645,7 @@
   }
  ],
  "geocodificacao": {
-  "com_local": 38,
+  "com_local": 40,
   "sem_local": 0
  }
 }
