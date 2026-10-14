@@ -278,7 +278,7 @@ function historico(){
           <div class="sub"><b>${hm(c.acc)}</b> · ${c.app==="99"?"99":"Uber"} · viagem sem oferta lida (o card não apareceu)</div>
           ${(ROUTES[c.id]||[]).length > 1 ? `<div class="mini" data-mini="${c.id}"></div>` : ""}
           <div class="sm muted" style="margin-top:10px">${(c.km||0).toFixed(1).replace(".",",")} km rodados${c.end?" · "+hm(c.acc)+"–"+hm(c.end):""}</div>
-          ${(ROUTES[c.id]||[]).length > 1 && (c.st||"").startsWith("concluída") ? `<button class="replay" onclick="openReplay('${c.id}')">${ic("play_arrow-fill")} Ver replay da corrida</button>` : ""}</div>`; return; }
+          ${(ROUTES[c.id]||[]).length >= 6 && (c.st||"").startsWith("concluída") ? `<button class="replay" onclick="openReplay('${c.id}')">${ic("play_arrow-fill")} Ver replay da corrida</button>` : ""}</div>`; return; }
       const vc = o.v==="BOM"?"good":o.v==="RUIM"?"bad":"mid", vl = o.v==="BOM"?"Boa":o.v==="RUIM"?"Ruim":"Média";
       const nota = o.nota ? " · " + ic("star-fill","sm") + " " + o.nota.toFixed(2).replace(".",",") : "";
       h += `<div class="offer ${o.accepted?"accepted":""}">
@@ -287,7 +287,7 @@ function historico(){
         <div class="mets"><div><b class="${cls(o.rskm,KMB,KMG)}">${brl(o.rskm)}</b><span>por km</span></div><div><b class="${cls(o.rsh,HB,HG)}">${brl(o.rsh,0)}</b><span>por hora</span></div><div><b>${o.lucro!=null?brl(o.lucro,0):"–"}</b><span>lucro</span></div></div>
         ${fixAddr(o.orig)||fixAddr(o.dest)?`<div class="addr">${fixAddr(o.orig)?ic("radio_button_unchecked","sm")+" "+fixAddr(o.orig):""}${fixAddr(o.orig)&&fixAddr(o.dest)?"<br>":""}${fixAddr(o.dest)?ic("location_on","sm")+" "+fixAddr(o.dest):""}</div>`:""}
         ${o.trip && (ROUTES[o.trip.id]||[]).length > 1 ? `<div class="mini" data-mini="${o.trip.id}"></div><div class="sm muted" style="margin-top:10px">${o.trip.st[0].toUpperCase()+o.trip.st.slice(1)} · ${(o.trip.km||0).toFixed(1).replace(".",",")} km rodados${o.trip.end?" · "+hm(o.trip.acc)+"–"+hm(o.trip.end):""}</div>
-        ${o.trip.st.startsWith("concluída") ? `<button class="replay" onclick="openReplay('${o.trip.id}')">${ic("play_arrow-fill")} Ver replay da corrida</button>` : ""}` : ""}</div>`; });
+        ${o.trip.st.startsWith("concluída") && (ROUTES[o.trip.id]||[]).length >= 6 ? `<button class="replay" onclick="openReplay('${o.trip.id}')">${ic("play_arrow-fill")} Ver replay da corrida</button>` : ""}` : ""}</div>`; });
   });
   app.innerHTML = h; initMaps();
 }

@@ -104,7 +104,11 @@ const when=s=>s?new Date(s.replace(" ","T")):null, hm=d=>String(d.getHours()).pa
 const brl=(v,d=2)=>"R$ "+(v||0).toLocaleString("pt-BR",{minimumFractionDigits:d,maximumFractionDigits:d});
 const trips=parseCsv(raw("corridas.csv")), offers=parseCsv(raw("ofertas.csv")), rotas=parseCsv(raw("rotas.csv"));
 const want=new URLSearchParams(location.search).get("id");
-const done=trips.filter(t=>t.status.startsWith("concluída") && rotas.some(r=>r.id===t.id));
+// só dá replay com o trajeto gravado (corrida corrigida sem GPS não tem percurso para animar)
+const MIN_PTS=6, nPts=id=>rotas.filter(r=>r.id===id).length;
+const done=trips.filter(t=>t.status.startsWith("concluída") && nPts(t.id)>=MIN_PTS);
+const pedida=want?trips.find(t=>t.id===want):null;
+if(pedida && nPts(pedida.id)<MIN_PTS){ document.body.innerHTML=`<div style="padding:28px 20px;font:17px system-ui;color:#E6EDF3;background:#0B0F14;height:100vh"><button onclick="goBack()" style="width:52px;height:52px;border-radius:16px;border:0;background:#1E2630;color:#E6EDF3;font-size:28px" aria-label="Voltar">${ic("chevron_left")}</button><h2 style="margin:22px 0 8px">Sem trajeto gravado</h2><p style="color:#8B949E">O GPS não gravou o percurso desta corrida (${hm(when(pedida.aceite))}), então não dá para animar. Os valores e horários dela estão certos no Histórico.</p></div>`; throw new Error("sem trajeto"); }
 const T=done.find(t=>t.id===want) || done[done.length-1];
 if(!T){ document.body.innerHTML=`<div style="padding:28px 20px;font:17px system-ui;color:#E6EDF3;background:#0B0F14;height:100vh"><button onclick="goBack()" style="width:52px;height:52px;border-radius:16px;border:0;background:#1E2630;color:#E6EDF3;font-size:28px" aria-label="Voltar">${ic("chevron_left")}</button><h2 style="margin:22px 0 8px">Ainda sem replay</h2><p style="color:#8B949E">Assim que você concluir uma corrida com o Radar ligado, ela aparece aqui animada.</p></div>`; throw new Error("sem corrida"); }
 const acc=when(T.aceite);

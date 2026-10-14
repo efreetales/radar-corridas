@@ -505,7 +505,9 @@ object FreeTrack {
     private val fmt = java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss", java.util.Locale.US)
 
     fun onLocation(ctx: android.content.Context, loc: android.location.Location) {
-        if (TripTracker.isOnTrip || RideScreen.active) { last = null; return }
+        // Só para quando a corrida está sendo gravada pelo TripTracker. Se a Uber está numa corrida que o Radar
+        // não registrou (oferta não lida), o GPS continua aqui, e a conferência com a Uber consegue montar o trajeto.
+        if (TripTracker.isOnTrip) { last = null; return }
         if (loc.hasAccuracy() && loc.accuracy > 60f) return
         val now = System.currentTimeMillis()
         if (now - lastAt < EVERY_MS) return

@@ -516,7 +516,7 @@ function renderItin(){
   le.style.display = "block";
   return bounds;
 }
-function canReplay(id){ const c = (trips||[]).find(t => t.id === id); return !!c && (c.st||"").startsWith("concluída") && (routes[id]||[]).length > 1; }
+function canReplay(id){ const c = (trips||[]).find(t => t.id === id); return !!c && (c.st||"").startsWith("concluída") && (routes[id]||[]).length >= 6; }
 function openReplay(id){ if (!id) return; try { Radar.replay(id); } catch(e) {} }
 function pickTrip(id){ selTrip = selTrip === id ? null : id; renderItin();
   document.getElementById("rplay").style.display = selTrip && canReplay(selTrip) ? "block" : "none";
