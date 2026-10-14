@@ -13,6 +13,8 @@ class BankListener : NotificationListenerService() {
     override fun onNotificationPosted(sbn: StatusBarNotification?) {
         val n = sbn ?: return
         if (n.packageName == packageName) return
+        // Uber/99 online com a leitura de ofertas desligada: o card não vai aparecer, avisa
+        if (LeituraAviso.deApp(n.packageName)) { LeituraAviso.avisar(this, aposAtualizar = false); return }
         try {
             if (!Prefs(this).readBankNotifs) return
             val ex = n.notification.extras ?: return

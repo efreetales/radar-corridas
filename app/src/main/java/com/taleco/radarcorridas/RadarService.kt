@@ -161,6 +161,7 @@ class RadarService : AccessibilityService() {
 
     override fun onServiceConnected() {
         super.onServiceConnected()
+        LeituraAviso.limpar(this)
         prefs = Prefs(this)
         overlay = OverlayManager(this)
         instance = this
