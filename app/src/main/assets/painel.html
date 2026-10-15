@@ -154,6 +154,18 @@
   .cfv { font-weight:800; font-size:18px; white-space:nowrap; } .cfv input { width:84px; background:transparent; border:0; border-bottom:1px dashed var(--line); color:var(--tx); font:inherit; text-align:right; padding:2px 0; }
   .tag { font-size:12px; padding:2px 9px; border-radius:20px; background:var(--s3); color:var(--mid); } .tag.ok { color:var(--good); }
   .btn2 { display:block; width:100%; min-height:50px; margin-top:10px; border:1px solid var(--line); border-radius:14px; background:transparent; color:var(--mu); font-size:16px; }
+
+  /* ===== tema claro (segue o celular) ===== */
+  :root[data-tema=claro] { --bg:#F4F6F8; --s1:#FFFFFF; --s2:#EEF1F4; --s3:#E3E7EC; --line:#DDE2E7; --tx:#14181D; --mu:#5F6B76;
+          --ac:#0E9F7A; --good:#178A54; --mid:#B7791F; --bad:#D93B41; --blue:#2F6FD6; --purple:#6F4CD6; }
+  [data-tema=claro] .seg button.on, [data-tema=claro] .chip.on { background:#DDF3EC; }
+  [data-tema=claro] .hero { background:linear-gradient(180deg,#E3F5EF,#F4FAF8); border-color:#BFE6D8; }
+  [data-tema=claro] .perm { background:linear-gradient(180deg,#E7F0FC,#F3F7FD); border-color:#C3D7F2; }
+  [data-tema=claro] .gx.pend { background:linear-gradient(180deg,#FFF6E0,var(--s1)); }
+  [data-tema=claro] .mini, [data-tema=claro] .daymap, [data-tema=claro] .leaflet-container { background:#E6EAEE; }
+  [data-tema=claro] .btn, [data-tema=claro] .gx .acts .yes { color:#fff; }
+  [data-tema=claro] .card, [data-tema=claro] .kpi, [data-tema=claro] .offer, [data-tema=claro] .rank { box-shadow:0 1px 2px rgba(20,24,29,.06); }
+  [data-tema=claro] .replay { background:#DDF3EC; color:#0B7F62; }
   @media (prefers-reduced-motion: reduce) { .anim, .bars i, .hourbar i, .track i, .stack i, .draw { animation:none !important; } }
 </style>
 </head>
@@ -204,7 +216,7 @@ const PHC = { A_CAMINHO:"#8B949E", NO_EMBARQUE:"#F5C518", EM_VIAGEM:"#2FD3A6" };
 function drawMini(el, ids, free){
   if (!window.L) { el.innerHTML = '<div class="empty" style="padding:50px 0">Mapa indisponível sem internet</div>'; return; }
   const m = L.map(el, { zoomControl:false, attributionControl:false, dragging:false, scrollWheelZoom:false, doubleClickZoom:false, boxZoom:false, keyboard:false, tap:false, touchZoom:false });
-  L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}", { maxZoom:16 }).addTo(m);
+  L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_" + (document.documentElement.dataset.tema === "claro" ? "Light" : "Dark") + "_Gray_Base/MapServer/tile/{z}/{y}/{x}", { maxZoom:16 }).addTo(m);
   const all = [];
   (free || []).forEach(seg => { if (seg.length > 1) { L.polyline(seg, { color:"#4C9AFF", weight:2.5, opacity:.7, dashArray:"5 5" }).addTo(m); all.push(...seg); } });
   ids.forEach(id => { const pts = ROUTES[id] || []; let seg = [], ph = null;

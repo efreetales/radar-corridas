@@ -20,10 +20,6 @@ object Voz {
     private val fila = mutableListOf<String>()
     private var foco: AudioFocusRequest? = null
 
-    private val ATTR = AudioAttributes.Builder()
-        .setUsage(AudioAttributes.USAGE_ASSISTANCE_NAVIGATION_GUIDANCE)
-        .setContentType(AudioAttributes.CONTENT_TYPE_SPEECH)
-        .build()
 
     fun falar(ctx: Context, texto: String) {
         val app = ctx.applicationContext
@@ -36,7 +32,7 @@ object Voz {
                     escolherVoz(app, t)
                     t.setSpeechRate(1.0f)
                     t.setPitch(1.0f)
-                    t.setAudioAttributes(ATTR)
+                    t.setAudioAttributes(VozCanal.attr(app))
                     t.setOnUtteranceProgressListener(object : UtteranceProgressListener() {
                         override fun onStart(id: String?) {}
                         override fun onDone(id: String?) { soltarFoco(app) }
@@ -86,11 +82,12 @@ object Voz {
         if (texto.isBlank()) return
         val am = ctx.getSystemService(AudioManager::class.java)
         if (am != null) {
-            val r = AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK).setAudioAttributes(ATTR).build()
+            val r = AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK).setAudioAttributes(VozCanal.attr(ctx)).build()
             foco = r
             am.requestAudioFocus(r)
         }
         Volume.subir(ctx)
+        try { tts?.setAudioAttributes(VozCanal.attr(ctx)) } catch (_: Exception) { }
         val p = Bundle()
         p.putFloat(TextToSpeech.Engine.KEY_PARAM_VOLUME, 1.0f)
         tts?.speak(texto, TextToSpeech.QUEUE_ADD, p, "radar-" + System.currentTimeMillis())

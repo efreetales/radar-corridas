@@ -222,6 +222,21 @@ class Prefs(context: Context) {
         get() = sp.getBoolean("ler_notif_banco", true)
         set(v) = sp.edit().putBoolean("ler_notif_banco", v).apply()
 
+    /** Canal da voz com o passageiro: "midia" (mais alto, como o áudio do WhatsApp) ou "navegacao" (como o Waze). */
+    var voiceChannel: String
+        get() = sp.getString("voz_canal", "midia") ?: "midia"
+        set(v) = sp.edit().putString("voz_canal", v).apply()
+
+    /** Opacidade da bolinha "R" (0.2 a 1). */
+    var bubbleOpacity: Float
+        get() = sp.getFloat("bolha_opacidade", 0.92f)
+        set(v) = sp.edit().putFloat("bolha_opacidade", v).apply()
+
+    /** Tema das telas do Radar: "auto" (segue o celular), "claro" ou "escuro". */
+    var tema: String
+        get() = sp.getString("tema", "auto") ?: "auto"
+        set(v) = sp.edit().putString("tema", v).apply()
+
     var bubbleLocked: Boolean
         get() = sp.getBoolean("bolha_travada", false)
         set(v) = sp.edit().putBoolean("bolha_travada", v).apply()

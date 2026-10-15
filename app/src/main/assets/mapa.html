@@ -128,6 +128,13 @@
   .trip .rp { margin-top:8px; width:100%; min-height:48px; border:0; border-radius:12px; background:#173A33; color:#6EE7C7; font:800 15px system-ui,sans-serif; }
   #me { position:absolute; right:10px; bottom:30px; z-index:450; width:44px; height:44px; border-radius:50%; border:0;
         background:var(--s1); color:#4C9AFF; font-size:22px; box-shadow:0 2px 8px rgba(0,0,0,.5); }
+
+  :root[data-tema=claro] { --bg:#F4F6F8; --s1:#FFFFFF; --s2:#EEF1F4; --tx:#14181D; --mu:#5F6B76; --ac:#0E9F7A; }
+  [data-tema=claro] .chip.on, [data-tema=claro] .tabs button.on { background:#DDF3EC; }
+  [data-tema=claro] .leaflet-container { background:#E6EAEE; }
+  [data-tema=claro] #grip { background:#C9D0D7; }
+  [data-tema=claro] .num::before { border-color:#fff; box-shadow:0 2px 8px rgba(0,0,0,.25); }
+  [data-tema=claro] .leaflet-tooltip.rgtip { background:#fff; color:#14181D; }
 </style>
 </head>
 <body>
@@ -253,8 +260,9 @@ const map = L.map("map", { zoomControl:false, attributionControl:false }).setVie
 L.control.attribution({ position:"topleft", prefix:false }).addTo(map);
 // Fundo escuro da Esri (sem chave). Se falhar, cai para o mapa padrão do OpenStreetMap.
 const esri = "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/";
-const base = L.tileLayer(esri + "World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}", { maxZoom:16, attribution:"© Esri, HERE, Garmin, © OpenStreetMap" }).addTo(map);
-const labels = L.tileLayer(esri + "World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}", { maxZoom:16 }).addTo(map);
+const TEMA = document.documentElement.dataset.tema === "claro" ? "Light" : "Dark";
+const base = L.tileLayer(esri + "World_" + TEMA + "_Gray_Base/MapServer/tile/{z}/{y}/{x}", { maxZoom:16, attribution:"© Esri, HERE, Garmin, © OpenStreetMap" }).addTo(map);
+const labels = L.tileLayer(esri + "World_" + TEMA + "_Gray_Reference/MapServer/tile/{z}/{y}/{x}", { maxZoom:16 }).addTo(map);
 let fails = 0, switched = false;
 base.on("tileerror", () => { if (++fails > 4 && !switched) { switched = true; map.removeLayer(base); map.removeLayer(labels);
   L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom:19, attribution:"© OpenStreetMap" }).addTo(map); } });

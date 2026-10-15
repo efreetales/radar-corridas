@@ -56,27 +56,39 @@ class MainActivity : AppCompatActivity() {
 
     // ---------- Navegação: tela inicial com cards → página de cada seção ----------
 
-    private class Page(val key: String, val icon: Int, val hint: String, val web: String? = null, val hidden: Boolean = false) {
+    private class Page(val key: String, val icon: Int, val hint: String, val web: String? = null, val grupo: String? = null) {
         lateinit var body: LinearLayout
     }
 
-    /** Ordem e ícones dos cards da tela inicial. "Prévia do cartão" fica dentro de Ganhos. */
+    /** Páginas do app. grupo = seção da tela inicial (trabalho, rua, ganhos, ajustes); null = só por dentro de outra página. */
     private val pages = linkedMapOf(
-        "Cartão e ganhos" to Page("Cartão e ganhos", R.drawable.ic_money, "Faixas, campos do cartão, custos e gastos"),
-        "Cálculo de ganhos" to Page("Faixas de ganhos", R.drawable.ic_money, "Quando cada número fica vermelho, amarelo ou verde", hidden = true),
-        "Radares de velocidade" to Page("Radares", R.drawable.ic_speed, "Aviso, bipe e distância"),
-        "Valetas e buracos" to Page("Valetas", R.drawable.ic_warning, "Marcar e avisar"),
-        "Meus pontos bons" to Page("Pontos bons", R.drawable.ic_star, "Lugares e horários"),
-        "Eventos de hoje" to Page("Eventos", R.drawable.ic_event, "Saídas de teatros, shows e jogos"),
-        "Histórico de ofertas" to Page("Histórico", R.drawable.ic_history, "Aceitas e recusadas", web = "historico"),
-        "Melhores horários" to Page("Horários", R.drawable.ic_clock, "Quando mais paga", web = "horarios"),
-        "Jornada" to Page("Jornada", R.drawable.ic_timer, "Tempo por fase", web = "jornada"),
-        "Custos do carro" to Page("Custos do carro", R.drawable.ic_fuel, "Seu custo por km e o mínimo para aceitar", web = "custos", hidden = true),
-        "Gastos do carro" to Page("Gastos do carro", R.drawable.ic_fuel, "Lidos das notificações do banco: posto, pedágio, oficina", web = "gastos", hidden = true),
-        "Estilo do cartão" to Page("Campos do cartão", R.drawable.ic_tune, "O que aparece no cartão e em que ordem", web = "cartao", hidden = true),
-        "Corridas e percurso" to Page("Corridas", R.drawable.ic_car, "Registro e permissões"),
-        "Aparência" to Page("Aparência", R.drawable.ic_palette, "Posição e botão R"),
-        "Dados" to Page("Dados", R.drawable.ic_storage, "Exportar e diagnóstico")
+        // Seu trabalho
+        "Histórico de ofertas" to Page("Corridas", R.drawable.ic_car, "Ofertas, corridas e replay", web = "historico", grupo = "trabalho"),
+        "Mapa" to Page("Mapa", R.drawable.ic_map, "Calor das ofertas e percursos", grupo = "trabalho"),
+        "Jornada" to Page("Tempo", R.drawable.ic_timer, "Online, buscando e em viagem", web = "jornada", grupo = "trabalho"),
+        "Melhores horários" to Page("Melhores horários", R.drawable.ic_clock, "Quando mais paga", web = "horarios", grupo = "trabalho"),
+        // Na rua
+        "Radares de velocidade" to Page("Radares", R.drawable.ic_speed, "Aviso, bipe e distância", grupo = "rua"),
+        "Valetas e buracos" to Page("Valetas", R.drawable.ic_warning, "Marcar e avisar", grupo = "rua"),
+        "Meus pontos bons" to Page("Pontos bons", R.drawable.ic_star, "Lugares e horários", grupo = "rua"),
+        "Eventos de hoje" to Page("Eventos", R.drawable.ic_event, "Saídas de shows e jogos", grupo = "rua"),
+        // Ganhos e custos
+        "Cartão e ganhos" to Page("Card da oferta", R.drawable.ic_tune, "Faixas de cor e campos", grupo = "ganhos"),
+        "Custos e gastos" to Page("Custos do carro", R.drawable.ic_fuel, "Gastos e custo por km", grupo = "ganhos"),
+        "Cálculo de ganhos" to Page("Faixas de cor", R.drawable.ic_tune, "Quando cada número fica vermelho, amarelo ou verde"),
+        "Estilo do cartão" to Page("Campos do card", R.drawable.ic_tune, "O que aparece no card e em que ordem", web = "cartao"),
+        "Custos do carro" to Page("Custo por km", R.drawable.ic_money, "Seu custo por km e o mínimo para aceitar", web = "custos"),
+        "Gastos do carro" to Page("Gastos do carro", R.drawable.ic_fuel, "Lidos das notificações do banco: posto, pedágio, oficina", web = "gastos"),
+        // Ajustes
+        "Voz com o passageiro" to Page("Voz com o passageiro", R.drawable.ic_record_voice_over, "Textos, voz, volume e canal do áudio", grupo = "ajustes"),
+        "Leitura e permissões" to Page("Leitura e permissões", R.drawable.ic_verified_user, "Ofertas, GPS, notificações e bateria", grupo = "ajustes"),
+        "Aparência" to Page("Aparência", R.drawable.ic_palette, "Tema, bolinha R e posição do card", grupo = "ajustes"),
+        "Dados" to Page("Dados e backup", R.drawable.ic_storage, "Exportar, conferir com a Uber, diagnóstico", grupo = "ajustes")
+    )
+    /** Páginas que são uma lista de subpáginas. */
+    private val hubs = mapOf(
+        "Cartão e ganhos" to listOf("Cálculo de ganhos", "Estilo do cartão"),
+        "Custos e gastos" to listOf("Custos do carro", "Gastos do carro")
     )
 
     private lateinit var scroll: ScrollView
@@ -86,50 +98,75 @@ class MainActivity : AppCompatActivity() {
     private var previewBlock: View? = null
     /** Subpáginas: o "voltar" leva para a página-mãe, não para a tela inicial. */
     private val parentPage = mapOf("Cálculo de ganhos" to "Cartão e ganhos")
+    private lateinit var homeStatusTitle: TextView
+    private lateinit var homeStatusSub: TextView
+    private lateinit var homePill: TextView
 
     private fun goBack() {
         val p = currentPage?.let { parentPage[it] }
         if (p != null) showPage(p) else showHome()
     }
 
-    /** Página "Cartão e ganhos": prévia do cartão + submenu (faixas, campos, custos). */
-    private fun buildCardHub() {
-        val hub = pages["Cartão e ganhos"] ?: return
-        for (key in listOf("Cálculo de ganhos", "Estilo do cartão", "Custos do carro", "Gastos do carro")) {
-            val pg = pages[key] ?: continue
-            val row = LinearLayout(this).apply {
-                orientation = LinearLayout.HORIZONTAL
-                gravity = Gravity.CENTER_VERTICAL
-                setPadding(dp(18), dp(20), dp(14), dp(20))
-                background = rounded(Colors.SURFACE, 18f)
-                minimumHeight = dp(88)
-            }
-            ripple(row)
-            row.addView(icon(pg.icon, 30, Colors.ACCENT).apply {
-                layoutParams = LinearLayout.LayoutParams(dp(30), dp(30)).apply { rightMargin = dp(16) }
-            })
-            val t = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
-            t.addView(text(pg.key, 18f, Colors.TEXT, bold = true))
-            t.addView(text(pg.hint, 13f, Colors.MUTED))
-            row.addView(t, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f))
-            row.addView(icon(R.drawable.ic_chevron_right, 24, Colors.MUTED).apply {
-                layoutParams = LinearLayout.LayoutParams(dp(24), dp(24)).apply { leftMargin = dp(8) }
-            })
-            row.setOnClickListener {
-                val w = pg.web
-                if (w != null) startActivity(Intent(this, PainelActivity::class.java).putExtra(PainelActivity.EXTRA_PAGE, w))
-                else showPage(key)
-            }
-            hub.body.addView(row, matchWrap(top = 14))
+    /** Linha de lista (ícone, título, descrição e seta): usada nos hubs e nos Ajustes da tela inicial. */
+    private fun listRow(pg: Page, key: String, divider: Boolean): View {
+        val row = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            gravity = Gravity.CENTER_VERTICAL
+            setPadding(dp(16), dp(16), dp(12), dp(16))
+            minimumHeight = dp(76)
+        }
+        ripple(row)
+        row.addView(icon(pg.icon, 28, Ui.ACCENT).apply {
+            layoutParams = LinearLayout.LayoutParams(dp(28), dp(28)).apply { rightMargin = dp(16) }
+        })
+        val t = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
+        t.addView(text(pg.key, 17f, Ui.TEXT, bold = true))
+        t.addView(text(pg.hint, 13f, Ui.MUTED))
+        row.addView(t, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f))
+        row.addView(icon(R.drawable.ic_chevron_right, 24, Ui.MUTED).apply {
+            layoutParams = LinearLayout.LayoutParams(dp(24), dp(24)).apply { leftMargin = dp(8) }
+        })
+        row.setOnClickListener { abrir(key) }
+        if (!divider) return row
+        val wrap = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
+        wrap.addView(row)
+        wrap.addView(View(this).apply { setBackgroundColor(Ui.LINE) }, LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 1).apply { leftMargin = dp(60) })
+        return wrap
+    }
+
+    /** Lista agrupada num cartão (fundo único, separadores entre as linhas). */
+    private fun listCard(keys: List<String>): LinearLayout {
+        val box = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            background = rounded(Ui.SURFACE, 20f)
+        }
+        keys.forEachIndexed { i, k -> pages[k]?.let { box.addView(listRow(it, k, i < keys.size - 1), matchWrap()) } }
+        return box
+    }
+
+    /** Abre uma página: web, mapa ou página nativa. */
+    private fun abrir(key: String) {
+        val pg = pages[key] ?: return
+        when {
+            key == "Mapa" -> startActivity(Intent(this, MapActivity::class.java))
+            pg.web != null -> startActivity(Intent(this, PainelActivity::class.java).putExtra(PainelActivity.EXTRA_PAGE, pg.web))
+            else -> showPage(key)
         }
     }
 
+    /** Páginas-hub (Card da oferta, Custos do carro): lista das subpáginas. */
+    private fun buildHubs() {
+        for ((hubKey, keys) in hubs) pages[hubKey]?.body?.addView(listCard(keys), matchWrap(top = 16))
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode(Ui.modo(this))
         super.onCreate(savedInstanceState)
+        Ui.atualizar(this)
         prefs = Prefs(this)
 
         scroll = ScrollView(this).apply {
-            setBackgroundColor(Colors.BG)
+            setBackgroundColor(Ui.BG)
             isFillViewport = true
         }
         setContentView(scroll)
@@ -141,7 +178,7 @@ class MainActivity : AppCompatActivity() {
         statusCard = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
             setPadding(dp(20), dp(20), dp(20), dp(20))
-            background = rounded(Colors.SURFACE, 20f)
+            background = rounded(Ui.SURFACE, 20f)
         }
 
         val dummy = LinearLayout(this)
@@ -156,8 +193,7 @@ class MainActivity : AppCompatActivity() {
         buildSpots(dummy)
         buildEvents(dummy)
         buildData(dummy)
-        buildCardHub()
-        tallAll(statusCard)
+        buildHubs()
         for (pg in pages.values) tallAll(pg.body)
 
         home = buildHome()
@@ -180,64 +216,51 @@ class MainActivity : AppCompatActivity() {
             orientation = LinearLayout.VERTICAL
             setPadding(dp(16), dp(28), dp(16), dp(40))
         }
-        col.addView(text("Radar Corridas", 28f, Colors.TEXT, bold = true))
+        col.addView(text("Radar Corridas", 28f, Ui.TEXT, bold = true))
         col.addView(text(
             "Mostra na hora se a corrida compensa. Só lê a oferta: nunca aceita nem recusa por você.",
-            14f, Colors.MUTED
+            14f, Ui.MUTED
         ).apply { setPadding(0, dp(4), 0, dp(16)) })
 
-        statusCard.addView(icon(R.drawable.ic_power, 34, Colors.ACCENT).apply {
-            layoutParams = LinearLayout.LayoutParams(dp(34), dp(34)).apply { bottomMargin = dp(14) }
-        }, 0)
-        col.addView(statusCard, matchWrap())
-
-        // Card do mapa, largura toda
-        val mapTile = LinearLayout(this).apply {
+        // Status compacto: toca para abrir Leitura e permissões
+        val st = LinearLayout(this).apply {
             orientation = LinearLayout.HORIZONTAL
             gravity = Gravity.CENTER_VERTICAL
-            setPadding(dp(18), dp(18), dp(18), dp(18))
-            background = rounded(Colors.SURFACE, 20f)
-            minimumHeight = dp(96)
+            setPadding(dp(16), dp(16), dp(16), dp(16))
+            background = rounded(Ui.SURFACE, 20f)
+            minimumHeight = dp(76)
         }
-        ripple(mapTile)
-        mapTile.addView(icon(R.drawable.ic_map, 34, Colors.ACCENT).apply {
-            layoutParams = LinearLayout.LayoutParams(dp(34), dp(34)).apply { rightMargin = dp(16) }
+        ripple(st)
+        st.addView(icon(R.drawable.ic_power, 30, Ui.ACCENT).apply {
+            layoutParams = LinearLayout.LayoutParams(dp(30), dp(30)).apply { rightMargin = dp(14) }
         })
-        val mt = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
-        mt.addView(text("Mapa", 18f, Colors.TEXT, bold = true))
-        mt.addView(text("Calor das ofertas, percursos e melhores regiões", 12f, Colors.MUTED))
-        mapTile.addView(mt, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f))
-        mapTile.setOnClickListener { startActivity(Intent(this, MapActivity::class.java)) }
-        col.addView(mapTile, matchWrap(top = 12))
+        val stt = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
+        homeStatusTitle = text("", 17f, Ui.TEXT, bold = true)
+        homeStatusSub = text("", 13f, Ui.MUTED)
+        stt.addView(homeStatusTitle); stt.addView(homeStatusSub)
+        st.addView(stt, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f))
+        homePill = text("", 13f, Ui.ACCENT, bold = true).apply { setPadding(dp(12), dp(6), dp(12), dp(6)) }
+        st.addView(homePill)
+        st.setOnClickListener { showPage("Leitura e permissões") }
+        col.addView(st, matchWrap())
 
-        // Cartão e ganhos: card largo, como o do mapa
-        pages["Cartão e ganhos"]?.let { pg ->
-            col.addView(wideTile(pg.icon, pg.key, pg.hint) { showPage("Cartão e ganhos") }, matchWrap(top = 14))
-        }
-
-        // Replay animado da última corrida concluída
-        col.addView(wideTile(R.drawable.ic_play_circle, "Replay da última corrida", "Reveja a última corrida animada no mapa, etapa por etapa") {
-            startActivity(Intent(this, PainelActivity::class.java).putExtra(PainelActivity.EXTRA_PAGE, "replay:"))
-        }, matchWrap(top = 14))
-
-        // Grade de cards, 2 por linha
-        val entries = pages.entries.filter { !it.value.hidden && it.key != "Cartão e ganhos" }
-        var i = 0
-        while (i < entries.size) {
-            val row = LinearLayout(this).apply { orientation = LinearLayout.HORIZONTAL }
-            for (j in 0..1) {
-                val e = entries.getOrNull(i + j)
-                val lp = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f).apply {
-                    if (j == 0) rightMargin = dp(7) else leftMargin = dp(7)
+        for ((grupo, titulo) in listOf("trabalho" to "Seu trabalho", "rua" to "Na rua", "ganhos" to "Ganhos e custos", "ajustes" to "Ajustes")) {
+            col.addView(text(titulo.uppercase(), 13f, Ui.MUTED, bold = true).apply {
+                letterSpacing = 0.06f
+                setPadding(dp(4), dp(24), 0, dp(10))
+            })
+            val keys = pages.filter { it.value.grupo == grupo }.keys.toList()
+            if (grupo == "ajustes") { col.addView(listCard(keys), matchWrap()); continue }
+            // Grade de 2 colunas, todos os cards com a mesma altura
+            keys.chunked(2).forEachIndexed { i, par ->
+                val row = LinearLayout(this).apply { orientation = LinearLayout.HORIZONTAL }
+                for (j in 0..1) {
+                    val lp = LinearLayout.LayoutParams(0, dp(150), 1f).apply { if (j == 0) rightMargin = dp(6) else leftMargin = dp(6) }
+                    val k = par.getOrNull(j)
+                    row.addView(if (k == null) View(this) else tile(k, pages[k]!!), lp)
                 }
-                if (e == null) {
-                    row.addView(View(this), lp)
-                } else {
-                    row.addView(tile(e.key, e.value), lp)
-                }
+                col.addView(row, matchWrap(top = if (i == 0) 0 else 12))
             }
-            col.addView(row, matchWrap(top = 14))
-            i += 2
         }
 
         val version = try {
@@ -245,32 +268,11 @@ class MainActivity : AppCompatActivity() {
         } catch (_: Exception) {
             "?"
         }
-        col.addView(text("Versão $version", 12f, Colors.MUTED).apply {
+        col.addView(text("Versão $version", 12f, Ui.MUTED).apply {
             gravity = Gravity.CENTER
             setPadding(0, dp(20), 0, 0)
         })
         return col
-    }
-
-    /** Card largo da tela inicial (ícone à esquerda, título e descrição). */
-    private fun wideTile(iconRes: Int, title: String, hint: String, onClick: () -> Unit): View {
-        val t = LinearLayout(this).apply {
-            orientation = LinearLayout.HORIZONTAL
-            gravity = Gravity.CENTER_VERTICAL
-            setPadding(dp(18), dp(18), dp(18), dp(18))
-            background = rounded(Colors.SURFACE, 20f)
-            minimumHeight = dp(96)
-        }
-        ripple(t)
-        t.addView(icon(iconRes, 34, Colors.ACCENT).apply {
-            layoutParams = LinearLayout.LayoutParams(dp(34), dp(34)).apply { rightMargin = dp(16) }
-        })
-        val c = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
-        c.addView(text(title, 18f, Colors.TEXT, bold = true))
-        c.addView(text(hint, 12f, Colors.MUTED))
-        t.addView(c, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f))
-        t.setOnClickListener { onClick() }
-        return t
     }
 
     private fun ripple(v: View) {
@@ -287,24 +289,20 @@ class MainActivity : AppCompatActivity() {
         layoutParams = LinearLayout.LayoutParams(dp(sizeDp), dp(sizeDp))
     }
 
-    /** Card da tela inicial: ícone em cima, nome embaixo (como no app do banco). */
-    private fun tile(title: String, pg: Page): View {
+    /** Card da tela inicial: ícone em cima, nome e descrição (até 2 linhas). Altura fixa definida pela grade. */
+    private fun tile(key: String, pg: Page): View {
         val card = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
-            setPadding(dp(18), dp(18), dp(18), dp(16))
-            background = rounded(Colors.SURFACE, 20f)
-            minimumHeight = dp(150)
+            setPadding(dp(16), dp(16), dp(16), dp(14))
+            background = rounded(Ui.SURFACE, 20f)
         }
         ripple(card)
-        card.addView(icon(pg.icon, 34, Colors.ACCENT))
-        card.addView(View(this), LinearLayout.LayoutParams(1, 0, 1f))
-        card.addView(text(pg.key, 18f, Colors.TEXT, bold = true).apply { setPadding(0, dp(18), 0, 0) })
-        card.addView(text(pg.hint, 12f, Colors.MUTED).apply { setPadding(0, dp(2), 0, 0) })
-        card.setOnClickListener {
-            val w = pg.web
-            if (w != null) startActivity(Intent(this, PainelActivity::class.java).putExtra(PainelActivity.EXTRA_PAGE, w))
-            else showPage(title)
-        }
+        card.addView(icon(pg.icon, 30, Ui.ACCENT))
+        card.addView(text(pg.key, 17f, Ui.TEXT, bold = true).apply { setPadding(0, dp(12), 0, 0); maxLines = 2 })
+        card.addView(text(pg.hint, 13f, Ui.MUTED).apply {
+            setPadding(0, dp(2), 0, 0); maxLines = 2; ellipsize = android.text.TextUtils.TruncateAt.END
+        })
+        card.setOnClickListener { abrir(key) }
         return card
     }
 
@@ -334,12 +332,12 @@ class MainActivity : AppCompatActivity() {
             setOnClickListener { goBack() }
         }
         ripple(back)
-        back.addView(icon(R.drawable.ic_back, 26, Colors.TEXT), android.widget.FrameLayout.LayoutParams(dp(26), dp(26), Gravity.CENTER))
+        back.addView(icon(R.drawable.ic_back, 26, Ui.TEXT), android.widget.FrameLayout.LayoutParams(dp(26), dp(26), Gravity.CENTER))
         bar.addView(back, LinearLayout.LayoutParams(dp(48), dp(48)))
-        bar.addView(icon(pg.icon, 28, Colors.ACCENT).apply {
+        bar.addView(icon(pg.icon, 28, Ui.ACCENT).apply {
             layoutParams = LinearLayout.LayoutParams(dp(28), dp(28)).apply { leftMargin = dp(4); rightMargin = dp(10) }
         })
-        bar.addView(text(if (title == "Cálculo de ganhos") pg.key else title, 22f, Colors.TEXT, bold = true))
+        bar.addView(text(pg.key, 22f, Ui.TEXT, bold = true))
         col.addView(bar, matchWrap())
 
         // A prévia do cartão aparece no topo do "Cartão e ganhos" e das "Faixas de ganhos"
@@ -380,7 +378,7 @@ class MainActivity : AppCompatActivity() {
         statusDot = View(this).apply {
             layoutParams = LinearLayout.LayoutParams(dp(12), dp(12)).apply { rightMargin = dp(10) }
         }
-        statusText = text("", 16f, Colors.TEXT, bold = true)
+        statusText = text("", 16f, Ui.TEXT, bold = true)
         row.addView(statusDot)
         row.addView(statusText)
         card.addView(row)
@@ -394,7 +392,7 @@ class MainActivity : AppCompatActivity() {
             "Em Acessibilidade, procure \"Radar Corridas\" (às vezes dentro de \"Apps instalados\") e ative.\n\n" +
                 "Se a opção aparecer bloqueada: abra Configurações {chevron} Apps {chevron} Radar Corridas {chevron} menu de três pontinhos {chevron} " +
                 "\"Permitir configurações restritas\" e tente de novo.",
-            13f, Colors.MUTED
+            13f, Ui.MUTED
         ).apply { setPadding(0, dp(8), 0, 0) })
 
         val testBtn = outlinedButton("Testar cartão na tela").apply {
@@ -410,7 +408,7 @@ class MainActivity : AppCompatActivity() {
         val card = section(col, "Prévia do cartão")
         card.addView(text(
             "Exemplo com a oferta do print: Black, R$ 22,02, 16 min e 7 km no total.",
-            13f, Colors.MUTED
+            13f, Ui.MUTED
         ).apply { setPadding(0, 0, 0, dp(10)) })
         previewBox = FrameLayout(this).apply {
             setPadding(dp(8), dp(16), dp(8), dp(16))
@@ -424,14 +422,14 @@ class MainActivity : AppCompatActivity() {
         card.addView(text(
             "Arraste as bolinhas: até a da esquerda é ruim (vermelho), a partir da da direita é bom (verde). " +
                 "Entre as duas, médio (amarelo). Busca e viagem entram juntas na conta.",
-            13f, Colors.MUTED
+            13f, Ui.MUTED
         ))
 
         for (m in Metric.values()) {
             val box = LinearLayout(this).apply {
                 orientation = LinearLayout.VERTICAL
                 setPadding(dp(12), dp(12), dp(12), dp(8))
-                background = rounded(Colors.SURFACE_2, 12f)
+                background = rounded(Ui.SURFACE_2, 12f)
             }
 
             val header = LinearLayout(this).apply {
@@ -439,12 +437,12 @@ class MainActivity : AppCompatActivity() {
                 gravity = Gravity.CENTER_VERTICAL
             }
             header.addView(
-                text(m.label, 17f, Colors.TEXT, bold = true),
+                text(m.label, 17f, Ui.TEXT, bold = true),
                 LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
             )
             val show = SwitchMaterial(this).apply {
                 text = "No cartão"
-                setTextColor(Colors.MUTED)
+                setTextColor(Ui.MUTED)
                 isChecked = prefs.isShown(m)
                 setOnCheckedChangeListener { _, checked ->
                     prefs.setShown(m, checked)
@@ -453,9 +451,9 @@ class MainActivity : AppCompatActivity() {
             }
             header.addView(show)
             box.addView(header)
-            box.addView(text(m.help, 12f, Colors.MUTED))
+            box.addView(text(m.help, 12f, Ui.MUTED))
 
-            val rangeLabel = text("", 14f, Colors.TEXT).apply { setPadding(0, dp(8), 0, 0) }
+            val rangeLabel = text("", 14f, Ui.TEXT).apply { setPadding(0, dp(8), 0, 0) }
             box.addView(rangeLabel)
 
             val bad = prefs.bad(m).coerceIn(m.sliderMin, m.sliderMax)
@@ -490,7 +488,7 @@ class MainActivity : AppCompatActivity() {
         val card = section(col, "Custos do carro")
         card.addView(text(
             "Usados para calcular o Lucro: valor da corrida menos o custo dos km rodados.",
-            13f, Colors.MUTED
+            13f, Ui.MUTED
         ))
         card.addView(numberField("Km por litro", prefs.kmPerLiter) { prefs.kmPerLiter = it }, matchWrap(top = 10))
         card.addView(numberField("Preço do litro (R$)", prefs.fuelPrice) { prefs.fuelPrice = it }, matchWrap(top = 8))
@@ -506,7 +504,7 @@ class MainActivity : AppCompatActivity() {
             numberField("Outros custos por km (R$) — manutenção, pneus, seguro", prefs.extraCostKm) { prefs.extraCostKm = it },
             matchWrap(top = 8)
         )
-        costSummary = text("", 14f, Colors.TEXT, bold = true).apply { setPadding(0, dp(10), 0, 0) }
+        costSummary = text("", 14f, Ui.TEXT, bold = true).apply { setPadding(0, dp(10), 0, 0) }
         card.addView(costSummary)
         updateCostSummary()
     }
@@ -514,7 +512,24 @@ class MainActivity : AppCompatActivity() {
     private fun buildAppearance(col: LinearLayout) {
         val card = section(col, "Aparência")
 
-        card.addView(text("Posição do cartão", 14f, Colors.TEXT))
+        card.addView(text("Tema", 14f, Ui.TEXT))
+        val tg = MaterialButtonToggleGroup(this).apply { isSingleSelection = true; isSelectionRequired = true }
+        val temas = listOf("auto" to "Celular", "claro" to "Claro", "escuro" to "Escuro")
+        val tIds = mutableMapOf<Int, String>()
+        for ((k, l) in temas) {
+            val b = outlinedButton(l).apply { id = View.generateViewId() }
+            tIds[b.id] = k
+            tg.addView(b, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f))
+            if (prefs.tema == k) tg.check(b.id)
+        }
+        tg.addOnButtonCheckedListener { _, id, on ->
+            val k = tIds[id] ?: return@addOnButtonCheckedListener
+            if (on && k != prefs.tema) { prefs.tema = k; androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode(Ui.modo(this)); recreate() }
+        }
+        card.addView(tg, matchWrap(top = 6))
+        card.addView(text("O card da oferta e os avisos sobre a Uber ficam sempre escuros, para ler bem em cima do mapa.", 12f, Ui.MUTED).apply { setPadding(0, 0, 0, dp(14)) })
+
+        card.addView(text("Posição do card", 14f, Ui.TEXT))
         val group = MaterialButtonToggleGroup(this).apply {
             isSingleSelection = true
             isSelectionRequired = true
@@ -531,9 +546,9 @@ class MainActivity : AppCompatActivity() {
         }
         card.addView(group, matchWrap(top = 6))
 
-        val opLabel = text("", 14f, Colors.TEXT).apply { setPadding(0, dp(14), 0, 0) }
+        val opLabel = text("", 14f, Ui.TEXT).apply { setPadding(0, dp(14), 0, 0) }
         card.addView(opLabel)
-        fun setOpLabel(v: Float) { opLabel.text = "Opacidade: ${(v * 100).roundToInt()}%" }
+        fun setOpLabel(v: Float) { opLabel.text = "Opacidade do card: ${(v * 100).roundToInt()}%" }
         setOpLabel(prefs.opacity)
         val op = Slider(this)
         op.valueFrom = 0.4f
@@ -550,7 +565,7 @@ class MainActivity : AppCompatActivity() {
 
         val bubble = SwitchMaterial(this).apply {
             text = "Mostrar botão flutuante \"R\""
-            setTextColor(Colors.TEXT)
+            setTextColor(Ui.TEXT)
             isChecked = prefs.showBubble
             setOnCheckedChangeListener { _, checked ->
                 prefs.showBubble = checked
@@ -558,9 +573,19 @@ class MainActivity : AppCompatActivity() {
             }
         }
         card.addView(bubble, matchWrap(top = 6))
+        val bLabel = text("", 14f, Ui.TEXT).apply { setPadding(0, dp(10), 0, 0) }
+        card.addView(bLabel)
+        fun setB(v: Float) { bLabel.text = "Opacidade da bolinha R: ${(v * 100).roundToInt()}%" }
+        setB(prefs.bubbleOpacity)
+        card.addView(Slider(this).apply {
+            valueFrom = 0.2f; valueTo = 1f; stepSize = 0f
+            value = prefs.bubbleOpacity.coerceIn(0.2f, 1f)
+            thumbTintList = ColorStateList.valueOf(Color.WHITE)
+            addOnChangeListener { _, v, fromUser -> prefs.bubbleOpacity = v; setB(v); if (fromUser) RadarService.instance?.refreshBubble() }
+        }, matchWrap())
         card.addView(text(
             "O botão fica sobre a tela, mostra que o radar está ligado e abre esta tela com um toque. Arraste para mudar de lugar.",
-            12f, Colors.MUTED
+            12f, Ui.MUTED
         ))
     }
 
@@ -569,7 +594,7 @@ class MainActivity : AppCompatActivity() {
 
         val save = SwitchMaterial(this).apply {
             text = "Salvar as ofertas vistas"
-            setTextColor(Colors.TEXT)
+            setTextColor(Ui.TEXT)
             isChecked = prefs.logOffers
             setOnCheckedChangeListener { _, checked -> prefs.logOffers = checked }
         }
@@ -577,9 +602,9 @@ class MainActivity : AppCompatActivity() {
         card.addView(text(
             "Guarda valor, distância, tempo, endereços e o veredito de cada oferta, inclusive as que você recusa. " +
                 "Serve para descobrir onde e quando aparecem as melhores corridas.",
-            12f, Colors.MUTED
+            12f, Ui.MUTED
         ))
-        countText = text("", 14f, Colors.TEXT).apply { setPadding(0, dp(8), 0, 0) }
+        countText = text("", 14f, Ui.TEXT).apply { setPadding(0, dp(8), 0, 0) }
         card.addView(countText)
         card.addView(outlinedButton("Exportar dados (ofertas, corridas, rotas, radares e valetas)").apply {
             setOnClickListener {
@@ -596,19 +621,19 @@ class MainActivity : AppCompatActivity() {
         }, matchWrap(top = 6))
         card.addView(text(
             "Para arquivos de correção preparados a partir das suas ofertas, do GPS e do resumo da Uber. Uma cópia dos dados anteriores fica guardada.",
-            12f, Colors.MUTED
+            12f, Ui.MUTED
         ))
 
         val diag = SwitchMaterial(this).apply {
             text = "Modo diagnóstico"
-            setTextColor(Colors.TEXT)
+            setTextColor(Ui.TEXT)
             isChecked = prefs.diagnostic
             setOnCheckedChangeListener { _, checked -> prefs.diagnostic = checked }
         }
         card.addView(diag, matchWrap(top = 16))
         card.addView(text(
             "Registra os textos que o radar lê na tela da Uber/99. Se o cartão não aparecer, ligue, receba algumas ofertas e envie o arquivo para ajustar a leitura.",
-            12f, Colors.MUTED
+            12f, Ui.MUTED
         ))
         card.addView(outlinedButton("Enviar diagnóstico").apply {
             setOnClickListener {
@@ -629,6 +654,14 @@ class MainActivity : AppCompatActivity() {
 
     private fun updateStatus() {
         val active = RadarService.instance != null
+        if (::homeStatusTitle.isInitialized) {
+            homeStatusTitle.text = if (active) "Radar ligado" else "Radar desligado"
+            homeStatusSub.text = if (active) "Leitura de ofertas ativa" else "Toque para ligar a leitura de ofertas"
+            homePill.text = if (active) "Tudo certo" else "Ligar"
+            val c = if (active) Ui.ACCENT else Colors.RED
+            homePill.setTextColor(c)
+            homePill.background = GradientDrawable().apply { setColor(Color.argb(30, Color.red(c), Color.green(c), Color.blue(c))); cornerRadius = dp(99).toFloat() }
+        }
         statusDot.background = GradientDrawable().apply {
             shape = GradientDrawable.OVAL
             setColor(if (active) Colors.GREEN else Colors.RED)
@@ -662,10 +695,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun buildTrips(col: LinearLayout) {
-        val card = section(col, "Corridas e percurso")
+        val permCard = section(col, "Leitura e permissões")
+        var card = permCard
         val sw = SwitchMaterial(this).apply {
             text = "Registrar as corridas aceitas"
-            setTextColor(Colors.TEXT)
+            setTextColor(Ui.TEXT)
             isChecked = prefs.trackTrips
             setOnCheckedChangeListener { _, checked -> prefs.trackTrips = checked }
         }
@@ -674,31 +708,32 @@ class MainActivity : AppCompatActivity() {
             "Quando você aceita uma corrida, o Radar liga o GPS e grava o percurso e os tempos: " +
                 "do aceite até chegar ao passageiro, a espera, a viagem até o destino. " +
                 "O GPS desliga sozinho quando a Uber volta para a tela inicial.",
-            12f, Colors.MUTED
+            12f, Ui.MUTED
         ))
-        // Voz para o passageiro
+        // Voz para o passageiro (página própria)
+        card = section(col, "Voz com o passageiro")
         card.addView(SwitchMaterial(this).apply {
             text = "Falar com o passageiro"
-            setTextColor(Colors.TEXT)
+            setTextColor(Ui.TEXT)
             isChecked = prefs.talkToPassenger
             setOnCheckedChangeListener { _, checked -> prefs.talkToPassenger = checked }
         }, matchWrap(top = 14))
         card.addView(text(
             "O Radar fala com o passageiro quando ele embarca e quando o carro para no destino. " +
                 "Sai pelo som do carro quando o celular está conectado por Bluetooth ou Android Auto, abaixando a música enquanto fala.",
-            12f, Colors.MUTED
+            12f, Ui.MUTED
         ))
         // Textos da voz (editáveis)
         fun editor(titulo: String, atual: String, padrao: String, salvar: (String) -> Unit, ouvir: () -> Unit) {
-            card.addView(text(titulo, 15f, Colors.TEXT, bold = true).apply { setPadding(0, dp(14), 0, 0) })
+            card.addView(text(titulo, 15f, Ui.TEXT, bold = true).apply { setPadding(0, dp(14), 0, 0) })
             val ed = EditText(this).apply {
                 setText(atual.ifBlank { padrao })
-                setTextColor(Colors.TEXT)
+                setTextColor(Ui.TEXT)
                 textSize = 16f
                 minLines = 3
                 gravity = Gravity.TOP or Gravity.START
                 inputType = android.text.InputType.TYPE_CLASS_TEXT or android.text.InputType.TYPE_TEXT_FLAG_MULTI_LINE or android.text.InputType.TYPE_TEXT_FLAG_CAP_SENTENCES
-                background = rounded(Colors.SURFACE_2, 14f)
+                background = rounded(Ui.SURFACE_2, 14f)
                 setPadding(dp(14), dp(12), dp(14), dp(12))
                 addTextChangedListener(object : android.text.TextWatcher {
                     override fun beforeTextChanged(a: CharSequence?, b: Int, c: Int, d: Int) {}
@@ -718,7 +753,7 @@ class MainActivity : AppCompatActivity() {
         card.addView(text(
             "Edite como a voz fala: tire ou ponha vírgulas para mudar as pausas, use ! para mais animação. " +
                 "{nome} vira o primeiro nome do passageiro e {rua} a rua do destino.",
-            12f, Colors.MUTED
+            12f, Ui.MUTED
         ).apply { setPadding(0, dp(12), 0, 0) })
         editor("Quando o passageiro embarca", prefs.voiceStart, Voz.PADRAO_INICIO, { prefs.voiceStart = it }) {
             Voz.inicio(this, "Ana", "Avenida Paulista, 1000, Bela Vista")
@@ -726,7 +761,7 @@ class MainActivity : AppCompatActivity() {
         editor("Quando chega ao destino", prefs.voiceEnd, Voz.PADRAO_CHEGADA, { prefs.voiceEnd = it }) {
             Voz.chegada(this, "Ana")
         }
-        val volLabel = text("", 15f, Colors.TEXT).apply { setPadding(0, dp(12), 0, 0) }
+        val volLabel = text("", 15f, Ui.TEXT).apply { setPadding(0, dp(12), 0, 0) }
         fun volText(v: Int) { volLabel.text = if (v == 0) "Volume da voz: o mesmo do celular" else "Volume da voz: sobe a mídia para $v% enquanto fala" }
         volText(prefs.voiceVolume)
         card.addView(volLabel)
@@ -735,7 +770,17 @@ class MainActivity : AppCompatActivity() {
             value = prefs.voiceVolume.toFloat().coerceIn(0f, 100f)
             addOnChangeListener { _, v, _ -> prefs.voiceVolume = v.toInt(); volText(v.toInt()) }
         }, matchWrap(top = 2))
-        card.addView(text("Depois da fala o volume volta ao que estava. A música abaixa enquanto a voz fala.", 12f, Colors.MUTED))
+        card.addView(text("Depois da fala o volume volta ao que estava. A música abaixa enquanto a voz fala.", 12f, Ui.MUTED))
+        card.addView(text("Canal do áudio", 15f, Ui.TEXT, bold = true).apply { setPadding(0, dp(14), 0, 0) })
+        val canal = MaterialButtonToggleGroup(this).apply { isSingleSelection = true; isSelectionRequired = true }
+        val bMidia = outlinedButton("Mídia").apply { id = View.generateViewId() }
+        val bNav = outlinedButton("Navegação").apply { id = View.generateViewId() }
+        canal.addView(bMidia, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f))
+        canal.addView(bNav, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f))
+        canal.check(if (prefs.voiceChannel == "navegacao") bNav.id else bMidia.id)
+        canal.addOnButtonCheckedListener { _, id, on -> if (on) prefs.voiceChannel = if (id == bNav.id) "navegacao" else "midia" }
+        card.addView(canal, matchWrap(top = 6))
+        card.addView(text("Mídia é o canal do áudio do WhatsApp e da música, o mais alto no som do carro. Navegação é o canal do Waze.", 12f, Ui.MUTED))
         card.addView(MaterialButton(this).apply {
             isAllCaps = false
             letterSpacing = 0f
@@ -753,7 +798,7 @@ class MainActivity : AppCompatActivity() {
         // Voz de estúdio (ElevenLabs): fala natural, com a chave do próprio motorista
         card.addView(SwitchMaterial(this).apply {
             text = "Voz de estúdio (ElevenLabs)"
-            setTextColor(Colors.TEXT)
+            setTextColor(Ui.TEXT)
             isChecked = prefs.studioVoice
             setOnCheckedChangeListener { _, checked -> prefs.studioVoice = checked }
         }, matchWrap(top = 18))
@@ -761,12 +806,12 @@ class MainActivity : AppCompatActivity() {
             "Fala como gente, sem as pausas da voz do celular. Usa a sua conta da ElevenLabs: cada corrida gasta cerca de 270 créditos " +
                 "(as duas falas, geradas logo no aceite). O primeiro nome do passageiro e a rua do destino vão para a ElevenLabs para gerar a fala. " +
                 "Sem internet ou sem créditos, o Radar usa a voz do celular.",
-            12f, Colors.MUTED
+            12f, Ui.MUTED
         ))
         val keyIn = EditText(this).apply {
             hint = if (prefs.elevenKey.isBlank()) "Cole aqui a sua chave da ElevenLabs" else "Chave salva. Cole outra para trocar"
-            setHintTextColor(Colors.MUTED)
-            setTextColor(Colors.TEXT)
+            setHintTextColor(Ui.MUTED)
+            setTextColor(Ui.TEXT)
             textSize = 16f
             inputType = android.text.InputType.TYPE_CLASS_TEXT or android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD
             minHeight = dp(56)
@@ -797,7 +842,8 @@ class MainActivity : AppCompatActivity() {
                 .show()
         }
         card.addView(vozBtn, matchWrap(top = 8))
-        tripChecklist = text("", 14f, Colors.TEXT).apply { setPadding(0, dp(10), 0, 0) }
+        card = permCard
+        tripChecklist = text("", 14f, Ui.TEXT).apply { setPadding(0, dp(10), 0, 0) }
         card.addView(tripChecklist)
         tripPermBtn = MaterialButton(this).apply {
             isAllCaps = false
@@ -884,7 +930,7 @@ class MainActivity : AppCompatActivity() {
         myCamsList.removeAllViews()
         val mine = SpeedCams.userList(this)
         if (mine.isEmpty()) {
-            myCamsList.addView(text("Nenhum radar marcado por você.", 13f, Colors.MUTED))
+            myCamsList.addView(text("Nenhum radar marcado por você.", 13f, Ui.MUTED))
             return
         }
         val fmt = java.text.SimpleDateFormat("dd/MM HH:mm", PT_BR)
@@ -892,12 +938,12 @@ class MainActivity : AppCompatActivity() {
             val box = LinearLayout(this).apply {
                 orientation = LinearLayout.VERTICAL
                 setPadding(dp(12), dp(10), dp(12), dp(10))
-                background = rounded(Colors.SURFACE_2, 12f)
+                background = rounded(Ui.SURFACE_2, 12f)
             }
             val title = "{camera} Radar ${mine.size - i} · marcado em ${fmt.format(java.util.Date(c.id))}" +
                 (if (c.limit == null) " · sem limite definido" else " · ${c.limit} km/h")
-            box.addView(text(title, 14f, if (c.limit == null) Colors.YELLOW else Colors.TEXT, bold = true))
-            box.addView(text(String.format(java.util.Locale.US, "%.5f, %.5f", c.lat, c.lng), 11f, Colors.MUTED))
+            box.addView(text(title, 14f, if (c.limit == null) Colors.YELLOW else Ui.TEXT, bold = true))
+            box.addView(text(String.format(java.util.Locale.US, "%.5f, %.5f", c.lat, c.lng), 11f, Ui.MUTED))
             val group = MaterialButtonToggleGroup(this).apply {
                 isSingleSelection = true
             }
@@ -944,7 +990,7 @@ class MainActivity : AppCompatActivity() {
         val card = section(col, "Radares de velocidade")
         card.addView(SwitchMaterial(this).apply {
             text = "Avisar radares e velocidade"
-            setTextColor(Colors.TEXT)
+            setTextColor(Ui.TEXT)
             isChecked = prefs.speedAlerts
             setOnCheckedChangeListener { _, checked ->
                 prefs.speedAlerts = checked
@@ -956,25 +1002,25 @@ class MainActivity : AppCompatActivity() {
             "Com a Uber ou a 99 aberta, o GPS fica ligado. Ao chegar perto de um radar, aparece no topo da tela " +
                 "a placa com o limite e a sua velocidade: verde (ok), amarelo (acima do limite, mas dentro da tolerância) " +
                 "ou vermelho (multa), com bipe. Depois do radar, se passou da tolerância, chega uma notificação de possível multa.",
-            12f, Colors.MUTED
+            12f, Ui.MUTED
         ))
         card.addView(SwitchMaterial(this).apply {
             text = "Bipe sonoro (volume de mídia; sai no som do carro se conectado)"
-            setTextColor(Colors.TEXT)
+            setTextColor(Ui.TEXT)
             isChecked = prefs.speedSound
             setOnCheckedChangeListener { _, checked -> prefs.speedSound = checked }
         }, matchWrap(top = 6))
 
-        card.addView(text("Distância do aviso (radar e valeta)", 15f, Colors.TEXT, bold = true).apply { setPadding(0, dp(14), 0, 0) })
+        card.addView(text("Distância do aviso (radar e valeta)", 15f, Ui.TEXT, bold = true).apply { setPadding(0, dp(14), 0, 0) })
         card.addView(text(
             "O aviso aparece mais cedo quanto mais rápido você estiver.",
-            12f, Colors.MUTED
+            12f, Ui.MUTED
         ))
         card.addView(distanceSlider("Até 50 km/h", prefs.alertDistSlow) { prefs.alertDistSlow = it }, matchWrap(top = 6))
         card.addView(distanceSlider("De 50 a 80 km/h", prefs.alertDistMid) { prefs.alertDistMid = it }, matchWrap(top = 2))
         card.addView(distanceSlider("Acima de 80 km/h", prefs.alertDistFast) { prefs.alertDistFast = it }, matchWrap(top = 2))
 
-        speedInfo = text("", 14f, Colors.TEXT).apply { setPadding(0, dp(10), 0, 0) }
+        speedInfo = text("", 14f, Ui.TEXT).apply { setPadding(0, dp(10), 0, 0) }
         card.addView(speedInfo)
         card.addView(outlinedButton("Atualizar lista de radares").apply {
             setOnClickListener { updateCams() }
@@ -986,13 +1032,13 @@ class MainActivity : AppCompatActivity() {
             }
         }, matchWrap(top = 4))
 
-        card.addView(text("Radar errado?", 15f, Colors.TEXT, bold = true).apply { setPadding(0, dp(14), 0, 0) })
+        card.addView(text("Radar errado?", 15f, Ui.TEXT, bold = true).apply { setPadding(0, dp(14), 0, 0) })
         card.addView(text(
             "Se aparecer um radar que não existe, ou de outra pista, segure o aviso por 1 segundo. " +
                 "Ele some e não aparece mais, e fica anotado no arquivo de dados para corrigirmos a lista.",
-            12f, Colors.MUTED
+            12f, Ui.MUTED
         ))
-        hiddenText = text("", 13f, Colors.TEXT).apply { setPadding(0, dp(4), 0, 0) }
+        hiddenText = text("", 13f, Ui.TEXT).apply { setPadding(0, dp(4), 0, 0) }
         card.addView(hiddenText)
         card.addView(outlinedButton("Mostrar de novo os radares removidos").apply {
             setOnClickListener {
@@ -1002,24 +1048,24 @@ class MainActivity : AppCompatActivity() {
             }
         }, matchWrap(top = 4))
 
-        card.addView(text("Faltou um radar no mapa?", 15f, Colors.TEXT, bold = true).apply { setPadding(0, dp(14), 0, 0) })
+        card.addView(text("Faltou um radar no mapa?", 15f, Ui.TEXT, bold = true).apply { setPadding(0, dp(14), 0, 0) })
         card.addView(text(
             "Aperte o volume + duas vezes rápido logo depois de passar por ele (com a Uber/99 aberta). " +
                 "Depois, aqui embaixo, escolha o limite de velocidade dele. Da próxima vez, o Radar avisa como os outros.",
-            12f, Colors.MUTED
+            12f, Ui.MUTED
         ))
         myCamsList = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
         card.addView(myCamsList, matchWrap(top = 6))
 
-        card.addView(text("Possíveis multas recentes", 15f, Colors.TEXT, bold = true).apply { setPadding(0, dp(14), 0, 0) })
-        finesText = text("", 13f, Colors.TEXT).apply { setPadding(0, dp(4), 0, 0) }
+        card.addView(text("Possíveis multas recentes", 15f, Ui.TEXT, bold = true).apply { setPadding(0, dp(14), 0, 0) })
+        finesText = text("", 13f, Ui.TEXT).apply { setPadding(0, dp(4), 0, 0) }
         card.addView(finesText)
 
         card.addView(text(
             "A velocidade vem do GPS. Os radares da cidade de SP vêm da lista oficial da CET (atualizada todo mês); " +
                 "os de fora da cidade, do OpenStreetMap (mapa colaborativo), onde pode faltar algum. Usa as permissões de localização da seção acima. " +
                 "Para saber das multas oficiais, ative o SNE no app Carteira Digital de Trânsito.",
-            12f, Colors.MUTED
+            12f, Ui.MUTED
         ).apply { setPadding(0, dp(10), 0, 0) })
         updateSpeedInfo()
     }
@@ -1035,22 +1081,22 @@ class MainActivity : AppCompatActivity() {
             "Todo dia à tarde eu pesquiso os eventos de São Paulo (teatros, shows, jogos, SESCs, formaturas) e calculo o horário " +
                 "provável de saída do público. Com a Uber/99 aberta, quando você estiver perto de um evento perto da hora da saída, " +
                 "aparece um aviso rosa. A oferta também ganha {star} se o destino for perto de uma saída.",
-            12f, Colors.MUTED
+            12f, Ui.MUTED
         ))
         card.addView(SwitchMaterial(this).apply {
             text = "Avisar saídas de eventos"
-            setTextColor(Colors.TEXT)
+            setTextColor(Ui.TEXT)
             isChecked = prefs.eventAlerts
             setOnCheckedChangeListener { _, c -> prefs.eventAlerts = c }
         }, matchWrap(top = 8))
         card.addView(SwitchMaterial(this).apply {
             text = "Mostrar eventos no card da oferta"
-            setTextColor(Colors.TEXT)
+            setTextColor(Ui.TEXT)
             isChecked = prefs.eventsInOffer
             setOnCheckedChangeListener { _, c -> prefs.eventsInOffer = c }
         }, matchWrap(top = 4))
-        card.addView(text("Ponto bom favorito perto do destino sempre aparece no card e vem antes de evento.", 12f, Colors.MUTED))
-        val radLbl = text("", 14f, Colors.TEXT).apply { setPadding(0, dp(10), 0, 0) }
+        card.addView(text("Ponto bom favorito perto do destino sempre aparece no card e vem antes de evento.", 12f, Ui.MUTED))
+        val radLbl = text("", 14f, Ui.TEXT).apply { setPadding(0, dp(10), 0, 0) }
         fun setRad(v: Int) { radLbl.text = String.format(PT_BR, "Avisar a até %.1f km do evento", v / 1000f) }
         setRad(prefs.eventRadiusM)
         card.addView(radLbl)
@@ -1064,7 +1110,7 @@ class MainActivity : AppCompatActivity() {
         rad.addOnChangeListener { _, v, _ -> prefs.eventRadiusM = v.toInt(); setRad(v.toInt()) }
         card.addView(rad, matchWrap())
 
-        eventsInfo = text("", 13f, Colors.MUTED).apply { setPadding(0, dp(8), 0, 0) }
+        eventsInfo = text("", 13f, Ui.MUTED).apply { setPadding(0, dp(8), 0, 0) }
         card.addView(eventsInfo)
         card.addView(outlinedButton("Atualizar agora").apply {
             setOnClickListener {
@@ -1093,12 +1139,12 @@ class MainActivity : AppCompatActivity() {
             val box = LinearLayout(this).apply {
                 orientation = LinearLayout.VERTICAL
                 setPadding(dp(12), dp(10), dp(12), dp(10))
-                background = rounded(Colors.SURFACE_2, 12f)
+                background = rounded(Ui.SURFACE_2, 12f)
             }
-            box.addView(text("{${e.icon}} ${e.name}", 15f, Colors.TEXT, bold = true))
+            box.addView(text("{${e.icon}} ${e.name}", 15f, Ui.TEXT, bold = true))
             val start = e.startMin?.let { "começa ${Spot.hhmm(it)} · " } ?: ""
             val aud = e.audience?.let { " · ~$it pessoas" } ?: ""
-            box.addView(text("${e.place}\n${start}saída ~${Spot.hhmm(e.endMin)}$aud", 13f, Colors.MUTED))
+            box.addView(text("${e.place}\n${start}saída ~${Spot.hhmm(e.endMin)}$aud", 13f, Ui.MUTED))
             if (e.lat != null && e.lng != null) {
                 box.addView(MaterialButton(this).apply {
                     text = "Ir com Waze"
@@ -1122,15 +1168,15 @@ class MainActivity : AppCompatActivity() {
         card.addView(text(
             "Marque os lugares que você sabe que rendem em certos dias e horários (teatro, bar, igreja, faculdade…). " +
                 "Com a Uber/99 aberta, quando você estiver perto de um deles no horário, aparece um aviso roxo com a distância e um toque de sino.",
-            12f, Colors.MUTED
+            12f, Ui.MUTED
         ))
         card.addView(SwitchMaterial(this).apply {
             text = "Avisar quando estiver perto"
-            setTextColor(Colors.TEXT)
+            setTextColor(Ui.TEXT)
             isChecked = prefs.spotAlerts
             setOnCheckedChangeListener { _, checked -> prefs.spotAlerts = checked }
         }, matchWrap(top = 8))
-        val starLbl = text("", 14f, Colors.TEXT).apply { setPadding(0, dp(12), 0, 0) }
+        val starLbl = text("", 14f, Ui.TEXT).apply { setPadding(0, dp(12), 0, 0) }
         fun setStar(v: Float) {
             starLbl.text = Icones.texto(this@MainActivity, String.format(PT_BR, "{star} na oferta quando o destino ficar a até %.0f km de um ponto no horário dele", v), starLbl.textSize)
         }
@@ -1173,20 +1219,20 @@ class MainActivity : AppCompatActivity() {
         spotsList.removeAllViews()
         val all = Spots.all(this)
         if (all.isEmpty()) {
-            spotsList.addView(text("Nenhum ponto cadastrado ainda.", 13f, Colors.MUTED))
+            spotsList.addView(text("Nenhum ponto cadastrado ainda.", 13f, Ui.MUTED))
             return
         }
         for (sp in all.sortedBy { it.startMin }) {
             val box = LinearLayout(this).apply {
                 orientation = LinearLayout.VERTICAL
                 setPadding(dp(12), dp(10), dp(12), dp(10))
-                background = rounded(Colors.SURFACE_2, 12f)
+                background = rounded(Ui.SURFACE_2, 12f)
             }
             val header = LinearLayout(this).apply {
                 orientation = LinearLayout.HORIZONTAL
                 gravity = Gravity.CENTER_VERTICAL
             }
-            header.addView(text("{star} " + sp.name, 16f, Colors.TEXT, bold = true),
+            header.addView(text("{star} " + sp.name, 16f, Ui.TEXT, bold = true),
                 LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f))
             header.addView(SwitchMaterial(this).apply {
                 isChecked = sp.enabled
@@ -1197,7 +1243,7 @@ class MainActivity : AppCompatActivity() {
             })
             box.addView(header)
             val radius = if (sp.radiusM >= 1000) String.format(PT_BR, "%.1f km", sp.radiusM / 1000f) else "${sp.radiusM} m"
-            box.addView(text("${sp.daysText()} · ${sp.windowText()} · avisa a $radius", 13f, Colors.MUTED))
+            box.addView(text("${sp.daysText()} · ${sp.windowText()} · avisa a $radius", 13f, Ui.MUTED))
             val row = LinearLayout(this).apply { orientation = LinearLayout.HORIZONTAL }
             row.addView(outlinedButton("Editar").apply { setOnClickListener { editSpot(sp, isNew = false) } },
                 LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f).apply { rightMargin = dp(6) })
@@ -1236,7 +1282,7 @@ class MainActivity : AppCompatActivity() {
     @android.annotation.SuppressLint("MissingPermission")
     private fun addSpotHere() {
         if (!hasLocation()) {
-            toast("Libere a localização na seção \"Corridas e percurso\"")
+            toast("Libere a localização em Ajustes > Leitura e permissões")
             return
         }
         val recent = Geo.lastKnown(this)
@@ -1316,7 +1362,7 @@ class MainActivity : AppCompatActivity() {
             orientation = LinearLayout.VERTICAL
             setPadding(dp(20), dp(8), dp(20), 0)
         }
-        box.addView(text("Nome", 13f, Colors.MUTED))
+        box.addView(text("Nome", 13f, Ui.MUTED))
         val nameIn = EditText(this).apply {
             setText(sp.name)
             hint = "Ex.: Teatro Renault"
@@ -1324,7 +1370,7 @@ class MainActivity : AppCompatActivity() {
         }
         box.addView(nameIn, matchWrap())
 
-        box.addView(text("Dias", 13f, Colors.MUTED).apply { setPadding(0, dp(10), 0, 0) })
+        box.addView(text("Dias", 13f, Ui.MUTED).apply { setPadding(0, dp(10), 0, 0) })
         val days = sp.days.toMutableSet()
         val dayRow = LinearLayout(this).apply { orientation = LinearLayout.HORIZONTAL }
         for (d in Spot.DAY_ORDER) {
@@ -1336,9 +1382,9 @@ class MainActivity : AppCompatActivity() {
                 setPadding(0, 0, 0, 0)
                 fun paint() {
                     val on = d in days
-                    setBackgroundColor(if (on) Colors.ACCENT else Color.TRANSPARENT)
-                    setTextColor(if (on) Color.parseColor("#06231B") else Colors.ACCENT)
-                    strokeColor = ColorStateList.valueOf(Colors.ACCENT)
+                    setBackgroundColor(if (on) Ui.ACCENT else Color.TRANSPARENT)
+                    setTextColor(if (on) Color.parseColor("#06231B") else Ui.ACCENT)
+                    strokeColor = ColorStateList.valueOf(Ui.ACCENT)
                 }
                 paint()
                 setOnClickListener {
@@ -1368,10 +1414,10 @@ class MainActivity : AppCompatActivity() {
         }
         timeRow.addView(startBtn, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f).apply { rightMargin = dp(6) })
         timeRow.addView(endBtn, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f))
-        box.addView(text("Horário bom", 13f, Colors.MUTED).apply { setPadding(0, dp(10), 0, 0) })
+        box.addView(text("Horário bom", 13f, Ui.MUTED).apply { setPadding(0, dp(10), 0, 0) })
         box.addView(timeRow, matchWrap())
 
-        box.addView(text("Avisar quando estiver a", 13f, Colors.MUTED).apply { setPadding(0, dp(10), 0, 0) })
+        box.addView(text("Avisar quando estiver a", 13f, Ui.MUTED).apply { setPadding(0, dp(10), 0, 0) })
         val radii = listOf(500, 1000, 2000, 3000, 5000)
         val radiusGroup = MaterialButtonToggleGroup(this).apply {
             isSingleSelection = true
@@ -1428,27 +1474,27 @@ class MainActivity : AppCompatActivity() {
         card.addView(text(
             "Marque as valetas que o Waze não mostra. Da próxima vez que passar por ali, o Radar avisa com a distância, " +
                 "no mesmo aviso dos radares (em laranja).",
-            12f, Colors.MUTED
+            12f, Ui.MUTED
         ))
         card.addView(text(
             "Como marcar sem olhar para o celular:\n" +
                 "1. Aperte o volume − duas vezes rápido logo depois de passar pela valeta\n" +
                 "2. Ou segure o botão \"R\" por meio segundo\n" +
                 "Aparece \"Valeta marcada\" com um bipe. Errou? Toque no aviso para desfazer.",
-            13f, Colors.TEXT
+            13f, Ui.TEXT
         ).apply { setPadding(0, dp(10), 0, 0) })
         card.addView(text(
             "A valeta vale para os dois sentidos da rua. Apareceu uma valeta que não existe? Segure o aviso por 1 segundo: " +
                 "ela some e não volta, nem pelo solavanco automático.",
-            13f, Colors.TEXT
+            13f, Ui.TEXT
         ).apply { setPadding(0, dp(8), 0, 0) })
         card.addView(text(
             "O volume só vira atalho enquanto a Uber/99 está aberta (GPS ligado). Fora disso, funciona normal. " +
                 "Depois de instalar esta versão, desligue e ligue de novo o Radar em Acessibilidade para liberar o atalho do volume.",
-            12f, Colors.MUTED
+            12f, Ui.MUTED
         ).apply { setPadding(0, dp(6), 0, 0) })
 
-        val delayLabel = text("", 14f, Colors.TEXT).apply { setPadding(0, dp(12), 0, 0) }
+        val delayLabel = text("", 14f, Ui.TEXT).apply { setPadding(0, dp(12), 0, 0) }
         card.addView(delayLabel)
         fun setDelay(v: Float) {
             delayLabel.text = if (v == 0f) "Marcar no ponto exato do aperto"
@@ -1470,18 +1516,18 @@ class MainActivity : AppCompatActivity() {
         card.addView(text(
             "Vale para o volume − e para o botão \"R\". Se costuma apertar bem depois de passar, aumente. " +
                 "Se aperta antes, ao ver a valeta chegando, use 0.",
-            12f, Colors.MUTED
+            12f, Ui.MUTED
         ))
 
         card.addView(SwitchMaterial(this).apply {
             text = "Avisar valetas marcadas"
-            setTextColor(Colors.TEXT)
+            setTextColor(Ui.TEXT)
             isChecked = prefs.valetaAlerts
             setOnCheckedChangeListener { _, checked -> prefs.valetaAlerts = checked }
         }, matchWrap(top = 12))
         card.addView(SwitchMaterial(this).apply {
             text = "Marcar sozinho quando o carro der um solavanco forte"
-            setTextColor(Colors.TEXT)
+            setTextColor(Ui.TEXT)
             isChecked = prefs.valetaAuto
             setOnCheckedChangeListener { _, checked ->
                 prefs.valetaAuto = checked
@@ -1492,10 +1538,10 @@ class MainActivity : AppCompatActivity() {
         card.addView(text(
             "Usa o sensor de movimento do celular. Precisa do celular firme no suporte. Também pode marcar lombadas e buracos: " +
                 "se marcar algo errado, toque no aviso para desfazer.",
-            12f, Colors.MUTED
+            12f, Ui.MUTED
         ))
 
-        val sensLabel = text("", 14f, Colors.TEXT).apply { setPadding(0, dp(10), 0, 0) }
+        val sensLabel = text("", 14f, Ui.TEXT).apply { setPadding(0, dp(10), 0, 0) }
         card.addView(sensLabel)
         fun setSens(v: Float) {
             sensLabel.text = "Sensibilidade do solavanco: " + when {
@@ -1517,7 +1563,7 @@ class MainActivity : AppCompatActivity() {
         }
         card.addView(sens, matchWrap())
 
-        hazardInfo = text("", 14f, Colors.TEXT, bold = true).apply { setPadding(0, dp(6), 0, 0) }
+        hazardInfo = text("", 14f, Ui.TEXT, bold = true).apply { setPadding(0, dp(6), 0, 0) }
         card.addView(hazardInfo)
         card.addView(outlinedButton("Testar aviso de valeta").apply {
             setOnClickListener {
@@ -1547,7 +1593,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun distanceSlider(label: String, initial: Int, onChange: (Int) -> Unit): View {
         val box = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
-        val lbl = text("", 14f, Colors.TEXT)
+        val lbl = text("", 14f, Ui.TEXT)
         fun setLbl(v: Int) { lbl.text = "$label: avisar a $v m" }
         setLbl(initial)
         box.addView(lbl)
@@ -1656,14 +1702,14 @@ class MainActivity : AppCompatActivity() {
 
     private fun numberField(label: String, initial: Float, onChange: (Float) -> Unit): View {
         val box = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
-        box.addView(text(label, 13f, Colors.MUTED))
+        box.addView(text(label, 13f, Ui.MUTED))
         val input = EditText(this).apply {
             setText(String.format(PT_BR, "%.2f", initial))
             keyListener = DigitsKeyListener.getInstance("0123456789,.")
-            setTextColor(Colors.TEXT)
+            setTextColor(Ui.TEXT)
             textSize = 17f
             setSingleLine(true)
-            backgroundTintList = ColorStateList.valueOf(Colors.ACCENT)
+            backgroundTintList = ColorStateList.valueOf(Ui.ACCENT)
         }
         input.doAfterTextChanged { e ->
             val v = e?.toString()?.trim()?.replace(",", ".")?.toFloatOrNull()
@@ -1682,15 +1728,15 @@ class MainActivity : AppCompatActivity() {
      * as outras viram um bloco dentro da página do card correspondente.
      */
     private fun section(@Suppress("UNUSED_PARAMETER") parent: LinearLayout, title: String): LinearLayout {
-        if (title == "Status") return statusCard
+        if (title == "Status") { pages["Leitura e permissões"]?.body?.addView(statusCard, matchWrap(top = 16)); return statusCard }
         val key = if (title == "Prévia do cartão") "Cartão e ganhos" else title
         val page = pages[key] ?: return LinearLayout(this)
         val block = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
             setPadding(dp(18), dp(20), dp(18), dp(20))
-            background = rounded(Colors.SURFACE, 18f)
+            background = rounded(Ui.SURFACE, 18f)
         }
-        if (title == "Prévia do cartão") { block.addView(text(title, 16f, Colors.TEXT, bold = true).apply { setPadding(0, 0, 0, dp(8)) }); previewBlock = block }
+        if (title == "Prévia do cartão") { block.addView(text(title, 16f, Ui.TEXT, bold = true).apply { setPadding(0, 0, 0, dp(8)) }); previewBlock = block }
         page.body.addView(block, matchWrap(top = 16))
         return block
     }
@@ -1718,14 +1764,17 @@ class MainActivity : AppCompatActivity() {
                 shape = GradientDrawable.OVAL
                 setSize(dp(28), dp(28))
                 setColor(Color.WHITE)
+                // no tema claro a bolinha branca some sobre o card branco: ganha um contorno
+                if (!Ui.escuro) setStroke(dp(1), Color.parseColor("#C3CAD1"))
             }, dp(5))
-            v.thumbTintList = ColorStateList(checked, intArrayOf(Color.WHITE, Color.parseColor("#C9D1D9")))
+            v.isUseMaterialThemeColors = false   // senão o Material pinta a bolinha com a cor do tema
+            v.thumbTintList = if (Ui.escuro) ColorStateList(checked, intArrayOf(Color.WHITE, Color.parseColor("#C9D1D9"))) else null
             v.trackDrawable = GradientDrawable().apply {
                 cornerRadius = dp(19).toFloat()
                 setSize(dp(64), dp(38))
                 setColor(Color.WHITE)
             }
-            v.trackTintList = ColorStateList(checked, intArrayOf(Colors.ACCENT, Color.parseColor("#3A434D")))
+            v.trackTintList = ColorStateList(checked, intArrayOf(Ui.ACCENT, if (Ui.escuro) Color.parseColor("#3A434D") else Color.parseColor("#BFC7CF")))
             v.textSize = maxOf(16f, v.textSize / resources.displayMetrics.scaledDensity)
             v.switchPadding = dp(12)
             return
@@ -1745,7 +1794,7 @@ class MainActivity : AppCompatActivity() {
      */
     private fun readable(size: Float, color: Int): Float = when {
         size <= 11f -> 13f
-        size < 14f -> if (color == Colors.MUTED) 14f else 15f
+        size < 14f -> if (color == Ui.MUTED) 14f else 15f
         size < 16f -> size + 2f
         size < 18f -> size + 1f
         else -> size
@@ -1763,8 +1812,8 @@ class MainActivity : AppCompatActivity() {
         MaterialButton(this, null, com.google.android.material.R.attr.materialButtonOutlinedStyle).apply {
             text = label
             isAllCaps = false
-            setTextColor(Colors.ACCENT)
-            strokeColor = ColorStateList.valueOf(Colors.ACCENT)
+            setTextColor(Ui.ACCENT)
+            strokeColor = ColorStateList.valueOf(Ui.ACCENT)
             makeTall(this)
         }
 

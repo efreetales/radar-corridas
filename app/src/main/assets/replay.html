@@ -75,6 +75,14 @@
   .ics { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
   .ics button { height:96px; border-radius:18px; border:2px solid transparent; background:#1E2630; color:var(--tx); font-size:14px; font-weight:700; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; }
   .ics button svg { width:44px; height:44px; } .ics button.sel { border-color:var(--ac); background:#173A33; }
+
+  :root[data-tema=claro] { --bg:#F4F6F8; --s1:#FFFFFF; --tx:#14181D; --mu:#5F6B76; --ac:#0E9F7A; --good:#178A54; --mid:#B7791F; --bad:#D93B41; --blue:#2F6FD6; --pick:#6B7785; }
+  [data-tema=claro] #map { background:#E6EAEE; }
+  [data-tema=claro] .panel { background:linear-gradient(180deg,rgba(244,246,248,0),rgba(244,246,248,.94) 22%,var(--bg)); }
+  [data-tema=claro] .st b, [data-tema=claro] .bar, [data-tema=claro] .ctrl button, [data-tema=claro] .done .g div, [data-tema=claro] .ics button { background:#E3E7EC; }
+  [data-tema=claro] .st.past b { background:#CDEDE2; } [data-tema=claro] .st.past { color:#0B7F62; }
+  [data-tema=claro] .ctrl .play { background:var(--ac); color:#fff; }
+  [data-tema=claro] .back { background:rgba(255,255,255,.9); }
 </style>
 </head>
 <body>
@@ -126,7 +134,7 @@ let total=0; SEG.forEach(s=>{ s.dur=PLAY[s.ph]||4; if(s.ph==="NO_EMBARQUE") s.du
 // ===== mapa (vetorial, OpenFreeMap: grátis e sem chave) =====
 const allLL=pts.map(p=>[p.lng,p.lat]);
 const bounds=allLL.reduce((b,c)=>b.extend(c), new maplibregl.LngLatBounds(allLL[0],allLL[0]));
-const map=new maplibregl.Map({container:"map",style:"https://tiles.openfreemap.org/styles/dark",bounds,fitBoundsOptions:{padding:70},
+const map=new maplibregl.Map({container:"map",style:"https://tiles.openfreemap.org/styles/" + (document.documentElement.dataset.tema === "claro" ? "positron" : "dark"),bounds,fitBoundsOptions:{padding:70},
   pitch:0,attributionControl:{compact:true},fadeDuration:0});
 // ícone do motorista: carro (várias cores) ou seta de navegação — escolha salva em "replay_icone"
 const ICONES=[["verde","Verde","#2FD3A6"],["branco","Branco","#E8EDF2"],["amarelo","Amarelo","#F5C518"],["vermelho","Vermelho","#FF5A5F"],["azul","Azul","#4C9AFF"],["preto","Preto","#2B323B"],["seta","Seta","#4C9AFF"],["seta_verde","Seta verde","#2FD3A6"]];
