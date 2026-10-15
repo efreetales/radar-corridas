@@ -18,7 +18,7 @@ import java.io.File
 @Config(sdk = [34], qualifiers = "w411dp-h891dp-xxhdpi")
 class TelasTest {
     private fun shot(v: View, nome: String) {
-        val w = v.width
+        val w = if (v.width > 0) v.width else 1080
         v.measure(View.MeasureSpec.makeMeasureSpec(w, View.MeasureSpec.EXACTLY), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED))
         val h = v.measuredHeight
         v.layout(0, 0, w, h)
@@ -39,7 +39,7 @@ class TelasTest {
             m.invoke(a, k)
             shot(scroll.getChildAt(0), "${n}_$tema")
         }
-        c.pause().stop().destroy()
+        try { c.pause().stop().destroy() } catch (_: Throwable) { }
     }
     @Test fun escuro() = telas("escuro")
     @Test fun claro() = telas("claro")
