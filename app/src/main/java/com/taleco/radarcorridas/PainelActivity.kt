@@ -118,7 +118,8 @@ class PainelActivity : AppCompatActivity() {
     private fun carregar(web: WebView, url: String) {
         val replay = android.net.Uri.parse(url).path?.startsWith("/replay") == true
         val html = assets.open(if (replay) "replay.html" else "painel.html").bufferedReader().use { it.readText() }
-        web.loadDataWithBaseURL(url, html, "text/html", "utf-8", null)
+        // tema claro/escuro igual ao do app
+        web.loadDataWithBaseURL(url, html.replaceFirst("<head>", "<head><script>document.documentElement.dataset.tema='${Ui.nomeTema}'</script>"), "text/html", "utf-8", null)
     }
 
     /** Leva os custos da tela nova para o cálculo de lucro do cartão. */
@@ -135,11 +136,13 @@ class PainelActivity : AppCompatActivity() {
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
+        androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode(Ui.modo(this))
         super.onCreate(savedInstanceState)
+        Ui.atualizar(this)
         prefs = Prefs(this)
         val page = intent.getStringExtra(EXTRA_PAGE) ?: "historico"
         val web = WebView(this)
-        web.setBackgroundColor(Colors.BG)
+        web.setBackgroundColor(Ui.BG)
         web.settings.javaScriptEnabled = true
         web.webViewClient = object : WebViewClient() {
             // O endereço radarcorridas.app é "de mentira" (só dá origem às páginas). Se a página tentar

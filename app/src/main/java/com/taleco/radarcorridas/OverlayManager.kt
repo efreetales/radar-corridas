@@ -376,9 +376,9 @@ class OverlayManager(private val service: AccessibilityService) {
     }
 
     fun showBubble(prefs: Prefs) {
-        if (bubble != null) return
+        bubble?.let { it.alpha = prefs.bubbleOpacity.coerceIn(0.2f, 1f); return }
         val size = service.dp(56)
-        val view = android.widget.FrameLayout(service).apply { alpha = 0.92f }
+        val view = android.widget.FrameLayout(service).apply { alpha = prefs.bubbleOpacity.coerceIn(0.2f, 1f) }
         val r = TextView(service).apply {
             text = "R"
             setTextColor(Color.parseColor("#06231B"))

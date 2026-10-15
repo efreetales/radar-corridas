@@ -26,7 +26,7 @@ jobs:
       - name: Compilar
         run: |
           set -o pipefail
-          gradle :app:assembleDebug :app:testDebugUnitTest --tests "*OfferParserTest*" -i --console=plain 2>&1 | tee build.log; grep -E "RENDER|PARSER|expected|FAILED|AssertionError" build.log | sed "s/^/::warning::/" || true; grep -E "IconesRenderTest.*(FAILED|PASSED)|Exception" build.log | head -5 | sed "s/^/::warning::/" || true
+          gradle :app:assembleDebug :app:testDebugUnitTest --tests "*OfferParserTest*" --tests "*TelasTest*" -i --console=plain 2>&1 | tee build.log; grep -E "RENDER|PARSER|expected|FAILED|AssertionError" build.log | sed "s/^/::warning::/" || true; grep -E "IconesRenderTest.*(FAILED|PASSED)|Exception" build.log | head -5 | sed "s/^/::warning::/" || true
 
       - name: Mostrar erros da compilação
         if: failure()
@@ -34,3 +34,11 @@ jobs:
           msg=$(grep -v "> Task" build.log | grep -E -A4 "^e: |error:|What went wrong" | head -60 | sed ':a;N;$!ba;s/%/%25/g;s/\r//g;s/\n/%0A/g')
           echo "::error::$msg"
 
+
+      - name: Publicar prévias
+        if: always()
+        run: |
+          [ -d app/build/previas ] || exit 0
+          mkdir /tmp/pv && cp app/build/previas/*.png /tmp/pv/ && cd /tmp/pv
+          git init -q && git checkout -q -b previas && git add . && git -c user.name=ci -c user.email=ci@x commit -qm previas
+          git push -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" previas

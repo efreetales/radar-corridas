@@ -50,10 +50,12 @@ class MapActivity : AppCompatActivity() {
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
+        androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode(Ui.modo(this))
         super.onCreate(savedInstanceState)
+        Ui.atualizar(this)
         title = "Mapa"
         val web = WebView(this)
-        web.setBackgroundColor(Colors.BG)
+        web.setBackgroundColor(Ui.BG)
         web.settings.javaScriptEnabled = true
         web.settings.domStorageEnabled = true
         web.settings.userAgentString = web.settings.userAgentString + " RadarCorridas/1.0"
@@ -75,7 +77,8 @@ class MapActivity : AppCompatActivity() {
         setContentView(web)
         // Carrega com um endereço https "de mentira": os servidores de mapa recusam páginas sem origem (file://)
         val html = assets.open("mapa.html").bufferedReader().use { it.readText() }
-        web.loadDataWithBaseURL("https://radarcorridas.app/", html, "text/html", "utf-8", null)
+        // tema claro/escuro igual ao do app
+        web.loadDataWithBaseURL("https://radarcorridas.app/", html.replaceFirst("<head>", "<head><script>document.documentElement.dataset.tema='${Ui.nomeTema}'</script>"), "text/html", "utf-8", null)
 
         // Agenda de eventos: baixa se ainda não tiver (ou estiver velha) e atualiza o mapa
         val f = Events.file(this)

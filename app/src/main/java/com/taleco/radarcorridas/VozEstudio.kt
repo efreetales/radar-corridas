@@ -29,10 +29,6 @@ object VozEstudio {
     private var player: MediaPlayer? = null
     private var foco: AudioFocusRequest? = null
 
-    private val ATTR = AudioAttributes.Builder()
-        .setUsage(AudioAttributes.USAGE_ASSISTANCE_NAVIGATION_GUIDANCE)
-        .setContentType(AudioAttributes.CONTENT_TYPE_SPEECH)
-        .build()
 
     fun ativa(ctx: Context): Boolean { val p = Prefs(ctx); return p.studioVoice && p.elevenKey.isNotBlank() }
 
@@ -94,11 +90,11 @@ object VozEstudio {
     private fun tocar(ctx: Context, f: File): Boolean = try {
         player?.release()
         val am = ctx.getSystemService(AudioManager::class.java)
-        val r = AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK).setAudioAttributes(ATTR).build()
+        val r = AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK).setAudioAttributes(VozCanal.attr(ctx)).build()
         am?.requestAudioFocus(r); foco = r
         Volume.subir(ctx)
         player = MediaPlayer().apply {
-            setAudioAttributes(ATTR)
+            setAudioAttributes(VozCanal.attr(ctx))
             setDataSource(f.path)
             setOnCompletionListener { mp -> mp.release(); if (player === mp) player = null; foco?.let { am?.abandonAudioFocusRequest(it) }; Volume.voltar(ctx) }
             prepare()
