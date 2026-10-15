@@ -1,5 +1,5 @@
 {
- "gerado_em": "2026-10-15T11:08:14-03:00",
+ "gerado_em": "2026-10-15T19:08:58-03:00",
  "data": "2026-10-15",
  "observacao": "Gerado automaticamente (Ticket360, Sympla e revisão semanal). Saída estimada pelas regras de tools/casas.json.",
  "eventos": [
@@ -82,6 +82,38 @@
    "regra": "show",
    "lat": -23.561806,
    "lng": -46.694882
+  },
+  {
+   "nome": "Museu do Futebol",
+   "local": "Museu do futebol",
+   "endereco": "Praça Charles Miller, S//N - Estádio do Pacaembu, São Paulo",
+   "tipo": "show",
+   "data": "2026-10-15",
+   "inicio": "17:00",
+   "fim_estimado": "18:45",
+   "incerteza_min": 45,
+   "publico_estimado": null,
+   "fonte": "https://bileto.sympla.com.br/event/96110",
+   "origem": "sympla",
+   "regra": "show",
+   "lat": -23.547383,
+   "lng": -46.664895
+  },
+  {
+   "nome": "Museu da Imaginação",
+   "local": "Museu da Imaginação",
+   "endereco": "Rua Virgilio Wey,100, São Paulo",
+   "tipo": "show",
+   "data": "2026-10-15",
+   "inicio": "17:00",
+   "fim_estimado": "18:45",
+   "incerteza_min": 45,
+   "publico_estimado": null,
+   "fonte": "https://bileto.sympla.com.br/event/116303",
+   "origem": "sympla",
+   "regra": "show",
+   "lat": -23.513035,
+   "lng": -46.696046
   },
   {
    "nome": "QUINTAL DO JAZZ",
@@ -186,7 +218,7 @@
    "tipo": "festa",
    "data": "2026-10-15",
    "inicio": "18:30",
-   "fim_estimado": "22:00",
+   "fim_estimado": "23:29",
    "incerteza_min": 120,
    "publico_estimado": null,
    "fonte": "https://www.sympla.com.br/evento/ponto-sem-retorno-15-10-open-air-brasil-sao-paulo/3580384",
@@ -276,20 +308,20 @@
    "lng": -46.647879
   },
   {
-   "nome": "Lançamento do Livro Zeitenwende Ponto de Virada - Eckhard E. Kupfer",
-   "local": "Club Transatlântico - Villa Blue Tree Transatlântico",
-   "endereco": "Rua Verbo Divino, Chácara Santo Antônio, São Paulo",
+   "nome": "LANÇAMENTO VIDEOCAST - PROSAS DECOLONIAIS",
+   "local": "ORÍ CASA FLORESTA",
+   "endereco": "Rua Félix Della Rosa, Vila Anglo Brasileira, São Paulo",
    "tipo": "show",
    "data": "2026-10-15",
    "inicio": "19:00",
-   "fim_estimado": "21:00",
+   "fim_estimado": "22:00",
    "incerteza_min": 45,
    "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/lancamento-do-livro-zeitenwende-ponto-de-virada-eckhard-e-kupfer/3597119",
+   "fonte": "https://www.sympla.com.br/evento/lancamento-videocast-prosas-decoloniais/3612861",
    "origem": "sympla",
    "regra": "show",
-   "lat": -23.631542,
-   "lng": -46.709195
+   "lat": -23.536962,
+   "lng": -46.69275
   },
   {
    "nome": "Talk com Gisela Rodenburg | 15/10",
@@ -756,22 +788,6 @@
    "lng": -46.688537
   },
   {
-   "nome": "Mabween",
-   "local": "Av. José Maria de Faria, 94",
-   "endereco": "Avenida José Maria de Faria, São Paulo",
-   "tipo": "show",
-   "data": "2026-10-15",
-   "inicio": "21:00",
-   "fim_estimado": "03:00",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/mabween/3614959",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.51371,
-   "lng": -46.700046
-  },
-  {
    "nome": "Fernando Catatau e Mateus Fazeno Rock // Cancioneiro e Vadiaji",
    "local": "Casa de Francisca",
    "endereco": "R. Quintino Bocaiúva,22 - 1º andar, São Paulo",
@@ -837,7 +853,7 @@
   }
  ],
  "geocodificacao": {
-  "com_local": 52,
+  "com_local": 53,
   "sem_local": 0
  }
 }
