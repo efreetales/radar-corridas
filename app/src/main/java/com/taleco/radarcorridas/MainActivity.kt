@@ -514,7 +514,7 @@ class MainActivity : AppCompatActivity() {
 
         card.addView(text("Tema", 14f, Ui.TEXT))
         val tg = MaterialButtonToggleGroup(this).apply { isSingleSelection = true; isSelectionRequired = true }
-        val temas = listOf("auto" to "Do celular", "claro" to "Claro", "escuro" to "Escuro")
+        val temas = listOf("auto" to "Celular", "claro" to "Claro", "escuro" to "Escuro")
         val tIds = mutableMapOf<Int, String>()
         for ((k, l) in temas) {
             val b = outlinedButton(l).apply { id = View.generateViewId() }
@@ -773,7 +773,7 @@ class MainActivity : AppCompatActivity() {
         card.addView(text("Depois da fala o volume volta ao que estava. A música abaixa enquanto a voz fala.", 12f, Ui.MUTED))
         card.addView(text("Canal do áudio", 15f, Ui.TEXT, bold = true).apply { setPadding(0, dp(14), 0, 0) })
         val canal = MaterialButtonToggleGroup(this).apply { isSingleSelection = true; isSelectionRequired = true }
-        val bMidia = outlinedButton("Mídia (mais alto)").apply { id = View.generateViewId() }
+        val bMidia = outlinedButton("Mídia").apply { id = View.generateViewId() }
         val bNav = outlinedButton("Navegação").apply { id = View.generateViewId() }
         canal.addView(bMidia, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f))
         canal.addView(bNav, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f))
@@ -1765,13 +1765,13 @@ class MainActivity : AppCompatActivity() {
                 setSize(dp(28), dp(28))
                 setColor(Color.WHITE)
             }, dp(5))
-            v.thumbTintList = ColorStateList(checked, intArrayOf(Color.WHITE, Color.parseColor("#C9D1D9")))
+            v.thumbTintList = ColorStateList(checked, intArrayOf(Color.WHITE, if (Ui.escuro) Color.parseColor("#C9D1D9") else Color.WHITE))
             v.trackDrawable = GradientDrawable().apply {
                 cornerRadius = dp(19).toFloat()
                 setSize(dp(64), dp(38))
                 setColor(Color.WHITE)
             }
-            v.trackTintList = ColorStateList(checked, intArrayOf(Ui.ACCENT, Color.parseColor("#3A434D")))
+            v.trackTintList = ColorStateList(checked, intArrayOf(Ui.ACCENT, if (Ui.escuro) Color.parseColor("#3A434D") else Color.parseColor("#BFC7CF")))
             v.textSize = maxOf(16f, v.textSize / resources.displayMetrics.scaledDensity)
             v.switchPadding = dp(12)
             return

@@ -23,7 +23,7 @@ class TelasTest {
         val h = v.measuredHeight
         v.layout(0, 0, w, h)
         val b = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888)
-        v.draw(Canvas(b))
+        Canvas(b).also { it.drawColor(Ui.BG); v.draw(it) }
         val d = File("build/previas"); d.mkdirs()
         File(d, "$nome.png").outputStream().use { b.compress(Bitmap.CompressFormat.PNG, 100, it) }
         println("TELA $nome ${w}x$h")
