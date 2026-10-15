@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Material Symbols Rounded: record_voice_over (Apache 2.0) -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp" android:height="24dp" android:viewportWidth="960" android:viewportHeight="960">
+    <group android:translateY="960">
+        <path android:fillColor="#FFFFFFFF" android:pathData="M 920 -591 q 0 80 -24.5 142 T 826 -333 q -10 12 -24.5 13 T 776 -330 q -11 -11 -10.5 -26 t 10.5 -27 q 36 -44 55 -92.5 T 850 -591 q 0 -67 -19 -115.5 T 776 -799 q -10 -12 -10.5 -27 t 10.5 -26 q 11 -11 25.5 -10 t 24.5 13 q 45 54 69.5 116 T 920 -591 Z m -200 0 q 0 32 -9.5 61 T 684 -475 q -8 12 -22 13 t -25 -10 q -11 -11 -12 -25 t 7 -27 q 8 -14 13 -31 t 5 -36 q 0 -19 -5 -36 t -13 -31 q -8 -13 -7 -27 t 12 -25 q 11 -11 25 -10 t 22 13 q 17 26 26.5 55 t 9.5 61 Z M 360 -441 q -66 0 -108 -42 t -42 -108 q 0 -66 42 -108 t 108 -42 q 66 0 108 42 t 42 108 q 0 66 -42 108 t -108 42 Z M 40 -180 v -34 q 0 -38 19 -64.5 t 49 -41.5 q 51 -26 120.5 -43 T 360 -380 q 62 0 131 17 t 120 43 q 30 15 49.5 41.5 T 680 -214 v 34 q 0 25 -17.5 42.5 T 620 -120 H 100 q -25 0 -42.5 -17.5 T 40 -180 Z m 60 0 h 520 v -34 q 0 -16 -8.5 -29.5 T 587 -266 q -48 -27 -109 -40.5 T 360 -320 q -57 0 -118.5 14.5 T 132 -266 q -14 7 -23 21.5 t -9 30.5 v 34 Z m 324.5 -346.5 Q 450 -552 450 -591 t -25.5 -64.5 Q 399 -681 360 -681 t -64.5 25.5 Q 270 -630 270 -591 t 25.5 64.5 Q 321 -501 360 -501 t 64.5 -25.5 Z M 360 -591 Z m 0 411 Z"/>
+    </group>
+</vector>
