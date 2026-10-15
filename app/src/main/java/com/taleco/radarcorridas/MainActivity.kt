@@ -1767,6 +1767,7 @@ class MainActivity : AppCompatActivity() {
                 // no tema claro a bolinha branca some sobre o card branco: ganha um contorno
                 if (!Ui.escuro) setStroke(dp(1), Color.parseColor("#C3CAD1"))
             }, dp(5))
+            v.isUseMaterialThemeColors = false   // senão o Material pinta a bolinha com a cor do tema
             v.thumbTintList = if (Ui.escuro) ColorStateList(checked, intArrayOf(Color.WHITE, Color.parseColor("#C9D1D9"))) else null
             v.trackDrawable = GradientDrawable().apply {
                 cornerRadius = dp(19).toFloat()
