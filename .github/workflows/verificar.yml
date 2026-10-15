@@ -26,7 +26,7 @@ jobs:
       - name: Compilar
         run: |
           set -o pipefail
-          gradle :app:assembleDebug :app:testDebugUnitTest --tests "*OfferParserTest*" --tests "*TelasTest*" -i --console=plain 2>&1 | tee build.log; grep -E "RENDER|PARSER|expected|FAILED|AssertionError" build.log | sed "s/^/::warning::/" || true; grep -E "IconesRenderTest.*(FAILED|PASSED)|Exception" build.log | head -5 | sed "s/^/::warning::/" || true
+          gradle :app:assembleDebug :app:testDebugUnitTest --tests "*OfferParserTest*" --tests "*TelasTest*" -i --console=plain 2>&1 | tee build.log; grep -E -A8 "RENDER|PARSER|TELA|FAILED" build.log | grep -vE "^\s*at org.junit|^\s*at java.base|^--$" | head -60 | sed "s/^/::warning::/" || true; grep -E "IconesRenderTest.*(FAILED|PASSED)|Exception" build.log | head -5 | sed "s/^/::warning::/" || true
 
       - name: Mostrar erros da compilação
         if: failure()
