@@ -1764,8 +1764,10 @@ class MainActivity : AppCompatActivity() {
                 shape = GradientDrawable.OVAL
                 setSize(dp(28), dp(28))
                 setColor(Color.WHITE)
+                // no tema claro a bolinha branca some sobre o card branco: ganha um contorno
+                if (!Ui.escuro) setStroke(dp(1), Color.parseColor("#C3CAD1"))
             }, dp(5))
-            v.thumbTintList = ColorStateList(checked, intArrayOf(Color.WHITE, if (Ui.escuro) Color.parseColor("#C9D1D9") else Color.WHITE))
+            v.thumbTintList = if (Ui.escuro) ColorStateList(checked, intArrayOf(Color.WHITE, Color.parseColor("#C9D1D9"))) else null
             v.trackDrawable = GradientDrawable().apply {
                 cornerRadius = dp(19).toFloat()
                 setSize(dp(64), dp(38))
