@@ -1,5 +1,5 @@
-Agenda 2026-10-16 (rodou 2026-10-16 10:55)
+Agenda 2026-10-16 (rodou 2026-10-16 19:01)
 Ticket360: 3 de hoje
-Sympla: 106 de hoje (9 páginas, total 129)
+Sympla: 108 de hoje (8 páginas, total 123)
 semana.json: não encontrado
-Total: 108 {'sympla': 106, 'ticket360': 2}
+Total: 110 {'sympla': 108, 'ticket360': 2}

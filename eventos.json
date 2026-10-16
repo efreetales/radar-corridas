@@ -1,5 +1,5 @@
 {
- "gerado_em": "2026-10-16T10:55:08-03:00",
+ "gerado_em": "2026-10-16T19:01:13-03:00",
  "data": "2026-10-16",
  "observacao": "Gerado automaticamente (Ticket360, Sympla e revisão semanal). Saída estimada pelas regras de tools/casas.json.",
  "eventos": [
@@ -84,6 +84,22 @@
    "lng": -46.663295
   },
   {
+   "nome": "Visita ao Jardim dos Gatos",
+   "local": "Gateria Cat Cafe",
+   "endereco": "R. Dr. José de Queirós Aranha, 358, São Paulo",
+   "tipo": "show",
+   "data": "2026-10-16",
+   "inicio": "18:00",
+   "fim_estimado": "19:45",
+   "incerteza_min": 45,
+   "publico_estimado": null,
+   "fonte": "https://bileto.sympla.com.br/event/94784",
+   "origem": "sympla",
+   "regra": "show",
+   "lat": -23.579499,
+   "lng": -46.635483
+  },
+  {
    "nome": "Tinder Night no St. Johns - 10º Edição",
    "local": "R. Itapura, 1308",
    "endereco": "Rua Itapura, Vila Gomes Cardim, São Paulo",
@@ -162,6 +178,22 @@
    "regra": "show",
    "lat": -23.554357,
    "lng": -46.655983
+  },
+  {
+   "nome": "Seja Luz - Tatuapé",
+   "local": "Arena Circo Show",
+   "endereco": "Rua: Uriel Gaspar,149, São Paulo",
+   "tipo": "show",
+   "data": "2026-10-16",
+   "inicio": "19:00",
+   "fim_estimado": "20:45",
+   "incerteza_min": 45,
+   "publico_estimado": null,
+   "fonte": "https://bileto.sympla.com.br/event/122471",
+   "origem": "sympla",
+   "regra": "show",
+   "lat": -23.542731,
+   "lng": -46.582402
   },
   {
    "nome": "Bar do Zeca - 2 Shows | Luiz Celestino | Samba Flor de Lis",
@@ -388,22 +420,6 @@
    "lng": -46.631789
   },
   {
-   "nome": "ArtWine Originals",
-   "local": "Casa beco",
-   "endereco": "Rua Aspicuelta, São Paulo",
-   "tipo": "show",
-   "data": "2026-10-16",
-   "inicio": "19:30",
-   "fim_estimado": "21:30",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/artwine-originals/3599233",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.556039,
-   "lng": -46.686695
-  },
-  {
    "nome": "TINTA & VINHO NAS ALTURAS",
    "local": "Bonjardim Restaurante & Skybar",
    "endereco": "Rua Doutor Olavo Egídio, Santana, São Paulo",
@@ -562,6 +578,22 @@
    "regra": "teatro",
    "lat": -23.548567,
    "lng": -46.645664
+  },
+  {
+   "nome": "GIL – ANDAR COM FÉ - O MUSICAL",
+   "local": "Teatro Santander",
+   "endereco": "Avenida Presidente Juscelino Kubitschek,2041, São Paulo",
+   "tipo": "teatro",
+   "data": "2026-10-16",
+   "inicio": "20:00",
+   "fim_estimado": "22:00",
+   "incerteza_min": 30,
+   "publico_estimado": null,
+   "fonte": "https://bileto.sympla.com.br/event/115256",
+   "origem": "sympla",
+   "regra": "teatro",
+   "lat": -23.592931,
+   "lng": -46.693951
   },
   {
    "nome": "Abalo sísmico",
@@ -1076,22 +1108,6 @@
    "lng": -46.655893
   },
   {
-   "nome": "FLUXO - O Mandelão da Blitz Haus!",
-   "local": "Blitz Haus",
-   "endereco": "Rua Augusta, Consolação, São Paulo",
-   "tipo": "festa",
-   "data": "2026-10-16",
-   "inicio": "21:00",
-   "fim_estimado": "05:30",
-   "incerteza_min": 120,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/fluxo-o-mandelao-da-blitz-haus/3594007",
-   "origem": "sympla",
-   "regra": "festa",
-   "lat": -23.552103,
-   "lng": -46.652185
-  },
-  {
    "nome": "Wilson Bebel + Unhas e Dentes + Dj Migalha /// Mamãe Bar",
    "local": "MAMÃE BAR",
    "endereco": "Rua Lopes Chaves, Barra Funda, São Paulo",
@@ -1266,6 +1282,22 @@
    "regra": "show",
    "lat": -23.567799,
    "lng": -46.690882
+  },
+  {
+   "nome": "FLUXO - O Mandelão da Blitz Haus!",
+   "local": "Blitz Haus",
+   "endereco": "Rua Augusta, Consolação, São Paulo",
+   "tipo": "festa",
+   "data": "2026-10-16",
+   "inicio": "21:00",
+   "fim_estimado": "05:30",
+   "incerteza_min": 120,
+   "publico_estimado": null,
+   "fonte": "https://www.sympla.com.br/evento/fluxo-o-mandelao-da-blitz-haus/3594007",
+   "origem": "sympla",
+   "regra": "festa",
+   "lat": -23.552103,
+   "lng": -46.652185
   },
   {
    "nome": "TINA TURNER TRIBUTO - O SHOW",
@@ -1733,7 +1765,7 @@
   }
  ],
  "geocodificacao": {
-  "com_local": 108,
+  "com_local": 110,
   "sem_local": 0
  }
 }
