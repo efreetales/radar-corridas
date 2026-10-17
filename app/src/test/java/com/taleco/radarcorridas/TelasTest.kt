@@ -34,12 +34,26 @@ class TelasTest {
         val a = c.get()
         val scroll = a.window.decorView.findViewById<android.view.ViewGroup>(android.R.id.content).getChildAt(0) as android.widget.ScrollView
         shot(scroll.getChildAt(0), "inicio_$tema")
-        for ((k, n) in listOf("Leitura e permissões" to "leitura", "Voz com o passageiro" to "voz", "Aparência" to "aparencia", "Cartão e ganhos" to "card", "Custos e gastos" to "custos")) {
+        for ((k, n) in listOf("Leitura e permissões" to "leitura", "Voz com o passageiro" to "voz", "Aparência" to "aparencia", "Cartão e ganhos" to "card", "Custos e gastos" to "custos", "Radares de velocidade" to "radares")) {
             val m = MainActivity::class.java.getDeclaredMethod("showPage", String::class.java); m.isAccessible = true
             m.invoke(a, k)
             shot(scroll.getChildAt(0), "${n}_$tema")
         }
         try { c.pause().stop().destroy() } catch (_: Throwable) { }
+    }
+    @Test fun aviso() {
+        val svc = Robolectric.buildService(RadarService::class.java).get()
+        val o = OverlayManager(svc)
+        for ((nome, b) in listOf(
+            "aviso_evento" to SpeedBanner(null, 34, "Allianz Parque · saída ~23:10 · a 1,2 km", 0xFFC2255C.toInt(), null, 0.4f, sign = "{music_note}", title = "Show de rock no estádio", action = "Waze"),
+            "aviso_ponto" to SpeedBanner(null, 28, "Bom até 19:00 · a 800 m", 0xFF5232B8.toInt(), null, 0.6f, sign = "{star}", title = "Shopping Eldorado", action = "Waze"),
+        )) {
+            o.showSpeed(b)
+            val f = OverlayManager::class.java.getDeclaredField("speedView"); f.isAccessible = true
+            val v = f.get(o) as View
+            shot(v, nome)
+            o.hideSpeed()
+        }
     }
     @Test fun escuro() = telas("escuro")
     @Test fun claro() = telas("claro")

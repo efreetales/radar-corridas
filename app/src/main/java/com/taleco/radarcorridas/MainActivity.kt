@@ -719,7 +719,7 @@ class MainActivity : AppCompatActivity() {
             setOnCheckedChangeListener { _, checked -> prefs.talkToPassenger = checked }
         }, matchWrap(top = 14))
         card.addView(text(
-            "O Radar fala com o passageiro quando ele embarca e quando o carro para no destino. " +
+            "O Radar fala com o passageiro quando ele embarca e quando o carro chega perto do destino. " +
                 "Sai pelo som do carro quando o celular está conectado por Bluetooth ou Android Auto, abaixando a música enquanto fala.",
             12f, Ui.MUTED
         ))
@@ -761,26 +761,38 @@ class MainActivity : AppCompatActivity() {
         editor("Quando chega ao destino", prefs.voiceEnd, Voz.PADRAO_CHEGADA, { prefs.voiceEnd = it }) {
             Voz.chegada(this, "Ana")
         }
-        val volLabel = text("", 15f, Ui.TEXT).apply { setPadding(0, dp(12), 0, 0) }
-        fun volText(v: Int) { volLabel.text = if (v == 0) "Volume da voz: o mesmo do celular" else "Volume da voz: sobe a mídia para $v% enquanto fala" }
-        volText(prefs.voiceVolume)
+        // Despedida: a quantos metros do destino
+        val despLabel = text("", 15f, Ui.TEXT).apply { setPadding(0, dp(12), 0, 0) }
+        fun despText(v: Int) { despLabel.text = "Despedida a $v m do destino" }
+        despText(prefs.farewellDist)
+        card.addView(despLabel)
+        card.addView(Slider(this).apply {
+            valueFrom = 50f; valueTo = 500f; stepSize = 10f
+            value = prefs.farewellDist.toFloat().coerceIn(50f, 500f)
+            addOnChangeListener { _, v, _ -> prefs.farewellDist = v.toInt(); despText(v.toInt()) }
+        }, matchWrap(top = 2))
+        card.addView(text("Toca quando o carro chega a essa distância do endereço de destino, andando ou parado. Se não der, toca quando você finaliza a viagem.", 12f, Ui.MUTED))
+
+        // Altura da própria fala (vale no Android Auto, onde o volume do celular não muda nada)
+        val volLabel = text("", 15f, Ui.TEXT).apply { setPadding(0, dp(14), 0, 0) }
+        fun volText(v: Int) { volLabel.text = "Altura da voz: $v%" }
+        volText(prefs.voiceGain)
         card.addView(volLabel)
         card.addView(Slider(this).apply {
-            valueFrom = 0f; valueTo = 100f; stepSize = 5f
-            value = prefs.voiceVolume.toFloat().coerceIn(0f, 100f)
-            addOnChangeListener { _, v, _ -> prefs.voiceVolume = v.toInt(); volText(v.toInt()) }
+            valueFrom = 50f; valueTo = 300f; stepSize = 10f
+            value = prefs.voiceGain.toFloat().coerceIn(50f, 300f)
+            addOnChangeListener { _, v, _ -> prefs.voiceGain = v.toInt(); volText(v.toInt()) }
         }, matchWrap(top = 2))
-        card.addView(text("Depois da fala o volume volta ao que estava. A música abaixa enquanto a voz fala.", 12f, Ui.MUTED))
+        card.addView(text("100% é a voz normal. Acima disso o Radar reforça o som da fala, mesmo com o volume do celular no máximo e no Android Auto. A música abaixa enquanto a voz fala.", 12f, Ui.MUTED))
         card.addView(text("Canal do áudio", 15f, Ui.TEXT, bold = true).apply { setPadding(0, dp(14), 0, 0) })
         val canal = MaterialButtonToggleGroup(this).apply { isSingleSelection = true; isSelectionRequired = true }
-        val bMidia = outlinedButton("Mídia").apply { id = View.generateViewId() }
-        val bNav = outlinedButton("Navegação").apply { id = View.generateViewId() }
-        canal.addView(bMidia, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f))
-        canal.addView(bNav, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f))
-        canal.check(if (prefs.voiceChannel == "navegacao") bNav.id else bMidia.id)
-        canal.addOnButtonCheckedListener { _, id, on -> if (on) prefs.voiceChannel = if (id == bNav.id) "navegacao" else "midia" }
+        val canais = listOf("navegacao" to "Navegação", "assistente" to "Assistente", "midia" to "Mídia")
+        val bCanal = canais.map { (k, nome) -> k to outlinedButton(nome).apply { id = View.generateViewId(); letterSpacing = 0f; setPadding(dp(4), paddingTop, dp(4), paddingBottom) } }
+        bCanal.forEach { (_, b) -> canal.addView(b, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)) }
+        canal.check((bCanal.firstOrNull { it.first == prefs.voiceChannel } ?: bCanal[0]).second.id)
+        canal.addOnButtonCheckedListener { _, id, on -> if (on) bCanal.firstOrNull { it.second.id == id }?.let { prefs.voiceChannel = it.first } }
         card.addView(canal, matchWrap(top = 6))
-        card.addView(text("Mídia é o canal do áudio do WhatsApp e da música, o mais alto no som do carro. Navegação é o canal do Waze.", 12f, Ui.MUTED))
+        card.addView(text("Navegação é o canal do Waze. Assistente é o canal em que o Android Auto lê as mensagens do WhatsApp. Mídia é o da música. Teste no carro com o botão abaixo.", 12f, Ui.MUTED))
         card.addView(MaterialButton(this).apply {
             isAllCaps = false
             letterSpacing = 0f
@@ -1005,11 +1017,25 @@ class MainActivity : AppCompatActivity() {
             12f, Ui.MUTED
         ))
         card.addView(SwitchMaterial(this).apply {
-            text = "Bipe sonoro (volume de mídia; sai no som do carro se conectado)"
+            text = "Bipe sonoro"
             setTextColor(Ui.TEXT)
             isChecked = prefs.speedSound
             setOnCheckedChangeListener { _, checked -> prefs.speedSound = checked }
         }, matchWrap(top = 6))
+        val bipeLabel = text("", 15f, Ui.TEXT).apply { setPadding(0, dp(6), 0, 0) }
+        fun bipeText(v: Int) { bipeLabel.text = "Altura dos bipes: $v%" }
+        bipeText(prefs.beepGain)
+        card.addView(bipeLabel)
+        card.addView(Slider(this).apply {
+            valueFrom = 10f; valueTo = 100f; stepSize = 5f
+            value = prefs.beepGain.toFloat().coerceIn(10f, 100f)
+            addOnChangeListener { _, v, _ -> prefs.beepGain = v.toInt(); bipeText(v.toInt()) }
+            addOnSliderTouchListener(object : Slider.OnSliderTouchListener {
+                override fun onStartTrackingTouch(sl: Slider) {}
+                override fun onStopTrackingTouch(sl: Slider) { Beeper.play(this@MainActivity, Beeper.Kind.RADAR_A_FRENTE) }
+            })
+        }, matchWrap(top = 2))
+        card.addView(text("Vale para radar, valeta e pontos bons. Sai no canal do Waze e abaixa a música por um instante. Solte o controle para ouvir.", 12f, Ui.MUTED))
 
         card.addView(text("Distância do aviso (radar e valeta)", 15f, Ui.TEXT, bold = true).apply { setPadding(0, dp(14), 0, 0) })
         card.addView(text(

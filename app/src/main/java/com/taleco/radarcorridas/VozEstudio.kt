@@ -1,10 +1,6 @@
 package com.taleco.radarcorridas
 
 import android.content.Context
-import android.media.AudioAttributes
-import android.media.AudioFocusRequest
-import android.media.AudioManager
-import android.media.MediaPlayer
 import org.json.JSONObject
 import java.io.File
 import java.net.HttpURLConnection
@@ -26,8 +22,6 @@ object VozEstudio {
     )
     private const val MODELO = "eleven_v4"
     private val rede = Executors.newSingleThreadExecutor()
-    private var player: MediaPlayer? = null
-    private var foco: AudioFocusRequest? = null
 
 
     fun ativa(ctx: Context): Boolean { val p = Prefs(ctx); return p.studioVoice && p.elevenKey.isNotBlank() }
@@ -87,21 +81,6 @@ object VozEstudio {
         }
     }
 
-    private fun tocar(ctx: Context, f: File): Boolean = try {
-        player?.release()
-        val am = ctx.getSystemService(AudioManager::class.java)
-        val r = AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK).setAudioAttributes(VozCanal.attr(ctx)).build()
-        am?.requestAudioFocus(r); foco = r
-        Volume.subir(ctx)
-        player = MediaPlayer().apply {
-            setAudioAttributes(VozCanal.attr(ctx))
-            setDataSource(f.path)
-            setOnCompletionListener { mp -> mp.release(); if (player === mp) player = null; foco?.let { am?.abandonAudioFocusRequest(it) }; Volume.voltar(ctx) }
-            prepare()
-            // reforço de volume da própria fala (+8 dB), além do volume do aparelho
-            try { android.media.audiofx.LoudnessEnhancer(audioSessionId).apply { setTargetGain(800); enabled = true } } catch (_: Exception) { }
-            start()
-        }
-        true
-    } catch (_: Exception) { false }
+    /** Toca com a "altura da voz" escolhida (o Tocador cuida do reforço, do canal e de abaixar a música). */
+    private fun tocar(ctx: Context, f: File): Boolean = Tocador.tocar(ctx, f)
 }
