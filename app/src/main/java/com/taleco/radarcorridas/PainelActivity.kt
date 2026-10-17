@@ -20,7 +20,7 @@ class PainelActivity : AppCompatActivity() {
     private lateinit var prefs: Prefs
 
     inner class Bridge {
-        private val allowed = setOf("ofertas.csv", "corridas.csv", "rotas.csv", "sessoes_uber.csv", "gastos.csv", "eventos_uber.csv", "ganhos_uber.csv")
+        private val allowed = setOf("ofertas.csv", "corridas.csv", "rotas.csv", "sessoes_uber.csv", "gastos.csv", "eventos_uber.csv", "ganhos_uber.csv", "ganhos_dia_uber.csv")
         private val sp get() = getSharedPreferences("radar", Context.MODE_PRIVATE)
 
         @JavascriptInterface

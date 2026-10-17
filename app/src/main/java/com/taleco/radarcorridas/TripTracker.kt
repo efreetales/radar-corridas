@@ -377,7 +377,11 @@ object TripTracker {
         val ri = tt.indexOfFirst { it.startsWith("Como foi a viagem") }
         val rated = if (ri >= 0) tt.getOrNull(ri + 1) else null
         val pickupScreen = tt.any { it.startsWith("Embarque em ") }
-        if (meet != null || dest != null || pickupScreen || RideScreen.isRide(tt)) { lastRideTextAt = now; homeSince = 0L }
+        // Esperando o passageiro a Uber mostra "Perto de …" / "tempo de espera" e o nome dele, sem "Embarque em":
+        // isso também é corrida (senão, mexer na Uber enquanto espera encerrava a corrida como cancelada)
+        val esperando = tt.any { it.startsWith("Perto de ") || it.contains("tempo de espera", ignoreCase = true) }
+        val nomeNaTela = trip?.passenger?.let { p -> tt.any { it == p } } == true
+        if (meet != null || dest != null || pickupScreen || esperando || nomeNaTela || RideScreen.isRide(tt)) { lastRideTextAt = now; homeSince = 0L }
 
         // 1) Avaliação = a corrida (de quem foi avaliado) terminou
         val cur = trip
@@ -608,6 +612,38 @@ object UberSession {
             val now = java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss", java.util.Locale.US).format(java.util.Date())
             f.appendText("\"$period\";$money;$done;$offered;$now\n")
             OfferLog.appendDiag(ctx, "SESSÃO UBER: $period · $money · $done viagens")
+        } catch (_: Exception) {
+        }
+    }
+
+    private var lastDiaKey = ""
+
+    /**
+     * Tela "Ganhos" da Uber com um dia escolhido: "12 de out. - 19 de out. | … | R$ 437,94 | … | Online | 7 h 53 m | Viagens | 15".
+     * A tela não diz qual dia está escolhido; o painel acha o turno pelo tempo online.
+     * A semana inteira (mais de 24 h online) não é guardada.
+     */
+    fun readDia(ctx: android.content.Context, texts: List<String>) {
+        val tt = texts.map { it.trim() }
+        val e = tt.indexOf("Estatísticas"); if (e < 0) return
+        val oi = tt.indexOf("Online"); val vi = tt.indexOf("Viagens")
+        if (oi < 0 || vi < 0) return
+        val m = Regex("^(?:(\\d+)\\s*h)?\\s*(?:(\\d+)\\s*m)?$").find(tt.getOrNull(oi + 1) ?: "") ?: return
+        val min = (m.groupValues[1].toIntOrNull() ?: 0) * 60 + (m.groupValues[2].toIntOrNull() ?: 0)
+        if (min <= 0 || min > 24 * 60) return
+        val viagens = tt.getOrNull(vi + 1)?.takeIf { it.matches(Regex("\\d{1,3}")) } ?: return
+        val semana = tt.firstOrNull { it.matches(Regex("\\d{1,2} de \\w{3}\\.? - \\d{1,2} de \\w{3}\\.?")) } ?: ""
+        val valor = tt.take(e).lastOrNull { it.startsWith("R$") } ?: return
+        val key = "$semana|$valor|$min|$viagens"
+        if (key == lastDiaKey) return
+        lastDiaKey = key
+        try {
+            val f = java.io.File(ctx.filesDir, "ganhos_dia_uber.csv")
+            if (!f.exists()) f.writeText("semana;valor;online_min;viagens;lido_em\n")
+            if (f.readText().contains("\"$semana\";$valor;$min;$viagens;")) return
+            val now = java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss", java.util.Locale.US).format(java.util.Date())
+            f.appendText("\"$semana\";$valor;$min;$viagens;$now\n")
+            OfferLog.appendDiag(ctx, "GANHOS DO DIA UBER: $valor · $viagens viagens · ${min / 60}h${min % 60} online")
         } catch (_: Exception) {
         }
     }
