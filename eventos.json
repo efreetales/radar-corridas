@@ -1,5 +1,5 @@
 {
- "gerado_em": "2026-10-17T09:55:02-03:00",
+ "gerado_em": "2026-10-17T18:23:53-03:00",
  "data": "2026-10-17",
  "observacao": "Gerado automaticamente (Ticket360, Sympla e revisão semanal). Saída estimada pelas regras de tools/casas.json.",
  "eventos": [
@@ -308,6 +308,22 @@
    "lng": -46.690712
   },
   {
+   "nome": "O despertar do Orí: Sabedoria Ancestral para o Cotidiano",
+   "local": "Terreiro Baiana Severina",
+   "endereco": "Rua Capitão Pacheco e Chaves, Vila Prudente, São Paulo",
+   "tipo": "show",
+   "data": "2026-10-17",
+   "inicio": "16:00",
+   "fim_estimado": "20:00",
+   "incerteza_min": 45,
+   "publico_estimado": null,
+   "fonte": "https://www.sympla.com.br/evento/o-despertar-do-ori-sabedoria-ancestral-para-o-cotidiano/3570688",
+   "origem": "sympla",
+   "regra": "show",
+   "lat": -23.581812,
+   "lng": -46.588393
+  },
+  {
    "nome": "Quintal da Jacque - Baile Brasileiro",
    "local": "Quintal da Jacque",
    "endereco": "Rua Camburiú, Vila Ipojuca, São Paulo",
@@ -388,22 +404,6 @@
    "lng": -46.661344
   },
   {
-   "nome": "VIKTOR Y BRUTUS",
-   "local": "CIRCO CAJU",
-   "endereco": "Rua Lavradio, BARRA FUNDA, São Paulo",
-   "tipo": "show",
-   "data": "2026-10-17",
-   "inicio": "17:00",
-   "fim_estimado": "18:00",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/viktor-y-brutus/3602159",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.528933,
-   "lng": -46.660088
-  },
-  {
    "nome": "VIVÊNCIA: O Renascimento",
    "local": "Emanare Terapias",
    "endereco": "Rua Teodoro Sampaio, São Paulo",
@@ -418,6 +418,22 @@
    "regra": "show",
    "lat": -23.55762,
    "lng": -46.677641
+  },
+  {
+   "nome": "O Mágico de Oz",
+   "local": "Teatro Bibi Ferreira",
+   "endereco": "Av. Brigadeiro Luiz Antônio, 931, São Paulo",
+   "tipo": "teatro",
+   "data": "2026-10-17",
+   "inicio": "17:30",
+   "fim_estimado": "19:30",
+   "incerteza_min": 30,
+   "publico_estimado": null,
+   "fonte": "https://bileto.sympla.com.br/event/64140",
+   "origem": "sympla",
+   "regra": "teatro",
+   "lat": -23.5695,
+   "lng": -46.65079
   },
   {
    "nome": "A Casa Mágica da Gabby",
@@ -642,6 +658,22 @@
    "regra": "show",
    "lat": -23.529141,
    "lng": -46.659684
+  },
+  {
+   "nome": "MIRACULOUS LADYBUG: O SHOW MUSICAL",
+   "local": "Teatro do Shopping Villa Lobos",
+   "endereco": "Av. Dra. Ruth Cardoso ,4777 - 4º andar, São Paulo",
+   "tipo": "teatro",
+   "data": "2026-10-17",
+   "inicio": "19:00",
+   "fim_estimado": "21:00",
+   "incerteza_min": 30,
+   "publico_estimado": null,
+   "fonte": "https://bileto.sympla.com.br/event/122747",
+   "origem": "sympla",
+   "regra": "teatro",
+   "lat": -23.551872,
+   "lng": -46.721986
   },
   {
    "nome": "Simplesmente eu, Clarice Lispector",
@@ -884,6 +916,38 @@
    "lng": -46.679082
   },
   {
+   "nome": "Dance mais! A grande festa do Flashback está de volta!",
+   "local": "Local a definir",
+   "endereco": "São Paulo",
+   "tipo": "festa",
+   "data": "2026-10-17",
+   "inicio": "19:00",
+   "fim_estimado": "23:15",
+   "incerteza_min": 120,
+   "publico_estimado": null,
+   "fonte": "https://www.sympla.com.br/evento/dance-mais-a-grande-festa-do-flashback-esta-de-volta/3607320",
+   "origem": "sympla",
+   "regra": "festa",
+   "lat": -23.555771,
+   "lng": -46.639557
+  },
+  {
+   "nome": "TOKYO CLUB NO KBAR KARAOKÊ",
+   "local": "Kbar Karaokê",
+   "endereco": "Rua Fernando de Albuquerque, Consolação, São Paulo",
+   "tipo": "show",
+   "data": "2026-10-17",
+   "inicio": "19:00",
+   "fim_estimado": "01:30",
+   "incerteza_min": 45,
+   "publico_estimado": null,
+   "fonte": "https://www.sympla.com.br/evento/tokyo-club-no-kbar-karaoke/3615082",
+   "origem": "sympla",
+   "regra": "show",
+   "lat": -23.552956,
+   "lng": -46.658747
+  },
+  {
    "nome": "Comédia dos Comédia",
    "local": "Laje Carioca",
    "endereco": "Rua Frei Caneca, Consolação, São Paulo",
@@ -962,6 +1026,22 @@
    "regra": "teatro",
    "lat": -23.541959,
    "lng": -46.567142
+  },
+  {
+   "nome": "GIL – ANDAR COM FÉ - O MUSICAL",
+   "local": "Teatro Santander",
+   "endereco": "Avenida Presidente Juscelino Kubitschek,2041, São Paulo",
+   "tipo": "teatro",
+   "data": "2026-10-17",
+   "inicio": "20:00",
+   "fim_estimado": "22:00",
+   "incerteza_min": 30,
+   "publico_estimado": null,
+   "fonte": "https://bileto.sympla.com.br/event/115256",
+   "origem": "sympla",
+   "regra": "teatro",
+   "lat": -23.592931,
+   "lng": -46.693951
   },
   {
    "nome": "DOIS PAPAS",
@@ -1170,22 +1250,6 @@
    "regra": "show",
    "lat": -23.533338,
    "lng": -46.658438
-  },
-  {
-   "nome": "[17/10 - 20h] Wagner Rodrigues apresenta o espetáculo solo de comédia ",
-   "local": "Sociedade do Humor",
-   "endereco": "Rua Bela Flor, Vila da Saúde, São Paulo",
-   "tipo": "teatro",
-   "data": "2026-10-17",
-   "inicio": "20:00",
-   "fim_estimado": "21:00",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/17-10-20h-wagner-rodrigues-apresenta-o-espetaculo-solo-de-comedia-desventuras-de-um-quarentao/3615989",
-   "origem": "sympla",
-   "regra": "teatro",
-   "lat": -23.603812,
-   "lng": -46.631789
   },
   {
    "nome": "Camerata Ritualística em Pé no Chão",
@@ -2325,7 +2389,7 @@
   }
  ],
  "geocodificacao": {
-  "com_local": 145,
+  "com_local": 149,
   "sem_local": 0
  }
 }
