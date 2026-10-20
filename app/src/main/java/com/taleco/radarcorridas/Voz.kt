@@ -105,8 +105,37 @@ object Voz {
     /** Só o primeiro nome, como aparece na Uber ("Gabriel", "Ana Paula" -> "Ana"). */
     private fun nome(n: String?) = n?.trim()?.split(Regex("\\s+"))?.firstOrNull()?.takeIf { it.length >= 2 }
 
-    /** "Avenida 9 de Julho, 2040, Bela Vista" -> "Avenida 9 de Julho" */
-    private fun rua(d: String?): String? = d?.substringBefore(",")?.substringBefore(" - ")?.trim()?.takeIf { it.length >= 4 }
+    /** "Avenida 9 de Julho, 2040, Bela Vista" -> "Avenida 9 de Julho"; "R. Augusta" -> "Rua Augusta" (a voz não lê "R"). */
+    private fun rua(d: String?): String? = d?.substringBefore(",")?.substringBefore(" - ")?.trim()?.let { porExtenso(it) }?.takeIf { it.length >= 4 }
+
+    private val ABREV = listOf(
+        "R" to "Rua", "Av" to "Avenida", "Al" to "Alameda", "Pç" to "Praça", "Pça" to "Praça", "Pc" to "Praça", "Pca" to "Praça",
+        "Tv" to "Travessa", "Trav" to "Travessa", "Estr" to "Estrada", "Est" to "Estrada", "Rod" to "Rodovia", "Lgo" to "Largo", "Lg" to "Largo",
+        "Vd" to "Viaduto", "Pq" to "Parque", "Jd" to "Jardim", "Vl" to "Vila", "Res" to "Residencial",
+        "Dr" to "Doutor", "Dra" to "Doutora", "Prof" to "Professor", "Profa" to "Professora", "Eng" to "Engenheiro", "Brg" to "Brigadeiro",
+        "Brig" to "Brigadeiro", "Cel" to "Coronel", "Gen" to "General", "Cap" to "Capitão", "Maj" to "Major", "Ten" to "Tenente",
+        "Mal" to "Marechal", "Alm" to "Almirante", "Des" to "Desembargador", "Pres" to "Presidente", "Gov" to "Governador",
+        "Sen" to "Senador", "Dep" to "Deputado", "Ver" to "Vereador", "Pe" to "Padre", "Fr" to "Frei", "Sta" to "Santa", "Sto" to "Santo",
+        "S" to "São", "N. Sra" to "Nossa Senhora", "Nsa" to "Nossa", "Sra" to "Senhora", "Cons" to "Conselheiro", "Com" to "Comendador",
+        "Visc" to "Visconde", "Bar" to "Barão", "Dq" to "Duque", "Min" to "Ministro", "Arq" to "Arquiteto", "Dom" to "Dom"
+    )
+
+    /** Troca as abreviações dos endereços pelas palavras inteiras. "R" sozinho só vira "Rua" no começo. */
+    fun porExtenso(nome: String): String {
+        var t = nome.trim()
+        // tipo do logradouro no começo: "R.", "R ", "Av.", "Al."…
+        Regex("^(R|Av|Al|Pç|Pça|Pc|Pca|Tv|Trav|Estr|Est|Rod|Lgo|Lg|Vd)\\.?\\s+", RegexOption.IGNORE_CASE).find(t)?.let { m ->
+            val k = m.groupValues[1]
+            val nomeLongo = ABREV.firstOrNull { it.first.equals(k, ignoreCase = true) }?.second
+            if (nomeLongo != null) t = nomeLongo + " " + t.substring(m.range.last + 1)
+        }
+        // títulos no meio do nome, só com ponto: "Av. Brg. Faria Lima" -> "Avenida Brigadeiro Faria Lima"
+        for ((ab, longo) in ABREV) {
+            if (ab.length < 2) continue
+            t = t.replace(Regex("(?<=^|\\s)" + Regex.escape(ab) + "\\.(?=\\s|$)", RegexOption.IGNORE_CASE), longo)
+        }
+        return t.replace(Regex("\\s{2,}"), " ").trim()
+    }
 
     const val PADRAO_INICIO = "Oi, {nome}, tudo bem? Vamos lá, nosso destino é {rua}. Se precisar de alguma coisa, é só me falar. Boa viagem!"
     const val PADRAO_CHEGADA = "Pronto, {nome}, chegamos! Obrigado pela companhia, espero que tenha curtido a viagem. Se puder, deixa sua avaliação no aplicativo da Uber. Até a próxima!"

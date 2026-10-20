@@ -93,6 +93,7 @@ object TripTracker {
         var passenger: String? = null   // nome lido na tela da Uber ("Encontro com X", "Destino de X")
         var falouInicio = false          // voz: "Vamos começar…"
         var falouFim = false             // voz: "Chegamos…"
+        var navUber = false             // a Uber está navegando até o destino (a despedida usa a distância dela, não o GPS)
         var ratedDone = false           // apareceu "Como foi a viagem?": corrida concluída de verdade
     }
 
@@ -267,7 +268,8 @@ object TripTracker {
         if (loc.hasAccuracy() && loc.accuracy > MIN_ACCURACY_M) return
         val here = Geo.of(loc)
         // Chegou perto do destino (distância escolhida em Voz com o passageiro) -> "Chegamos…"
-        if (phase == Phase.EM_VIAGEM && !t.falouFim) {
+        // Sem a navegação da Uber na tela (ex.: navegando pelo Waze): usa a distância em linha reta pelo GPS
+        if (phase == Phase.EM_VIAGEM && !t.falouFim && !t.navUber) {
             val d = t.destination; val saiu = t.leftPickupAt
             val raio = appContext?.let { Prefs(it).farewellDist.toDouble() } ?: 150.0
             if (d != null && saiu != null && loc.time - saiu > 60_000L && Geo.meters(here, d) <= raio) despedir(t)
@@ -437,6 +439,25 @@ object TripTracker {
             t.leftPickupAt = now
             phase = Phase.EM_VIAGEM
             saudar(t)
+        }
+        // Despedida pela navegação da Uber: no último trecho a faixa de cima mostra o próprio endereço de destino
+        // com a distância que falta pelo caminho ("Rua X, 188 - Bairro | 175 m | Rua X, 188 - Bairro").
+        // Assim não toca numa rua paralela que está perto em linha reta.
+        if (phase == Phase.EM_VIAGEM && !t.falouFim) {
+            val nav = Regex("^(\\d+(?:[.,]\\d+)?)\\s?(m|km)$")
+            for (i in 1 until tt.size - 1) {
+                val m = nav.find(tt[i]) ?: continue
+                val alvo = tt[i + 1]
+                if (!Regex("^[^,]+, \\d").containsMatchIn(alvo)) continue
+                t.navUber = true
+                if (tt[i - 1] != alvo) break   // ainda não é o último trecho
+                val metros = (m.groupValues[1].replace(',', '.').toDoubleOrNull() ?: break) * (if (m.groupValues[2] == "km") 1000.0 else 1.0)
+                if (metros <= prefs.farewellDist && (t.leftPickupAt?.let { now - it > 60_000L } != false)) {
+                    OfferLog.appendDiag(ctx, "VOZ: despedida pela navegação da Uber (faltam ${metros.toInt()} m)")
+                    despedir(t)
+                }
+                break
+            }
         }
     }
 

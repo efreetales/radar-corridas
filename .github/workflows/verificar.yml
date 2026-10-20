@@ -26,13 +26,13 @@ jobs:
       - name: Compilar
         run: |
           set -o pipefail
-          gradle :app:assembleDebug :app:testDebugUnitTest --tests "*OfferParserTest*" --tests "*TelasTest*" -i --console=plain 2>&1 | tee build.log
+          gradle :app:assembleDebug :app:testDebugUnitTest --tests "*OfferParserTest*" --tests "*TelasTest*" --tests "*VozTextoTest*" -i --console=plain 2>&1 | tee build.log
 
       - name: Resultados dos testes
         if: always()
         run: |
           for f in app/build/test-results/testDebugUnitTest/*.xml; do grep -E -A6 "<failure" "$f" | head -20 | sed "s/^/::warning::/"; done || true
-          grep -E -A8 "RENDER|PARSER|TELA|FAILED" build.log | grep -vE "^\s*at org.junit|^\s*at java.base|^--$" | head -60 | sed "s/^/::warning::/" || true; grep -E "IconesRenderTest.*(FAILED|PASSED)|Exception" build.log | head -5 | sed "s/^/::warning::/" || true
+          grep -E -A8 "RENDER|PARSER|TELA|VOZTEXTO|FAILED" build.log | grep -vE "^\s*at org.junit|^\s*at java.base|^--$" | head -60 | sed "s/^/::warning::/" || true; grep -E "IconesRenderTest.*(FAILED|PASSED)|Exception" build.log | head -5 | sed "s/^/::warning::/" || true
 
       - name: Mostrar erros da compilação
         if: failure()
