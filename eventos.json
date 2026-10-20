@@ -1,5 +1,5 @@
 {
- "gerado_em": "2026-10-20T11:15:59-03:00",
+ "gerado_em": "2026-10-20T19:14:26-03:00",
  "data": "2026-10-20",
  "observacao": "Gerado automaticamente (Ticket360, Sympla e revisão semanal). Saída estimada pelas regras de tools/casas.json.",
  "eventos": [
@@ -66,6 +66,22 @@
    "regra": "show",
    "lat": -23.589405,
    "lng": -46.685938
+  },
+  {
+   "nome": "À Mesa com Afeto",
+   "local": "Casa Del Papa",
+   "endereco": "Rua República do Iraque, São Paulo",
+   "tipo": "show",
+   "data": "2026-10-20",
+   "inicio": "18:00",
+   "fim_estimado": "19:45",
+   "incerteza_min": 45,
+   "publico_estimado": null,
+   "fonte": "https://www.sympla.com.br/evento/a-mesa-com-afeto/3626042",
+   "origem": "sympla",
+   "regra": "show",
+   "lat": -23.623758,
+   "lng": -46.670355
   },
   {
    "nome": "Farol Santander São Paulo 2026",
@@ -341,7 +357,7 @@
   }
  ],
  "geocodificacao": {
-  "com_local": 21,
+  "com_local": 22,
   "sem_local": 0
  }
 }
