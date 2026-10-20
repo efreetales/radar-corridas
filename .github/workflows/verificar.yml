@@ -32,7 +32,7 @@ jobs:
         if: always()
         run: |
           for f in app/build/test-results/testDebugUnitTest/*.xml; do grep -E -A6 "<failure" "$f" | head -20 | sed "s/^/::warning::/"; done || true
-          grep -E -A8 "RENDER|PARSER|TELA|VOZTEXTO|FAILED" build.log | grep -vE "^\s*at org.junit|^\s*at java.base|^--$" | head -60 | sed "s/^/::warning::/" || true; grep -E "IconesRenderTest.*(FAILED|PASSED)|Exception" build.log | head -5 | sed "s/^/::warning::/" || true
+          grep -E "VOZTEXTO|FAILED|VozTextoTest" build.log | head -8 | sed "s/^/::warning::/" || true; grep -E -A8 "RENDER|PARSER|TELA|FAILED" build.log | grep -vE "^\s*at org.junit|^\s*at java.base|^--$" | head -60 | sed "s/^/::warning::/" || true; grep -E "IconesRenderTest.*(FAILED|PASSED)|Exception" build.log | head -5 | sed "s/^/::warning::/" || true
 
       - name: Mostrar erros da compilação
         if: failure()
