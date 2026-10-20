@@ -30,8 +30,12 @@ class TelasTest {
     }
     private fun telas(tema: String) {
         Prefs(RuntimeEnvironment.getApplication()).tema = tema
+        // simula versão nova no GitHub (sem internet no teste)
+        RuntimeEnvironment.getApplication().getSharedPreferences("radar", android.content.Context.MODE_PRIVATE).edit()
+            .putLong("atualiz_conferiu", System.currentTimeMillis()).putInt("atualiz_num", 83).putString("atualiz_url", "https://x/RadarCorridas.apk").commit()
         val c = Robolectric.buildActivity(MainActivity::class.java).setup()
         val a = c.get()
+        org.robolectric.Shadows.shadowOf(android.os.Looper.getMainLooper()).idle()
         val scroll = a.window.decorView.findViewById<android.view.ViewGroup>(android.R.id.content).getChildAt(0) as android.widget.ScrollView
         shot(scroll.getChildAt(0), "inicio_$tema")
         for ((k, n) in listOf("Leitura e permissões" to "leitura", "Voz com o passageiro" to "voz", "Aparência" to "aparencia", "Cartão e ganhos" to "card", "Custos e gastos" to "custos", "Radares de velocidade" to "radares")) {

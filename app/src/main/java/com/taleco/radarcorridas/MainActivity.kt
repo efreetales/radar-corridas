@@ -101,6 +101,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var homeStatusTitle: TextView
     private lateinit var homeStatusSub: TextView
     private lateinit var homePill: TextView
+    private var atualizCard: LinearLayout? = null
+    private var atualizSub: TextView? = null
 
     private fun goBack() {
         val p = currentPage?.let { parentPage[it] }
@@ -244,6 +246,32 @@ class MainActivity : AppCompatActivity() {
         st.setOnClickListener { showPage("Leitura e permissões") }
         col.addView(st, matchWrap())
 
+        // Versão nova no GitHub: um toque baixa e abre a instalação
+        val up = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            gravity = Gravity.CENTER_VERTICAL
+            setPadding(dp(16), dp(16), dp(16), dp(16))
+            background = rounded(Ui.SURFACE, 20f).apply { setStroke(dp(2), Ui.ACCENT) }
+            minimumHeight = dp(76)
+            visibility = View.GONE
+        }
+        ripple(up)
+        up.addView(icon(R.drawable.ic_download, 30, Ui.ACCENT).apply {
+            layoutParams = LinearLayout.LayoutParams(dp(30), dp(30)).apply { rightMargin = dp(14) }
+        })
+        val upt = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
+        upt.addView(text("Nova versão do Radar", 17f, Ui.TEXT, bold = true))
+        val upSub = text("", 13f, Ui.MUTED)
+        upt.addView(upSub)
+        up.addView(upt, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f))
+        up.addView(text("Atualizar", 13f, Ui.BG, bold = true).apply {
+            setPadding(dp(14), dp(8), dp(14), dp(8))
+            background = GradientDrawable().apply { setColor(Ui.ACCENT); cornerRadius = dp(99).toFloat() }
+        })
+        up.setOnClickListener { atualizar() }
+        atualizCard = up; atualizSub = upSub
+        col.addView(up, matchWrap(top = 12))
+
         for ((grupo, titulo) in listOf("trabalho" to "Seu trabalho", "rua" to "Na rua", "ganhos" to "Ganhos e custos", "ajustes" to "Ajustes")) {
             col.addView(text(titulo.uppercase(), 13f, Ui.MUTED, bold = true).apply {
                 letterSpacing = 0.06f
@@ -268,11 +296,38 @@ class MainActivity : AppCompatActivity() {
         } catch (_: Exception) {
             "?"
         }
-        col.addView(text("Versão $version", 12f, Ui.MUTED).apply {
+        col.addView(text("Versão $version · Procurar atualização", 12f, Ui.MUTED).apply {
             gravity = Gravity.CENTER
-            setPadding(0, dp(20), 0, 0)
+            setPadding(0, dp(20), 0, dp(8))
+            setOnClickListener {
+                toast("Procurando versão nova…")
+                Atualizacao.conferir(this@MainActivity, forcar = true) {
+                    mostrarAtualizacao()
+                    if (Atualizacao.nova == null) toast("O Radar já está na versão mais nova")
+                }
+            }
         })
         return col
+    }
+
+    private fun mostrarAtualizacao() {
+        val n = Atualizacao.nova
+        atualizCard?.visibility = if (n != null) View.VISIBLE else View.GONE
+        if (n != null && !Atualizacao.baixando) atualizSub?.text = "Versão 0.1.${n.numero} · toque para baixar e instalar"
+    }
+
+    private fun atualizar() {
+        if (Atualizacao.baixando) return
+        if (!Atualizacao.podeInstalar(this)) {
+            toast("Na próxima tela, ligue \"Permitir desta fonte\" para o Radar e volte aqui")
+            Atualizacao.pedirPermissao(this)
+            return
+        }
+        atualizSub?.text = "Baixando…"
+        Atualizacao.baixarEInstalar(this, { p -> atualizSub?.text = "Baixando… $p%" }) { erro ->
+            if (erro != null) { toast(erro); mostrarAtualizacao() }
+            else atualizSub?.text = "Confirme a instalação na tela do Android"
+        }
     }
 
     private fun ripple(v: View) {
@@ -357,6 +412,7 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         updateStatus()
+        Atualizacao.conferir(this) { mostrarAtualizacao() }
         updateCount()
         updateTripChecklist()
         updateSpeedInfo()
