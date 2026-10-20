@@ -287,6 +287,7 @@ class RadarService : AccessibilityService() {
             TripTracker.onUberTexts(this, prefs, it.second)
             UberSession.read(this, it.second)
             UberSession.readLastTrip(this, it.second)
+            UberSession.readDia(this, it.second)
             UberEventos.registrar(this, it.second)
         }
         for ((app, texts) in screens) {
@@ -478,7 +479,7 @@ class RadarService : AccessibilityService() {
 
     fun showSpeedBanner(b: SpeedBanner) {
         // Radar ou valeta passam na frente do aviso de ponto bom
-        if (b.sign != "{star}") SpotWatch.onBannerClosed()
+        if (b.action == null) SpotWatch.onBannerClosed()
         if (::overlay.isInitialized) overlay.showSpeed(b)
     }
 

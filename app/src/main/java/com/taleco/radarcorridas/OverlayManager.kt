@@ -38,7 +38,10 @@ class OverlayManager(private val service: AccessibilityService) {
     private var speedBase: GradientDrawable? = null
     private var speedFillShape: GradientDrawable? = null
     private var speedFill: ClipDrawable? = null
-    private var speedAction: TextView? = null
+    private var speedAction: LinearLayout? = null
+    private var speedActionWaze: TextView? = null
+    private var speedActionUber: TextView? = null
+    private var speedActionLine: View? = null
 
     val isCardShowing: Boolean get() = card != null
 
@@ -102,10 +105,11 @@ class OverlayManager(private val service: AccessibilityService) {
         speedLine?.setTextColor(fg)
         speedDist?.setTextColor(fg)
         speedDistUnit?.setTextColor(fg)
-        speedAction?.let { a ->
-            a.visibility = if (b.action != null) View.VISIBLE else View.GONE
-            a.text = Icones.texto(service, "{navigation}\n${b.action ?: ""}", a.textSize)
-            a.setTextColor(b.color)
+        speedAction?.let { col ->
+            col.visibility = if (b.action != null) View.VISIBLE else View.GONE
+            speedActionWaze?.let { it.text = Icones.texto(service, "{navigation} Waze", it.textSize); it.setTextColor(b.color) }
+            speedActionUber?.let { it.text = Icones.texto(service, "{pin} Uber", it.textSize); it.setTextColor(b.color) }
+            speedActionLine?.setBackgroundColor((b.color and 0x00FFFFFF) or 0x55000000)
         }
         if (b.distText != null) {
             speedDist?.text = b.distText
@@ -133,6 +137,9 @@ class OverlayManager(private val service: AccessibilityService) {
         speedFillShape = null
         speedFill = null
         speedAction = null
+        speedActionWaze = null
+        speedActionUber = null
+        speedActionLine = null
     }
 
     /** Mesma cor, uns 35% mais escura: é o "preenchimento" que avança até o radar. */
@@ -215,16 +222,25 @@ class OverlayManager(private val service: AccessibilityService) {
             LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT
         ).apply { leftMargin = service.dp(8) })
 
-        // Botão à direita (só no aviso de ponto/evento): abre o Waze. O resto do aviso só fecha.
-        val action = TextView(service).apply {
+        // Botões à direita (só no aviso de ponto/evento): Waze em cima, Uber embaixo. O resto do aviso só fecha.
+        fun botao() = TextView(service).apply {
             gravity = Gravity.CENTER
-            textSize = 15f
+            textSize = 14f
             typeface = Typeface.DEFAULT_BOLD
-            setLineSpacing(0f, 0.95f)
+            setLineSpacing(0f, 0.9f)
+        }
+        val aWaze = botao()
+        val aUber = botao()
+        val aLine = View(service)
+        val action = LinearLayout(service).apply {
+            orientation = LinearLayout.VERTICAL
             background = GradientDrawable().apply {
                 setColor(Color.WHITE)
                 cornerRadii = floatArrayOf(0f, 0f, radius, radius, radius, radius, 0f, 0f)
             }
+            addView(aWaze, LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 1f))
+            addView(aLine, LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, service.dp(1)).apply { leftMargin = service.dp(10); rightMargin = service.dp(10) })
+            addView(aUber, LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 1f))
             visibility = View.GONE
         }
         root.addView(action, LinearLayout.LayoutParams(service.dp(78), LinearLayout.LayoutParams.MATCH_PARENT))
@@ -235,6 +251,7 @@ class OverlayManager(private val service: AccessibilityService) {
         var downX = 0f
         var moved = false
         var onAction = false
+        var onUber = false
         // Segurar o aviso de radar por 1 s: "radar errado" (some e não aparece mais)
         var longDone = false
         val longPress = Runnable {
@@ -247,6 +264,7 @@ class OverlayManager(private val service: AccessibilityService) {
                     moved = false
                     longDone = false
                     onAction = action.visibility == View.VISIBLE && ev.x >= action.left - service.dp(6)
+                    onUber = onAction && ev.y >= action.top + action.height / 2f
                     v.postDelayed(longPress, 1000L)
                     true
                 }
@@ -267,7 +285,7 @@ class OverlayManager(private val service: AccessibilityService) {
                         v.translationX = 0f
                         v.alpha = 1f
                     } else if (onAction && !moved) {
-                        HazardWatch.onActionTap()
+                        HazardWatch.onActionTap(uber = onUber)
                     } else if (!moved || abs(dx) > swipeDistance) {
                         // toque simples ou arrasto longo: fecha
                         v.animate().translationX(if (dx < 0) -v.width.toFloat() else v.width.toFloat())
@@ -312,6 +330,9 @@ class OverlayManager(private val service: AccessibilityService) {
             speedFillShape = fillShape
             speedFill = fill
             speedAction = action
+            speedActionWaze = aWaze
+            speedActionUber = aUber
+            speedActionLine = aLine
         } catch (e: Exception) {
             speedView = null
         }

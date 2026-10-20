@@ -57,7 +57,7 @@ class CityEvent(
         val s = (startAbs + 1440) % 1440
         val e = (endAbs + after) % 1440
         val windowDay = ((day - 1 + startAbs / 1440) % 7) + 1
-        return Spot(-(name.hashCode().toLong() and 0xffffffL) - 1, "$icon $name", la, lo, setOf(windowDay), s, e, radiusM, true, event = this)
+        return Spot(-(name.hashCode().toLong() and 0xffffffL) - 1, name, la, lo, setOf(windowDay), s, e, radiusM, true, event = this)
     }
 }
 

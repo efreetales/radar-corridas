@@ -223,9 +223,25 @@ class Prefs(context: Context) {
         set(v) = sp.edit().putBoolean("ler_notif_banco", v).apply()
 
     /** Canal da voz com o passageiro: "midia" (mais alto, como o áudio do WhatsApp) ou "navegacao" (como o Waze). */
+    /** Canal da voz: "navegacao" (o do Waze, padrão), "assistente" (o da leitura de mensagens do Android Auto) ou "midia". */
     var voiceChannel: String
-        get() = sp.getString("voz_canal", "midia") ?: "midia"
-        set(v) = sp.edit().putString("voz_canal", v).apply()
+        get() = sp.getString("voz_canal2", "navegacao") ?: "navegacao"
+        set(v) = sp.edit().putString("voz_canal2", v).apply()
+
+    /** Altura da própria fala, em % (100 = normal; acima disso o Radar reforça o áudio). Vale também no Android Auto. */
+    var voiceGain: Int
+        get() = sp.getInt("voz_altura", 150)
+        set(v) = sp.edit().putInt("voz_altura", v).apply()
+
+    /** Altura dos bipes (radar, valeta, pontos), em % do máximo. */
+    var beepGain: Int
+        get() = sp.getInt("bipe_altura", 40)
+        set(v) = sp.edit().putInt("bipe_altura", v).apply()
+
+    /** A despedida toca a até X metros do destino. */
+    var farewellDist: Int
+        get() = sp.getInt("despedida_m", 150)
+        set(v) = sp.edit().putInt("despedida_m", v).apply()
 
     /** Opacidade da bolinha "R" (0.2 a 1). */
     var bubbleOpacity: Float

@@ -66,7 +66,6 @@ object TripTracker {
     private const val HOME_CONFIRM_MS = 45_000L   // Uber: tela inicial firme por 45 s = corrida terminou (vale a hora em que apareceu)
     private const val PICKUP_RADIUS_M = 120.0     // chegou ao embarque
     private const val LEAVE_PICKUP_M = 250.0      // saiu do embarque com o passageiro
-    private const val ARRIVE_TALK_M = 130.0       // voz de chegada: parado a até 130 m do destino
     private const val DROPOFF_RADIUS_M = 150.0    // chegou ao destino
     private const val MAX_TRIP_MS = 3 * 60 * 60 * 1000L
     private const val MIN_ACCURACY_M = 60f
@@ -94,6 +93,7 @@ object TripTracker {
         var passenger: String? = null   // nome lido na tela da Uber ("Encontro com X", "Destino de X")
         var falouInicio = false          // voz: "Vamos começar…"
         var falouFim = false             // voz: "Chegamos…"
+        var navUber = false             // a Uber está navegando até o destino (a despedida usa a distância dela, não o GPS)
         var ratedDone = false           // apareceu "Como foi a viagem?": corrida concluída de verdade
     }
 
@@ -124,6 +124,9 @@ object TripTracker {
         recent.addLast(now to offer)
     }
 
+    /** A última oferta lida, em qualquer fase (segunda checagem quando o aceite não acha a oferta). */
+    private var ultimaVista: Pair<Long, Offer>? = null
+
     private fun forget(offer: Offer?) { if (offer != null) recent.removeAll { it.second.signature() == offer.signature() } }
 
     /** A oferta aceita: a mais recente vista nos últimos 2,5 min. */
@@ -148,6 +151,7 @@ object TripTracker {
     /** Chamado a cada leitura da tela. */
     fun onScreen(ctx: Context, prefs: Prefs, state: ScreenState, offer: Offer?) {
         appContext = ctx.applicationContext
+        if (state == ScreenState.OFERTA && offer != null) ultimaVista = System.currentTimeMillis() to offer
         if (!prefs.trackTrips) {
             if (trip != null) finish(ctx, "registro desligado")
             phase = Phase.LIVRE
@@ -245,6 +249,7 @@ object TripTracker {
         trip = t
         lastOffer = null
         forget(offer)
+        if (ultimaVista?.second === offer) ultimaVista = null
         homeSince = 0L
         setPhase(Phase.A_CAMINHO)
         OfferLog.appendDiag(ctx, "CORRIDA $id: aceita (R$ ${offer.price}) — ligando o GPS")
@@ -262,10 +267,12 @@ object TripTracker {
         val t = trip ?: return
         if (loc.hasAccuracy() && loc.accuracy > MIN_ACCURACY_M) return
         val here = Geo.of(loc)
-        // Chegou: carro parado perto do destino -> "Chegamos…"
-        if (phase == Phase.EM_VIAGEM && !t.falouFim && loc.hasSpeed() && loc.speed < 1.5f) {
+        // Chegou perto do destino (distância escolhida em Voz com o passageiro) -> "Chegamos…"
+        // Sem a navegação da Uber na tela (ex.: navegando pelo Waze): usa a distância em linha reta pelo GPS
+        if (phase == Phase.EM_VIAGEM && !t.falouFim && !t.navUber) {
             val d = t.destination; val saiu = t.leftPickupAt
-            if (d != null && saiu != null && loc.time - saiu > 60_000L && Geo.meters(here, d) <= ARRIVE_TALK_M) despedir(t)
+            val raio = appContext?.let { Prefs(it).farewellDist.toDouble() } ?: 150.0
+            if (d != null && saiu != null && loc.time - saiu > 60_000L && Geo.meters(here, d) <= raio) despedir(t)
         }
         val prev = t.points.lastOrNull()
         // Com o alerta de radar o GPS manda um ponto por segundo; para o percurso, 1 a cada 3 s basta.
@@ -313,7 +320,7 @@ object TripTracker {
         val ctx = appContext ?: return
         if (t.falouInicio || !Prefs(ctx).talkToPassenger) return
         t.falouInicio = true
-        OfferLog.appendDiag(ctx, "VOZ: saudação (${t.passenger ?: "sem nome"}) ${Volume.estado(ctx)}")
+        OfferLog.appendDiag(ctx, "VOZ: saudação (${t.passenger ?: "sem nome"}) ${Volume.estado(ctx)} ${Tocador.estado(ctx)}")
         Voz.inicio(ctx, t.passenger, t.offer.destination)
     }
 
@@ -321,7 +328,7 @@ object TripTracker {
         val ctx = appContext ?: return
         if (t.falouFim || !t.falouInicio || !Prefs(ctx).talkToPassenger) return
         t.falouFim = true
-        OfferLog.appendDiag(ctx, "VOZ: chegada (${t.passenger ?: "sem nome"}) ${Volume.estado(ctx)}")
+        OfferLog.appendDiag(ctx, "VOZ: chegada (${t.passenger ?: "sem nome"}) ${Volume.estado(ctx)} ${Tocador.estado(ctx)}")
         Voz.chegada(ctx, t.passenger)
     }
 
@@ -372,7 +379,11 @@ object TripTracker {
         val ri = tt.indexOfFirst { it.startsWith("Como foi a viagem") }
         val rated = if (ri >= 0) tt.getOrNull(ri + 1) else null
         val pickupScreen = tt.any { it.startsWith("Embarque em ") }
-        if (meet != null || dest != null || pickupScreen || RideScreen.isRide(tt)) { lastRideTextAt = now; homeSince = 0L }
+        // Esperando o passageiro a Uber mostra "Perto de …" / "tempo de espera" e o nome dele, sem "Embarque em":
+        // isso também é corrida (senão, mexer na Uber enquanto espera encerrava a corrida como cancelada)
+        val esperando = tt.any { it.startsWith("Perto de ") || it.contains("tempo de espera", ignoreCase = true) }
+        val nomeNaTela = trip?.passenger?.let { p -> tt.any { it == p } } == true
+        if (meet != null || dest != null || pickupScreen || esperando || nomeNaTela || RideScreen.isRide(tt)) { lastRideTextAt = now; homeSince = 0L }
 
         // 1) Avaliação = a corrida (de quem foi avaliado) terminou
         val cur = trip
@@ -393,10 +404,15 @@ object TripTracker {
         val justDone = meet != null && meet == lastDonePassenger && now - lastDoneAt < 10 * 60_000L
         if (trip == null && meet != null && meet != rated && !justDone) {
             // a mais recente entre a emendada guardada e as ofertas vistas
-            val best = listOfNotNull(queued?.let { queuedAt to it }, pickRecent(now)).maxByOrNull { it.first }
+            var best = listOfNotNull(queued?.let { queuedAt to it }, pickRecent(now)).maxByOrNull { it.first }
+            if (best == null) {
+                val u = ultimaVista
+                OfferLog.appendDiag(ctx, "CORRIDA: aceite sem oferta na lista (fase $phase, ${recent.size} guardadas, última lida há ${u?.let { (now - it.first) / 1000 } ?: "-"} s)")
+                if (u != null && now - u.first <= RECENT_OFFER_MS && u.second.isUber) best = u
+            }
             val q = best?.second
             if (q != null) {
-                val at = if (phase == Phase.OFERTA && offerGoneAt > 0 && q === lastOffer) offerGoneAt else best.first
+                val at = if (phase == Phase.OFERTA && offerGoneAt > 0 && q === lastOffer) offerGoneAt else (best?.first ?: now)
                 queued = null
                 nextOffer = null
                 startTrip(ctx, q, at)
@@ -423,6 +439,25 @@ object TripTracker {
             t.leftPickupAt = now
             phase = Phase.EM_VIAGEM
             saudar(t)
+        }
+        // Despedida pela navegação da Uber: no último trecho a faixa de cima mostra o próprio endereço de destino
+        // com a distância que falta pelo caminho ("Rua X, 188 - Bairro | 175 m | Rua X, 188 - Bairro").
+        // Assim não toca numa rua paralela que está perto em linha reta.
+        if (phase == Phase.EM_VIAGEM && !t.falouFim) {
+            val nav = Regex("^(\\d+(?:[.,]\\d+)?)\\s?(m|km)$")
+            for (i in 1 until tt.size - 1) {
+                val m = nav.find(tt[i]) ?: continue
+                val alvo = tt[i + 1]
+                if (!Regex("^[^,]+, \\d").containsMatchIn(alvo)) continue
+                t.navUber = true
+                if (tt[i - 1] != alvo) break   // ainda não é o último trecho
+                val metros = (m.groupValues[1].replace(',', '.').toDoubleOrNull() ?: break) * (if (m.groupValues[2] == "km") 1000.0 else 1.0)
+                if (metros <= prefs.farewellDist && (t.leftPickupAt?.let { now - it > 60_000L } != false)) {
+                    OfferLog.appendDiag(ctx, "VOZ: despedida pela navegação da Uber (faltam ${metros.toInt()} m)")
+                    despedir(t)
+                }
+                break
+            }
         }
     }
 
@@ -598,6 +633,38 @@ object UberSession {
             val now = java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss", java.util.Locale.US).format(java.util.Date())
             f.appendText("\"$period\";$money;$done;$offered;$now\n")
             OfferLog.appendDiag(ctx, "SESSÃO UBER: $period · $money · $done viagens")
+        } catch (_: Exception) {
+        }
+    }
+
+    private var lastDiaKey = ""
+
+    /**
+     * Tela "Ganhos" da Uber com um dia escolhido: "12 de out. - 19 de out. | … | R$ 437,94 | … | Online | 7 h 53 m | Viagens | 15".
+     * A tela não diz qual dia está escolhido; o painel acha o turno pelo tempo online.
+     * A semana inteira (mais de 24 h online) não é guardada.
+     */
+    fun readDia(ctx: android.content.Context, texts: List<String>) {
+        val tt = texts.map { it.trim() }
+        val e = tt.indexOf("Estatísticas"); if (e < 0) return
+        val oi = tt.indexOf("Online"); val vi = tt.indexOf("Viagens")
+        if (oi < 0 || vi < 0) return
+        val m = Regex("^(?:(\\d+)\\s*h)?\\s*(?:(\\d+)\\s*m)?$").find(tt.getOrNull(oi + 1) ?: "") ?: return
+        val min = (m.groupValues[1].toIntOrNull() ?: 0) * 60 + (m.groupValues[2].toIntOrNull() ?: 0)
+        if (min <= 0 || min > 24 * 60) return
+        val viagens = tt.getOrNull(vi + 1)?.takeIf { it.matches(Regex("\\d{1,3}")) } ?: return
+        val semana = tt.firstOrNull { it.matches(Regex("\\d{1,2} de \\w{3}\\.? - \\d{1,2} de \\w{3}\\.?")) } ?: ""
+        val valor = tt.take(e).lastOrNull { it.startsWith("R$") } ?: return
+        val key = "$semana|$valor|$min|$viagens"
+        if (key == lastDiaKey) return
+        lastDiaKey = key
+        try {
+            val f = java.io.File(ctx.filesDir, "ganhos_dia_uber.csv")
+            if (!f.exists()) f.writeText("semana;valor;online_min;viagens;lido_em\n")
+            if (f.readText().contains("\"$semana\";$valor;$min;$viagens;")) return
+            val now = java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss", java.util.Locale.US).format(java.util.Date())
+            f.appendText("\"$semana\";$valor;$min;$viagens;$now\n")
+            OfferLog.appendDiag(ctx, "GANHOS DO DIA UBER: $valor · $viagens viagens · ${min / 60}h${min % 60} online")
         } catch (_: Exception) {
         }
     }

@@ -101,6 +101,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var homeStatusTitle: TextView
     private lateinit var homeStatusSub: TextView
     private lateinit var homePill: TextView
+    private var atualizCard: LinearLayout? = null
+    private var atualizSub: TextView? = null
 
     private fun goBack() {
         val p = currentPage?.let { parentPage[it] }
@@ -244,6 +246,32 @@ class MainActivity : AppCompatActivity() {
         st.setOnClickListener { showPage("Leitura e permissões") }
         col.addView(st, matchWrap())
 
+        // Versão nova no GitHub: um toque baixa e abre a instalação
+        val up = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            gravity = Gravity.CENTER_VERTICAL
+            setPadding(dp(16), dp(16), dp(16), dp(16))
+            background = rounded(Ui.SURFACE, 20f).apply { setStroke(dp(2), Ui.ACCENT) }
+            minimumHeight = dp(76)
+            visibility = View.GONE
+        }
+        ripple(up)
+        up.addView(icon(R.drawable.ic_download, 30, Ui.ACCENT).apply {
+            layoutParams = LinearLayout.LayoutParams(dp(30), dp(30)).apply { rightMargin = dp(14) }
+        })
+        val upt = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
+        upt.addView(text("Nova versão do Radar", 17f, Ui.TEXT, bold = true))
+        val upSub = text("", 13f, Ui.MUTED)
+        upt.addView(upSub)
+        up.addView(upt, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f))
+        up.addView(text("Atualizar", 13f, Ui.BG, bold = true).apply {
+            setPadding(dp(14), dp(8), dp(14), dp(8))
+            background = GradientDrawable().apply { setColor(Ui.ACCENT); cornerRadius = dp(99).toFloat() }
+        })
+        up.setOnClickListener { atualizar() }
+        atualizCard = up; atualizSub = upSub
+        col.addView(up, matchWrap(top = 12))
+
         for ((grupo, titulo) in listOf("trabalho" to "Seu trabalho", "rua" to "Na rua", "ganhos" to "Ganhos e custos", "ajustes" to "Ajustes")) {
             col.addView(text(titulo.uppercase(), 13f, Ui.MUTED, bold = true).apply {
                 letterSpacing = 0.06f
@@ -268,11 +296,38 @@ class MainActivity : AppCompatActivity() {
         } catch (_: Exception) {
             "?"
         }
-        col.addView(text("Versão $version", 12f, Ui.MUTED).apply {
+        col.addView(text("Versão $version · Procurar atualização", 12f, Ui.MUTED).apply {
             gravity = Gravity.CENTER
-            setPadding(0, dp(20), 0, 0)
+            setPadding(0, dp(20), 0, dp(8))
+            setOnClickListener {
+                toast("Procurando versão nova…")
+                Atualizacao.conferir(this@MainActivity, forcar = true) {
+                    mostrarAtualizacao()
+                    if (Atualizacao.nova == null) toast("O Radar já está na versão mais nova")
+                }
+            }
         })
         return col
+    }
+
+    private fun mostrarAtualizacao() {
+        val n = Atualizacao.nova
+        atualizCard?.visibility = if (n != null) View.VISIBLE else View.GONE
+        if (n != null && !Atualizacao.baixando) atualizSub?.text = "Versão 0.1.${n.numero} · toque para baixar e instalar"
+    }
+
+    private fun atualizar() {
+        if (Atualizacao.baixando) return
+        if (!Atualizacao.podeInstalar(this)) {
+            toast("Na próxima tela, ligue \"Permitir desta fonte\" para o Radar e volte aqui")
+            Atualizacao.pedirPermissao(this)
+            return
+        }
+        atualizSub?.text = "Baixando…"
+        Atualizacao.baixarEInstalar(this, { p -> atualizSub?.text = "Baixando… $p%" }) { erro ->
+            if (erro != null) { toast(erro); mostrarAtualizacao() }
+            else atualizSub?.text = "Confirme a instalação na tela do Android"
+        }
     }
 
     private fun ripple(v: View) {
@@ -357,6 +412,7 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         updateStatus()
+        Atualizacao.conferir(this) { mostrarAtualizacao() }
         updateCount()
         updateTripChecklist()
         updateSpeedInfo()
@@ -609,7 +665,7 @@ class MainActivity : AppCompatActivity() {
         card.addView(outlinedButton("Exportar dados (ofertas, corridas, rotas, radares e valetas)").apply {
             setOnClickListener {
                 val ctx = this@MainActivity
-                val files = listOf(OfferLog.offersFile(ctx), TripLog.tripsFile(ctx), TripLog.routesFile(ctx), PassLog.file(ctx), Hazards.file(ctx), Spots.file(ctx), SpeedCams.reportFile(ctx), java.io.File(ctx.filesDir, "sessoes_uber.csv"), java.io.File(ctx.filesDir, "eventos_uber.csv"), java.io.File(ctx.filesDir, "ganhos_uber.csv"))
+                val files = listOf(OfferLog.offersFile(ctx), TripLog.tripsFile(ctx), TripLog.routesFile(ctx), PassLog.file(ctx), Hazards.file(ctx), Spots.file(ctx), SpeedCams.reportFile(ctx), java.io.File(ctx.filesDir, "sessoes_uber.csv"), java.io.File(ctx.filesDir, "eventos_uber.csv"), java.io.File(ctx.filesDir, "ganhos_uber.csv"), java.io.File(ctx.filesDir, "ganhos_dia_uber.csv"))
                 if (!OfferLog.shareAll(ctx, files, "Dados — Radar Corridas")) toast("Nenhum dado salvo ainda")
             }
         }, matchWrap(top = 6))
@@ -719,7 +775,7 @@ class MainActivity : AppCompatActivity() {
             setOnCheckedChangeListener { _, checked -> prefs.talkToPassenger = checked }
         }, matchWrap(top = 14))
         card.addView(text(
-            "O Radar fala com o passageiro quando ele embarca e quando o carro para no destino. " +
+            "O Radar fala com o passageiro quando ele embarca e quando o carro chega perto do destino. " +
                 "Sai pelo som do carro quando o celular está conectado por Bluetooth ou Android Auto, abaixando a música enquanto fala.",
             12f, Ui.MUTED
         ))
@@ -761,26 +817,38 @@ class MainActivity : AppCompatActivity() {
         editor("Quando chega ao destino", prefs.voiceEnd, Voz.PADRAO_CHEGADA, { prefs.voiceEnd = it }) {
             Voz.chegada(this, "Ana")
         }
-        val volLabel = text("", 15f, Ui.TEXT).apply { setPadding(0, dp(12), 0, 0) }
-        fun volText(v: Int) { volLabel.text = if (v == 0) "Volume da voz: o mesmo do celular" else "Volume da voz: sobe a mídia para $v% enquanto fala" }
-        volText(prefs.voiceVolume)
+        // Despedida: a quantos metros do destino
+        val despLabel = text("", 15f, Ui.TEXT).apply { setPadding(0, dp(12), 0, 0) }
+        fun despText(v: Int) { despLabel.text = "Despedida a $v m do destino" }
+        despText(prefs.farewellDist)
+        card.addView(despLabel)
+        card.addView(Slider(this).apply {
+            valueFrom = 50f; valueTo = 500f; stepSize = 10f
+            value = prefs.farewellDist.toFloat().coerceIn(50f, 500f)
+            addOnChangeListener { _, v, _ -> prefs.farewellDist = v.toInt(); despText(v.toInt()) }
+        }, matchWrap(top = 2))
+        card.addView(text("Toca quando o carro chega a essa distância do endereço de destino, andando ou parado. Se não der, toca quando você finaliza a viagem.", 12f, Ui.MUTED))
+
+        // Altura da própria fala (vale no Android Auto, onde o volume do celular não muda nada)
+        val volLabel = text("", 15f, Ui.TEXT).apply { setPadding(0, dp(14), 0, 0) }
+        fun volText(v: Int) { volLabel.text = "Altura da voz: $v%" }
+        volText(prefs.voiceGain)
         card.addView(volLabel)
         card.addView(Slider(this).apply {
-            valueFrom = 0f; valueTo = 100f; stepSize = 5f
-            value = prefs.voiceVolume.toFloat().coerceIn(0f, 100f)
-            addOnChangeListener { _, v, _ -> prefs.voiceVolume = v.toInt(); volText(v.toInt()) }
+            valueFrom = 50f; valueTo = 300f; stepSize = 10f
+            value = prefs.voiceGain.toFloat().coerceIn(50f, 300f)
+            addOnChangeListener { _, v, _ -> prefs.voiceGain = v.toInt(); volText(v.toInt()) }
         }, matchWrap(top = 2))
-        card.addView(text("Depois da fala o volume volta ao que estava. A música abaixa enquanto a voz fala.", 12f, Ui.MUTED))
+        card.addView(text("100% é a voz normal. Acima disso o Radar reforça o som da fala, mesmo com o volume do celular no máximo e no Android Auto. A música abaixa enquanto a voz fala.", 12f, Ui.MUTED))
         card.addView(text("Canal do áudio", 15f, Ui.TEXT, bold = true).apply { setPadding(0, dp(14), 0, 0) })
         val canal = MaterialButtonToggleGroup(this).apply { isSingleSelection = true; isSelectionRequired = true }
-        val bMidia = outlinedButton("Mídia").apply { id = View.generateViewId() }
-        val bNav = outlinedButton("Navegação").apply { id = View.generateViewId() }
-        canal.addView(bMidia, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f))
-        canal.addView(bNav, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f))
-        canal.check(if (prefs.voiceChannel == "navegacao") bNav.id else bMidia.id)
-        canal.addOnButtonCheckedListener { _, id, on -> if (on) prefs.voiceChannel = if (id == bNav.id) "navegacao" else "midia" }
+        val canais = listOf("navegacao" to "Navegação", "assistente" to "Assistente", "midia" to "Mídia")
+        val bCanal = canais.map { (k, nome) -> k to outlinedButton(nome).apply { id = View.generateViewId(); letterSpacing = 0f; setPadding(dp(4), paddingTop, dp(4), paddingBottom) } }
+        bCanal.forEach { (_, b) -> canal.addView(b, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)) }
+        canal.check((bCanal.firstOrNull { it.first == prefs.voiceChannel } ?: bCanal[0]).second.id)
+        canal.addOnButtonCheckedListener { _, id, on -> if (on) bCanal.firstOrNull { it.second.id == id }?.let { prefs.voiceChannel = it.first } }
         card.addView(canal, matchWrap(top = 6))
-        card.addView(text("Mídia é o canal do áudio do WhatsApp e da música, o mais alto no som do carro. Navegação é o canal do Waze.", 12f, Ui.MUTED))
+        card.addView(text("Navegação é o canal do Waze. Assistente é o canal em que o Android Auto lê as mensagens do WhatsApp. Mídia é o da música. Teste no carro com o botão abaixo.", 12f, Ui.MUTED))
         card.addView(MaterialButton(this).apply {
             isAllCaps = false
             letterSpacing = 0f
@@ -1005,11 +1073,25 @@ class MainActivity : AppCompatActivity() {
             12f, Ui.MUTED
         ))
         card.addView(SwitchMaterial(this).apply {
-            text = "Bipe sonoro (volume de mídia; sai no som do carro se conectado)"
+            text = "Bipe sonoro"
             setTextColor(Ui.TEXT)
             isChecked = prefs.speedSound
             setOnCheckedChangeListener { _, checked -> prefs.speedSound = checked }
         }, matchWrap(top = 6))
+        val bipeLabel = text("", 15f, Ui.TEXT).apply { setPadding(0, dp(6), 0, 0) }
+        fun bipeText(v: Int) { bipeLabel.text = "Altura dos bipes: $v%" }
+        bipeText(prefs.beepGain)
+        card.addView(bipeLabel)
+        card.addView(Slider(this).apply {
+            valueFrom = 10f; valueTo = 100f; stepSize = 5f
+            value = prefs.beepGain.toFloat().coerceIn(10f, 100f)
+            addOnChangeListener { _, v, _ -> prefs.beepGain = v.toInt(); bipeText(v.toInt()) }
+            addOnSliderTouchListener(object : Slider.OnSliderTouchListener {
+                override fun onStartTrackingTouch(sl: Slider) {}
+                override fun onStopTrackingTouch(sl: Slider) { Beeper.play(this@MainActivity, Beeper.Kind.RADAR_A_FRENTE) }
+            })
+        }, matchWrap(top = 2))
+        card.addView(text("Vale para radar, valeta e pontos bons. Sai no canal do Waze e abaixa a música por um instante. Solte o controle para ouvir.", 12f, Ui.MUTED))
 
         card.addView(text("Distância do aviso (radar e valeta)", 15f, Ui.TEXT, bold = true).apply { setPadding(0, dp(14), 0, 0) })
         card.addView(text(

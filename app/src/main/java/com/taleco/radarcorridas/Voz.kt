@@ -1,9 +1,6 @@
 package com.taleco.radarcorridas
 
 import android.content.Context
-import android.media.AudioAttributes
-import android.media.AudioFocusRequest
-import android.media.AudioManager
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
 import android.speech.tts.UtteranceProgressListener
@@ -12,13 +9,15 @@ import java.util.Locale
 
 /**
  * Fala com o passageiro pelo som do celular (e do carro, quando o celular está ligado nele por
- * Bluetooth ou Android Auto). Usa o canal de "navegação": abaixa a música enquanto fala, como o Waze.
+ * Bluetooth ou Android Auto). A frase é gravada em arquivo e tocada pelo Tocador, que aplica a
+ * "altura da voz" (reforço acima de 100%) e abaixa a música enquanto fala.
  */
 object Voz {
     private var tts: TextToSpeech? = null
     private var pronto = false
     private val fila = mutableListOf<String>()
-    private var foco: AudioFocusRequest? = null
+    private val arquivos = java.util.concurrent.ConcurrentHashMap<String, java.io.File>()
+    private val main = android.os.Handler(android.os.Looper.getMainLooper())
 
 
     fun falar(ctx: Context, texto: String) {
@@ -35,10 +34,11 @@ object Voz {
                     t.setAudioAttributes(VozCanal.attr(app))
                     t.setOnUtteranceProgressListener(object : UtteranceProgressListener() {
                         override fun onStart(id: String?) {}
-                        override fun onDone(id: String?) { soltarFoco(app) }
+                        // a frase terminou de ser gravada em arquivo: toca com a altura escolhida
+                        override fun onDone(id: String?) { val f = arquivos.remove(id ?: return) ?: return; main.post { if (!Tocador.tocar(app, f) { f.delete() }) f.delete() } }
                         @Deprecated("Deprecated in Java")
-                        override fun onError(id: String?) { soltarFoco(app); OfferLog.appendDiag(app, "VOZ: erro do motor de voz do celular") }
-                        override fun onError(id: String?, code: Int) { soltarFoco(app); OfferLog.appendDiag(app, "VOZ: erro do motor de voz do celular ($code)") }
+                        override fun onError(id: String?) { erro(app, id, null) }
+                        override fun onError(id: String?, code: Int) { erro(app, id, code) }
                     })
                     pronto = true
                     fila.forEach { dizer(app, it) }
@@ -78,34 +78,64 @@ object Voz {
             android.os.Handler(android.os.Looper.getMainLooper()).post(pronto) }.start()
     }
 
+    /** Grava a frase em arquivo (o Tocador toca quando ficar pronta, com o reforço de altura). */
     private fun dizer(ctx: Context, texto: String) {
         if (texto.isBlank()) return
-        val am = ctx.getSystemService(AudioManager::class.java)
-        if (am != null) {
-            val r = AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK).setAudioAttributes(VozCanal.attr(ctx)).build()
-            foco = r
-            am.requestAudioFocus(r)
-        }
-        Volume.subir(ctx)
+        val t = tts ?: return
+        val id = "radar-" + System.currentTimeMillis()
+        val f = java.io.File(java.io.File(ctx.cacheDir, "fala").apply { mkdirs() }, "$id.wav")
+        arquivos[id] = f
+        val r = try { t.synthesizeToFile(texto, Bundle(), f, id) } catch (_: Exception) { TextToSpeech.ERROR }
+        if (r != TextToSpeech.SUCCESS) { arquivos.remove(id); falarDireto(ctx, texto) }
+    }
+
+    /** Se não der para gravar a frase, fala direto pelo motor de voz (sem o reforço de altura). */
+    private fun falarDireto(ctx: Context, texto: String) {
         try { tts?.setAudioAttributes(VozCanal.attr(ctx)) } catch (_: Exception) { }
         val p = Bundle()
         p.putFloat(TextToSpeech.Engine.KEY_PARAM_VOLUME, 1.0f)
-        tts?.speak(texto, TextToSpeech.QUEUE_ADD, p, "radar-" + System.currentTimeMillis())
+        tts?.speak(texto, TextToSpeech.QUEUE_ADD, p, "direto-" + System.currentTimeMillis())
     }
 
-    private fun soltarFoco(ctx: Context) {
-        val r = foco ?: return
-        if (tts?.isSpeaking == true) return
-        ctx.getSystemService(AudioManager::class.java)?.abandonAudioFocusRequest(r)
-        foco = null
-        Volume.voltar(ctx)
+    private fun erro(ctx: Context, id: String?, code: Int?) {
+        OfferLog.appendDiag(ctx, "VOZ: erro do motor de voz do celular" + (if (code != null) " ($code)" else ""))
+        arquivos.remove(id ?: return)?.delete()
     }
 
     /** Só o primeiro nome, como aparece na Uber ("Gabriel", "Ana Paula" -> "Ana"). */
     private fun nome(n: String?) = n?.trim()?.split(Regex("\\s+"))?.firstOrNull()?.takeIf { it.length >= 2 }
 
-    /** "Avenida 9 de Julho, 2040, Bela Vista" -> "Avenida 9 de Julho" */
-    private fun rua(d: String?): String? = d?.substringBefore(",")?.substringBefore(" - ")?.trim()?.takeIf { it.length >= 4 }
+    /** "Avenida 9 de Julho, 2040, Bela Vista" -> "Avenida 9 de Julho"; "R. Augusta" -> "Rua Augusta" (a voz não lê "R"). */
+    private fun rua(d: String?): String? = d?.substringBefore(",")?.substringBefore(" - ")?.trim()?.let { porExtenso(it) }?.takeIf { it.length >= 4 }
+
+    private val ABREV = listOf(
+        "R" to "Rua", "Av" to "Avenida", "Al" to "Alameda", "Pç" to "Praça", "Pça" to "Praça", "Pc" to "Praça", "Pca" to "Praça",
+        "Tv" to "Travessa", "Trav" to "Travessa", "Estr" to "Estrada", "Est" to "Estrada", "Rod" to "Rodovia", "Lgo" to "Largo", "Lg" to "Largo",
+        "Vd" to "Viaduto", "Pq" to "Parque", "Jd" to "Jardim", "Vl" to "Vila", "Res" to "Residencial",
+        "Dr" to "Doutor", "Dra" to "Doutora", "Prof" to "Professor", "Profa" to "Professora", "Eng" to "Engenheiro", "Brg" to "Brigadeiro",
+        "Brig" to "Brigadeiro", "Cel" to "Coronel", "Gen" to "General", "Cap" to "Capitão", "Maj" to "Major", "Ten" to "Tenente",
+        "Mal" to "Marechal", "Alm" to "Almirante", "Des" to "Desembargador", "Pres" to "Presidente", "Gov" to "Governador",
+        "Sen" to "Senador", "Dep" to "Deputado", "Ver" to "Vereador", "Pe" to "Padre", "Fr" to "Frei", "Sta" to "Santa", "Sto" to "Santo",
+        "S" to "São", "N. Sra" to "Nossa Senhora", "Nsa" to "Nossa", "Sra" to "Senhora", "Cons" to "Conselheiro", "Com" to "Comendador",
+        "Visc" to "Visconde", "Bar" to "Barão", "Dq" to "Duque", "Min" to "Ministro", "Arq" to "Arquiteto", "Dom" to "Dom"
+    )
+
+    /** Troca as abreviações dos endereços pelas palavras inteiras. "R" sozinho só vira "Rua" no começo. */
+    fun porExtenso(nome: String): String {
+        var t = nome.trim()
+        // tipo do logradouro no começo: "R.", "R ", "Av.", "Al."…
+        Regex("^(R|Av|Al|Pç|Pça|Pc|Pca|Tv|Trav|Estr|Est|Rod|Lgo|Lg|Vd)\\.?\\s+", RegexOption.IGNORE_CASE).find(t)?.let { m ->
+            val k = m.groupValues[1]
+            val nomeLongo = ABREV.firstOrNull { it.first.equals(k, ignoreCase = true) }?.second
+            if (nomeLongo != null) t = nomeLongo + " " + t.substring(m.range.last + 1)
+        }
+        // títulos no meio do nome, só com ponto: "Av. Brg. Faria Lima" -> "Avenida Brigadeiro Faria Lima"
+        for ((ab, longo) in ABREV) {
+            if (ab.length < 2) continue
+            t = t.replace(Regex("(?<=^|\\s)" + Regex.escape(ab) + "\\.(?=\\s|$)", RegexOption.IGNORE_CASE), longo)
+        }
+        return t.replace(Regex("\\s{2,}"), " ").trim()
+    }
 
     const val PADRAO_INICIO = "Oi, {nome}, tudo bem? Vamos lá, nosso destino é {rua}. Se precisar de alguma coisa, é só me falar. Boa viagem!"
     const val PADRAO_CHEGADA = "Pronto, {nome}, chegamos! Obrigado pela companhia, espero que tenha curtido a viagem. Se puder, deixa sua avaliação no aplicativo da Uber. Até a próxima!"

@@ -17,7 +17,7 @@ import kotlin.math.sin
  * Bipes do alerta de radar.
  * Toca como "instrução de navegação" (o mesmo canal da voz do Waze):
  * sai no som do carro quando o celular está conectado e abaixa a música por um instante.
- * Usa o volume de mídia do celular.
+ * A altura é a escolhida em Radares ("Altura dos bipes").
  */
 object Beeper {
 
@@ -47,7 +47,7 @@ object Beeper {
     fun play(ctx: Context, kind: Kind) {
         val app = ctx.applicationContext
         try {
-            val samples = buildSamples(pattern(kind))
+            val samples = buildSamples(pattern(kind), Prefs(app).beepGain.coerceIn(5, 100) / 100.0)
             stop(app)
             val t = AudioTrack.Builder()
                 .setAudioAttributes(attrs)
@@ -72,7 +72,7 @@ object Beeper {
         }
     }
 
-    private fun buildSamples(parts: List<Pair<Double, Int>>): ShortArray {
+    private fun buildSamples(parts: List<Pair<Double, Int>>, gain: Double): ShortArray {
         val total = parts.sumOf { it.second } * RATE / 1000
         val out = ShortArray(total)
         var i = 0
@@ -87,7 +87,7 @@ object Beeper {
                         k > n - fade -> (n - k).toDouble() / fade
                         else -> 1.0
                     }
-                    out[i] = (sin(2 * PI * freq * k / RATE) * env * 0.9 * Short.MAX_VALUE).toInt().toShort()
+                    out[i] = (sin(2 * PI * freq * k / RATE) * env * 0.9 * gain * Short.MAX_VALUE).toInt().toShort()
                 }
                 i++
             }
