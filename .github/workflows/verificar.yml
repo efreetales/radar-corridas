@@ -1,0 +1,50 @@
+name: Verificar
+
+on:
+  push:
+    branches: [verificar9]
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: "8.7"
+
+      - name: Compilar
+        run: |
+          set -o pipefail
+          gradle :app:assembleDebug :app:testDebugUnitTest --tests "*OfferParserTest*" --tests "*TelasTest*" --tests "*VozTextoTest*" -i --console=plain 2>&1 | tee build.log
+
+      - name: Resultados dos testes
+        if: always()
+        run: |
+          for f in app/build/test-results/testDebugUnitTest/*.xml; do grep -E -A6 "<failure" "$f" | head -20 | sed "s/^/::warning::/"; done || true
+          grep -E "VOZTEXTO|FAILED|VozTextoTest" build.log | head -8 | sed "s/^/::warning::/" || true; grep -E -A8 "RENDER|PARSER|TELA|FAILED" build.log | grep -vE "^\s*at org.junit|^\s*at java.base|^--$" | head -60 | sed "s/^/::warning::/" || true; grep -E "IconesRenderTest.*(FAILED|PASSED)|Exception" build.log | head -5 | sed "s/^/::warning::/" || true
+
+      - name: Mostrar erros da compilação
+        if: failure()
+        run: |
+          msg=$(grep -v "> Task" build.log | grep -E -A4 "^e: |error:|What went wrong" | head -60 | sed ':a;N;$!ba;s/%/%25/g;s/\r//g;s/\n/%0A/g')
+          echo "::error::$msg"
+
+
+      - name: Publicar prévias
+        if: always()
+        run: |
+          [ -d app/build/previas ] || exit 0
+          mkdir /tmp/pv && cp app/build/previas/*.png /tmp/pv/ && cd /tmp/pv
+          git init -q && git checkout -q -b previas && git add . && git -c user.name=ci -c user.email=ci@x commit -qm previas
+          git push -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" previas

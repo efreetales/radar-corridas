@@ -357,10 +357,13 @@ const MES3 = {jan:0,fev:1,mar:2,abr:3,mai:4,jun:5,jul:6,ago:7,set:8,out:9,nov:10
 function sessionOf(k){
   // um turno pode ter várias sessões (ficou offline e voltou): soma todas as do mesmo dia
   const ps = allSessions().filter(x => key(shiftDay(x.start)) === k);
-  if (!ps.length) return null;
+  if (!ps.length) { // sem resumo de sessão: vale a tela Ganhos do dia, se foi lida
+    const d = diaUber(k), T = d && turnBase().find(t => t.k === k);
+    return T ? { start:T.start, end:T.end, online:d.min, valor:d.v, concl:d.n, ofer:null, partes:0 } : null;
+  }
   const start = new Date(Math.min(...ps.map(x => x.start))), end = new Date(Math.max(...ps.map(x => x.end)));
   const sum = f => ps.some(x => x[f] != null) ? ps.reduce((t,x) => t + (x[f] || 0), 0) : null;
-  const online = ps.reduce((t,x) => t + (x.end - x.start)/60e3, 0), d = diaUber(start);
+  const online = ps.reduce((t,x) => t + (x.end - x.start)/60e3, 0), d = diaUber(k);
   return { start, end, online, valor: d ? d.v : sum("valor"), concl: d ? d.n : sum("concl"), ofer: sum("ofer"), partes: ps.length };
 }
 const offerOfTrip = {}; offers.forEach(o => { if (o.trip) offerOfTrip[o.trip.id] = o; });
@@ -381,7 +384,7 @@ function dayStats(k){
   let t0 = times.length ? new Date(Math.min(...times)) : null, t1 = times.length ? new Date(Math.max(...times)) : null;
   let online = t0 ? (t1 - t0)/60e3 : 0, src = "estimado: da 1ª oferta ao fim da última corrida";
   const s = sessionOf(k); let extra = null;
-  if (s) { online = s.online; t0 = s.start; t1 = s.end; src = s.partes > 1 ? `das ${s.partes} sessões da Uber` : "da sessão da Uber";
+  if (s) { online = s.online; t0 = s.start; t1 = s.end; src = s.partes > 1 ? `das ${s.partes} sessões da Uber` : s.partes === 0 ? "da tela Ganhos da Uber" : "da sessão da Uber";
     // A Uber contou mais viagens do que o Radar registrou: completa com a média das registradas
     if (s.concl && done.length && s.concl > done.length) {
       const f = s.concl / done.length; extra = { uber:s.concl, radar:done.length };
@@ -542,31 +545,41 @@ function allSessions(){
     out.push({ start:a, end:b, valor:num(x.valor), concl:+x.concluidas||null, ofer:+x.oferecidas||null }); });
   return out.sort((a,b) => a.start - b.start);
 }
-// Tela "Ganhos" da Uber com o dia escolhido (ganhos_dia_uber.csv): a tela não diz o dia, então cada leitura vai
-// para o turno (já começado na hora da leitura, até 8 dias antes) com o tempo online mais parecido (até 15 min de diferença).
+// Turnos: as sessões da Uber do mesmo dia (ficou offline e voltou) somadas. Dia com corridas e sem resumo de sessão
+// (não abriu o resumo ao ficar offline) vira um turno pelas corridas do Radar, que só vale se a tela Ganhos do dia foi lida.
+function turnBase(){
+  const by = {};
+  allSessions().forEach(x => { const k = key(shiftDay(x.start)); const t = by[k] = by[k] || { k, start:x.start, end:x.end, online:0, ps:[] };
+    t.online += (x.end - x.start)/60e3; t.ps.push(x); if (x.end > t.end) t.end = x.end; });
+  trips.filter(c => c.st.startsWith("concluída")).forEach(c => { const k = key(shiftDay(c.acc)); if (by[k] && by[k].ps.length) return;
+    const e = c.end || c.acc, t = by[k] = by[k] || { k, start:c.acc, end:e, online:null, ps:[], n:0 };
+    t.n++; if (c.acc < t.start) t.start = c.acc; if (e > t.end) t.end = e; });
+  return Object.values(by);
+}
+// Tela "Ganhos" da Uber com o dia escolhido (ganhos_dia_uber.csv): a tela não diz o dia, então cada leitura vai para o turno
+// (já começado na hora da leitura, até 8 dias antes) mais parecido: pelo tempo online (até 15 min de diferença) ou, sem resumo
+// de sessão, pelo número de viagens (até 1 de diferença, lida depois do fim do turno).
 // É o total mais confiável: o resumo da sessão às vezes é lido antes de a última viagem entrar.
-function diaUber(start){
-  const by = {}; allSessions().forEach(x => { const k = key(shiftDay(x.start)); const t = by[k] = by[k] || { start:x.start, online:0 }; t.online += (x.end - x.start)/60e3; });
-  const turns = Object.values(by);
+function diaUber(k){
+  const turns = turnBase();
   const L = parseCsv(raw("ganhos_dia_uber.csv")).map(x => ({ v:num(x.valor), min:+x.online_min, n:+x.viagens, t:when(x.lido_em) })).filter(x => x.t && x.v);
+  const score = (t, x) => t.online != null ? (Math.abs(t.online - x.min) <= 15 ? Math.abs(t.online - x.min) : null)
+    : (Math.abs(t.n - x.n) <= 1 && x.t >= t.end ? 5 + 10*Math.abs(t.n - x.n) : null);
   const mine = L.filter(x => {
-    const c = turns.filter(t => t.start <= x.t && x.t - t.start < 8*86400e3 && Math.abs(t.online - x.min) <= 15)
-      .sort((a,b) => Math.abs(a.online - x.min) - Math.abs(b.online - x.min) || b.start - a.start)[0];
-    return c && c.start.getTime() === start.getTime();
+    const c = turns.filter(t => t.start <= x.t && x.t - t.start < 8*86400e3 && score(t, x) != null)
+      .sort((a,b) => score(a, x) - score(b, x) || b.start - a.start)[0];
+    return c && c.k === k;
   });
   return mine.length ? mine[mine.length-1] : null;
 }
-// Turnos para conferir: as sessões do mesmo dia (ficou offline e voltou) viram um turno só
 function allTurns(){
-  const by = {};
-  allSessions().forEach(x => { const k = key(shiftDay(x.start)); (by[k] = by[k] || []).push(x); });
-  return Object.values(by).map(ps => {
-    const a = ps[0].start, b = new Date(Math.max(...ps.map(x => x.end)));
+  return turnBase().map(T => {
+    const ps = T.ps, a = T.start, b = T.end, d = diaUber(T.k);
+    if (!ps.length && !d) return null;
     const sum = f => ps.some(x => x[f] != null) ? ps.reduce((t,x) => t + (x[f] || 0), 0) : null;
-    const online = ps.reduce((t,x) => t + (x.end - x.start)/60e3, 0), d = diaUber(a);
     return { start:a, end:b, valor:d ? d.v : sum("valor"), concl:d ? d.n : sum("concl"), partes:ps.length, fonte:d ? "dia" : "sessao",
-      label:`${WD[a.getDay()]} ${a.getDate()}/${pad2(a.getMonth()+1)} · ${ps.map(x => `${hm(x.start)} – ${hm(x.end)}`).join(" + ")}` };
-  }).sort((a,b) => b.start - a.start);
+      label:`${WD[a.getDay()]} ${a.getDate()}/${pad2(a.getMonth()+1)} · ${ps.length ? ps.map(x => `${hm(x.start)} – ${hm(x.end)}`).join(" + ") : `${hm(a)} – ${hm(b)}`}` };
+  }).filter(Boolean).sort((a,b) => b.start - a.start);
 }
 function conferirCalc(S){
   const t0 = new Date(S.start.getTime() - 10*60e3), t1 = new Date(S.end.getTime() + 30*60e3), inW = t => t && t >= t0 && t <= t1;
@@ -575,6 +588,8 @@ function conferirCalc(S){
   // 1) corridas segundo a Uber
   const C = []; const open = () => C.filter(c => !c.closed);
   EV.forEach(e => {
+    // "Confira o U-Código e tente de novo… antes de a viagem ser cancelada" é só o aviso do código errado, não cancelamento
+    if (e.ev === "CANCELADA" && /U-C[óo]digo|tentativas restantes/i.test(e.end || "")) return;
     if (e.ev === "CANCELADA") { open().filter(c => !c.start).forEach(c => { c.closed = true; c.cancel = true; c.fim = e.t; }); return; }
     if (e.ev === "AVALIACAO") { const c = open().find(c => c.nome === e.nome); if (c) { c.closed = true; c.done = true; c.fim = e.t; } return; }
     let c = open().find(c => c.nome === e.nome);

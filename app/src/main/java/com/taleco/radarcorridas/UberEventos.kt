@@ -38,7 +38,9 @@ object UberEventos {
         val ri = tt.indexOfFirst { it.startsWith("Como foi a viagem") }
         val rated = if (ri >= 0) tt.getOrNull(ri + 1) else null
         val atPickup = tt.any { it.contains("Aguardando", ignoreCase = true) || it.startsWith("Perto de ") }
-        val cancel = tt.firstOrNull { it.contains("cancelou", ignoreCase = true) || it.contains("cancelada", ignoreCase = true) }
+        // "Confira o U-Código e tente de novo. 4 tentativas restantes antes de a viagem ser cancelada" não é cancelamento
+        val cancel = tt.firstOrNull { (it.contains("cancelou", ignoreCase = true) || it.contains("cancelada", ignoreCase = true)) &&
+            !it.contains("U-Código", ignoreCase = true) && !it.contains("tentativas", ignoreCase = true) }
 
         if (rated != null) gravar(ctx, "AVALIACAO", rated, "", "")
         if (dest != null) gravar(ctx, "DESTINO", dest, cat, endereco(tt))
