@@ -36,6 +36,14 @@ class OfferParserTest {
         assertEquals(85.0, o3.tripMin, 0.01); assertEquals(113.5, o3.tripKm, 0.01)
         println("PARSER ok regressao")
     }
+    @Test fun estimativaInteira() {
+        // Uber em 20/10: "R$ 10" e "Est. de R$4/km" (sem centavos e R$/km arredondado)
+        val o = p("2 Black", "X", "R$ 10", "Est. de R$4/km", "* 4,93 (1091)", "Verificado", "4 min (l.2 km)", "Rua A, Vila B,", "São Paulo", "o 5 minutos (1.3 km)", "Rua C, 462,")
+        assertNotNull(o); o!!
+        assertEquals(10.0, o.price, 0.01); assertEquals(1.2, o.pickupKm, 0.01); assertEquals(1.3, o.tripKm, 0.01)
+        assertNull(p("2 Black", "X", "R$ 10", "Est. de R$4/km", "4 min (5.2 km)", "Rua A", "15 minutos (9.3 km)", "Rua C, 1"))   // km não batem
+        println("PARSER ok estimativaInteira ${o.price} ${o.pickupKm}+${o.tripKm} km")
+    }
     @Test fun naoInventaOferta() {
         assertNull(p("2 Comfort", "X", "R$ 31", "10 min (2.4 km)", "35 minutos (5.7 km)"))   // sem centavos e sem R$/km
         assertNull(p("Alta demanda aqui", "+R$ 2", "1-2 min"))
