@@ -165,7 +165,7 @@ export function AlertsScreen({ variant }: ScreenProps) {
         )}
       </div>
 
-      <div className="absolute right-3 top-[540px]">
+      <div className="absolute right-3 top-[480px]">
         <Bubble state="ligado" size={56} />
       </div>
     </RideBackdrop>
