@@ -23,6 +23,8 @@ object OfferParser {
     private val PRICE_INT = Regex("""^R\$\s*(\d{1,3})$""")
     /** "R$3,51/km aprox." — a Uber informa quanto paga por km somando busca e viagem. */
     private val RATE_KM = Regex("""R\$\s*([\dlI]{1,2}[.,][\dlIoO]{2})\s*/\s*km""", RegexOption.IGNORE_CASE)
+    /** "Est. de R$4/km": estimativa arredondada para o real inteiro (vem com o valor sem centavos, "R$ 10"). */
+    private val RATE_KM_INT = Regex("""R\$\s*(\d{1,2})\s*/\s*km""", RegexOption.IGNORE_CASE)
     /** Tolerância na conferência entre os km lidos e o "R$/km aprox." da Uber. */
     private const val RATE_TOLERANCE = 0.06
     private val RATING = Regex("""(?<![\d.,])([1-5][.,]\d{1,2})\s*\(\s*[\d.]+\s*\)""")
@@ -85,10 +87,14 @@ object OfferParser {
         val rate = texts.firstNotNullOfOrNull { t ->
             RATE_KM.find(t)?.groupValues?.get(1)?.let { parseOcrNumber(it) }
         }?.takeIf { it > 0.0 }
+        // "Est. de R$4/km": o R$/km arredondado (vale de 3,50 a 4,49)
+        val rateInt = if (rate != null) null else texts.firstNotNullOfOrNull { t ->
+            RATE_KM_INT.find(t)?.groupValues?.get(1)?.toDoubleOrNull()
+        }?.takeIf { it >= 1.0 }
         // Valor sem centavos só com a conferência do R$/km
-        if (cents == null && rate == null) return null
+        if (cents == null && rate == null && rateInt == null) return null
 
-        val chosen = chooseLegs(legs, price, rate) ?: return null
+        val chosen = (if (rateInt != null) chooseLegsRange(legs, price / (rateInt + 0.5), price / (rateInt - 0.5)) else chooseLegs(legs, price, rate)) ?: return null
         val pickup: Leg? = chosen.first
         val trip: Leg = chosen.second
 
@@ -119,6 +125,22 @@ object OfferParser {
      * valor / (R$ por km). Se nenhuma combinação bater, a leitura é descartada
      * (geralmente a tela foi capturada no meio da animação) e o Radar tenta de novo.
      */
+    /** Como chooseLegs, mas com o total de km numa faixa (R$/km arredondado). */
+    private fun chooseLegsRange(legs: List<Leg>, kmLo: Double, kmHi: Double): Pair<Leg?, Leg>? {
+        fun matches(km: Double) = km >= kmLo - 0.05 && km <= kmHi + 0.05
+        val candidates = legs.take(6).flatMap { l ->
+            if (l.km >= 10 && l.rawKm.none { it == '.' || it == ',' }) listOf(l, l.copy(km = l.km / 10)) else listOf(l)
+        }
+        for (i in candidates.indices) {
+            for (j in i + 1 until candidates.size) {
+                if (candidates[i].index == candidates[j].index && candidates[i].minutes == candidates[j].minutes) continue
+                if (matches(candidates[i].km + candidates[j].km)) return Pair(candidates[i], candidates[j])
+            }
+        }
+        candidates.firstOrNull { matches(it.km) }?.let { return Pair(null, it) }
+        return null
+    }
+
     private fun chooseLegs(legs: List<Leg>, price: Double, rate: Double?): Pair<Leg?, Leg>? {
         if (rate == null) {
             return if (legs.size >= 2) Pair(legs[0], legs[1]) else Pair(null, legs[0])

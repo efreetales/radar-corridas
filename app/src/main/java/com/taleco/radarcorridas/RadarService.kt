@@ -400,9 +400,15 @@ class RadarService : AccessibilityService() {
     /** Lê os textos de todas as janelas da Uber/99 que estão na tela. */
     /** Outro app (WhatsApp, Claude, navegador…) está aberto na frente da Uber/99? */
     private fun otherAppOnTop(): Boolean = try {
-        val active = windows?.firstOrNull { it.isActive && it.type == android.view.accessibility.AccessibilityWindowInfo.TYPE_APPLICATION }
+        val ws = windows
+        val active = ws?.firstOrNull { it.isActive && it.type == android.view.accessibility.AccessibilityWindowInfo.TYPE_APPLICATION }
         val pkg = active?.root?.packageName?.toString()
-        pkg != null && pkg !in TARGETS && pkg != packageName
+        if (pkg == null || pkg in TARGETS || pkg == packageName) false
+        else {
+            // Navegando pelo Waze, a oferta da Uber aparece numa janela por cima dele: aí pode ler
+            val uberLayer = ws.filter { w -> w.root?.packageName?.toString() in TARGETS }.maxOfOrNull { it.layer } ?: -1
+            uberLayer <= active.layer
+        }
     } catch (_: Exception) { false }
 
     private fun collectTargetTexts(): List<Pair<String, List<String>>> {
