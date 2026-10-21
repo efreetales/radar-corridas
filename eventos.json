@@ -1,5 +1,5 @@
 {
- "gerado_em": "2026-10-21T11:27:25-03:00",
+ "gerado_em": "2026-10-21T19:16:19-03:00",
  "data": "2026-10-21",
  "observacao": "Gerado automaticamente (Ticket360, Sympla e revisão semanal). Saída estimada pelas regras de tools/casas.json.",
  "eventos": [
@@ -34,22 +34,6 @@
    "regra": "show",
    "lat": -23.570732,
    "lng": -46.643231
-  },
-  {
-   "nome": "Vive la France com Les Deux Magots - O Fantasma da Ópera, de Gaston Le",
-   "local": "Les Deux Magots",
-   "endereco": "Rua Colômbia, Jardim Paulista, São Paulo",
-   "tipo": "teatro",
-   "data": "2026-10-21",
-   "inicio": "17:00",
-   "fim_estimado": "19:00",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/vive-la-france-com-les-deux-magots-o-fantasma-da-opera-de-gaston-leroux/3586513",
-   "origem": "sympla",
-   "regra": "teatro",
-   "lat": -23.566891,
-   "lng": -46.670115
   },
   {
    "nome": "Grupo Recomendo - Unidade Santana - Fazendo parcerias e negócios na re",
@@ -516,22 +500,6 @@
    "lng": -46.652939
   },
   {
-   "nome": "NeGruzz no Fino da Bossa",
-   "local": "Fino da Bossa - Canção de Autor",
-   "endereco": "Avenida Brigadeiro Faria Lima, Itaim Bibi, São Paulo",
-   "tipo": "show",
-   "data": "2026-10-21",
-   "inicio": "20:30",
-   "fim_estimado": "22:00",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/negruzz-no-fino-da-bossa/3592323",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.562865,
-   "lng": -46.694157
-  },
-  {
    "nome": "Acústico Convida - stand up comedy",
    "local": "Acustico Comedy",
    "endereco": "Rua da Consolação, Consolação, São Paulo",
@@ -628,22 +596,6 @@
    "lng": -46.473927
   },
   {
-   "nome": "Casa del Burlesque",
-   "local": "Drosophyla Bar",
-   "endereco": "Rua Nestor Pestana, São Paulo",
-   "tipo": "show",
-   "data": "2026-10-21",
-   "inicio": "21:00",
-   "fim_estimado": "22:45",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/casa-del-burlesque/3613522",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.549072,
-   "lng": -46.645272
-  },
-  {
    "nome": "Ná Ozzetti e Swami Jr // Só Danço Samba",
    "local": "Casa de Francisca",
    "endereco": "R. Quintino Bocaiúva,22 - 1º andar, São Paulo",
@@ -709,7 +661,7 @@
   }
  ],
  "geocodificacao": {
-  "com_local": 44,
+  "com_local": 41,
   "sem_local": 0
  }
 }
