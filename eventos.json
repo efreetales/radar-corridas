@@ -1,5 +1,5 @@
 {
- "gerado_em": "2026-10-22T11:29:07-03:00",
+ "gerado_em": "2026-10-22T19:14:50-03:00",
  "data": "2026-10-22",
  "observacao": "Gerado automaticamente (Ticket360, Sympla e revisão semanal). Saída estimada pelas regras de tools/casas.json.",
  "eventos": [
@@ -18,6 +18,22 @@
    "regra": "show",
    "lat": -23.513035,
    "lng": -46.696046
+  },
+  {
+   "nome": "Atividade com Crianças: Cerâmica em Família",
+   "local": "Ateliê Shoyu Crafts - Pinheiros",
+   "endereco": "Rua Capote Valente, Pinheiros, São Paulo",
+   "tipo": "show",
+   "data": "2026-10-22",
+   "inicio": "17:00",
+   "fim_estimado": "18:45",
+   "incerteza_min": 45,
+   "publico_estimado": null,
+   "fonte": "https://www.sympla.com.br/evento/atividade-com-criancas-ceramica-em-familia/3607462",
+   "origem": "sympla",
+   "regra": "show",
+   "lat": -23.555886,
+   "lng": -46.676893
   },
   {
    "nome": "QUINTAL DO JAZZ",
@@ -164,38 +180,6 @@
    "lng": -46.679193
   },
   {
-   "nome": "Odette apresenta Bela Martins em Manhãs Sussurradas e Femark em Passar",
-   "local": "Odette - Casa de Cultura",
-   "endereco": "Rua Rui Barbosa, Bela Vista, São Paulo",
-   "tipo": "festa",
-   "data": "2026-10-22",
-   "inicio": "19:00",
-   "fim_estimado": "23:00",
-   "incerteza_min": 120,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/odette-apresenta-bela-martins-em-manhas-sussurradas-e-femark-em-passarinha-2-shows-na-noite/3589147",
-   "origem": "sympla",
-   "regra": "festa",
-   "lat": -23.56139,
-   "lng": -46.64502
-  },
-  {
-   "nome": "NADA DISSO VAI ACONTECER . O CIENTISTA PERDIDO . 22/OUTUBRO",
-   "local": "Rua Dr. Teodoro Baima, 100",
-   "endereco": "Rua Doutor Teodoro Baima, República, São Paulo",
-   "tipo": "show",
-   "data": "2026-10-22",
-   "inicio": "19:00",
-   "fim_estimado": "00:30",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/nada-disso-vai-acontecer-o-cientista-perdido-22-outubro/3609824",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.546689,
-   "lng": -46.646427
-  },
-  {
    "nome": "Jantar às Cegas - Sabores, Sensações e Sentidos",
    "local": "Alameda dos Guatás, 490",
    "endereco": "Alameda dos Guatás, Vila da Saúde, São Paulo",
@@ -226,6 +210,22 @@
    "regra": "show",
    "lat": -23.503366,
    "lng": -46.628058
+  },
+  {
+   "nome": "Odette apresenta Bela Martins em Manhãs Sussurradas e Femark em Passar",
+   "local": "Odette - Casa de Cultura",
+   "endereco": "Rua Rui Barbosa, Bela Vista, São Paulo",
+   "tipo": "festa",
+   "data": "2026-10-22",
+   "inicio": "19:00",
+   "fim_estimado": "23:00",
+   "incerteza_min": 120,
+   "publico_estimado": null,
+   "fonte": "https://www.sympla.com.br/evento/odette-apresenta-bela-martins-em-manhas-sussurradas-e-femark-em-passarinha-2-shows-na-noite/3589147",
+   "origem": "sympla",
+   "regra": "festa",
+   "lat": -23.56139,
+   "lng": -46.64502
   },
   {
    "nome": "SURRENDER THE NIGHT - Dinner Show at The Core",
@@ -322,6 +322,22 @@
    "regra": "teatro",
    "lat": -23.624403,
    "lng": -46.699543
+  },
+  {
+   "nome": "Percy Jackson – O Ladrão de Raios: O Musical",
+   "local": "Teatro Liberdade",
+   "endereco": "R. São Joaquim, 129, São Paulo",
+   "tipo": "teatro",
+   "data": "2026-10-22",
+   "inicio": "20:00",
+   "fim_estimado": "22:00",
+   "incerteza_min": 30,
+   "publico_estimado": null,
+   "fonte": "https://bileto.sympla.com.br/event/114114",
+   "origem": "sympla",
+   "regra": "teatro",
+   "lat": -23.561697,
+   "lng": -46.637461
   },
   {
    "nome": "ART BATTLE #89",
@@ -805,7 +821,7 @@
   }
  ],
  "geocodificacao": {
-  "com_local": 50,
+  "com_local": 51,
   "sem_local": 0
  }
 }
