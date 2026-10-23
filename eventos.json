@@ -1,8 +1,24 @@
 {
- "gerado_em": "2026-10-23T11:12:14-03:00",
+ "gerado_em": "2026-10-23T19:01:01-03:00",
  "data": "2026-10-23",
  "observacao": "Gerado automaticamente (Ticket360, Sympla e revisão semanal). Saída estimada pelas regras de tools/casas.json.",
  "eventos": [
+  {
+   "nome": "Saia do Anoninimato Karaoke",
+   "local": "Anonimato Bar",
+   "endereco": "Rua Doutor Albuquerque Lins, Santa Cecilia, São Paulo",
+   "tipo": "show",
+   "data": "2026-10-23",
+   "inicio": "15:37",
+   "fim_estimado": "23:45",
+   "incerteza_min": 45,
+   "publico_estimado": null,
+   "fonte": "https://www.sympla.com.br/evento/saia-do-anoninimato-karaoke/3627798",
+   "origem": "sympla",
+   "regra": "show",
+   "lat": -23.532447,
+   "lng": -46.654154
+  },
   {
    "nome": "Pagode do Thiago Bispo no Prainha da Vila!!! (23/10)",
    "local": "Prainha da Vila bar",
@@ -34,6 +50,22 @@
    "regra": "show",
    "lat": -23.53045,
    "lng": -46.503792
+  },
+  {
+   "nome": "SAMPA RUN 5K",
+   "local": "Av. Prof. Fonseca Rodrigues, 2001",
+   "endereco": "Avenida Professor Fonseca Rodrigues, São Paulo",
+   "tipo": "show",
+   "data": "2026-10-23",
+   "inicio": "18:00",
+   "fim_estimado": "19:45",
+   "incerteza_min": 45,
+   "publico_estimado": null,
+   "fonte": "https://www.sympla.com.br/evento/sampa-run-5k/3630382",
+   "origem": "sympla",
+   "regra": "show",
+   "lat": -23.544059,
+   "lng": -46.726093
   },
   {
    "nome": "Kombuca 2000 | Especial Axé e Funk 2000",
@@ -68,6 +100,22 @@
    "lng": -46.452383
   },
   {
+   "nome": "Café Hotel Apresenta 2º Edição Back to 80´s",
+   "local": "R. Min. Jesuíno Cardoso, 181",
+   "endereco": "Rua Ministro Jesuíno Cardoso, Itaim Bibi, São Paulo",
+   "tipo": "show",
+   "data": "2026-10-23",
+   "inicio": "18:00",
+   "fim_estimado": "19:45",
+   "incerteza_min": 45,
+   "publico_estimado": null,
+   "fonte": "https://www.sympla.com.br/evento/cafe-hotel-apresenta-2o-edicao-back-to-80-s/3630329",
+   "origem": "sympla",
+   "regra": "show",
+   "lat": -23.592138,
+   "lng": -46.679463
+  },
+  {
    "nome": "II Simpósio de Cirurgia Plástica da Santa Casa de São Paulo - SIMPLASC",
    "local": "Faculdade de Ciências Médicas da Santa Casa de São Paulo",
    "endereco": "Largo Santa Cecília, Santa Cecília, São Paulo",
@@ -82,6 +130,22 @@
    "regra": "show",
    "lat": -23.539522,
    "lng": -46.6496
+  },
+  {
+   "nome": "A Raiz",
+   "local": "Teatro Sérgio Cardoso",
+   "endereco": "Rua Rui Barbosa, 153, São Paulo",
+   "tipo": "teatro",
+   "data": "2026-10-23",
+   "inicio": "18:30",
+   "fim_estimado": "20:30",
+   "incerteza_min": 30,
+   "publico_estimado": null,
+   "fonte": "https://bileto.sympla.com.br/event/127367",
+   "origem": "sympla",
+   "regra": "teatro",
+   "lat": -23.558874,
+   "lng": -46.645314
   },
   {
    "nome": "À mesa, entre os seus. | Jantar | The Circle by Mika",
@@ -322,22 +386,6 @@
    "regra": "show",
    "lat": -23.519137,
    "lng": -46.654894
-  },
-  {
-   "nome": "Hadassa o Musical",
-   "local": "Teatro Nissi",
-   "endereco": "Av. Brigadeiro Luís Antonio, 884, São Paulo",
-   "tipo": "teatro",
-   "data": "2026-10-23",
-   "inicio": "19:30",
-   "fim_estimado": "21:30",
-   "incerteza_min": 30,
-   "publico_estimado": null,
-   "fonte": "https://bileto.sympla.com.br/event/124247",
-   "origem": "sympla",
-   "regra": "teatro",
-   "lat": -23.557521,
-   "lng": -46.641252
   },
   {
    "nome": "[23/10 - 19h30] Laboratório da Sociedade | Espetáculo de comédia inédi",
@@ -660,6 +708,22 @@
    "lng": -46.663484
   },
   {
+   "nome": "VIRGINIA ROSA E SWAMI JR - VOU NA VIDA",
+   "local": "PSICADEIRO -SALA BEATRIZ SEGALL",
+   "endereco": "Rua Doutor Guilherme Bannitz, Itaim Bibi, São Paulo",
+   "tipo": "show",
+   "data": "2026-10-23",
+   "inicio": "20:00",
+   "fim_estimado": "21:20",
+   "incerteza_min": 45,
+   "publico_estimado": null,
+   "fonte": "https://www.sympla.com.br/evento/virginia-rosa-e-swami-jr-vou-na-vida/3571557",
+   "origem": "sympla",
+   "regra": "show",
+   "lat": -23.588914,
+   "lng": -46.672399
+  },
+  {
    "nome": "Como de costume",
    "local": "Teatro Escola Macunaíma",
    "endereco": "Rua Adolfo Gordo, 238, São Paulo",
@@ -754,22 +818,6 @@
    "regra": "show",
    "lat": -23.570336,
    "lng": -46.529029
-  },
-  {
-   "nome": "Saia do Anoninimato Karaoke",
-   "local": "Anonimato Bar",
-   "endereco": "Rua Doutor Albuquerque Lins, Santa Cecilia, São Paulo",
-   "tipo": "show",
-   "data": "2026-10-23",
-   "inicio": "20:00",
-   "fim_estimado": "23:45",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/saia-do-anoninimato-karaoke/3627798",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.532447,
-   "lng": -46.654154
   },
   {
    "nome": "ISMENE + RODA DE CONVERSA BLOOM 23/10",
@@ -1749,7 +1797,7 @@
   }
  ],
  "geocodificacao": {
-  "com_local": 109,
+  "com_local": 112,
   "sem_local": 0
  }
 }
