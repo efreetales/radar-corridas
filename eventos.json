@@ -1,5 +1,5 @@
 {
- "gerado_em": "2026-10-24T10:16:18-03:00",
+ "gerado_em": "2026-10-24T18:31:24-03:00",
  "data": "2026-10-24",
  "observacao": "Gerado automaticamente (Ticket360, Sympla e revisão semanal). Saída estimada pelas regras de tools/casas.json.",
  "eventos": [
@@ -388,22 +388,6 @@
    "lng": -46.716666
   },
   {
-   "nome": "Bravo Tenores In Concert",
-   "local": "BTG Pactual Hall",
-   "endereco": "R. Bento Branco de Andrade Filho,722, São Paulo",
-   "tipo": "show",
-   "data": "2026-10-24",
-   "inicio": "17:00",
-   "fim_estimado": "18:45",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://bileto.sympla.com.br/event/125598",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.650504,
-   "lng": -46.721077
-  },
-  {
    "nome": "Imagina na adolescência",
    "local": "Teatro Multiplan MorumbiShopping",
    "endereco": "Av. Roque Petroni Jr., Piso G2,1089 - MORUMBISHOPPING, São Paulo",
@@ -434,6 +418,22 @@
    "regra": "teatro",
    "lat": -23.598797,
    "lng": -46.637284
+  },
+  {
+   "nome": "Patati Patatá Circo Show - Tatuapé",
+   "local": "Patati Patatá Circo Show",
+   "endereco": "Rua Uriel Gaspar,149, São Paulo",
+   "tipo": "teatro",
+   "data": "2026-10-24",
+   "inicio": "17:00",
+   "fim_estimado": "19:00",
+   "incerteza_min": 30,
+   "publico_estimado": null,
+   "fonte": "https://bileto.sympla.com.br/event/120360",
+   "origem": "sympla",
+   "regra": "teatro",
+   "lat": -23.542897,
+   "lng": -43.175187
   },
   {
    "nome": "5ª NIGHT RUN PARQUE BRUNO COVAS",
@@ -482,22 +482,6 @@
    "regra": "show",
    "lat": -23.556623,
    "lng": -46.686516
-  },
-  {
-   "nome": "Me Ensina a Voar?",
-   "local": "Rua Juventus, 28",
-   "endereco": "Rua Juventus, Parque da Mooca, São Paulo",
-   "tipo": "show",
-   "data": "2026-10-24",
-   "inicio": "17:00",
-   "fim_estimado": "17:50",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/me-ensina-a-voar/3554677",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.568167,
-   "lng": -46.593516
   },
   {
    "nome": "Samba da Treze",
@@ -580,6 +564,38 @@
    "lng": -46.719498
   },
   {
+   "nome": "Lilith Lounge - Exclusivo para Mulheres",
+   "local": "Spicy Club",
+   "endereco": "Alameda dos Pamaris, Indianópolis, São Paulo",
+   "tipo": "show",
+   "data": "2026-10-24",
+   "inicio": "17:00",
+   "fim_estimado": "22:00",
+   "incerteza_min": 45,
+   "publico_estimado": null,
+   "fonte": "https://www.sympla.com.br/evento/lilith-lounge-exclusivo-para-mulheres/3608026",
+   "origem": "sympla",
+   "regra": "show",
+   "lat": -23.611238,
+   "lng": -46.66824
+  },
+  {
+   "nome": "O Mágico de Oz",
+   "local": "Teatro Bibi Ferreira",
+   "endereco": "Av. Brigadeiro Luiz Antônio, 931, São Paulo",
+   "tipo": "teatro",
+   "data": "2026-10-24",
+   "inicio": "17:30",
+   "fim_estimado": "19:30",
+   "incerteza_min": 30,
+   "publico_estimado": null,
+   "fonte": "https://bileto.sympla.com.br/event/64140",
+   "origem": "sympla",
+   "regra": "teatro",
+   "lat": -23.5695,
+   "lng": -46.65079
+  },
+  {
    "nome": "MUSEU DAS CULTURAS INDÍGENAS",
    "local": "Museu das Culturas Indígenas",
    "endereco": "Rua Dona Germaine Burchard, 451, São Paulo",
@@ -626,22 +642,6 @@
    "regra": "teatro",
    "lat": -23.603812,
    "lng": -46.631789
-  },
-  {
-   "nome": "(STAND-UP GRATUITO) Matinê de Humor - Comédia Stand Up",
-   "local": "Acústico Comedy",
-   "endereco": "Rua da Consolação, Consolação, São Paulo",
-   "tipo": "teatro",
-   "data": "2026-10-24",
-   "inicio": "18:00",
-   "fim_estimado": "19:30",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/stand-up-gratuito-matine-de-humor-comedia-stand-up/3623057",
-   "origem": "sympla",
-   "regra": "teatro",
-   "lat": -23.555849,
-   "lng": -46.663484
   },
   {
    "nome": "BAILE MENSAL VPR - OUTUBRO 2026",
@@ -756,6 +756,38 @@
    "lng": -46.646133
   },
   {
+   "nome": "5º Pequeno Teatro de Variedades Animadas",
+   "local": "Casa da História",
+   "endereco": "Rua Doutor Francisco Figueiredo Barreto, São Paulo",
+   "tipo": "teatro",
+   "data": "2026-10-24",
+   "inicio": "18:00",
+   "fim_estimado": "22:00",
+   "incerteza_min": 45,
+   "publico_estimado": null,
+   "fonte": "https://www.sympla.com.br/evento/5o-pequeno-teatro-de-variedades-animadas/3615648",
+   "origem": "sympla",
+   "regra": "teatro",
+   "lat": -23.531509,
+   "lng": -46.69327
+  },
+  {
+   "nome": "28/10 - Transporte - BTS World Tour em São Paulo - Itaúna Turismo",
+   "local": "Estádio MorumBIS",
+   "endereco": "Praça Roberto Gomes Pedrosa, São Paulo",
+   "tipo": "show",
+   "data": "2026-10-24",
+   "inicio": "18:04",
+   "fim_estimado": "19:49",
+   "incerteza_min": 45,
+   "publico_estimado": null,
+   "fonte": "https://www.sympla.com.br/evento/28-10-transporte-bts-world-tour-em-sao-paulo-itauna-turismo/3284764",
+   "origem": "sympla",
+   "regra": "show",
+   "lat": -23.599035,
+   "lng": -46.720336
+  },
+  {
    "nome": "A Raiz",
    "local": "Teatro Sérgio Cardoso",
    "endereco": "Rua Rui Barbosa, 153, São Paulo",
@@ -788,6 +820,38 @@
    "lng": -46.529029
   },
   {
+   "nome": "GRAND WINE TASTING 2026",
+   "local": "Rua Chemin Del Pra, 210",
+   "endereco": "Rua Chemin Del Pra, Santana, São Paulo",
+   "tipo": "show",
+   "data": "2026-10-24",
+   "inicio": "18:30",
+   "fim_estimado": "22:00",
+   "incerteza_min": 45,
+   "publico_estimado": null,
+   "fonte": "https://www.sympla.com.br/evento/grand-wine-tasting-2026/3602675",
+   "origem": "sympla",
+   "regra": "show",
+   "lat": -23.500869,
+   "lng": -46.631451
+  },
+  {
+   "nome": "Uma viagem pelos sentidos - Recital de Sitar com Marcus Santuris",
+   "local": "Casa de Cultura Nina de Holanda",
+   "endereco": "Alameda dos Aicás, Moema, São Paulo",
+   "tipo": "show",
+   "data": "2026-10-24",
+   "inicio": "18:30",
+   "fim_estimado": "20:30",
+   "incerteza_min": 45,
+   "publico_estimado": null,
+   "fonte": "https://www.sympla.com.br/evento/uma-viagem-pelos-sentidos-recital-de-sitar-com-marcus-santuris/3611994",
+   "origem": "sympla",
+   "regra": "show",
+   "lat": -23.606503,
+   "lng": -46.655631
+  },
+  {
    "nome": "O Nome do Tango no TEATRO ESTÚDIO",
    "local": "Teatro Estúdio",
    "endereco": "R. Conselheiro Nébias,891, São Paulo",
@@ -802,6 +866,22 @@
    "regra": "teatro",
    "lat": -23.535552,
    "lng": -46.645724
+  },
+  {
+   "nome": "MIRACULOUS LADYBUG: O SHOW MUSICAL",
+   "local": "Teatro do Shopping Villa Lobos",
+   "endereco": "Av. Dra. Ruth Cardoso ,4777 - 4º andar, São Paulo",
+   "tipo": "teatro",
+   "data": "2026-10-24",
+   "inicio": "19:00",
+   "fim_estimado": "21:00",
+   "incerteza_min": 30,
+   "publico_estimado": null,
+   "fonte": "https://bileto.sympla.com.br/event/122747",
+   "origem": "sympla",
+   "regra": "teatro",
+   "lat": -23.551872,
+   "lng": -46.721986
   },
   {
    "nome": "Entrega! Delírios Capitalistas e outras aberrações",
@@ -1172,6 +1252,22 @@
    "lng": -46.690712
   },
   {
+   "nome": "Comédia dos Comédia",
+   "local": "Laje Carioca",
+   "endereco": "Rua Frei Caneca, Consolação, São Paulo",
+   "tipo": "teatro",
+   "data": "2026-10-24",
+   "inicio": "19:30",
+   "fim_estimado": "21:00",
+   "incerteza_min": 45,
+   "publico_estimado": null,
+   "fonte": "https://www.sympla.com.br/evento/comedia-dos-comedia/3598842",
+   "origem": "sympla",
+   "regra": "teatro",
+   "lat": -23.556024,
+   "lng": -46.656597
+  },
+  {
    "nome": "Outra Revolução dos Bichos no TEATRO ESTÚDIO",
    "local": "Teatro Estúdio",
    "endereco": "R. Conselheiro Nébias,891, São Paulo",
@@ -1188,6 +1284,38 @@
    "lng": -46.645724
   },
   {
+   "nome": "2º AutoMotor Experience",
+   "local": "Shopping Vila Olimpia",
+   "endereco": "Rua Olimpíadas, 360, São Paulo",
+   "tipo": "show",
+   "data": "2026-10-24",
+   "inicio": "20:00",
+   "fim_estimado": "21:45",
+   "incerteza_min": 45,
+   "publico_estimado": null,
+   "fonte": "https://bileto.sympla.com.br/event/128111",
+   "origem": "sympla",
+   "regra": "show",
+   "lat": -23.595126,
+   "lng": -46.686396
+  },
+  {
+   "nome": "A Bela Adormecida - Cia Paulista de Dança Adriana Assaf",
+   "local": "Teatro Sérgio Cardoso",
+   "endereco": "Rua Rui Barbosa, 153, São Paulo",
+   "tipo": "teatro",
+   "data": "2026-10-24",
+   "inicio": "20:00",
+   "fim_estimado": "22:00",
+   "incerteza_min": 30,
+   "publico_estimado": null,
+   "fonte": "https://bileto.sympla.com.br/event/127335",
+   "origem": "sympla",
+   "regra": "teatro",
+   "lat": -23.558874,
+   "lng": -46.645314
+  },
+  {
    "nome": "O FILHO",
    "local": "Teatro Fernando Torres",
    "endereco": "Rua Padre Estevão Pernet, 588, São Paulo",
@@ -1202,6 +1330,22 @@
    "regra": "teatro",
    "lat": -23.541959,
    "lng": -46.567142
+  },
+  {
+   "nome": "GIL – ANDAR COM FÉ - O MUSICAL",
+   "local": "Teatro Santander",
+   "endereco": "Avenida Presidente Juscelino Kubitschek,2041, São Paulo",
+   "tipo": "teatro",
+   "data": "2026-10-24",
+   "inicio": "20:00",
+   "fim_estimado": "22:00",
+   "incerteza_min": 30,
+   "publico_estimado": null,
+   "fonte": "https://bileto.sympla.com.br/event/115256",
+   "origem": "sympla",
+   "regra": "teatro",
+   "lat": -23.592931,
+   "lng": -46.693951
   },
   {
    "nome": "REALNESS HALLOWEEN APOCALYPSE - com Kennedy Davenport, Dawn, Márcia Pa",
@@ -1348,22 +1492,6 @@
    "lng": -46.741183
   },
   {
-   "nome": "Bruno Motta - Stand up Comedy",
-   "local": "Acustico Comedy",
-   "endereco": "Rua da Consolação, Consolação, São Paulo",
-   "tipo": "teatro",
-   "data": "2026-10-24",
-   "inicio": "20:00",
-   "fim_estimado": "21:59",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/bruno-motta-stand-up-comedy/3612869",
-   "origem": "sympla",
-   "regra": "teatro",
-   "lat": -23.555849,
-   "lng": -46.663484
-  },
-  {
    "nome": "Espetáculo \"DEPOIS DA CHUVA\"- Iason Cultural",
    "local": "Ágora Teatro",
    "endereco": "Rua Rui Barbosa, Bela Vista, São Paulo",
@@ -1412,6 +1540,54 @@
    "lng": -46.631789
   },
   {
+   "nome": "Midnight - Halloween Party",
+   "local": "Vila Lapa",
+   "endereco": "Rua Guaicurus, Lapa, São Paulo",
+   "tipo": "festa",
+   "data": "2026-10-24",
+   "inicio": "20:00",
+   "fim_estimado": "01:30",
+   "incerteza_min": 120,
+   "publico_estimado": null,
+   "fonte": "https://www.sympla.com.br/evento/midnight-halloween-party/3557733",
+   "origem": "sympla",
+   "regra": "festa",
+   "lat": -23.522475,
+   "lng": -46.690116
+  },
+  {
+   "nome": "ALMOÇO COM A ESTRELA",
+   "local": "Casa de Artes SP",
+   "endereco": "Rua Major Sertório, Vila Buarque, São Paulo",
+   "tipo": "show",
+   "data": "2026-10-24",
+   "inicio": "20:00",
+   "fim_estimado": "21:30",
+   "incerteza_min": 45,
+   "publico_estimado": null,
+   "fonte": "https://www.sympla.com.br/evento/almoco-com-a-estrela/3573614",
+   "origem": "sympla",
+   "regra": "show",
+   "lat": -23.545208,
+   "lng": -46.648684
+  },
+  {
+   "nome": "Depois do ato",
+   "local": "Teatro de Arena Eugênio Kusnet",
+   "endereco": "Rua Doutor Teodoro Baima, São Paulo",
+   "tipo": "teatro",
+   "data": "2026-10-24",
+   "inicio": "20:00",
+   "fim_estimado": "21:10",
+   "incerteza_min": 45,
+   "publico_estimado": null,
+   "fonte": "https://www.sympla.com.br/evento/depois-do-ato/3560800",
+   "origem": "sympla",
+   "regra": "teatro",
+   "lat": -23.546898,
+   "lng": -46.646338
+  },
+  {
    "nome": "EX BOM É EXUMADO",
    "local": "Teatro Santa Cruz",
    "endereco": "R. Domingos de Morais,2564 - Shopping Metrô Santa, São Paulo",
@@ -1442,6 +1618,22 @@
    "regra": "show",
    "lat": -23.562865,
    "lng": -46.694157
+  },
+  {
+   "nome": "Palazzo Verde",
+   "local": "PALAZZO VERDE",
+   "endereco": "Av. Francisco Matarazzo,1748 - Comercial Casa das Caldeiras, Cj. 501, São Paulo",
+   "tipo": "show",
+   "data": "2026-10-24",
+   "inicio": "21:00",
+   "fim_estimado": "22:45",
+   "incerteza_min": 45,
+   "publico_estimado": null,
+   "fonte": "https://bileto.sympla.com.br/event/117081",
+   "origem": "sympla",
+   "regra": "show",
+   "lat": -23.525471,
+   "lng": -46.681564
   },
   {
    "nome": "VEREDA no JazzB (SÁBADO 24/JUN/25)",
@@ -1908,22 +2100,6 @@
    "lng": -46.651694
   },
   {
-   "nome": "Noites Magicas - Stand Up",
-   "local": "Acustico Comedy",
-   "endereco": "Rua da Consolação, Consolação, São Paulo",
-   "tipo": "teatro",
-   "data": "2026-10-24",
-   "inicio": "22:00",
-   "fim_estimado": "23:59",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/noites-magicas-stand-up/3612870",
-   "origem": "sympla",
-   "regra": "teatro",
-   "lat": -23.555849,
-   "lng": -46.663484
-  },
-  {
    "nome": "HALLOWEEN PARTY MARÉ DOGS 2000",
    "local": "KZA 2675",
    "endereco": "Rua Costa Aguiar, Ipiranga, São Paulo",
@@ -2036,22 +2212,6 @@
    "lng": -46.639557
   },
   {
-   "nome": "Ibiza a última ressaca",
-   "local": "Rua Dr. Oscar de Almeida, 312",
-   "endereco": "Rua Doutor Oscar de Almeida, Morumbi, São Paulo",
-   "tipo": "show",
-   "data": "2026-10-24",
-   "inicio": "22:00",
-   "fim_estimado": "05:00",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/ibiza-a-ultima-ressaca/3563840",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.612861,
-   "lng": -46.71941
-  },
-  {
    "nome": "Hallowano 2026",
    "local": "Casa Jamming",
    "endereco": "Rua Padre João Gonçalves, São Paulo",
@@ -2068,6 +2228,22 @@
    "lng": -46.687727
   },
   {
+   "nome": "Ibiza a última ressaca",
+   "local": "Rua Dr. Oscar de Almeida, 312",
+   "endereco": "Rua Doutor Oscar de Almeida, Morumbi, São Paulo",
+   "tipo": "show",
+   "data": "2026-10-24",
+   "inicio": "22:00",
+   "fim_estimado": "05:00",
+   "incerteza_min": 45,
+   "publico_estimado": null,
+   "fonte": "https://www.sympla.com.br/evento/ibiza-a-ultima-ressaca/3563840",
+   "origem": "sympla",
+   "regra": "show",
+   "lat": -23.612861,
+   "lng": -46.71941
+  },
+  {
    "nome": "ZUNO: DELEITE-SE",
    "local": "Zuno Bar",
    "endereco": "Rua Doutor Olavo Egídio, Santana, São Paulo",
@@ -2082,6 +2258,22 @@
    "regra": "show",
    "lat": -23.499765,
    "lng": -46.622483
+  },
+  {
+   "nome": "Inauguração N3 Bar",
+   "local": "N3 BAR",
+   "endereco": "Rua Antônio Gil, Cidade Ademar, São Paulo",
+   "tipo": "show",
+   "data": "2026-10-24",
+   "inicio": "22:00",
+   "fim_estimado": "05:00",
+   "incerteza_min": 45,
+   "publico_estimado": null,
+   "fonte": "https://www.sympla.com.br/evento/inauguracao-n3-bar/3622074",
+   "origem": "sympla",
+   "regra": "show",
+   "lat": -23.656106,
+   "lng": -46.668948
   },
   {
    "nome": "MC LIPI @ LE CLUB",
@@ -2389,7 +2581,7 @@
   }
  ],
  "geocodificacao": {
-  "com_local": 149,
+  "com_local": 161,
   "sem_local": 0
  }
 }
