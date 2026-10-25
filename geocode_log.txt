@@ -1,1 +1,1 @@
-com local: 161  sem local: 0
+com local: 37  sem local: 0
