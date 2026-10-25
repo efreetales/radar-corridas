@@ -1,5 +1,5 @@
 {
- "gerado_em": "2026-10-25T10:40:44-03:00",
+ "gerado_em": "2026-10-25T18:40:07-03:00",
  "data": "2026-10-25",
  "observacao": "Gerado automaticamente (Ticket360, Sympla e revisão semanal). Saída estimada pelas regras de tools/casas.json.",
  "eventos": [
@@ -34,22 +34,6 @@
    "regra": "show",
    "lat": -23.597719,
    "lng": -46.676441
-  },
-  {
-   "nome": "Bate Fundo+Pagode Da Garagem no Moleque Travesso",
-   "local": "Moleque Travesso",
-   "endereco": "Avenida do Café, Vila Guarani, São Paulo",
-   "tipo": "festa",
-   "data": "2026-10-25",
-   "inicio": "13:00",
-   "fim_estimado": "19:00",
-   "incerteza_min": 120,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/bate-fundo-pagode-da-garagem-no-moleque-travesso/3619110",
-   "origem": "sympla",
-   "regra": "festa",
-   "lat": -23.631964,
-   "lng": -46.636144
   },
   {
    "nome": "ANIVERSÁRIO DA LU: FESTA NA LAJE | 25/10-DOM | BAR DO JUIZ PATRIARCA",
@@ -228,20 +212,20 @@
    "lng": -46.648108
   },
   {
-   "nome": "Yayá Massemba // SAMBA DA DEMOCRACIA",
-   "local": "Casa de Francisca",
-   "endereco": "R. Quintino Bocaiúva,22 - 1º andar, São Paulo",
-   "tipo": "show",
+   "nome": "Bate Fundo+Pagode Da Garagem no Moleque Travesso",
+   "local": "Moleque Travesso",
+   "endereco": "Avenida do Café, Vila Guarani, São Paulo",
+   "tipo": "festa",
    "data": "2026-10-25",
    "inicio": "17:00",
-   "fim_estimado": "18:45",
-   "incerteza_min": 45,
+   "fim_estimado": "21:30",
+   "incerteza_min": 120,
    "publico_estimado": null,
-   "fonte": "https://bileto.sympla.com.br/event/128178",
+   "fonte": "https://www.sympla.com.br/evento/bate-fundo-pagode-da-garagem-no-moleque-travesso/3619110",
    "origem": "sympla",
-   "regra": "show",
-   "lat": -23.548776,
-   "lng": -46.634712
+   "regra": "festa",
+   "lat": -23.631964,
+   "lng": -46.636144
   },
   {
    "nome": "Halloween Fora de Cena",
@@ -354,22 +338,6 @@
    "regra": "teatro",
    "lat": -23.6313,
    "lng": -46.736063
-  },
-  {
-   "nome": "DJ KL JAY NA TOCA + PAGODE/SAMBA E ATRAÇÕES",
-   "local": "toca do spetto",
-   "endereco": "Rua Diamantino Ferreira Innocencio, grajau, São Paulo",
-   "tipo": "festa",
-   "data": "2026-10-25",
-   "inicio": "18:00",
-   "fim_estimado": "00:30",
-   "incerteza_min": 120,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/dj-kl-jay-na-toca-pagode-samba-e-atracoes/3563153",
-   "origem": "sympla",
-   "regra": "festa",
-   "lat": -23.739938,
-   "lng": -46.691104
   },
   {
    "nome": "DOM 18h - 25/10/26 - MÊS DAS CRIANÇAS - Circo Spacial - SPARK",
@@ -597,7 +565,7 @@
   }
  ],
  "geocodificacao": {
-  "com_local": 37,
+  "com_local": 35,
   "sem_local": 0
  }
 }
