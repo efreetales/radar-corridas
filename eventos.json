@@ -1,5 +1,5 @@
 {
- "gerado_em": "2026-10-26T13:04:34-03:00",
+ "gerado_em": "2026-10-26T20:05:32-03:00",
  "data": "2026-10-26",
  "observacao": "Gerado automaticamente (Ticket360, Sympla e revisão semanal). Saída estimada pelas regras de tools/casas.json.",
  "eventos": [
@@ -34,22 +34,6 @@
    "regra": "show",
    "lat": -23.594447,
    "lng": -46.642037
-  },
-  {
-   "nome": "Pirâmide Estelar - 26 de Outubro",
-   "local": "Cura-te Nova Sede",
-   "endereco": "Avenida Santa Catarina, São Paulo",
-   "tipo": "show",
-   "data": "2026-10-26",
-   "inicio": "18:00",
-   "fim_estimado": "20:00",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/piramide-estelar-26-de-outubro/3525116",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.642141,
-   "lng": -46.666045
   },
   {
    "nome": "Navalhas nas Ruas + PnR - 26-10",
@@ -116,20 +100,20 @@
    "lng": -46.656923
   },
   {
-   "nome": "Recital de Piano Solo com Pascal Galley",
-   "local": "Teatro Sérgio Cardoso",
-   "endereco": "Rua Rui Barbosa, 153, São Paulo",
+   "nome": "DOM QUIXOTE",
+   "local": "TEATRO EVA WILMA",
+   "endereco": "Rua Antônio de Lucena, São Paulo",
    "tipo": "teatro",
    "data": "2026-10-26",
-   "inicio": "20:00",
-   "fim_estimado": "22:00",
+   "inicio": "19:30",
+   "fim_estimado": "21:30",
    "incerteza_min": 30,
    "publico_estimado": null,
-   "fonte": "https://bileto.sympla.com.br/event/128944",
+   "fonte": "https://www.sympla.com.br/evento/dom-quixote/3627145",
    "origem": "sympla",
    "regra": "teatro",
-   "lat": -23.558874,
-   "lng": -46.645314
+   "lat": -23.543692,
+   "lng": -46.549984
   },
   {
    "nome": "INEFÁVEL",
@@ -146,6 +130,22 @@
    "regra": "show",
    "lat": -23.533338,
    "lng": -46.658438
+  },
+  {
+   "nome": "CORRIDA DE NATAL 5KM",
+   "local": "R. Guirá-Acangatara, 70",
+   "endereco": "Rua Guirá-Acangatara, Engenheiro Goulart, São Paulo",
+   "tipo": "show",
+   "data": "2026-10-26",
+   "inicio": "20:00",
+   "fim_estimado": "21:45",
+   "incerteza_min": 45,
+   "publico_estimado": null,
+   "fonte": "https://www.sympla.com.br/evento/corrida-de-natal-5km/3632630",
+   "origem": "sympla",
+   "regra": "show",
+   "lat": -23.498966,
+   "lng": -46.528475
   },
   {
    "nome": "O Ovo e a Galinha",
