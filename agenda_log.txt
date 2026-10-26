@@ -1,5 +1,5 @@
-Agenda 2026-10-25 (rodou 2026-10-25 18:40)
-Ticket360: 1 de hoje
-Sympla: 35 de hoje (3 páginas, total 40)
-semana.json: não encontrado
-Total: 35 {'sympla': 35}
+Agenda 2026-10-26 (rodou 2026-10-26 09:06)
+Ticket360: 0 de hoje
+Sympla: 10 de hoje (1 páginas, total 16)
+semana.json: 1 de hoje
+Total: 11 {'sympla': 10, 'semana': 1}
