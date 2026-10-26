@@ -1,0 +1,795 @@
+{
+ "gerado_em": "2026-10-26T09:06:33-03:00",
+ "de": "2026-10-26",
+ "ate": "2026-11-01",
+ "eventos": [
+  {
+   "nome": "O Ovo e a Galinha",
+   "local": "Teat(r)o Oficina",
+   "endereco": "Rua Jaceguai, 520, Bela Vista, São Paulo",
+   "data": "2026-10-26",
+   "inicio": "20:00",
+   "regra": "teatro",
+   "publico_estimado": 300,
+   "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/"
+  },
+  {
+   "nome": "Thales Lion Farmer toca Santana",
+   "local": "Blue Note São Paulo",
+   "endereco": "Av. Paulista, 2073, Conjunto Nacional, Consolação, São Paulo",
+   "data": "2026-10-27",
+   "inicio": "20:00",
+   "regra": "show",
+   "publico_estimado": 300,
+   "fonte": "https://cadernopop.com.br/confira-a-agenda-de-shows-de-outubro-de-2026-em-sao-paulo/"
+  },
+  {
+   "nome": "O Ovo e a Galinha",
+   "local": "Teat(r)o Oficina",
+   "endereco": "Rua Jaceguai, 520, Bela Vista, São Paulo",
+   "data": "2026-10-27",
+   "inicio": "20:00",
+   "regra": "teatro",
+   "publico_estimado": 300,
+   "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/"
+  },
+  {
+   "nome": "Trilogia para a Vida",
+   "local": "Teatro Ruth Escobar",
+   "endereco": "Rua dos Ingleses, 209, Bela Vista, São Paulo",
+   "data": "2026-10-27",
+   "inicio": "20:30",
+   "regra": "teatro",
+   "publico_estimado": 150,
+   "fonte": "https://vivaacidadenews.com.br/dicas/musicais-em-sp-outubro-2026/"
+  },
+  {
+   "nome": "Iron Maiden (Alter Bridge 19h10)",
+   "local": "Nubank Parque",
+   "endereco": "Av. Francisco Matarazzo, 1705, Água Branca, São Paulo",
+   "data": "2026-10-27",
+   "inicio": "20:50",
+   "regra": "show",
+   "publico_estimado": 45000,
+   "fonte": "https://baressp.com.br/shows/iron-maiden-em-sao-paulo-turne-de-50-anos-run-for-your-lives"
+  },
+  {
+   "nome": "MONSTRO – tenho sonhado com homens",
+   "local": "Sesc Pompeia",
+   "endereco": "Rua Clélia, 93, Pompeia, São Paulo",
+   "data": "2026-10-28",
+   "inicio": "19:30",
+   "regra": "teatro",
+   "publico_estimado": 300,
+   "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/"
+  },
+  {
+   "nome": "BTS – Arirang Tour",
+   "local": "MorumBIS",
+   "endereco": "Praça Roberto Gomes Pedrosa, 1, Morumbi, São Paulo",
+   "data": "2026-10-28",
+   "inicio": "20:00",
+   "regra": "show",
+   "publico_estimado": 65000,
+   "fonte": "https://agitomax.com.br/shows/bts-tres-shows-sao-paulo-outubro-2026-datas-ingressos/",
+   "obs": "portões 16h"
+  },
+  {
+   "nome": "Helga Nemëtik canta Fafá de Belém",
+   "local": "Blue Note São Paulo",
+   "endereco": "Av. Paulista, 2073, Conjunto Nacional, Consolação, São Paulo",
+   "data": "2026-10-28",
+   "inicio": "20:00",
+   "regra": "show",
+   "publico_estimado": 300,
+   "fonte": "https://cadernopop.com.br/confira-a-agenda-de-shows-de-outubro-de-2026-em-sao-paulo/"
+  },
+  {
+   "nome": "Trilogia para a Vida",
+   "local": "Teatro Ruth Escobar",
+   "endereco": "Rua dos Ingleses, 209, Bela Vista, São Paulo",
+   "data": "2026-10-28",
+   "inicio": "20:30",
+   "regra": "teatro",
+   "publico_estimado": 150,
+   "fonte": "https://vivaacidadenews.com.br/dicas/musicais-em-sp-outubro-2026/"
+  },
+  {
+   "nome": "Daniel Daibem Trio",
+   "local": "Blue Note São Paulo",
+   "endereco": "Av. Paulista, 2073, Conjunto Nacional, Consolação, São Paulo",
+   "data": "2026-10-28",
+   "inicio": "22:30",
+   "regra": "show",
+   "publico_estimado": 300,
+   "fonte": "https://cadernopop.com.br/confira-a-agenda-de-shows-de-outubro-de-2026-em-sao-paulo/"
+  },
+  {
+   "nome": "MONSTRO – tenho sonhado com homens",
+   "local": "Sesc Pompeia",
+   "endereco": "Rua Clélia, 93, Pompeia, São Paulo",
+   "data": "2026-10-29",
+   "inicio": "19:30",
+   "regra": "teatro",
+   "publico_estimado": 300,
+   "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/"
+  },
+  {
+   "nome": "João Sabiá – João & Violão",
+   "local": "Blue Note São Paulo",
+   "endereco": "Av. Paulista, 2073, Conjunto Nacional, Consolação, São Paulo",
+   "data": "2026-10-29",
+   "inicio": "20:00",
+   "regra": "show",
+   "publico_estimado": 300,
+   "fonte": "https://cadernopop.com.br/confira-a-agenda-de-shows-de-outubro-de-2026-em-sao-paulo/"
+  },
+  {
+   "nome": "Júpiter Maçã + 50 anos Ramones",
+   "local": "Picles",
+   "endereco": "Rua Cardeal Arcoverde, 1838, Pinheiros, São Paulo",
+   "data": "2026-10-29",
+   "inicio": "20:00",
+   "fim": "04:30",
+   "regra": "show",
+   "publico_estimado": 400,
+   "fonte": "https://shotgun.live/en/events/tata-aeroplano-luiz-thunderbird-jupiter-maca-ramones-2026-10-29"
+  },
+  {
+   "nome": "Sopro",
+   "local": "Sesc 14 Bis",
+   "endereco": "Rua Dr. Plínio Barreto, 285, Bela Vista, São Paulo",
+   "data": "2026-10-29",
+   "inicio": "20:00",
+   "regra": "teatro",
+   "publico_estimado": 300,
+   "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/"
+  },
+  {
+   "nome": "Trilogia para a Vida",
+   "local": "Teatro Ruth Escobar",
+   "endereco": "Rua dos Ingleses, 209, Bela Vista, São Paulo",
+   "data": "2026-10-29",
+   "inicio": "20:30",
+   "regra": "teatro",
+   "publico_estimado": 150,
+   "fonte": "https://vivaacidadenews.com.br/dicas/musicais-em-sp-outubro-2026/"
+  },
+  {
+   "nome": "Baile do George, com Cathy Israel",
+   "local": "Blue Note São Paulo",
+   "endereco": "Av. Paulista, 2073, Conjunto Nacional, Consolação, São Paulo",
+   "data": "2026-10-29",
+   "inicio": "22:30",
+   "regra": "show",
+   "publico_estimado": 300,
+   "fonte": "https://cadernopop.com.br/confira-a-agenda-de-shows-de-outubro-de-2026-em-sao-paulo/"
+  },
+  {
+   "nome": "Dire Straits Experience – Gui Cicarelli",
+   "local": "Blue Note São Paulo",
+   "endereco": "Av. Paulista, 2073, Conjunto Nacional, Consolação, São Paulo",
+   "data": "2026-10-29",
+   "inicio": "22:30",
+   "regra": "show",
+   "publico_estimado": 300,
+   "fonte": "https://cadernopop.com.br/confira-a-agenda-de-shows-de-outubro-de-2026-em-sao-paulo/"
+  },
+  {
+   "nome": "Mande Notícias do Mundo de Lá",
+   "local": "Teatro Renaissance",
+   "endereco": "Alameda Santos, 2233, Jardim Paulista, São Paulo",
+   "data": "2026-10-30",
+   "inicio": "19:30",
+   "regra": "teatro",
+   "publico_estimado": 450,
+   "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/"
+  },
+  {
+   "nome": "MONSTRO – tenho sonhado com homens",
+   "local": "Sesc Pompeia",
+   "endereco": "Rua Clélia, 93, Pompeia, São Paulo",
+   "data": "2026-10-30",
+   "inicio": "19:30",
+   "regra": "teatro",
+   "publico_estimado": 300,
+   "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/"
+  },
+  {
+   "nome": "BTS – Arirang Tour",
+   "local": "MorumBIS",
+   "endereco": "Praça Roberto Gomes Pedrosa, 1, Morumbi, São Paulo",
+   "data": "2026-10-30",
+   "inicio": "20:00",
+   "regra": "show",
+   "publico_estimado": 65000,
+   "fonte": "https://agitomax.com.br/shows/bts-tres-shows-sao-paulo-outubro-2026-datas-ingressos/",
+   "obs": "portões 16h"
+  },
+  {
+   "nome": "Corinthians x Mirassol",
+   "local": "Neo Química Arena",
+   "endereco": "Av. Miguel Ignácio Curi, 111, Artur Alvim, São Paulo",
+   "data": "2026-10-30",
+   "inicio": "20:00",
+   "regra": "futebol",
+   "publico_estimado": 40000,
+   "fonte": "https://tribunadejundiai.com.br/mais/esportes/corinthians-veja-os-detalhes-de-4-rodadas-definidas-pela-cbf/"
+  },
+  {
+   "nome": "Jorja Smith",
+   "local": "Espaço Unimed",
+   "endereco": "Rua Tagipuru, 795, Barra Funda, São Paulo",
+   "data": "2026-10-30",
+   "inicio": "20:00",
+   "regra": "abertura",
+   "publico_estimado": 8000,
+   "fonte": "https://www.eventworld.com/jorja-smith-sao-paulo-tickets-30-10-2026/event/439507",
+   "obs": "horário estimado (página sem horário)"
+  },
+  {
+   "nome": "Paulo Miklos",
+   "local": "Tokio Marine Hall",
+   "endereco": "Rua Bragança Paulista, 1281, Santo Amaro, São Paulo",
+   "data": "2026-10-30",
+   "inicio": "20:00",
+   "regra": "abertura",
+   "publico_estimado": 3500,
+   "fonte": "https://cadernopop.com.br/confira-a-agenda-de-shows-de-outubro-de-2026-em-sao-paulo/",
+   "obs": "horário estimado (página sem horário)"
+  },
+  {
+   "nome": "OBMJazz – Jamaica 2.0",
+   "local": "Blue Note São Paulo",
+   "endereco": "Av. Paulista, 2073, Conjunto Nacional, Consolação, São Paulo",
+   "data": "2026-10-30",
+   "inicio": "20:00",
+   "regra": "show",
+   "publico_estimado": 300,
+   "fonte": "https://cadernopop.com.br/confira-a-agenda-de-shows-de-outubro-de-2026-em-sao-paulo/"
+  },
+  {
+   "nome": "Halloween Parte 1 – Safa Baile",
+   "local": "Picles",
+   "endereco": "Rua Cardeal Arcoverde, 1838, Pinheiros, São Paulo",
+   "data": "2026-10-30",
+   "inicio": "20:00",
+   "fim": "04:30",
+   "regra": "festa",
+   "publico_estimado": 400,
+   "fonte": "https://shotgun.live/en/events/safa-baile-2026-10-30"
+  },
+  {
+   "nome": "Alegría – Cirque du Soleil",
+   "local": "Parque Villa-Lobos (tenda)",
+   "endereco": "Av. Prof. Fonseca Rodrigues, 2001, Alto de Pinheiros, São Paulo",
+   "data": "2026-10-30",
+   "inicio": "20:00",
+   "regra": "teatro",
+   "publico_estimado": 2500,
+   "fonte": "https://vivaacidadenews.com.br/dicas/musicais-em-sp-outubro-2026/"
+  },
+  {
+   "nome": "Feliz Ano Velho (musical)",
+   "local": "Teatro Sabesp Frei Caneca",
+   "endereco": "Rua Frei Caneca, 569, Consolação, São Paulo",
+   "data": "2026-10-30",
+   "inicio": "20:00",
+   "regra": "teatro",
+   "publico_estimado": 600,
+   "fonte": "https://vivaacidadenews.com.br/dicas/musicais-em-sp-outubro-2026/"
+  },
+  {
+   "nome": "Meu Deus!",
+   "local": "Teatro das Artes (Shopping Eldorado)",
+   "endereco": "Av. Rebouças, 3970, Pinheiros, São Paulo",
+   "data": "2026-10-30",
+   "inicio": "20:00",
+   "regra": "teatro",
+   "publico_estimado": 750,
+   "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/"
+  },
+  {
+   "nome": "Arlequim, Servidor de Dois Patrões",
+   "local": "Sesc Bom Retiro",
+   "endereco": "Alameda Nothmann, 185, Campos Elíseos, São Paulo",
+   "data": "2026-10-30",
+   "inicio": "20:00",
+   "regra": "teatro",
+   "publico_estimado": 300,
+   "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/"
+  },
+  {
+   "nome": "Sopro",
+   "local": "Sesc 14 Bis",
+   "endereco": "Rua Dr. Plínio Barreto, 285, Bela Vista, São Paulo",
+   "data": "2026-10-30",
+   "inicio": "20:00",
+   "regra": "teatro",
+   "publico_estimado": 300,
+   "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/"
+  },
+  {
+   "nome": "Dois Papas",
+   "local": "TUCA",
+   "endereco": "Rua Monte Alegre, 1024, Perdizes, São Paulo",
+   "data": "2026-10-30",
+   "inicio": "20:00",
+   "regra": "teatro",
+   "publico_estimado": 670,
+   "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/"
+  },
+  {
+   "nome": "Eu Sou Minha Própria Mulher",
+   "local": "Teatro FAAP",
+   "endereco": "Rua Alagoas, 903, Higienópolis, São Paulo",
+   "data": "2026-10-30",
+   "inicio": "20:00",
+   "regra": "teatro",
+   "publico_estimado": 500,
+   "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/"
+  },
+  {
+   "nome": "Trilogia para a Vida",
+   "local": "Teatro Ruth Escobar",
+   "endereco": "Rua dos Ingleses, 209, Bela Vista, São Paulo",
+   "data": "2026-10-30",
+   "inicio": "20:30",
+   "regra": "teatro",
+   "publico_estimado": 150,
+   "fonte": "https://vivaacidadenews.com.br/dicas/musicais-em-sp-outubro-2026/"
+  },
+  {
+   "nome": "Pussycat Dolls + Pabllo Vittar",
+   "local": "Nubank Parque",
+   "endereco": "Av. Francisco Matarazzo, 1705, Água Branca, São Paulo",
+   "data": "2026-10-30",
+   "inicio": "21:00",
+   "regra": "show",
+   "publico_estimado": 40000,
+   "fonte": "https://catracalivre.com.br/gira/pussycat-dolls-faz-1o-show-no-brasil-com-abertura-de-pabllo-vittar-em-sao-paulo/",
+   "obs": "portões 17h; horário do show estimado"
+  },
+  {
+   "nome": "Um Dia Muito Especial",
+   "local": "Teatro Renaissance",
+   "endereco": "Alameda Santos, 2233, Jardim Paulista, São Paulo",
+   "data": "2026-10-30",
+   "inicio": "21:30",
+   "regra": "teatro",
+   "publico_estimado": 450,
+   "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/"
+  },
+  {
+   "nome": "Lauana Prado",
+   "local": "Villa Country",
+   "endereco": "Av. Francisco Matarazzo, 774, Água Branca, São Paulo",
+   "data": "2026-10-30",
+   "inicio": "22:00",
+   "regra": "abertura",
+   "publico_estimado": 6000,
+   "fonte": "https://www.eventworld.com/lauana-prado-sao-paulo-tickets-30-10-2026/event/483323",
+   "obs": "horário estimado (página sem horário)"
+  },
+  {
+   "nome": "RS Experience – Tributo Rolling Stones",
+   "local": "Blue Note São Paulo",
+   "endereco": "Av. Paulista, 2073, Conjunto Nacional, Consolação, São Paulo",
+   "data": "2026-10-30",
+   "inicio": "22:30",
+   "regra": "show",
+   "publico_estimado": 300,
+   "fonte": "https://cadernopop.com.br/confira-a-agenda-de-shows-de-outubro-de-2026-em-sao-paulo/"
+  },
+  {
+   "nome": "Vanguart Acústico",
+   "local": "Blue Note São Paulo",
+   "endereco": "Av. Paulista, 2073, Conjunto Nacional, Consolação, São Paulo",
+   "data": "2026-10-30",
+   "inicio": "22:30",
+   "regra": "show",
+   "publico_estimado": 300,
+   "fonte": "https://cadernopop.com.br/confira-a-agenda-de-shows-de-outubro-de-2026-em-sao-paulo/"
+  },
+  {
+   "nome": "Freak Chic (Goes, Halfcab, Sterium, Viot)",
+   "local": "D-Edge",
+   "endereco": "Av. Auro Soares de Moura Andrade, 141, Barra Funda, São Paulo",
+   "data": "2026-10-30",
+   "inicio": "23:59",
+   "fim": "08:00",
+   "regra": "festa",
+   "publico_estimado": 800,
+   "fonte": "https://de.ra.co/events/2557371"
+  },
+  {
+   "nome": "The Rasmus",
+   "local": "Carioca Club",
+   "endereco": "Rua Cardeal Arcoverde, 2899, Pinheiros, São Paulo",
+   "data": "2026-10-31",
+   "inicio": "17:00",
+   "regra": "abertura",
+   "publico_estimado": 1500,
+   "fonte": "https://billboard.com.br/the-rasmus-brasil-2026/"
+  },
+  {
+   "nome": "Feliz Ano Velho (musical)",
+   "local": "Teatro Sabesp Frei Caneca",
+   "endereco": "Rua Frei Caneca, 569, Consolação, São Paulo",
+   "data": "2026-10-31",
+   "inicio": "17:00",
+   "regra": "teatro",
+   "publico_estimado": 600,
+   "fonte": "https://vivaacidadenews.com.br/dicas/musicais-em-sp-outubro-2026/"
+  },
+  {
+   "nome": "Imagina na Adolescência",
+   "local": "Teatro Multiplan MorumbiShopping",
+   "endereco": "Av. Roque Petroni Júnior, 1089, Jardim das Acácias, São Paulo",
+   "data": "2026-10-31",
+   "inicio": "17:00",
+   "regra": "teatro",
+   "publico_estimado": 900,
+   "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/"
+  },
+  {
+   "nome": "A Wilhelm Scream + MakeWar",
+   "local": "Hangar 110",
+   "endereco": "Rua Rodolfo Miranda, 110, Bom Retiro, São Paulo",
+   "data": "2026-10-31",
+   "inicio": "18:00",
+   "regra": "abertura",
+   "publico_estimado": 800,
+   "fonte": "https://www.songkick.com/pt/venues/31661-hangar-110",
+   "obs": "horário estimado (página sem horário)"
+  },
+  {
+   "nome": "Mande Notícias do Mundo de Lá",
+   "local": "Teatro Renaissance",
+   "endereco": "Alameda Santos, 2233, Jardim Paulista, São Paulo",
+   "data": "2026-10-31",
+   "inicio": "19:00",
+   "regra": "teatro",
+   "publico_estimado": 450,
+   "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/"
+  },
+  {
+   "nome": "BTS – Arirang Tour",
+   "local": "MorumBIS",
+   "endereco": "Praça Roberto Gomes Pedrosa, 1, Morumbi, São Paulo",
+   "data": "2026-10-31",
+   "inicio": "20:00",
+   "regra": "show",
+   "publico_estimado": 65000,
+   "fonte": "https://agitomax.com.br/shows/bts-tres-shows-sao-paulo-outubro-2026-datas-ingressos/",
+   "obs": "portões 16h"
+  },
+  {
+   "nome": "Zeca Pagodinho, Alcione e Jorge Aragão",
+   "local": "Nubank Parque",
+   "endereco": "Av. Francisco Matarazzo, 1705, Água Branca, São Paulo",
+   "data": "2026-10-31",
+   "inicio": "20:00",
+   "regra": "show",
+   "publico_estimado": 45000,
+   "fonte": "https://billboard.com.br/maior-encontro-do-samba-itens-horarios/",
+   "obs": "horário estimado pelas datas de junho (show 20h)"
+  },
+  {
+   "nome": "Toody Cole",
+   "local": "Cine Joia",
+   "endereco": "Praça Carlos Gomes, 82, Liberdade, São Paulo",
+   "data": "2026-10-31",
+   "inicio": "20:00",
+   "regra": "abertura",
+   "publico_estimado": 900,
+   "fonte": "https://songkick.com/pt/venues/1539788-cine-joia",
+   "obs": "horário estimado (página sem horário)"
+  },
+  {
+   "nome": "Tears for Fears Experience",
+   "local": "Blue Note São Paulo",
+   "endereco": "Av. Paulista, 2073, Conjunto Nacional, Consolação, São Paulo",
+   "data": "2026-10-31",
+   "inicio": "20:00",
+   "regra": "show",
+   "publico_estimado": 300,
+   "fonte": "https://cadernopop.com.br/confira-a-agenda-de-shows-de-outubro-de-2026-em-sao-paulo/"
+  },
+  {
+   "nome": "Todo Mundo em Pânico – Nina Hit Halloween",
+   "local": "Picles",
+   "endereco": "Rua Cardeal Arcoverde, 1838, Pinheiros, São Paulo",
+   "data": "2026-10-31",
+   "inicio": "20:00",
+   "fim": "04:30",
+   "regra": "festa",
+   "publico_estimado": 400,
+   "fonte": "https://shotgun.live/en/events/dj-nina-hit-halloween-2026-10-31"
+  },
+  {
+   "nome": "Alegría – Cirque du Soleil",
+   "local": "Parque Villa-Lobos (tenda)",
+   "endereco": "Av. Prof. Fonseca Rodrigues, 2001, Alto de Pinheiros, São Paulo",
+   "data": "2026-10-31",
+   "inicio": "20:00",
+   "regra": "teatro",
+   "publico_estimado": 2500,
+   "fonte": "https://vivaacidadenews.com.br/dicas/musicais-em-sp-outubro-2026/"
+  },
+  {
+   "nome": "Feliz Ano Velho (musical)",
+   "local": "Teatro Sabesp Frei Caneca",
+   "endereco": "Rua Frei Caneca, 569, Consolação, São Paulo",
+   "data": "2026-10-31",
+   "inicio": "20:00",
+   "regra": "teatro",
+   "publico_estimado": 600,
+   "fonte": "https://vivaacidadenews.com.br/dicas/musicais-em-sp-outubro-2026/"
+  },
+  {
+   "nome": "Meu Deus!",
+   "local": "Teatro das Artes (Shopping Eldorado)",
+   "endereco": "Av. Rebouças, 3970, Pinheiros, São Paulo",
+   "data": "2026-10-31",
+   "inicio": "20:00",
+   "regra": "teatro",
+   "publico_estimado": 750,
+   "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/"
+  },
+  {
+   "nome": "Arlequim, Servidor de Dois Patrões",
+   "local": "Sesc Bom Retiro",
+   "endereco": "Alameda Nothmann, 185, Campos Elíseos, São Paulo",
+   "data": "2026-10-31",
+   "inicio": "20:00",
+   "regra": "teatro",
+   "publico_estimado": 300,
+   "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/"
+  },
+  {
+   "nome": "Drácula",
+   "local": "Espaço Parlapatões",
+   "endereco": "Praça Franklin Roosevelt, 158, Consolação, São Paulo",
+   "data": "2026-10-31",
+   "inicio": "20:00",
+   "regra": "teatro",
+   "publico_estimado": 100,
+   "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/"
+  },
+  {
+   "nome": "Sopro",
+   "local": "Sesc 14 Bis",
+   "endereco": "Rua Dr. Plínio Barreto, 285, Bela Vista, São Paulo",
+   "data": "2026-10-31",
+   "inicio": "20:00",
+   "regra": "teatro",
+   "publico_estimado": 300,
+   "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/"
+  },
+  {
+   "nome": "Dois Papas",
+   "local": "TUCA",
+   "endereco": "Rua Monte Alegre, 1024, Perdizes, São Paulo",
+   "data": "2026-10-31",
+   "inicio": "20:00",
+   "regra": "teatro",
+   "publico_estimado": 670,
+   "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/"
+  },
+  {
+   "nome": "Eu Sou Minha Própria Mulher",
+   "local": "Teatro FAAP",
+   "endereco": "Rua Alagoas, 903, Higienópolis, São Paulo",
+   "data": "2026-10-31",
+   "inicio": "20:00",
+   "regra": "teatro",
+   "publico_estimado": 500,
+   "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/"
+  },
+  {
+   "nome": "Escola Modelo",
+   "local": "iBT – Instituto Brasileiro de Teatro",
+   "endereco": "Av. Brigadeiro Luís Antônio, 277, Bela Vista, São Paulo",
+   "data": "2026-10-31",
+   "inicio": "20:00",
+   "regra": "teatro",
+   "publico_estimado": 100,
+   "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/"
+  },
+  {
+   "nome": "Trilogia para a Vida",
+   "local": "Teatro Ruth Escobar",
+   "endereco": "Rua dos Ingleses, 209, Bela Vista, São Paulo",
+   "data": "2026-10-31",
+   "inicio": "20:30",
+   "regra": "teatro",
+   "publico_estimado": 150,
+   "fonte": "https://vivaacidadenews.com.br/dicas/musicais-em-sp-outubro-2026/"
+  },
+  {
+   "nome": "Um Dia Muito Especial",
+   "local": "Teatro Renaissance",
+   "endereco": "Alameda Santos, 2233, Jardim Paulista, São Paulo",
+   "data": "2026-10-31",
+   "inicio": "21:00",
+   "regra": "teatro",
+   "publico_estimado": 450,
+   "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/"
+  },
+  {
+   "nome": "Elton John Diamonds – Mizinho Carvalho",
+   "local": "Blue Note São Paulo",
+   "endereco": "Av. Paulista, 2073, Conjunto Nacional, Consolação, São Paulo",
+   "data": "2026-10-31",
+   "inicio": "22:30",
+   "regra": "show",
+   "publico_estimado": 300,
+   "fonte": "https://cadernopop.com.br/confira-a-agenda-de-shows-de-outubro-de-2026-em-sao-paulo/"
+  },
+  {
+   "nome": "Mande Notícias do Mundo de Lá",
+   "local": "Teatro Renaissance",
+   "endereco": "Alameda Santos, 2233, Jardim Paulista, São Paulo",
+   "data": "2026-11-01",
+   "inicio": "17:00",
+   "regra": "teatro",
+   "publico_estimado": 450,
+   "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/"
+  },
+  {
+   "nome": "Meu Deus!",
+   "local": "Teatro das Artes (Shopping Eldorado)",
+   "endereco": "Av. Rebouças, 3970, Pinheiros, São Paulo",
+   "data": "2026-11-01",
+   "inicio": "17:00",
+   "regra": "teatro",
+   "publico_estimado": 750,
+   "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/"
+  },
+  {
+   "nome": "Imagina na Adolescência",
+   "local": "Teatro Multiplan MorumbiShopping",
+   "endereco": "Av. Roque Petroni Júnior, 1089, Jardim das Acácias, São Paulo",
+   "data": "2026-11-01",
+   "inicio": "17:00",
+   "regra": "teatro",
+   "publico_estimado": 900,
+   "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/"
+  },
+  {
+   "nome": "Eu Sou Minha Própria Mulher",
+   "local": "Teatro FAAP",
+   "endereco": "Rua Alagoas, 903, Higienópolis, São Paulo",
+   "data": "2026-11-01",
+   "inicio": "17:00",
+   "regra": "teatro",
+   "publico_estimado": 500,
+   "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/"
+  },
+  {
+   "nome": "Elymar Santos",
+   "local": "Tokio Marine Hall",
+   "endereco": "Rua Bragança Paulista, 1281, Santo Amaro, São Paulo",
+   "data": "2026-11-01",
+   "inicio": "18:00",
+   "regra": "abertura",
+   "publico_estimado": 3000,
+   "fonte": "https://visitesaopaulo.com/evento/elymar-santos-2026/",
+   "obs": "horário estimado (página sem horário)"
+  },
+  {
+   "nome": "Six Feet Under",
+   "local": "Hangar 110",
+   "endereco": "Rua Rodolfo Miranda, 110, Bom Retiro, São Paulo",
+   "data": "2026-11-01",
+   "inicio": "18:00",
+   "regra": "abertura",
+   "publico_estimado": 800,
+   "fonte": "https://www.wikimetal.com.br/en/six-feet-under-returns-to-brazil-for-its-16th-anniversary-tour/",
+   "obs": "horário estimado (página sem horário)"
+  },
+  {
+   "nome": "Feliz Ano Velho (musical)",
+   "local": "Teatro Sabesp Frei Caneca",
+   "endereco": "Rua Frei Caneca, 569, Consolação, São Paulo",
+   "data": "2026-11-01",
+   "inicio": "18:00",
+   "regra": "teatro",
+   "publico_estimado": 600,
+   "fonte": "https://vivaacidadenews.com.br/dicas/musicais-em-sp-outubro-2026/"
+  },
+  {
+   "nome": "Arlequim, Servidor de Dois Patrões",
+   "local": "Sesc Bom Retiro",
+   "endereco": "Alameda Nothmann, 185, Campos Elíseos, São Paulo",
+   "data": "2026-11-01",
+   "inicio": "18:00",
+   "regra": "teatro",
+   "publico_estimado": 300,
+   "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/"
+  },
+  {
+   "nome": "Sopro",
+   "local": "Sesc 14 Bis",
+   "endereco": "Rua Dr. Plínio Barreto, 285, Bela Vista, São Paulo",
+   "data": "2026-11-01",
+   "inicio": "18:00",
+   "regra": "teatro",
+   "publico_estimado": 300,
+   "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/"
+  },
+  {
+   "nome": "TR/ST",
+   "local": "Cine Joia",
+   "endereco": "Praça Carlos Gomes, 82, Liberdade, São Paulo",
+   "data": "2026-11-01",
+   "inicio": "19:00",
+   "fim": "23:00",
+   "regra": "abertura",
+   "publico_estimado": 900,
+   "fonte": "https://shotgun.live/en/events/tr-st-em-sao-paulo"
+  },
+  {
+   "nome": "Alegría – Cirque du Soleil",
+   "local": "Parque Villa-Lobos (tenda)",
+   "endereco": "Av. Prof. Fonseca Rodrigues, 2001, Alto de Pinheiros, São Paulo",
+   "data": "2026-11-01",
+   "inicio": "19:00",
+   "regra": "teatro",
+   "publico_estimado": 2500,
+   "fonte": "https://vivaacidadenews.com.br/dicas/musicais-em-sp-outubro-2026/"
+  },
+  {
+   "nome": "Um Dia Muito Especial",
+   "local": "Teatro Renaissance",
+   "endereco": "Alameda Santos, 2233, Jardim Paulista, São Paulo",
+   "data": "2026-11-01",
+   "inicio": "19:00",
+   "regra": "teatro",
+   "publico_estimado": 450,
+   "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/"
+  },
+  {
+   "nome": "Drácula",
+   "local": "Espaço Parlapatões",
+   "endereco": "Praça Franklin Roosevelt, 158, Consolação, São Paulo",
+   "data": "2026-11-01",
+   "inicio": "19:00",
+   "regra": "teatro",
+   "publico_estimado": 100,
+   "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/"
+  },
+  {
+   "nome": "Escola Modelo",
+   "local": "iBT – Instituto Brasileiro de Teatro",
+   "endereco": "Av. Brigadeiro Luís Antônio, 277, Bela Vista, São Paulo",
+   "data": "2026-11-01",
+   "inicio": "19:00",
+   "regra": "teatro",
+   "publico_estimado": 100,
+   "fonte": "https://catracalivre.com.br/gira/guia-de-teatro-em-sp/"
+  },
+  {
+   "nome": "Ronnie Wood",
+   "local": "Espaço Unimed",
+   "endereco": "Rua Tagipuru, 795, Barra Funda, São Paulo",
+   "data": "2026-11-01",
+   "inicio": "20:00",
+   "regra": "abertura",
+   "publico_estimado": 7000,
+   "fonte": "https://billboard.com.br/ronnie-wood-como-comprar-ingresso-sp/",
+   "obs": "horário estimado (página sem horário)"
+  },
+  {
+   "nome": "Trilogia para a Vida",
+   "local": "Teatro Ruth Escobar",
+   "endereco": "Rua dos Ingleses, 209, Bela Vista, São Paulo",
+   "data": "2026-11-01",
+   "inicio": "20:30",
+   "regra": "teatro",
+   "publico_estimado": 150,
+   "fonte": "https://vivaacidadenews.com.br/dicas/musicais-em-sp-outubro-2026/"
+  }
+ ]
+}
