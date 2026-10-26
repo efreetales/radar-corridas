@@ -1,5 +1,5 @@
 {
- "gerado_em": "2026-10-26T09:06:48-03:00",
+ "gerado_em": "2026-10-26T13:04:34-03:00",
  "data": "2026-10-26",
  "observacao": "Gerado automaticamente (Ticket360, Sympla e revisão semanal). Saída estimada pelas regras de tools/casas.json.",
  "eventos": [
@@ -178,10 +178,26 @@
    "regra": "festa",
    "lat": -23.567372,
    "lng": -46.698418
+  },
+  {
+   "nome": "FORRÓ DA VITÓRIA - FAZ O L P@RR&",
+   "local": "Canto da Ema",
+   "endereco": "Avenida Brigadeiro Faria Lima, São Paulo",
+   "tipo": "festa",
+   "data": "2026-10-26",
+   "inicio": "21:00",
+   "fim_estimado": "01:30",
+   "incerteza_min": 120,
+   "publico_estimado": null,
+   "fonte": "https://www.sympla.com.br/evento/forro-da-vitoria-faz-o-l-p-rr/3631686",
+   "origem": "sympla",
+   "regra": "festa",
+   "lat": -23.561955,
+   "lng": -46.694941
   }
  ],
  "geocodificacao": {
-  "com_local": 11,
+  "com_local": 12,
   "sem_local": 0
  }
 }
