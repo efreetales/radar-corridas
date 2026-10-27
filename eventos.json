@@ -1,5 +1,5 @@
 {
- "gerado_em": "2026-10-27T12:18:17-03:00",
+ "gerado_em": "2026-10-27T19:55:00-03:00",
  "data": "2026-10-27",
  "observacao": "Gerado automaticamente (Ticket360, Sympla e revisão semanal). Saída estimada pelas regras de tools/casas.json.",
  "eventos": [
@@ -100,22 +100,6 @@
    "lng": -46.69228
   },
   {
-   "nome": "High Sales Ticket: venda valor, defenda sua tese",
-   "local": "Condomínio On Paulista",
-   "endereco": "Viaduto Santa Generosa, São Paulo",
-   "tipo": "show",
-   "data": "2026-10-27",
-   "inicio": "18:30",
-   "fim_estimado": "19:20",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/high-sales-ticket-venda-valor-defenda-sua-tese/3604223",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.575886,
-   "lng": -46.641482
-  },
-  {
    "nome": "Aniversário de 6 anos Forró Na House",
    "local": "Loirão Bar",
    "endereco": "Rua Lucas de Freitas de Azevedo, Jardim São Paulo, São Paulo",
@@ -210,22 +194,6 @@
    "regra": "festa",
    "lat": -23.550291,
    "lng": -46.634189
-  },
-  {
-   "nome": "Diego Oliveira",
-   "local": "Casa de Francisca",
-   "endereco": "R. Quintino Bocaiúva,22 - 1º andar, São Paulo",
-   "tipo": "show",
-   "data": "2026-10-27",
-   "inicio": "19:30",
-   "fim_estimado": "21:15",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://bileto.sympla.com.br/event/127658",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.548776,
-   "lng": -46.634712
   },
   {
    "nome": "2º AutoMotor Experience",
@@ -565,7 +533,7 @@
   }
  ],
  "geocodificacao": {
-  "com_local": 35,
+  "com_local": 33,
   "sem_local": 0
  }
 }

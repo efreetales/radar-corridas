@@ -2,4 +2,4 @@ OK    Thales Lion Farmer toca Santana | Conjunto Nacional, 2073, Avenida Paulist
 OK    O Ovo e a Galinha | Teatro Oficina, 520, Rua Jaceguaí, República, São Paulo, Região Sudest
 OK    Trilogia para a Vida | Teatro Ruth Escobar, 209, Rua dos Ingleses, Morro dos Ingleses, Bela V
 OK    Iron Maiden (Alter Bridge 19h10) | 1705, Avenida Francisco Matarazzo, Barra Funda, São Paulo, Região Sude
-com local: 35  sem local: 0
+com local: 33  sem local: 0
