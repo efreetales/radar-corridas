@@ -1,5 +1,5 @@
 {
- "gerado_em": "2026-10-28T12:57:16-03:00",
+ "gerado_em": "2026-10-28T20:07:05-03:00",
  "data": "2026-10-28",
  "observacao": "Gerado automaticamente (Ticket360, Sympla e revisão semanal). Saída estimada pelas regras de tools/casas.json.",
  "eventos": [
@@ -84,6 +84,22 @@
    "lng": -46.696046
   },
   {
+   "nome": "Casa del Burlesque",
+   "local": "Drosophyla Bar",
+   "endereco": "Rua Nestor Pestana, São Paulo",
+   "tipo": "show",
+   "data": "2026-10-28",
+   "inicio": "17:25",
+   "fim_estimado": "19:10",
+   "incerteza_min": 45,
+   "publico_estimado": null,
+   "fonte": "https://www.sympla.com.br/evento/casa-del-burlesque/3613522",
+   "origem": "sympla",
+   "regra": "show",
+   "lat": -23.549072,
+   "lng": -46.645272
+  },
+  {
    "nome": "Raven Vinyl Club: Especial de Halloween",
    "local": "The Raven Music Bar",
    "endereco": "Rua Wisard, Vila Madalena, São Paulo",
@@ -162,38 +178,6 @@
    "regra": "show",
    "lat": -23.636913,
    "lng": -46.639925
-  },
-  {
-   "nome": "Quinteto no Mercadão de SP",
-   "local": "Mercado Municipal de São Paulo",
-   "endereco": "Rua da Cantareira, 306, São Paulo",
-   "tipo": "show",
-   "data": "2026-10-28",
-   "inicio": "19:00",
-   "fim_estimado": "20:45",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.ticket360.com.br/evento/34265/ingressos-para-quinteto-no-mercadao-de-sp",
-   "origem": "ticket360",
-   "regra": "show",
-   "lat": -23.540772,
-   "lng": -46.629153
-  },
-  {
-   "nome": "Dexa no Gelo - RAFFA MOREIRA",
-   "local": "Gelo & Limão Bar",
-   "endereco": "Rua Jequirituba, São Paulo",
-   "tipo": "show",
-   "data": "2026-10-28",
-   "inicio": "19:00",
-   "fim_estimado": "01:00",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/dexa-no-gelo-raffa-moreira/3621748",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.735308,
-   "lng": -46.6889
   },
   {
    "nome": "Noite Mexicana - Hotel Meliá Paulista - 28/10",
@@ -290,6 +274,22 @@
    "regra": "show",
    "lat": -23.557925,
    "lng": -46.650448
+  },
+  {
+   "nome": "'Eu Também sou Médico - Por Bruno Baroni e Thaisa Damous'",
+   "local": "Teatro Mooca",
+   "endereco": "Rua Capitão Pacheco e Chaves,313, São Paulo",
+   "tipo": "teatro",
+   "data": "2026-10-28",
+   "inicio": "20:00",
+   "fim_estimado": "22:00",
+   "incerteza_min": 30,
+   "publico_estimado": null,
+   "fonte": "https://bileto.sympla.com.br/event/126841",
+   "origem": "sympla",
+   "regra": "teatro",
+   "lat": -23.579747,
+   "lng": -46.596554
   },
   {
    "nome": "O Baile dos Bocadas no Canto da Ema",
@@ -418,22 +418,6 @@
    "regra": "teatro",
    "lat": -23.535552,
    "lng": -46.645724
-  },
-  {
-   "nome": "ESPETÁCULO ABBA & ELVIS",
-   "local": "Teatro Fernando Torres",
-   "endereco": "Rua Padre Estevão Pernet, 588, São Paulo",
-   "tipo": "teatro",
-   "data": "2026-10-28",
-   "inicio": "20:00",
-   "fim_estimado": "22:00",
-   "incerteza_min": 30,
-   "publico_estimado": null,
-   "fonte": "https://bileto.sympla.com.br/event/124539",
-   "origem": "sympla",
-   "regra": "teatro",
-   "lat": -23.541959,
-   "lng": -46.567142
   },
   {
    "nome": "Seja quem F(l)or",
@@ -725,7 +709,7 @@
   }
  ],
  "geocodificacao": {
-  "com_local": 45,
+  "com_local": 44,
   "sem_local": 0
  }
 }
