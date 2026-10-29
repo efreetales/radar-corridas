@@ -1,5 +1,5 @@
 {
- "gerado_em": "2026-10-29T13:01:48-03:00",
+ "gerado_em": "2026-10-29T20:13:50-03:00",
  "data": "2026-10-29",
  "observacao": "Gerado automaticamente (Ticket360, Sympla e revisão semanal). Saída estimada pelas regras de tools/casas.json.",
  "eventos": [
@@ -185,7 +185,7 @@
    "endereco": "Rua Cardeal Leme, Bela Vista, São Paulo",
    "tipo": "teatro",
    "data": "2026-10-29",
-   "inicio": "19:00",
+   "inicio": "19:15",
    "fim_estimado": "23:00",
    "incerteza_min": 45,
    "publico_estimado": null,
@@ -194,22 +194,6 @@
    "regra": "teatro",
    "lat": -23.559377,
    "lng": -46.648968
-  },
-  {
-   "nome": "CORRE ESPECIAL - Runlloween 29/10/2026",
-   "local": "Beer4U Pinheiros",
-   "endereco": "Rua João Moura, Pinheiros, São Paulo",
-   "tipo": "show",
-   "data": "2026-10-29",
-   "inicio": "19:00",
-   "fim_estimado": "23:00",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/corre-especial-runlloween-29-10-2026/3595475",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.560236,
-   "lng": -46.678025
   },
   {
    "nome": "Por Trás da Coroa",
@@ -260,6 +244,22 @@
    "lng": -46.683498
   },
   {
+   "nome": "Epifania no TEATRO ESTÚDIO",
+   "local": "Teatro Estúdio",
+   "endereco": "R. Conselheiro Nébias,891, São Paulo",
+   "tipo": "teatro",
+   "data": "2026-10-29",
+   "inicio": "20:00",
+   "fim_estimado": "22:00",
+   "incerteza_min": 30,
+   "publico_estimado": null,
+   "fonte": "https://bileto.sympla.com.br/event/127008",
+   "origem": "sympla",
+   "regra": "teatro",
+   "lat": -23.535552,
+   "lng": -46.645724
+  },
+  {
    "nome": "2º AutoMotor Experience",
    "local": "Shopping Vila Olimpia",
    "endereco": "Rua Olimpíadas, 360, São Paulo",
@@ -274,22 +274,6 @@
    "regra": "show",
    "lat": -23.595126,
    "lng": -46.686396
-  },
-  {
-   "nome": "FRED ELBONI Tenha Coragem Para Ser Quem Você É",
-   "local": "TEATRO BDO JARAGUÁ",
-   "endereco": "Rua Martins Fontes,71 - CENTRO(metrô Anhang), São Paulo",
-   "tipo": "teatro",
-   "data": "2026-10-29",
-   "inicio": "20:00",
-   "fim_estimado": "22:00",
-   "incerteza_min": 30,
-   "publico_estimado": null,
-   "fonte": "https://bileto.sympla.com.br/event/125101",
-   "origem": "sympla",
-   "regra": "teatro",
-   "lat": -23.548567,
-   "lng": -46.645664
   },
   {
    "nome": "Percy Jackson – O Ladrão de Raios: O Musical",
@@ -322,22 +306,6 @@
    "regra": "teatro",
    "lat": -23.592931,
    "lng": -46.693951
-  },
-  {
-   "nome": "BOFETADA - QUINTA SEM VERGONHA feat CABARÉ DA KENIA - OPEN BAR 29/10/2",
-   "local": "Bofetada club",
-   "endereco": "Rua Peixoto Gomide, Jardim Paulista, São Paulo",
-   "tipo": "show",
-   "data": "2026-10-29",
-   "inicio": "20:00",
-   "fim_estimado": "04:30",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/bofetada-quinta-sem-vergonha-feat-cabare-da-kenia-open-bar-29-10-2026/3630696",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.555085,
-   "lng": -46.655224
   },
   {
    "nome": "CCPC 29/10 QUINTA ROOTS REGGAE E PSYTRANCE das 20h as 5H!",
@@ -482,22 +450,6 @@
    "regra": "festa",
    "lat": -23.611652,
    "lng": -46.667876
-  },
-  {
-   "nome": "Brasil Contemporâneo - Fernando Schuler & Eduardo Giannetti.",
-   "local": "Teatro Iguatemi",
-   "endereco": "Av. Brigadeiro Faria Lima,2232 - 10° Andar, São Paulo",
-   "tipo": "teatro",
-   "data": "2026-10-29",
-   "inicio": "20:00",
-   "fim_estimado": "22:00",
-   "incerteza_min": 30,
-   "publico_estimado": null,
-   "fonte": "https://bileto.sympla.com.br/event/127811",
-   "origem": "sympla",
-   "regra": "teatro",
-   "lat": -23.57704,
-   "lng": -46.690766
   },
   {
    "nome": "Semeador Convida",
@@ -708,6 +660,38 @@
    "lng": -46.646825
   },
   {
+   "nome": "Tributos Novabrasil celebra Cassia Eller com Toni Garrido, Zelia Dunca",
+   "local": "Bourbon Street",
+   "endereco": "Rua dos Chanes, 127, São Paulo",
+   "tipo": "show",
+   "data": "2026-10-29",
+   "inicio": "21:00",
+   "fim_estimado": "22:45",
+   "incerteza_min": 45,
+   "publico_estimado": null,
+   "fonte": "https://bileto.sympla.com.br/event/127966",
+   "origem": "sympla",
+   "regra": "show",
+   "lat": -23.614095,
+   "lng": -46.667509
+  },
+  {
+   "nome": "Quarto 2107 - 2° temporada",
+   "local": "Espaço Parlapatões",
+   "endereco": "Praça Franklin Roosevelt,158, São Paulo",
+   "tipo": "show",
+   "data": "2026-10-29",
+   "inicio": "21:00",
+   "fim_estimado": "22:45",
+   "incerteza_min": 45,
+   "publico_estimado": null,
+   "fonte": "https://bileto.sympla.com.br/event/121985",
+   "origem": "sympla",
+   "regra": "show",
+   "lat": -23.548389,
+   "lng": -46.646793
+  },
+  {
    "nome": "BANDA MANTIQUEIRA (QUINTA 29/OUT/26)",
    "local": "JazzB",
    "endereco": "Rua General Jardim, Vila Buarque, São Paulo",
@@ -772,22 +756,6 @@
    "lng": -46.652939
   },
   {
-   "nome": "Jean Tassy - ACRÔNICO",
-   "local": "Casa Natura Musical",
-   "endereco": "Rua Artur de Azevedo, 2134, São Paulo",
-   "tipo": "show",
-   "data": "2026-10-29",
-   "inicio": "21:00",
-   "fim_estimado": "22:45",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://bileto.sympla.com.br/event/126608",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.567799,
-   "lng": -46.690882
-  },
-  {
    "nome": "Rodrigo Marques - Stand-up Comedy",
    "local": "Clube Barbixas de Comédia",
    "endereco": "Rua Augusta, 1129, São Paulo",
@@ -802,22 +770,6 @@
    "regra": "teatro",
    "lat": -23.554357,
    "lng": -46.655983
-  },
-  {
-   "nome": "Tributos Novabrasil celebra Cassia Eller com Toni Garrido, Zelia Dunca",
-   "local": "Bourbon Street",
-   "endereco": "Rua dos Chanes, 127, São Paulo",
-   "tipo": "show",
-   "data": "2026-10-29",
-   "inicio": "21:30",
-   "fim_estimado": "23:15",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://bileto.sympla.com.br/event/127966",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.614095,
-   "lng": -46.667509
   },
   {
    "nome": "Blue Label Chicago blues night",
@@ -917,7 +869,7 @@
   }
  ],
  "geocodificacao": {
-  "com_local": 57,
+  "com_local": 54,
   "sem_local": 0
  }
 }

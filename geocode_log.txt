@@ -5,4 +5,4 @@ OK    Sopro | SESC 14 Bis, 285, Rua Doutor Plínio Barreto, Bixiga, Bela Vista, 
 OK    Trilogia para a Vida | Teatro Ruth Escobar, 209, Rua dos Ingleses, Morro dos Ingleses, Bela V
 OK    Baile do George, com Cathy Israel | Conjunto Nacional, 2073, Avenida Paulista, Cerqueira César, Consolação
 OK    Dire Straits Experience – Gui Cicarelli | Conjunto Nacional, 2073, Avenida Paulista, Cerqueira César, Consolação
-com local: 57  sem local: 0
+com local: 54  sem local: 0
