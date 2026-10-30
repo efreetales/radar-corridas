@@ -1,5 +1,5 @@
 {
- "gerado_em": "2026-10-30T12:50:45-03:00",
+ "gerado_em": "2026-10-30T19:55:21-03:00",
  "data": "2026-10-30",
  "observacao": "Gerado automaticamente (Ticket360, Sympla e revisão semanal). Saída estimada pelas regras de tools/casas.json.",
  "eventos": [
@@ -164,22 +164,6 @@
    "lng": -46.610567
   },
   {
-   "nome": "Café intelectual",
-   "local": "ARA Restaurante de Sobremesas",
-   "endereco": "Rua Simão Álvares, São Paulo",
-   "tipo": "show",
-   "data": "2026-10-30",
-   "inicio": "17:00",
-   "fim_estimado": "19:00",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/cafe-intelectual/3614148",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.563998,
-   "lng": -46.688758
-  },
-  {
    "nome": "ÀVUÀ e Pedro Emílio | Viva MPB",
    "local": "Memorial da América Latina | Auditório Simón Bolívar",
    "endereco": "Avenida Mário de Andrade, Barra Funda, São Paulo",
@@ -194,6 +178,22 @@
    "regra": "show",
    "lat": -23.526591,
    "lng": -46.664197
+  },
+  {
+   "nome": "Jovem Guarda Tributo",
+   "local": "acre clube",
+   "endereco": "Rua agua comprida, Jardim França, São Paulo",
+   "tipo": "show",
+   "data": "2026-10-30",
+   "inicio": "17:30",
+   "fim_estimado": "19:15",
+   "incerteza_min": 45,
+   "publico_estimado": null,
+   "fonte": "https://www.sympla.com.br/evento/jovem-guarda-tributo/3638907",
+   "origem": "sympla",
+   "regra": "show",
+   "lat": -23.478333,
+   "lng": -46.615767
   },
   {
    "nome": "Halloween no St. Johns pub - Prepare-se para a noite mais sinistra de ",
@@ -290,6 +290,22 @@
    "regra": "show",
    "lat": -23.581457,
    "lng": -46.691832
+  },
+  {
+   "nome": "MIRACULOUS LADYBUG: O SHOW MUSICAL",
+   "local": "Teatro do Shopping Villa Lobos",
+   "endereco": "Av. Dra. Ruth Cardoso ,4777 - 4º andar, São Paulo",
+   "tipo": "teatro",
+   "data": "2026-10-30",
+   "inicio": "19:00",
+   "fim_estimado": "21:00",
+   "incerteza_min": 30,
+   "publico_estimado": null,
+   "fonte": "https://bileto.sympla.com.br/event/122747",
+   "origem": "sympla",
+   "regra": "teatro",
+   "lat": -23.551872,
+   "lng": -46.721986
   },
   {
    "nome": "Seja Luz - Tatuapé",
@@ -580,6 +596,38 @@
    "lng": -46.683498
   },
   {
+   "nome": "Transporte - BTS World Tour em São Paulo | Itaúna Transfer",
+   "local": "Estádio MorumBIS",
+   "endereco": "Praça Roberto Gomes Pedrosa, São Paulo",
+   "tipo": "show",
+   "data": "2026-10-30",
+   "inicio": "19:43",
+   "fim_estimado": "21:28",
+   "incerteza_min": 45,
+   "publico_estimado": null,
+   "fonte": "https://www.sympla.com.br/evento/transporte-bts-world-tour-em-sao-paulo-itauna-transfer/3402762",
+   "origem": "sympla",
+   "regra": "show",
+   "lat": -23.599035,
+   "lng": -46.720336
+  },
+  {
+   "nome": "31/10 - Transporte - BTS World Tour em São Paulo - Itaúna Turismo (Cóp",
+   "local": "Estádio MorumBIS",
+   "endereco": "Praça Roberto Gomes Pedrosa, São Paulo",
+   "tipo": "show",
+   "data": "2026-10-30",
+   "inicio": "19:44",
+   "fim_estimado": "22:00",
+   "incerteza_min": 45,
+   "publico_estimado": null,
+   "fonte": "https://www.sympla.com.br/evento/31-10-transporte-bts-world-tour-em-sao-paulo-itauna-turismo-copia/3284789",
+   "origem": "sympla",
+   "regra": "show",
+   "lat": -23.599035,
+   "lng": -46.720336
+  },
+  {
    "nome": "Sidarta no TEATRO ESTÚDIO",
    "local": "Teatro Estúdio",
    "endereco": "R. Conselheiro Nébias,891, São Paulo",
@@ -610,6 +658,22 @@
    "regra": "teatro",
    "lat": -23.548567,
    "lng": -46.645664
+  },
+  {
+   "nome": "GIL – ANDAR COM FÉ - O MUSICAL",
+   "local": "Teatro Santander",
+   "endereco": "Avenida Presidente Juscelino Kubitschek,2041, São Paulo",
+   "tipo": "teatro",
+   "data": "2026-10-30",
+   "inicio": "20:00",
+   "fim_estimado": "22:00",
+   "incerteza_min": 30,
+   "publico_estimado": null,
+   "fonte": "https://bileto.sympla.com.br/event/115256",
+   "origem": "sympla",
+   "regra": "teatro",
+   "lat": -23.592931,
+   "lng": -46.693951
   },
   {
    "nome": "SPOOKY NIGHT - DIA 01",
@@ -772,22 +836,6 @@
    "lng": -46.68042
   },
   {
-   "nome": "GATO PRETO: HALLOWEEN POCKET SHOW [NANI PORTO]",
-   "local": "Estúdio Mistto",
-   "endereco": "Rua Basílio da Gama, São Paulo",
-   "tipo": "show",
-   "data": "2026-10-30",
-   "inicio": "20:00",
-   "fim_estimado": "23:45",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/gato-preto-halloween-pocket-show-nani-porto/3613824",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.545896,
-   "lng": -46.642464
-  },
-  {
    "nome": "Banda Nautilus",
    "local": "Lá Maior - Espaço Cultural",
    "endereco": "Rua Traipu, Pacaembu, São Paulo",
@@ -884,6 +932,22 @@
    "lng": -46.699085
   },
   {
+   "nome": "GATO PRETO: HALLOWEEN POCKET SHOW [NANI PORTO]",
+   "local": "Estúdio Mistto",
+   "endereco": "Rua Basílio da Gama, São Paulo",
+   "tipo": "show",
+   "data": "2026-10-30",
+   "inicio": "20:00",
+   "fim_estimado": "23:45",
+   "incerteza_min": 45,
+   "publico_estimado": null,
+   "fonte": "https://www.sympla.com.br/evento/gato-preto-halloween-pocket-show-nani-porto/3613824",
+   "origem": "sympla",
+   "regra": "show",
+   "lat": -23.545896,
+   "lng": -46.642464
+  },
+  {
    "nome": "Pedro Salomão em 'Crise Cria Cura'",
    "local": "Teatro Viradalata",
    "endereco": "Rua Apinajés,1387, São Paulo",
@@ -930,6 +994,22 @@
    "regra": "show",
    "lat": -23.624403,
    "lng": -46.699543
+  },
+  {
+   "nome": "O Que Tem na Cozinha",
+   "local": "MoDi Giardino",
+   "endereco": "Dr. Cândido Espinheira, 431, São Paulo",
+   "tipo": "show",
+   "data": "2026-10-30",
+   "inicio": "20:00",
+   "fim_estimado": "21:45",
+   "incerteza_min": 45,
+   "publico_estimado": null,
+   "fonte": "https://bileto.sympla.com.br/event/96122",
+   "origem": "sympla",
+   "regra": "show",
+   "lat": -23.533361,
+   "lng": -46.664069
   },
   {
    "nome": "O Homem Mais Inteligente da História São Paulo/SP",
@@ -1057,8 +1137,8 @@
    "fonte": "https://cadernopop.com.br/confira-a-agenda-de-shows-de-outubro-de-2026-em-sao-paulo/",
    "origem": "semana",
    "regra": "abertura",
-   "lat": -23.64181,
-   "lng": -46.713718,
+   "lat": -23.638213,
+   "lng": -46.719999,
    "local_aproximado": true
   },
   {
@@ -1287,22 +1367,6 @@
    "lng": -46.721077
   },
   {
-   "nome": "IGOR GUIMARÃES - STAND UP DE HUMOR",
-   "local": "Teatro Bor",
-   "endereco": "R. Domingos de Morais,2970, São Paulo",
-   "tipo": "teatro",
-   "data": "2026-10-30",
-   "inicio": "21:00",
-   "fim_estimado": "23:00",
-   "incerteza_min": 30,
-   "publico_estimado": null,
-   "fonte": "https://bileto.sympla.com.br/event/125858",
-   "origem": "sympla",
-   "regra": "teatro",
-   "lat": -23.602395,
-   "lng": -46.637049
-  },
-  {
    "nome": "DIOGO PORTUGAL APRESENTA 'IMPRÓPRIO PARA POLÍTICOS'!",
    "local": "Teatro Mooca",
    "endereco": "Rua Capitão Pacheco e Chaves,313, São Paulo",
@@ -1317,6 +1381,22 @@
    "regra": "teatro",
    "lat": -23.579747,
    "lng": -46.596554
+  },
+  {
+   "nome": "IGOR GUIMARÃES - STAND UP DE HUMOR",
+   "local": "Teatro Bor",
+   "endereco": "R. Domingos de Morais,2970, São Paulo",
+   "tipo": "teatro",
+   "data": "2026-10-30",
+   "inicio": "21:00",
+   "fim_estimado": "23:00",
+   "incerteza_min": 30,
+   "publico_estimado": null,
+   "fonte": "https://bileto.sympla.com.br/event/125858",
+   "origem": "sympla",
+   "regra": "teatro",
+   "lat": -23.602395,
+   "lng": -46.637049
   },
   {
    "nome": "JAZZ POWER TRIO no JazzB (SEXTA 30/OUT/26)",
@@ -1445,6 +1525,22 @@
    "regra": "teatro",
    "lat": -23.581838,
    "lng": -46.588496
+  },
+  {
+   "nome": "Pé Na Estrada - STANDUP COMEDY",
+   "local": "Bixiga Comedy",
+   "endereco": "Rua Rui Barbosa, Bela Vista, São Paulo",
+   "tipo": "teatro",
+   "data": "2026-10-30",
+   "inicio": "21:00",
+   "fim_estimado": "23:00",
+   "incerteza_min": 30,
+   "publico_estimado": null,
+   "fonte": "https://www.sympla.com.br/evento/pe-na-estrada-standup-comedy/3639042",
+   "origem": "sympla",
+   "regra": "teatro",
+   "lat": -23.56063,
+   "lng": -46.645268
   },
   {
    "nome": "ANDRÉ D’LUCCA - HOMENS NÃO PRESTAM - STAND UP COMEDY ZONA LESTE",
@@ -1799,22 +1895,6 @@
    "lng": -46.686507
   },
   {
-   "nome": "ESPECIAL DE HALLOWEEN - WANTED X BAGUNÇA BOA X ÁLCOOLTECEU #MC KAUAN",
-   "local": "DÖHA GASTROBAR",
-   "endereco": "Avenida Washington Luís, São Paulo",
-   "tipo": "show",
-   "data": "2026-10-30",
-   "inicio": "22:00",
-   "fim_estimado": "06:00",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/especial-de-halloween-wanted-x-bagunca-boa-x-alcoolteceu-mc-kauan/3621302",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.65803,
-   "lng": -46.696683
-  },
-  {
    "nome": "HALLOWEEN KAT KLUB - OPEN BAR",
    "local": "Kat Klub",
    "endereco": "Rua Augusta, Consolação, São Paulo",
@@ -2021,6 +2101,22 @@
    "regra": "abertura",
    "lat": -23.528167,
    "lng": -46.67019
+  },
+  {
+   "nome": "CONCURSO DE FANTASIAS",
+   "local": "Praça Marechal Rodrigues Riba Junior",
+   "endereco": "Praça Mal. Rodrigues Riba Junior, Vila Regente Feijó, São Paulo",
+   "tipo": "show",
+   "data": "2026-10-30",
+   "inicio": "22:15",
+   "fim_estimado": "00:00",
+   "incerteza_min": 45,
+   "publico_estimado": null,
+   "fonte": "https://www.sympla.com.br/evento/concurso-de-fantasias/3558392",
+   "origem": "sympla",
+   "regra": "show",
+   "lat": -23.555339,
+   "lng": -46.567432
   },
   {
    "nome": "COMO TE GUSTA EDIÇÃO HALLOWEEN @ LE CLUB",
@@ -2297,7 +2393,7 @@
   }
  ],
  "geocodificacao": {
-  "com_local": 143,
+  "com_local": 149,
   "sem_local": 0
  }
 }

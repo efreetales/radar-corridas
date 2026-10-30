@@ -20,4 +20,4 @@ OK    Lauana Prado | 774, Avenida Francisco Matarazzo, Barra Funda, São Paulo, 
 OK    RS Experience – Tributo Rolling Stones | Conjunto Nacional, 2073, Avenida Paulista, Cerqueira César, Consolação
 OK    Vanguart Acústico | Conjunto Nacional, 2073, Avenida Paulista, Cerqueira César, Consolação
 OK    Freak Chic (Goes, Halfcab, Sterium, Viot | Avenida Auro Soares de Moura Andrade, Barra Funda, São Paulo, Região S
-com local: 143  sem local: 0
+com local: 149  sem local: 0
