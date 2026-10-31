@@ -1,23 +1,22 @@
-OK    Mande Notícias do Mundo de Lá | Renaissance São Paulo Hotel, 2233, Alameda Santos, Cerqueira César, Ja
-OK    MONSTRO – tenho sonhado com homens | Sesc Pompéia, 93, Rua Clélia, Pompéia, Perdizes, São Paulo, Região Sud
-OK    BTS – Arirang Tour | MorumBIS, 1, Praça Roberto Gomes Pedrosa, Morumbi, São Paulo, Região S
-OK    Corinthians x Mirassol | Avenida Miguel Ignácio Curi, Avenida Miguel Inácio Curi, Vila Campanel
-OK    Jorja Smith | Espaço Unimed, 795, Rua Tagipuru, Barra Funda, São Paulo, Região Sudes
-OK    Paulo Miklos | Rua Bragança Paulista, Granja Julieta, Santo Amaro, São Paulo, Região 
-OK    OBMJazz – Jamaica 2.0 | Conjunto Nacional, 2073, Avenida Paulista, Cerqueira César, Consolação
-OK    Halloween Parte 1 – Safa Baile | 1838, Rua Cardeal Arcoverde, Vila Madalena, Pinheiros, São Paulo, Regi
-OK    Alegría – Cirque du Soleil | Avenida Professor Fonseca Rodrigues, Boaçava, Alto de Pinheiros, São P
+OK    The Rasmus | Carioca Club, 2899, Rua Cardeal Arcoverde, Vila Madalena, Pinheiros, S
 OK    Feliz Ano Velho (musical) | Frei Caneca Shopping, 569, Rua Frei Caneca, Consolação, São Paulo, Reg
+OK    Imagina na Adolescência | Morumbi Shopping, 1089, Avenida Roque Petroni Júnior, Chácara Santo An
+OK    A Wilhelm Scream + MakeWar | 110, Rua Rodolfo Miranda, Vila Sá Barbosa, Bom Retiro, São Paulo, Regi
+OK    Mande Notícias do Mundo de Lá | Renaissance São Paulo Hotel, 2233, Alameda Santos, Cerqueira César, Ja
+OK    BTS – Arirang Tour | MorumBIS, 1, Praça Roberto Gomes Pedrosa, Morumbi, São Paulo, Região S
+OK    Zeca Pagodinho, Alcione e Jorge Aragão | 1705, Avenida Francisco Matarazzo, Barra Funda, São Paulo, Região Sude
+OK    Toody Cole | Cine Joia, 82, Praça Carlos Gomes, Glicério, Sé, São Paulo, Região Sud
+OK    Tears for Fears Experience | Conjunto Nacional, 2073, Avenida Paulista, Cerqueira César, Consolação
+OK    Todo Mundo em Pânico – Nina Hit Hallowee | 1838, Rua Cardeal Arcoverde, Vila Madalena, Pinheiros, São Paulo, Regi
+OK    Alegría – Cirque du Soleil | Avenida Professor Fonseca Rodrigues, Boaçava, Alto de Pinheiros, São P
 OK    Meu Deus! | 3970, Avenida Rebouças, Jardim Europa, Pinheiros, São Paulo, Região Su
 OK    Arlequim, Servidor de Dois Patrões | SESC Bom Retiro, 185, Alameda Nothmann, Campos Elísios, Santa Cecília,
+OK    Drácula | 158, Praça Franklin Roosevelt, Vila Buarque, República, São Paulo, Reg
 OK    Sopro | SESC 14 Bis, 285, Rua Doutor Plínio Barreto, Bixiga, Bela Vista, São P
 OK    Dois Papas | Teatro da Universidade Católica, 1024, Rua Monte Alegre, Perdizes, São
 OK    Eu Sou Minha Própria Mulher | Fundação Armando Alvares Penteado, 903, Rua Alagoas, Higienópolis, Con
+OK    Escola Modelo | Avenida Brigadeiro Luís Antônio, Bixiga, Bela Vista, São Paulo, Região
 OK    Trilogia para a Vida | Teatro Ruth Escobar, 209, Rua dos Ingleses, Morro dos Ingleses, Bela V
-OK    Pussycat Dolls + Pabllo Vittar | 1705, Avenida Francisco Matarazzo, Barra Funda, São Paulo, Região Sude
 OK    Um Dia Muito Especial | Renaissance São Paulo Hotel, 2233, Alameda Santos, Cerqueira César, Ja
-OK    Lauana Prado | 774, Avenida Francisco Matarazzo, Barra Funda, São Paulo, Região Sudes
-OK    RS Experience – Tributo Rolling Stones | Conjunto Nacional, 2073, Avenida Paulista, Cerqueira César, Consolação
-OK    Vanguart Acústico | Conjunto Nacional, 2073, Avenida Paulista, Cerqueira César, Consolação
-OK    Freak Chic (Goes, Halfcab, Sterium, Viot | Avenida Auro Soares de Moura Andrade, Barra Funda, São Paulo, Região S
-com local: 149  sem local: 0
+OK    Elton John Diamonds – Mizinho Carvalho | Conjunto Nacional, 2073, Avenida Paulista, Cerqueira César, Consolação
+com local: 180  sem local: 0
