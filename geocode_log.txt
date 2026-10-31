@@ -19,4 +19,4 @@ OK    Escola Modelo | Avenida Brigadeiro Luís Antônio, Bixiga, Bela Vista, Sã
 OK    Trilogia para a Vida | Teatro Ruth Escobar, 209, Rua dos Ingleses, Morro dos Ingleses, Bela V
 OK    Um Dia Muito Especial | Renaissance São Paulo Hotel, 2233, Alameda Santos, Cerqueira César, Ja
 OK    Elton John Diamonds – Mizinho Carvalho | Conjunto Nacional, 2073, Avenida Paulista, Cerqueira César, Consolação
-com local: 180  sem local: 0
+com local: 182  sem local: 0

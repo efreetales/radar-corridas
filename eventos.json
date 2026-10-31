@@ -1,5 +1,5 @@
 {
- "gerado_em": "2026-10-31T12:16:28-03:00",
+ "gerado_em": "2026-10-31T19:24:49-03:00",
  "data": "2026-10-31",
  "observacao": "Gerado automaticamente (Ticket360, Sympla e revisão semanal). Saída estimada pelas regras de tools/casas.json.",
  "eventos": [
@@ -84,20 +84,20 @@
    "lng": -46.592225
   },
   {
-   "nome": "Samba de Caboclo em São Paulo",
-   "local": "CASSASP",
-   "endereco": "Rua Tenente Rocha, Santana, São Paulo",
-   "tipo": "festa",
+   "nome": "Transporte - BTS World Tour em São Paulo | Itaúna Transfer",
+   "local": "Estádio MorumBIS",
+   "endereco": "Praça Roberto Gomes Pedrosa, São Paulo",
+   "tipo": "show",
    "data": "2026-10-31",
-   "inicio": "14:00",
-   "fim_estimado": "21:30",
-   "incerteza_min": 120,
+   "inicio": "13:25",
+   "fim_estimado": "15:10",
+   "incerteza_min": 45,
    "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/samba-de-caboclo-em-sao-paulo/3578452",
+   "fonte": "https://www.sympla.com.br/evento/transporte-bts-world-tour-em-sao-paulo-itauna-transfer/3402762",
    "origem": "sympla",
-   "regra": "festa",
-   "lat": -23.505869,
-   "lng": -46.638385
+   "regra": "show",
+   "lat": -23.599035,
+   "lng": -46.720336
   },
   {
    "nome": "SUMMER HITS no Edifício Martinelli! | 31.10",
@@ -308,6 +308,22 @@
    "lng": -46.707074
   },
   {
+   "nome": "Samba de Caboclo em São Paulo",
+   "local": "CASSASP",
+   "endereco": "Rua Tenente Rocha, Santana, São Paulo",
+   "tipo": "festa",
+   "data": "2026-10-31",
+   "inicio": "16:30",
+   "fim_estimado": "21:30",
+   "incerteza_min": 120,
+   "publico_estimado": null,
+   "fonte": "https://www.sympla.com.br/evento/samba-de-caboclo-em-sao-paulo/3578452",
+   "origem": "sympla",
+   "regra": "festa",
+   "lat": -23.505869,
+   "lng": -46.638385
+  },
+  {
    "nome": "Kizomba Sunset SP | Baile de Kizomba na Vila Mariana, SP",
    "local": "Restaurante Mandem Baobá",
    "endereco": "Rua Capitão Cavalcanti, Vila Mariana, São Paulo",
@@ -452,22 +468,6 @@
    "lng": -46.69492
   },
   {
-   "nome": "Me Ensina a Voar?",
-   "local": "Rua Juventus, 28",
-   "endereco": "Rua Juventus, Parque da Mooca, São Paulo",
-   "tipo": "show",
-   "data": "2026-10-31",
-   "inicio": "17:00",
-   "fim_estimado": "17:50",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/me-ensina-a-voar/3554684",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.568167,
-   "lng": -46.593516
-  },
-  {
    "nome": "Halloween da Bibli!",
    "local": "R. Baronesa de Itu, 639",
    "endereco": "Rua Baronesa de Itu, Santa Cecília, São Paulo",
@@ -596,22 +596,6 @@
    "lng": -46.579692
   },
   {
-   "nome": "O MILAGRE DE SANTA MARIA -EURÍPIDES BARSANULFO",
-   "local": "Teatro Mooca",
-   "endereco": "Rua Capitão Pacheco e Chaves,313, São Paulo",
-   "tipo": "teatro",
-   "data": "2026-10-31",
-   "inicio": "17:30",
-   "fim_estimado": "19:30",
-   "incerteza_min": 30,
-   "publico_estimado": null,
-   "fonte": "https://bileto.sympla.com.br/event/125946",
-   "origem": "sympla",
-   "regra": "teatro",
-   "lat": -23.579747,
-   "lng": -46.596554
-  },
-  {
    "nome": "Halloween do Quintal - Festa ä Fantasia",
    "local": "Quintal 1385",
    "endereco": "Rua Augusta, Consolação, São Paulo",
@@ -642,6 +626,22 @@
    "regra": "show",
    "lat": -23.582593,
    "lng": -46.629741
+  },
+  {
+   "nome": "Museu da Imaginação",
+   "local": "Museu da Imaginação",
+   "endereco": "Rua Virgilio Wey,100, São Paulo",
+   "tipo": "show",
+   "data": "2026-10-31",
+   "inicio": "18:00",
+   "fim_estimado": "19:45",
+   "incerteza_min": 45,
+   "publico_estimado": null,
+   "fonte": "https://bileto.sympla.com.br/event/116303",
+   "origem": "sympla",
+   "regra": "show",
+   "lat": -23.513035,
+   "lng": -46.696046
   },
   {
    "nome": "Mãe Solteita Também Samba - Dose Dupla",
@@ -706,22 +706,6 @@
    "regra": "teatro",
    "lat": -23.689868,
    "lng": -46.715762
-  },
-  {
-   "nome": "[31/10 - 18h] Festival da Sociedade | O espetáculo de comédia mais com",
-   "local": "Sociedade do Humor",
-   "endereco": "Rua Bela Flor, Vila da Saúde, São Paulo",
-   "tipo": "teatro",
-   "data": "2026-10-31",
-   "inicio": "18:00",
-   "fim_estimado": "20:00",
-   "incerteza_min": 30,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/31-10-18h-festival-da-sociedade-o-espetaculo-de-comedia-mais-completo-da-cidade/3633267",
-   "origem": "sympla",
-   "regra": "teatro",
-   "lat": -23.603812,
-   "lng": -46.631789
   },
   {
    "nome": "O Chamado do Forza Meeting - Halloween",
@@ -804,6 +788,22 @@
    "lng": -46.691468
   },
   {
+   "nome": "SESSÃO DE HALLOWEEN | O MENU",
+   "local": "Sky Hall Terrace Bar",
+   "endereco": "Avenida Presidente Juscelino Kubitschek, Vila Nova Conceição, São Paulo",
+   "tipo": "show",
+   "data": "2026-10-31",
+   "inicio": "18:00",
+   "fim_estimado": "02:00",
+   "incerteza_min": 45,
+   "publico_estimado": null,
+   "fonte": "https://www.sympla.com.br/evento/sessao-de-halloween-o-menu/3607706",
+   "origem": "sympla",
+   "regra": "show",
+   "lat": -23.58987,
+   "lng": -46.680245
+  },
+  {
    "nome": "Undernight Edição de Halloween- JohnnyIVXX,Gyp$y, Dchris, DekaMc, Eloy",
    "local": "Rua Tenente Joecyl Camargo da Mota, 157",
    "endereco": "Rua Tenente Joecyl Camargo da Mota, São Paulo",
@@ -884,36 +884,20 @@
    "lng": -46.645724
   },
   {
-   "nome": "Tatá Mendonça em Uma Cega Visionária",
-   "local": "Clube Barbixas de Comédia",
-   "endereco": "Rua Augusta, 1129, São Paulo",
-   "tipo": "show",
+   "nome": "MIRACULOUS LADYBUG: O SHOW MUSICAL",
+   "local": "Teatro do Shopping Villa Lobos",
+   "endereco": "Av. Dra. Ruth Cardoso ,4777 - 4º andar, São Paulo",
+   "tipo": "teatro",
    "data": "2026-10-31",
    "inicio": "19:00",
-   "fim_estimado": "20:45",
-   "incerteza_min": 45,
+   "fim_estimado": "21:00",
+   "incerteza_min": 30,
    "publico_estimado": null,
-   "fonte": "https://bileto.sympla.com.br/event/101502",
+   "fonte": "https://bileto.sympla.com.br/event/122747",
    "origem": "sympla",
-   "regra": "show",
-   "lat": -23.554357,
-   "lng": -46.655983
-  },
-  {
-   "nome": "O Vendedor de Sonhos Marte Hall",
-   "local": "Marte Hall",
-   "endereco": "Rua Domingos de Morais, 348, São Paulo",
-   "tipo": "show",
-   "data": "2026-10-31",
-   "inicio": "19:00",
-   "fim_estimado": "20:45",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://bileto.sympla.com.br/event/121572",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.580281,
-   "lng": -46.642752
+   "regra": "teatro",
+   "lat": -23.551872,
+   "lng": -46.721986
   },
   {
    "nome": "HALLOWEEN TERRITÓRIO DA MÚSICA + PUB BRITTÂNIA",
@@ -1268,22 +1252,6 @@
    "lng": -46.628058
   },
   {
-   "nome": "LOS MUERTOS | Sábado 31.10 - 19h | DROSOPHYLA BAR",
-   "local": "DROSOPHYLA BAR",
-   "endereco": "Rua Nestor Pestana, Consolação, São Paulo",
-   "tipo": "show",
-   "data": "2026-10-31",
-   "inicio": "19:00",
-   "fim_estimado": "02:00",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/los-muertos-sabado-31-10-19h-drosophyla-bar/3634913",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.549072,
-   "lng": -46.645272
-  },
-  {
    "nome": "Mande Notícias do Mundo de Lá",
    "local": "Teatro Renaissance",
    "endereco": "Alameda Santos, 2233, Jardim Paulista, São Paulo",
@@ -1314,6 +1282,22 @@
    "regra": "teatro",
    "lat": -23.556024,
    "lng": -46.656597
+  },
+  {
+   "nome": "GIL – ANDAR COM FÉ - O MUSICAL",
+   "local": "Teatro Santander",
+   "endereco": "Avenida Presidente Juscelino Kubitschek,2041, São Paulo",
+   "tipo": "teatro",
+   "data": "2026-10-31",
+   "inicio": "20:00",
+   "fim_estimado": "22:00",
+   "incerteza_min": 30,
+   "publico_estimado": null,
+   "fonte": "https://bileto.sympla.com.br/event/115256",
+   "origem": "sympla",
+   "regra": "teatro",
+   "lat": -23.592931,
+   "lng": -46.693951
   },
   {
    "nome": "HALLOWEEN - Festa de Halloween à Fantasia da Blitz Haus",
@@ -1666,6 +1650,22 @@
    "regra": "show",
    "lat": -23.545208,
    "lng": -46.648684
+  },
+  {
+   "nome": "LOS MUERTOS | Sábado 31.10 - 19h | DROSOPHYLA BAR",
+   "local": "DROSOPHYLA BAR",
+   "endereco": "Rua Nestor Pestana, Consolação, São Paulo",
+   "tipo": "show",
+   "data": "2026-10-31",
+   "inicio": "20:00",
+   "fim_estimado": "02:00",
+   "incerteza_min": 45,
+   "publico_estimado": null,
+   "fonte": "https://www.sympla.com.br/evento/los-muertos-sabado-31-10-19h-drosophyla-bar/3634913",
+   "origem": "sympla",
+   "regra": "show",
+   "lat": -23.549072,
+   "lng": -46.645272
   },
   {
    "nome": "Palavras em Travessia: Noite de contos - Mulheres Sábias",
@@ -2038,6 +2038,22 @@
    "lng": -46.645268
   },
   {
+   "nome": "Pé na Estrada - Stand Up Comedy | SP | Bixiga Comedy",
+   "local": "Bixiga Comedy Club",
+   "endereco": "Rua Rui Barbosa, Bela Vista, São Paulo",
+   "tipo": "teatro",
+   "data": "2026-10-31",
+   "inicio": "21:00",
+   "fim_estimado": "23:00",
+   "incerteza_min": 30,
+   "publico_estimado": null,
+   "fonte": "https://www.sympla.com.br/evento/pe-na-estrada-stand-up-comedy-sp-bixiga-comedy/3639562",
+   "origem": "sympla",
+   "regra": "teatro",
+   "lat": -23.56063,
+   "lng": -46.645268
+  },
+  {
    "nome": "GUI PRETO - PENSAMENTOS INTRUSIVOS",
    "local": "Hamsa Comedy",
    "endereco": "Avenida Águia de Haia, Parque Paineiras, São Paulo",
@@ -2064,6 +2080,22 @@
    "incerteza_min": 30,
    "publico_estimado": null,
    "fonte": "https://www.sympla.com.br/evento/perguntinha-show-standup-comedy/3636921",
+   "origem": "sympla",
+   "regra": "teatro",
+   "lat": -23.56063,
+   "lng": -46.645268
+  },
+  {
+   "nome": "Pé Na Estrada - STANDUP COMEDY",
+   "local": "Bixiga Comedy",
+   "endereco": "Rua Rui Barbosa, Bela Vista, São Paulo",
+   "tipo": "teatro",
+   "data": "2026-10-31",
+   "inicio": "21:00",
+   "fim_estimado": "23:00",
+   "incerteza_min": 30,
+   "publico_estimado": null,
+   "fonte": "https://www.sympla.com.br/evento/pe-na-estrada-standup-comedy/3639483",
    "origem": "sympla",
    "regra": "teatro",
    "lat": -23.56063,
@@ -2374,22 +2406,6 @@
    "lng": -46.647179
   },
   {
-   "nome": "HALLOWEEN MALDITO - SARAVÁ + LOS OUTROS + ARCAIDAS + FUNÉREA",
-   "local": "R. Luís Murat, 400",
-   "endereco": "Rua Luís Murat, Pinheiros, São Paulo",
-   "tipo": "show",
-   "data": "2026-10-31",
-   "inicio": "22:00",
-   "fim_estimado": "23:45",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/halloween-maldito-sarava-los-outros-arcaidas-funerea/3620641",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.557963,
-   "lng": -46.686867
-  },
-  {
    "nome": "Gasolina: Perreo De Halloween | Reggaeton & Música Latina | 31.10 (Sáb",
    "local": "The Atro",
    "endereco": "Rua Rui Barbosa, São Paulo",
@@ -2404,6 +2420,22 @@
    "regra": "show",
    "lat": -23.557159,
    "lng": -46.645108
+  },
+  {
+   "nome": "HALLOWEEN MALDITO - SARAVÁ + LOS OUTROS + ARCAIDAS + FUNÉREA",
+   "local": "R. Luís Murat, 400",
+   "endereco": "Rua Luís Murat, Pinheiros, São Paulo",
+   "tipo": "show",
+   "data": "2026-10-31",
+   "inicio": "22:00",
+   "fim_estimado": "23:45",
+   "incerteza_min": 45,
+   "publico_estimado": null,
+   "fonte": "https://www.sympla.com.br/evento/halloween-maldito-sarava-los-outros-arcaidas-funerea/3620641",
+   "origem": "sympla",
+   "regra": "show",
+   "lat": -23.557963,
+   "lng": -46.686867
   },
   {
    "nome": "CARNAWEEN - SIGA BEM E BATUCAMINA",
@@ -2887,7 +2919,7 @@
   }
  ],
  "geocodificacao": {
-  "com_local": 180,
+  "com_local": 182,
   "sem_local": 0
  }
 }
