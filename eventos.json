@@ -1,5 +1,5 @@
 {
- "gerado_em": "2026-11-01T12:57:37-03:00",
+ "gerado_em": "2026-11-01T19:42:47-03:00",
  "data": "2026-11-01",
  "observacao": "Gerado automaticamente (Ticket360, Sympla e revisão semanal). Saída estimada pelas regras de tools/casas.json.",
  "eventos": [
@@ -276,6 +276,22 @@
    "lng": -46.720866
   },
   {
+   "nome": "Sidarta no TEATRO ESTÚDIO",
+   "local": "Teatro Estúdio",
+   "endereco": "R. Conselheiro Nébias,891, São Paulo",
+   "tipo": "teatro",
+   "data": "2026-11-01",
+   "inicio": "17:00",
+   "fim_estimado": "19:00",
+   "incerteza_min": 30,
+   "publico_estimado": null,
+   "fonte": "https://bileto.sympla.com.br/event/121960",
+   "origem": "sympla",
+   "regra": "teatro",
+   "lat": -23.535552,
+   "lng": -46.645724
+  },
+  {
    "nome": "AFROSPEAKS - THRILLER NIGHT",
    "local": "Bar do Zeca Pagodinho",
    "endereco": "Avenida Miguel Ignácio Curi, São Paulo",
@@ -356,22 +372,6 @@
    "lng": -46.66294
   },
   {
-   "nome": "A Casa Mágica da Gabby",
-   "local": "Teatro Bibi Ferreira",
-   "endereco": "Av. Brigadeiro Luiz Antônio, 931, São Paulo",
-   "tipo": "teatro",
-   "data": "2026-11-01",
-   "inicio": "17:30",
-   "fim_estimado": "19:30",
-   "incerteza_min": 30,
-   "publico_estimado": null,
-   "fonte": "https://bileto.sympla.com.br/event/113725",
-   "origem": "sympla",
-   "regra": "teatro",
-   "lat": -23.5695,
-   "lng": -46.65079
-  },
-  {
    "nome": "Deu a louca nos contos de fadas -Uma comédia além da magia",
    "local": "Teatro Raposo Shopping- Sala Bibi Ferreira",
    "endereco": "Rodovia Raposo Tavares,0 - km 14,5, São Paulo",
@@ -420,22 +420,6 @@
    "lng": -46.696046
   },
   {
-   "nome": "ALVOROÇO! // Especial Ocupação Fervo // Blocos Abacaxi de Irará e Ano ",
-   "local": "Casa de Francisca",
-   "endereco": "R. Quintino Bocaiúva,22 - 1º andar, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-01",
-   "inicio": "18:00",
-   "fim_estimado": "19:45",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://bileto.sympla.com.br/event/129280",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.548776,
-   "lng": -46.634712
-  },
-  {
    "nome": "TODAS AS COISAS MARAVILHOSAS",
    "local": "Tucarena / PUC-SP",
    "endereco": "Rua Bartira esquina c/ R. Monte Alegre s/nº, São Paulo",
@@ -482,38 +466,6 @@
    "regra": "show",
    "lat": -23.589471,
    "lng": -46.679591
-  },
-  {
-   "nome": "DOM 18h - 01/11/26 - Circo Spacial - SPARK",
-   "local": "Circo Spacial",
-   "endereco": "Avenida Atlântica, Jardim Tres Marias, São Paulo",
-   "tipo": "teatro",
-   "data": "2026-11-01",
-   "inicio": "18:00",
-   "fim_estimado": "19:30",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/dom-18h-01-11-26-circo-spacial-spark/3628110",
-   "origem": "sympla",
-   "regra": "teatro",
-   "lat": -23.689868,
-   "lng": -46.715762
-  },
-  {
-   "nome": "[01/11 - 18h] A Sociedade é Delas | Espetáculo de comédia com elenco e",
-   "local": "Sociedade do Humor",
-   "endereco": "Rua Bela Flor, Vila da Saúde, São Paulo",
-   "tipo": "teatro",
-   "data": "2026-11-01",
-   "inicio": "18:00",
-   "fim_estimado": "19:00",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/01-11-18h-a-sociedade-e-delas-espetaculo-de-comedia-com-elenco-exclusivamente-feminino/3633271",
-   "origem": "sympla",
-   "regra": "teatro",
-   "lat": -23.603812,
-   "lng": -46.631789
   },
   {
    "nome": "CASA DO HORROR 7 - DOMINGO - 01/Nov 2026",
@@ -578,22 +530,6 @@
    "regra": "teatro",
    "lat": -23.557586,
    "lng": -46.645212
-  },
-  {
-   "nome": "ALMOÇO COM A ESTRELA",
-   "local": "Casa de Artes SP",
-   "endereco": "Rua Major Sertório, Vila Buarque, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-01",
-   "inicio": "18:00",
-   "fim_estimado": "19:30",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/almoco-com-a-estrela/3573619",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.545208,
-   "lng": -46.648684
   },
   {
    "nome": "Elymar Santos",
@@ -677,38 +613,6 @@
    "lng": -46.652014
   },
   {
-   "nome": "Uana - Estrela",
-   "local": "Casa Natura Musical",
-   "endereco": "Rua Artur de Azevedo, 2134, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-01",
-   "inicio": "19:00",
-   "fim_estimado": "20:45",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://bileto.sympla.com.br/event/126964",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.567799,
-   "lng": -46.690882
-  },
-  {
-   "nome": "TRASHNICKS TRIBUTO À ALEGRIA E IRREVERÊNCIA DOS ANOS 80 E 90",
-   "local": "Teatro Mooca",
-   "endereco": "Rua Capitão Pacheco e Chaves,313, São Paulo",
-   "tipo": "teatro",
-   "data": "2026-11-01",
-   "inicio": "19:00",
-   "fim_estimado": "21:00",
-   "incerteza_min": 30,
-   "publico_estimado": null,
-   "fonte": "https://bileto.sympla.com.br/event/125150",
-   "origem": "sympla",
-   "regra": "teatro",
-   "lat": -23.579747,
-   "lng": -46.596554
-  },
-  {
    "nome": "ENTRADA ICCARUS - NOVEMBRO 2026",
    "local": "Iccarus",
    "endereco": "Praca Pedro Lessa, São Paulo",
@@ -739,38 +643,6 @@
    "regra": "show",
    "lat": -23.518235,
    "lng": -46.593424
-  },
-  {
-   "nome": "Domingo do Standup às 19H no Bixiga Comedy",
-   "local": "Bixiga Comedy Club",
-   "endereco": "Rua Rui Barbosa, Bela Vista, São Paulo",
-   "tipo": "teatro",
-   "data": "2026-11-01",
-   "inicio": "19:00",
-   "fim_estimado": "21:00",
-   "incerteza_min": 30,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/domingo-do-standup-as-19h-no-bixiga-comedy/3631536",
-   "origem": "sympla",
-   "regra": "teatro",
-   "lat": -23.56063,
-   "lng": -46.645268
-  },
-  {
-   "nome": "Projeto Clarice",
-   "local": "Teatro Paulo Eiró",
-   "endereco": "Avenida Adolfo Pinheiro, São Paulo",
-   "tipo": "teatro",
-   "data": "2026-11-01",
-   "inicio": "19:00",
-   "fim_estimado": "21:00",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/projeto-clarice/3600141",
-   "origem": "sympla",
-   "regra": "teatro",
-   "lat": -23.646525,
-   "lng": -46.701891
   },
   {
    "nome": "Espetáculo \"DEPOIS DA CHUVA\" - Iason Cultural",
@@ -967,22 +839,6 @@
    "lng": -46.68987
   },
   {
-   "nome": "PIADAS CANABICAS COM TIAGO CARVALHO 01/11 - Sessão Véspera Feriado",
-   "local": "Artéria Loft",
-   "endereco": "Rua da Consolação, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-01",
-   "inicio": "19:30",
-   "fim_estimado": "21:15",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/piadas-canabicas-com-tiago-carvalho-01-11-sessao-vespera-feriado/3620791",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.554316,
-   "lng": -46.661601
-  },
-  {
    "nome": "LAURYN HILL por AMANDA MARIA",
    "local": "Bourbon Street",
    "endereco": "Rua dos Chanes, 127, São Paulo",
@@ -1095,38 +951,6 @@
    "lng": -46.655342
   },
   {
-   "nome": "Anedotas - Piadas no Estilo XX!",
-   "local": "Bixiga Comedy Club",
-   "endereco": "Rua Rui Barbosa, Bela Vista, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-01",
-   "inicio": "20:00",
-   "fim_estimado": "21:45",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/anedotas-piadas-no-estilo-xx/3616945",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.56063,
-   "lng": -46.645268
-  },
-  {
-   "nome": "Anedotas no Estilo XXI",
-   "local": "Bixiga Comedy",
-   "endereco": "Rua Rui Barbosa, Bela Vista, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-01",
-   "inicio": "20:00",
-   "fim_estimado": "21:45",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/anedotas-no-estilo-xxi/3639490",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.56063,
-   "lng": -46.645268
-  },
-  {
    "nome": "SORÓ SILVA E FORRÓ BOYS NO FORRÓ DA PRISCILA",
    "local": "Forró da Priscila",
    "endereco": "Rua Ernest Renan, Paraísopolis, São Paulo",
@@ -1157,6 +981,22 @@
    "regra": "festa",
    "lat": -23.592138,
    "lng": -46.679463
+  },
+  {
+   "nome": "Os Rastros das Marias",
+   "local": "ºAndar",
+   "endereco": "Rua Doutor Gabriel dos Santos, Santa Cecília, São Paulo",
+   "tipo": "show",
+   "data": "2026-11-01",
+   "inicio": "20:00",
+   "fim_estimado": "21:00",
+   "incerteza_min": 45,
+   "publico_estimado": null,
+   "fonte": "https://www.sympla.com.br/evento/os-rastros-das-marias/3614917",
+   "origem": "sympla",
+   "regra": "show",
+   "lat": -23.533338,
+   "lng": -46.658438
   },
   {
    "nome": "Ronnie Wood",
@@ -1207,6 +1047,22 @@
    "lng": -46.646825
   },
   {
+   "nome": "AUGUSTA AFTER DARK",
+   "local": "Blitz Haus",
+   "endereco": "Rua Augusta, Consolação, São Paulo",
+   "tipo": "festa",
+   "data": "2026-11-01",
+   "inicio": "21:00",
+   "fim_estimado": "05:30",
+   "incerteza_min": 120,
+   "publico_estimado": null,
+   "fonte": "https://www.sympla.com.br/evento/augusta-after-dark/3606046",
+   "origem": "sympla",
+   "regra": "festa",
+   "lat": -23.552103,
+   "lng": -46.652185
+  },
+  {
    "nome": "After On",
    "local": "Le Club SP",
    "endereco": "Avenida Brigadeiro Faria Lima, Itaim Bibi, São Paulo",
@@ -1221,22 +1077,6 @@
    "regra": "festa",
    "lat": -23.589026,
    "lng": -46.681285
-  },
-  {
-   "nome": "PRA QUEM FICOU EM SP - STAND UP COMEDY - ZONA LESTE",
-   "local": "Hamsa Comedy",
-   "endereco": "Avenida Águia de Haia, Parque Paineiras, São Paulo",
-   "tipo": "teatro",
-   "data": "2026-11-01",
-   "inicio": "21:00",
-   "fim_estimado": "23:00",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/pra-quem-ficou-em-sp-stand-up-comedy-zona-leste/3631961",
-   "origem": "sympla",
-   "regra": "teatro",
-   "lat": -23.534298,
-   "lng": -46.473927
   },
   {
    "nome": "The Rocky Horror Party Show | DATA EXTRA| 01.11 | Cortina",
@@ -1480,7 +1320,7 @@
   }
  ],
  "geocodificacao": {
-  "com_local": 92,
+  "com_local": 82,
   "sem_local": 0
  }
 }

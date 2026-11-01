@@ -1,6 +1,6 @@
 OK    Mande Notícias do Mundo de Lá | Renaissance São Paulo Hotel, 2233, Alameda Santos, Cerqueira César, Ja
 OK    Meu Deus! | 3970, Avenida Rebouças, Jardim Europa, Pinheiros, São Paulo, Região Su
-OK    Imagina na Adolescência | Morumbi Shopping, 1089, Avenida Roque Petroni Júnior, Brooklin Novo, I
+OK    Imagina na Adolescência | Morumbi Shopping, 1089, Avenida Roque Petroni Júnior, Chácara Santo An
 OK    Eu Sou Minha Própria Mulher | Fundação Armando Alvares Penteado, 903, Rua Alagoas, Higienópolis, Con
 OK    Elymar Santos | Rua Bragança Paulista, Granja Julieta, Santo Amaro, São Paulo, Região 
 OK    Six Feet Under | 110, Rua Rodolfo Miranda, Vila Sá Barbosa, Bom Retiro, São Paulo, Regi
@@ -14,4 +14,4 @@ OK    Drácula | 158, Praça Franklin Roosevelt, Vila Buarque, República, São 
 OK    Escola Modelo | Avenida Brigadeiro Luís Antônio, Bixiga, Bela Vista, São Paulo, Região
 OK    Ronnie Wood | Espaço Unimed, 795, Rua Tagipuru, Barra Funda, São Paulo, Região Sudes
 OK    Trilogia para a Vida | Teatro Ruth Escobar, 209, Rua dos Ingleses, Morro dos Ingleses, Bela V
-com local: 92  sem local: 0
+com local: 82  sem local: 0
