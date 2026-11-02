@@ -1,17 +1,3 @@
-OK    Mande Notícias do Mundo de Lá | Renaissance São Paulo Hotel, 2233, Alameda Santos, Cerqueira César, Ja
-OK    Meu Deus! | 3970, Avenida Rebouças, Jardim Europa, Pinheiros, São Paulo, Região Su
-OK    Imagina na Adolescência | Morumbi Shopping, 1089, Avenida Roque Petroni Júnior, Chácara Santo An
-OK    Eu Sou Minha Própria Mulher | Fundação Armando Alvares Penteado, 903, Rua Alagoas, Higienópolis, Con
-OK    Elymar Santos | Rua Bragança Paulista, Granja Julieta, Santo Amaro, São Paulo, Região 
-OK    Six Feet Under | 110, Rua Rodolfo Miranda, Vila Sá Barbosa, Bom Retiro, São Paulo, Regi
-OK    Feliz Ano Velho (musical) | Frei Caneca Shopping, 569, Rua Frei Caneca, Consolação, São Paulo, Reg
-OK    Arlequim, Servidor de Dois Patrões | SESC Bom Retiro, 185, Alameda Nothmann, Campos Elísios, Santa Cecília,
-OK    Sopro | SESC 14 Bis, 285, Rua Doutor Plínio Barreto, Bixiga, Bela Vista, São P
-OK    TR/ST | Cine Joia, 82, Praça Carlos Gomes, Glicério, Sé, São Paulo, Região Sud
-OK    Alegría – Cirque du Soleil | Avenida Professor Fonseca Rodrigues, Boaçava, Alto de Pinheiros, São P
-OK    Um Dia Muito Especial | Renaissance São Paulo Hotel, 2233, Alameda Santos, Cerqueira César, Ja
-OK    Drácula | 158, Praça Franklin Roosevelt, Vila Buarque, República, São Paulo, Reg
-OK    Escola Modelo | Avenida Brigadeiro Luís Antônio, Bixiga, Bela Vista, São Paulo, Região
-OK    Ronnie Wood | Espaço Unimed, 795, Rua Tagipuru, Barra Funda, São Paulo, Região Sudes
-OK    Trilogia para a Vida | Teatro Ruth Escobar, 209, Rua dos Ingleses, Morro dos Ingleses, Bela V
-com local: 82  sem local: 0
+OK    Post Punk Brasil: Ploho (Rússia) | Madame Underground Club, 873, Rua Conselheiro Ramalho, Bixiga, Bela Vi
+OK    OneUs – Full Moon World Tour | 694, Avenida Francisco Matarazzo, Barra Funda, São Paulo, Região Sudes
+com local: 25  sem local: 0
