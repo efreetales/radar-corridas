@@ -1,5 +1,5 @@
 {
- "gerado_em": "2026-11-02T09:06:44-03:00",
+ "gerado_em": "2026-11-02T16:25:53-03:00",
  "data": "2026-11-02",
  "observacao": "Gerado automaticamente (Ticket360, Sympla e revisão semanal). Saída estimada pelas regras de tools/casas.json.",
  "eventos": [
@@ -130,6 +130,22 @@
    "regra": "festa",
    "lat": -23.567372,
    "lng": -46.698418
+  },
+  {
+   "nome": "FORRÓ DE TERNO DAS 17H ATÉ MEIA-NOITE COM GUSTAVO PINGO, THIAGO FRED, ",
+   "local": "Remelexo Brasil",
+   "endereco": "Rua Ferreira de Araújo, Pinheiros, São Paulo",
+   "tipo": "festa",
+   "data": "2026-11-02",
+   "inicio": "17:00",
+   "fim_estimado": "23:00",
+   "incerteza_min": 120,
+   "publico_estimado": null,
+   "fonte": "https://www.sympla.com.br/evento/forro-de-terno-das-17h-ate-meia-noite-com-gustavo-pingo-thiago-fred-rodrigo-braga-e-dj-xuxa/3639189",
+   "origem": "sympla",
+   "regra": "festa",
+   "lat": -23.567022,
+   "lng": -46.698094
   },
   {
    "nome": "CASA DO HORROR 7 - SEGUNDA - 02/Nov 2026",
@@ -405,7 +421,7 @@
   }
  ],
  "geocodificacao": {
-  "com_local": 25,
+  "com_local": 26,
   "sem_local": 0
  }
 }
