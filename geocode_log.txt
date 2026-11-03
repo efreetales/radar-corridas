@@ -1,3 +1,4 @@
-OK    Post Punk Brasil: Ploho (Rússia) | Madame Underground Club, 873, Rua Conselheiro Ramalho, Bixiga, Bela Vi
-OK    OneUs – Full Moon World Tour | 694, Avenida Francisco Matarazzo, Barra Funda, São Paulo, Região Sudes
-com local: 19  sem local: 0
+FALHA Sophia Chablau – voz e guitarra | São Paulo
+OK    Echoes Pink Floyd – Animals 50 anos | Conjunto Nacional, 2073, Avenida Paulista, Cerqueira César, Consolação
+OK    Jazz Sessions by Jazz Mansion | Bourbon Street Music Club, 127, Rua dos Chanés, Indianópolis, Moema, S
+com local: 21  sem local: 1
