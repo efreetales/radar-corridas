@@ -1,5 +1,5 @@
 {
- "gerado_em": "2026-11-02T16:25:53-03:00",
+ "gerado_em": "2026-11-02T22:31:36-03:00",
  "data": "2026-11-02",
  "observacao": "Gerado automaticamente (Ticket360, Sympla e revisão semanal). Saída estimada pelas regras de tools/casas.json.",
  "eventos": [
@@ -100,22 +100,6 @@
    "lng": -46.635668
   },
   {
-   "nome": "FROZEN PARA SEMPRE - MOOCA",
-   "local": "Teatro Mooca",
-   "endereco": "Rua Capitão Pacheco e Chaves,313, São Paulo",
-   "tipo": "teatro",
-   "data": "2026-11-02",
-   "inicio": "17:00",
-   "fim_estimado": "19:00",
-   "incerteza_min": 30,
-   "publico_estimado": null,
-   "fonte": "https://bileto.sympla.com.br/event/112729",
-   "origem": "sympla",
-   "regra": "teatro",
-   "lat": -23.579747,
-   "lng": -46.596554
-  },
-  {
    "nome": "FORRÓ DE TERNO",
    "local": "Remelexo Brasil",
    "endereco": "Rua Ferreira de Araújo, Pinheiros, São Paulo",
@@ -130,22 +114,6 @@
    "regra": "festa",
    "lat": -23.567372,
    "lng": -46.698418
-  },
-  {
-   "nome": "FORRÓ DE TERNO DAS 17H ATÉ MEIA-NOITE COM GUSTAVO PINGO, THIAGO FRED, ",
-   "local": "Remelexo Brasil",
-   "endereco": "Rua Ferreira de Araújo, Pinheiros, São Paulo",
-   "tipo": "festa",
-   "data": "2026-11-02",
-   "inicio": "17:00",
-   "fim_estimado": "23:00",
-   "incerteza_min": 120,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/forro-de-terno-das-17h-ate-meia-noite-com-gustavo-pingo-thiago-fred-rodrigo-braga-e-dj-xuxa/3639189",
-   "origem": "sympla",
-   "regra": "festa",
-   "lat": -23.567022,
-   "lng": -46.698094
   },
   {
    "nome": "CASA DO HORROR 7 - SEGUNDA - 02/Nov 2026",
@@ -196,22 +164,6 @@
    "lng": -46.644078
   },
   {
-   "nome": "SEGUNDA 18h - 02/11/26 - Circo Spacial - SPARK",
-   "local": "Circo Spacial",
-   "endereco": "Avenida Atlântica, Jardim Tres Marias, São Paulo",
-   "tipo": "teatro",
-   "data": "2026-11-02",
-   "inicio": "18:00",
-   "fim_estimado": "19:30",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/segunda-18h-02-11-26-circo-spacial-spark/3628230",
-   "origem": "sympla",
-   "regra": "teatro",
-   "lat": -23.689868,
-   "lng": -46.715762
-  },
-  {
    "nome": "Post Punk Brasil: Ploho (Rússia)",
    "local": "Madame Underground Club",
    "endereco": "Rua Conselheiro Ramalho, 873, Bela Vista, São Paulo",
@@ -244,38 +196,6 @@
    "lng": -46.694941
   },
   {
-   "nome": "GaivotaS - Feriado",
-   "local": "Teatro Commune",
-   "endereco": "Rua da Consolação, Consolação, São Paulo",
-   "tipo": "teatro",
-   "data": "2026-11-02",
-   "inicio": "19:00",
-   "fim_estimado": "20:00",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/gaivotas-feriado/3598017",
-   "origem": "sympla",
-   "regra": "teatro",
-   "lat": -23.549148,
-   "lng": -46.652939
-  },
-  {
-   "nome": "Get Up Stand Up Comedy 02/11",
-   "local": "Açaí Beach Bar",
-   "endereco": "Rua Augusta, Centro, São Paulo",
-   "tipo": "teatro",
-   "data": "2026-11-02",
-   "inicio": "19:00",
-   "fim_estimado": "22:00",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/get-up-stand-up-comedy-02-11/3635284",
-   "origem": "sympla",
-   "regra": "teatro",
-   "lat": -23.555157,
-   "lng": -46.656923
-  },
-  {
    "nome": "OneUs – Full Moon World Tour",
    "local": "Audio",
    "endereco": "Av. Francisco Matarazzo, 694, Água Branca, São Paulo",
@@ -290,22 +210,6 @@
    "regra": "abertura",
    "lat": -23.528535,
    "lng": -46.669524
-  },
-  {
-   "nome": "O homem com uma flor na boca",
-   "local": "R. Conselheiro Ramalho, 673",
-   "endereco": "Rua Conselheiro Ramalho, Bela Vista, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-02",
-   "inicio": "19:30",
-   "fim_estimado": "20:30",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/o-homem-com-uma-flor-na-boca/3619766",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.557762,
-   "lng": -46.644246
   },
   {
    "nome": "60 ANOS DE DOIS PERDIDOS NUMA NOITE SUJA",
@@ -324,48 +228,32 @@
    "lng": -46.646218
   },
   {
-   "nome": "Da Puberdade à Menopausa com Angela Dippe",
-   "local": "Clube Barbixas de Comédia",
-   "endereco": "Rua Augusta, 1129, São Paulo",
+   "nome": "O Ovo e a Galinha",
+   "local": "Teatro Oficina",
+   "endereco": "Rua Jaceguai, 520, São Paulo",
+   "tipo": "teatro",
+   "data": "2026-11-02",
+   "inicio": "20:00",
+   "fim_estimado": "22:00",
+   "incerteza_min": 30,
+   "publico_estimado": null,
+   "fonte": "https://bileto.sympla.com.br/event/127675",
+   "origem": "sympla",
+   "regra": "teatro",
+   "lat": -23.555253,
+   "lng": -46.643398
+  },
+  {
+   "nome": "A Família Mais Perigosa do Mundo",
+   "local": "Rua Tupi, 354",
+   "endereco": "Rua Tupi, São Paulo",
    "tipo": "show",
    "data": "2026-11-02",
    "inicio": "20:00",
    "fim_estimado": "21:45",
    "incerteza_min": 45,
    "publico_estimado": null,
-   "fonte": "https://bileto.sympla.com.br/event/127607",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.554357,
-   "lng": -46.655983
-  },
-  {
-   "nome": "CRIATURA, UMA AUTÓPSIA",
-   "local": "ºAndar",
-   "endereco": "Rua Doutor Gabriel dos Santos, Santa Cecília, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-02",
-   "inicio": "20:00",
-   "fim_estimado": "21:10",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/criatura-uma-autopsia/3496928",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.533338,
-   "lng": -46.658438
-  },
-  {
-   "nome": "A Família Mais Perigosa do Mundo 2/11 segunda",
-   "local": "Rua Tupi, 354",
-   "endereco": "Rua Tupi, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-02",
-   "inicio": "20:00",
-   "fim_estimado": "21:00",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/a-familia-mais-perigosa-do-mundo-2-11-segunda/3639094",
+   "fonte": "https://www.sympla.com.br/evento/a-familia-mais-perigosa-do-mundo/3639094",
    "origem": "sympla",
    "regra": "show",
    "lat": -23.534726,
@@ -421,7 +309,7 @@
   }
  ],
  "geocodificacao": {
-  "com_local": 26,
+  "com_local": 19,
   "sem_local": 0
  }
 }
