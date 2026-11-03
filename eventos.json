@@ -1,24 +1,8 @@
 {
- "gerado_em": "2026-11-03T13:59:06-03:00",
+ "gerado_em": "2026-11-03T20:56:56-03:00",
  "data": "2026-11-03",
  "observacao": "Gerado automaticamente (Ticket360, Sympla e revisão semanal). Saída estimada pelas regras de tools/casas.json.",
  "eventos": [
-  {
-   "nome": "Petlove Vet Summit 2026",
-   "local": "Av. Brigadeiro Luís Antônio, 4700",
-   "endereco": "Avenida Brigadeiro Luís Antônio, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-03",
-   "inicio": "11:50",
-   "fim_estimado": "20:00",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/petlove-vet-summit-2026/3597767",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.581709,
-   "lng": -46.666945
-  },
   {
    "nome": "Discopédia Especial Wu-Tang Clan | 3 De Novembro | Cortina",
    "local": "Cineclube Cortina",
@@ -34,22 +18,6 @@
    "regra": "show",
    "lat": -23.54441,
    "lng": -46.644514
-  },
-  {
-   "nome": "ANTHEA | TALKS: A vida ficou mais longa. Mas ninguém redesenhou o mapa",
-   "local": "R. Costa Carvalho, 113 - Pinheiros",
-   "endereco": "Rua Costa Carvalho, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-03",
-   "inicio": "18:30",
-   "fim_estimado": "21:00",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/anthea-talks-a-vida-ficou-mais-longa-mas-ninguem-redesenhou-o-mapa/3620179",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.560959,
-   "lng": -46.699
   },
   {
    "nome": "Farol Santander São Paulo 2026",
@@ -145,22 +113,6 @@
    "origem": "semana",
    "regra": "show",
    "sem_local": true
-  },
-  {
-   "nome": "Cidade de Dentro // Trilogia do Morar // ATO 1 “Banco Imobiliário”",
-   "local": "Casa de Francisca",
-   "endereco": "R. Quintino Bocaiúva,22 - 1º andar, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-03",
-   "inicio": "19:30",
-   "fim_estimado": "21:15",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://bileto.sympla.com.br/event/129308",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.548776,
-   "lng": -46.634712
   },
   {
    "nome": "Despalhaço",
@@ -356,7 +308,7 @@
   }
  ],
  "geocodificacao": {
-  "com_local": 21,
+  "com_local": 18,
   "sem_local": 1
  }
 }
