@@ -1,24 +1,8 @@
 {
- "gerado_em": "2026-11-04T14:08:33-03:00",
+ "gerado_em": "2026-11-04T21:18:08-03:00",
  "data": "2026-11-04",
  "observacao": "Gerado automaticamente (Ticket360, Sympla e revisão semanal). Saída estimada pelas regras de tools/casas.json.",
  "eventos": [
-  {
-   "nome": "XXV SIMPÓSIO DE FONOAUDIOLOGIA DA FMU",
-   "local": "FMU- Campus Vila Nova Conceição",
-   "endereco": "Rua Afonso Braz, Vila Nova Conceição, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-04",
-   "inicio": "08:00",
-   "fim_estimado": "09:45",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/xxv-simposio-de-fonoaudiologia-da-fmu/3627115",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.595506,
-   "lng": -46.668461
-  },
   {
    "nome": "Raven Vinyl Club: TODA QUARTA-FEIRA",
    "local": "The Raven Music Bar",
@@ -100,54 +84,6 @@
    "lng": -46.556008
   },
   {
-   "nome": "Get Open Mic - Quartas 20h - 04/11",
-   "local": "Açaí Beach Bar",
-   "endereco": "Rua Augusta, Centro, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-04",
-   "inicio": "19:00",
-   "fim_estimado": "21:00",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/get-open-mic-quartas-20h-04-11/3635292",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.555157,
-   "lng": -46.656923
-  },
-  {
-   "nome": "Cidade de Dentro // Trilogia do Morar // ATO 2 - “Moinho de gente”",
-   "local": "Casa de Francisca",
-   "endereco": "R. Quintino Bocaiúva,22 - 1º andar, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-04",
-   "inicio": "19:30",
-   "fim_estimado": "21:15",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://bileto.sympla.com.br/event/129310",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.548776,
-   "lng": -46.634712
-  },
-  {
-   "nome": "CINEMA & PSI - Uma parceria Psicadeiro + Gay Nerd - SUK SUK: UM AMOR E",
-   "local": "PSICADEIRO -SALA BEATRIZ SEGALL",
-   "endereco": "Rua Doutor Guilherme Bannitz, Itaim Bibi, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-04",
-   "inicio": "19:30",
-   "fim_estimado": "20:30",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/cinema-psi-uma-parceria-psicadeiro-gay-nerd-suk-suk-um-amor-em-segredo/3610451",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.588914,
-   "lng": -46.672399
-  },
-  {
    "nome": "Pré Estréia filme Nação Ubuntu - A Voz dos Silenciados",
    "local": "Cinesystem Frei Caneca - Shopping Frei Caneca",
    "endereco": "Rua Frei Caneca, Consolação, São Paulo",
@@ -178,22 +114,6 @@
    "regra": "festa",
    "lat": -23.561955,
    "lng": -46.694941
-  },
-  {
-   "nome": "Projeto Clarice",
-   "local": "Teatro Paulo Eiró",
-   "endereco": "Avenida Adolfo Pinheiro, São Paulo",
-   "tipo": "teatro",
-   "data": "2026-11-04",
-   "inicio": "20:00",
-   "fim_estimado": "21:00",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/projeto-clarice/3600152",
-   "origem": "sympla",
-   "regra": "teatro",
-   "lat": -23.646525,
-   "lng": -46.701891
   },
   {
    "nome": "Teatrocanção - show com Pedro Sá Moraes (4, 11, 18 e 25 de Novembro)",
@@ -276,22 +196,6 @@
    "lng": -46.628453
   },
   {
-   "nome": "4 de NOVEMBRO - PERDA MAIOR",
-   "local": "CaSa SLamB",
-   "endereco": "Rua Mateus Grou, Pinheiros, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-04",
-   "inicio": "20:00",
-   "fim_estimado": "21:00",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/4-de-novembro-perda-maior/3603477",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.56492,
-   "lng": -46.683744
-  },
-  {
    "nome": "Leandro Cabral – Com Texto",
    "local": "Blue Note São Paulo",
    "endereco": "Av. Paulista, 2073, Conjunto Nacional, Consolação, São Paulo",
@@ -356,22 +260,6 @@
    "lng": -46.663484
   },
   {
-   "nome": "EDU BASTOS E HELDER JANTAR - NÃO SOMOS DAQUI",
-   "local": "Teatro Mooca",
-   "endereco": "Rua Capitão Pacheco e Chaves,313, São Paulo",
-   "tipo": "teatro",
-   "data": "2026-11-04",
-   "inicio": "20:30",
-   "fim_estimado": "22:30",
-   "incerteza_min": 30,
-   "publico_estimado": null,
-   "fonte": "https://bileto.sympla.com.br/event/127390",
-   "origem": "sympla",
-   "regra": "teatro",
-   "lat": -23.579747,
-   "lng": -46.596554
-  },
-  {
    "nome": "Cabaré da Vida Pequena",
    "local": "iBT - Instituto Brasileiro de Teatro",
    "endereco": "Avenida Brigadeiro Luís Antônio, São Paulo",
@@ -388,22 +276,6 @@
    "lng": -46.637832
   },
   {
-   "nome": "The Black Kings Of The Blues",
-   "local": "Bourbon Street",
-   "endereco": "Rua dos Chanes, 127, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-04",
-   "inicio": "21:00",
-   "fim_estimado": "22:45",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://bileto.sympla.com.br/event/116983",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.614095,
-   "lng": -46.667509
-  },
-  {
    "nome": "Quarta do Standup Comedy às 21h no Bixiga Comedy",
    "local": "Bixiga Comedy Club",
    "endereco": "Rua Rui Barbosa, Bela Vista, São Paulo",
@@ -416,22 +288,6 @@
    "fonte": "https://www.sympla.com.br/evento/quarta-do-standup-comedy-as-21h-no-bixiga-comedy/3631571",
    "origem": "sympla",
    "regra": "teatro",
-   "lat": -23.56063,
-   "lng": -46.645268
-  },
-  {
-   "nome": "Anedotas no Estilo XXI (Cópia)",
-   "local": "Bixiga Comedy",
-   "endereco": "Rua Rui Barbosa, Bela Vista, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-04",
-   "inicio": "21:00",
-   "fim_estimado": "22:45",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/anedotas-no-estilo-xxi-copia/3641806",
-   "origem": "sympla",
-   "regra": "show",
    "lat": -23.56063,
    "lng": -46.645268
   },
@@ -501,7 +357,7 @@
   }
  ],
  "geocodificacao": {
-  "com_local": 31,
+  "com_local": 22,
   "sem_local": 0
  }
 }
