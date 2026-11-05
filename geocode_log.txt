@@ -1,3 +1,13 @@
-OK    Leandro Cabral – Com Texto | Conjunto Nacional, 2073, Avenida Paulista, Cerqueira César, Consolação
-OK    Weather Report Tributo | Conjunto Nacional, 2073, Avenida Paulista, Cerqueira César, Consolação
-com local: 22  sem local: 0
+FALHA Torre Lavanda no Cr1a | São Paulo
+FALHA Yu Musick – Oreia | São Paulo
+OK    Sepultura no Cine Joia | Cine Joia, 82, Praça Carlos Gomes, Glicério, Sé, São Paulo, Região Sud
+OK    Palmeiras x Remo | 1705, Avenida Francisco Matarazzo, Barra Funda, São Paulo, Região Sude
+OK    Jean Luc Ponty Project – Imaginary Voyag | Conjunto Nacional, 2073, Avenida Paulista, Cerqueira César, Consolação
+OK    Alzira E + Corte + Saravá | 1838, Rua Cardeal Arcoverde, Vila Madalena, Pinheiros, São Paulo, Regi
+FALHA Banana Frita no Carmem Convida Aya Ibeji | São Paulo
+OK    Juliana Linhares | 2134, Rua Artur de Azevedo, Pinheiros, São Paulo, Região Sudeste, 0540
+OK    Charanga do França | Mundo Pensante, 830, Rua Treze de Maio, Bixiga, Bela Vista, São Paulo,
+FALHA Baile da Sasha: After dos Maia | São Paulo
+OK    U2 Experience (U2 Rio) | Conjunto Nacional, 2073, Avenida Paulista, Cerqueira César, Consolação
+OK    Embalo com DJ Nuts | Mundo Pensante, 830, Rua Treze de Maio, Bixiga, Bela Vista, São Paulo,
+com local: 54  sem local: 4
