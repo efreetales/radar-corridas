@@ -1,6 +1,6 @@
 OK    Cartas & Reflexos – estreia Aline Cruz | Jai Club, 2676, Rua Vergueiro, Vila Mariana, São Paulo, Região Sudeste
 OK    Dance Party – Mark Lambert & Blue Note B | Conjunto Nacional, 2073, Avenida Paulista, Cerqueira César, Consolação
-OK    Alegría – Cirque du Soleil | Avenida Professor Fonseca Rodrigues, Vila Ida, Alto de Pinheiros, São 
+OK    Alegría – Cirque du Soleil | Avenida Professor Fonseca Rodrigues, Boaçava, Alto de Pinheiros, São P
 OK    Show Rafael Castro | 1838, Rua Cardeal Arcoverde, Vila Madalena, Pinheiros, São Paulo, Regi
 OK    Pedro Mizutani e Alan Bernardes | 2134, Rua Artur de Azevedo, Pinheiros, São Paulo, Região Sudeste, 0540
 FALHA Real Distro x Domply | Centro, São Paulo
@@ -17,4 +17,4 @@ OK    Jai Warped Tour | Jai Club, 2676, Rua Vergueiro, Vila Mariana, São Paulo,
 OK    Vennoweem: For All Freaks | Casa da Luz, 512, Rua Mauá, Santa Ifigênia, República, São Paulo, Regi
 FALHA Violação | São Paulo
 FALHA Caju a Festa | São Paulo
-com local: 112  sem local: 7
+com local: 108  sem local: 7

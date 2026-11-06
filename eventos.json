@@ -1,5 +1,5 @@
 {
- "gerado_em": "2026-11-06T13:43:03-03:00",
+ "gerado_em": "2026-11-06T20:42:37-03:00",
  "data": "2026-11-06",
  "observacao": "Gerado automaticamente (Ticket360, Sympla e revisão semanal). Saída estimada pelas regras de tools/casas.json.",
  "eventos": [
@@ -260,22 +260,6 @@
    "lng": -46.680245
   },
   {
-   "nome": "Marina Mole + Nuvem Guia (RJ) na CaSa SLAMB",
-   "local": "Casa Slamb",
-   "endereco": "Rua Mateus Grou, Pinheiros, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-06",
-   "inicio": "19:00",
-   "fim_estimado": "20:45",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/marina-mole-nuvem-guia-rj-na-casa-slamb/3634800",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.56492,
-   "lng": -46.683744
-  },
-  {
    "nome": "Festa Bastardo 13 anos: Democracia e Carnaval - Abrindo os trabalhos p",
    "local": "FERVO - Ocupação cultural",
    "endereco": "Rua Carijós, Água Branca, São Paulo",
@@ -516,38 +500,6 @@
    "lng": -46.674864
   },
   {
-   "nome": "A FILHA DA... comédia com REGINA DUARTE e GABRIELA DUARTE",
-   "local": "TEATRO BDO JARAGUÁ",
-   "endereco": "Rua Martins Fontes,71 - CENTRO(metrô Anhang), São Paulo",
-   "tipo": "teatro",
-   "data": "2026-11-06",
-   "inicio": "20:00",
-   "fim_estimado": "22:00",
-   "incerteza_min": 30,
-   "publico_estimado": null,
-   "fonte": "https://bileto.sympla.com.br/event/125083",
-   "origem": "sympla",
-   "regra": "teatro",
-   "lat": -23.548567,
-   "lng": -46.645664
-  },
-  {
-   "nome": "ENTRE NÓS - OS MENTALISTAS",
-   "local": "Teatro Multiplan MorumbiShopping",
-   "endereco": "Av. Roque Petroni Jr., Piso G2,1089 - MORUMBISHOPPING, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-06",
-   "inicio": "20:00",
-   "fim_estimado": "21:45",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://bileto.sympla.com.br/event/115174",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.624403,
-   "lng": -46.699543
-  },
-  {
    "nome": "Segunda Chance",
    "local": "Teatro Sérgio Cardoso",
    "endereco": "Rua Rui Barbosa, 153, São Paulo",
@@ -772,22 +724,6 @@
    "lng": -46.663755
   },
   {
-   "nome": "CONVERSA RIBEIRA - 25 anos entre o chão e a invenção",
-   "local": "PSICADEIRO -SALA BEATRIZ SEGALL",
-   "endereco": "Rua Doutor Guilherme Bannitz, Itaim Bibi, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-06",
-   "inicio": "20:00",
-   "fim_estimado": "21:20",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/conversa-ribeira-25-anos-entre-o-chao-e-a-invencao/3620253",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.588914,
-   "lng": -46.672399
-  },
-  {
    "nome": "Show Dois Sóis em São Paulo - Turnê de volta à estrada",
    "local": "Teatro Paiol Cultural",
    "endereco": "Rua Amaral Gurgel, São Paulo",
@@ -944,8 +880,8 @@
    "fonte": "https://programaparadois.com.br/eventos-sao-paulo-novembro-2026/",
    "origem": "semana",
    "regra": "teatro",
-   "lat": -23.550557,
-   "lng": -46.712649,
+   "lat": -23.546226,
+   "lng": -46.716988,
    "local_aproximado": true
   },
   {
@@ -963,22 +899,6 @@
    "regra": "show",
    "lat": -23.561951,
    "lng": -46.689006
-  },
-  {
-   "nome": "BEATLES 4EVER",
-   "local": "Teatro Fernando Torres",
-   "endereco": "Rua Padre Estevão Pernet, 588, São Paulo",
-   "tipo": "teatro",
-   "data": "2026-11-06",
-   "inicio": "20:30",
-   "fim_estimado": "22:30",
-   "incerteza_min": 30,
-   "publico_estimado": null,
-   "fonte": "https://bileto.sympla.com.br/event/107968",
-   "origem": "sympla",
-   "regra": "teatro",
-   "lat": -23.541959,
-   "lng": -46.567142
   },
   {
    "nome": "Cello Cascino no Fino da Bossa",
@@ -1029,6 +949,22 @@
    "lng": -46.631409
   },
   {
+   "nome": "Frequências: Pedro Mizutani + Alan Bernardes",
+   "local": "Casa Natura Musical",
+   "endereco": "Rua Artur de Azevedo, 2134, São Paulo",
+   "tipo": "show",
+   "data": "2026-11-06",
+   "inicio": "21:00",
+   "fim_estimado": "22:45",
+   "incerteza_min": 45,
+   "publico_estimado": null,
+   "fonte": "https://bileto.sympla.com.br/event/128096",
+   "origem": "sympla",
+   "regra": "show",
+   "lat": -23.567799,
+   "lng": -46.690882
+  },
+  {
    "nome": "4 Frades e 2 Bebês - Uma Santa Comédia",
    "local": "Teatro Bibi Ferreira",
    "endereco": "Av. Brigadeiro Luiz Antônio, 931, São Paulo",
@@ -1043,6 +979,22 @@
    "regra": "teatro",
    "lat": -23.5695,
    "lng": -46.65079
+  },
+  {
+   "nome": "NUBANK HOUSE",
+   "local": "Nubank Parque",
+   "endereco": "R. Padre Antônio Tomás,72 - Portão C1, São Paulo",
+   "tipo": "show",
+   "data": "2026-11-06",
+   "inicio": "21:00",
+   "fim_estimado": "22:45",
+   "incerteza_min": 45,
+   "publico_estimado": null,
+   "fonte": "https://bileto.sympla.com.br/event/128741",
+   "origem": "sympla",
+   "regra": "show",
+   "lat": -23.527104,
+   "lng": -46.677247
   },
   {
    "nome": "TUDO É BAILE! O ROLÊ.",
@@ -1219,22 +1171,6 @@
    "regra": "teatro",
    "lat": -23.557492,
    "lng": -46.645071
-  },
-  {
-   "nome": "Frequências: Pedro Mizutani + Alan Bernardes",
-   "local": "Casa Natura Musical",
-   "endereco": "Rua Artur de Azevedo, 2134, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-06",
-   "inicio": "21:00",
-   "fim_estimado": "22:45",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://bileto.sympla.com.br/event/128096",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.567799,
-   "lng": -46.690882
   },
   {
    "nome": "SHOW 'VOZES DO GRUNGE' POR RODRIGO FIORA",
@@ -1903,7 +1839,7 @@
   }
  ],
  "geocodificacao": {
-  "com_local": 112,
+  "com_local": 108,
   "sem_local": 7
  }
 }
