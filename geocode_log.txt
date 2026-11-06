@@ -10,4 +10,4 @@ OK    Charanga do França | Mundo Pensante, 830, Rua Treze de Maio, Bixiga, Bela
 FALHA Baile da Sasha: After dos Maia | São Paulo
 OK    U2 Experience (U2 Rio) | Conjunto Nacional, 2073, Avenida Paulista, Cerqueira César, Consolação
 OK    Embalo com DJ Nuts | Mundo Pensante, 830, Rua Treze de Maio, Bixiga, Bela Vista, São Paulo,
-com local: 54  sem local: 4
+com local: 47  sem local: 4

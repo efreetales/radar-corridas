@@ -1,5 +1,5 @@
 {
- "gerado_em": "2026-11-05T14:20:00-03:00",
+ "gerado_em": "2026-11-05T21:06:17-03:00",
  "data": "2026-11-05",
  "observacao": "Gerado automaticamente (Ticket360, Sympla e revisão semanal). Saída estimada pelas regras de tools/casas.json.",
  "eventos": [
@@ -194,22 +194,6 @@
    "lng": -46.648968
   },
   {
-   "nome": "Noturno Parque Ibirapuera - Pontos Secretos 3º edição",
-   "local": "Parque do Ibirapuera - Portão 6",
-   "endereco": "Avenida Quarto Centenário, Jardim Luziania, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-05",
-   "inicio": "19:00",
-   "fim_estimado": "21:00",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/noturno-parque-ibirapuera-pontos-secretos-3o-edicao/3592823",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.593575,
-   "lng": -46.659629
-  },
-  {
    "nome": "Zezza Vic + Madhu",
    "local": "FFFront",
    "endereco": "Rua Purpurina, São Paulo",
@@ -224,22 +208,6 @@
    "regra": "show",
    "lat": -23.553517,
    "lng": -46.690237
-  },
-  {
-   "nome": "CORRE ESPECIAL - Runlloween 05/11/2026",
-   "local": "Beer4U Pinheiros",
-   "endereco": "Rua João Moura, Pinheiros, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-05",
-   "inicio": "19:00",
-   "fim_estimado": "21:00",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/corre-especial-runlloween-05-11-2026/3637475",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.560236,
-   "lng": -46.678025
   },
   {
    "nome": "Sepultura no Cine Joia",
@@ -274,22 +242,6 @@
    "lng": -46.66616
   },
   {
-   "nome": "PERSONAGEM DE QUINTA",
-   "local": "Laje Carioca",
-   "endereco": "Rua Frei Caneca, Consolação, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-05",
-   "inicio": "19:30",
-   "fim_estimado": "20:45",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/personagem-de-quinta/3630066",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.556024,
-   "lng": -46.656597
-  },
-  {
    "nome": "Palmeiras x Remo",
    "local": "Nubank Parque",
    "endereco": "Av. Francisco Matarazzo, 1705, Água Branca, São Paulo",
@@ -306,20 +258,36 @@
    "lng": -46.679021
   },
   {
-   "nome": "Elizeu França em São Paulo, SP Isso não estava na meta!",
-   "local": "Teatro Fernando Torres",
-   "endereco": "Rua Padre Estevão Pernet, 588, São Paulo",
+   "nome": "2º AutoMotor Experience",
+   "local": "Shopping Vila Olimpia",
+   "endereco": "Rua Olimpíadas, 360, São Paulo",
+   "tipo": "show",
+   "data": "2026-11-05",
+   "inicio": "20:00",
+   "fim_estimado": "21:45",
+   "incerteza_min": 45,
+   "publico_estimado": null,
+   "fonte": "https://bileto.sympla.com.br/event/128111",
+   "origem": "sympla",
+   "regra": "show",
+   "lat": -23.595126,
+   "lng": -46.686396
+  },
+  {
+   "nome": "GIL – ANDAR COM FÉ - O MUSICAL",
+   "local": "Teatro Santander",
+   "endereco": "Avenida Presidente Juscelino Kubitschek,2041, São Paulo",
    "tipo": "teatro",
    "data": "2026-11-05",
    "inicio": "20:00",
    "fim_estimado": "22:00",
    "incerteza_min": 30,
    "publico_estimado": null,
-   "fonte": "https://bileto.sympla.com.br/event/126661",
+   "fonte": "https://bileto.sympla.com.br/event/115256",
    "origem": "sympla",
    "regra": "teatro",
-   "lat": -23.541959,
-   "lng": -46.567142
+   "lat": -23.592931,
+   "lng": -46.693951
   },
   {
    "nome": "BOFETADA - QUINTA SEM VERGONHA feat CABARÉ DA KENIA - OPEN BAR 05/11/2",
@@ -450,22 +418,6 @@
    "lng": -46.652187
   },
   {
-   "nome": "Moisés, O Musical",
-   "local": "Av. Imperatriz Leopoldina, 550",
-   "endereco": "Avenida Imperatriz Leopoldina, Vila Leopoldina, São Paulo",
-   "tipo": "teatro",
-   "data": "2026-11-05",
-   "inicio": "20:00",
-   "fim_estimado": "21:00",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/moises-o-musical/3555812",
-   "origem": "sympla",
-   "regra": "teatro",
-   "lat": -23.528127,
-   "lng": -46.734331
-  },
-  {
    "nome": "Improvisadores Verdes Fritos",
    "local": "R. Maj. Sertório, 476",
    "endereco": "Rua Major Sertório, Vila Buarque, São Paulo",
@@ -496,22 +448,6 @@
    "regra": "teatro",
    "lat": -23.554083,
    "lng": -46.654831
-  },
-  {
-   "nome": "INTERFACES 46 LC CSEKÖ",
-   "local": "Atelier Cênico",
-   "endereco": "Rua Fortunato, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-05",
-   "inicio": "20:00",
-   "fim_estimado": "21:00",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/interfaces-46-lc-cseko/3593166",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.541078,
-   "lng": -46.651854
   },
   {
    "nome": "Café Hotel Apresenta Quarto 23",
@@ -609,22 +545,6 @@
    "lng": -46.596554
   },
   {
-   "nome": "Juliana Linhares - Até Cansar o Cansaço",
-   "local": "Casa Natura Musical",
-   "endereco": "Rua Artur de Azevedo, 2134, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-05",
-   "inicio": "21:00",
-   "fim_estimado": "22:45",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://bileto.sympla.com.br/event/126349",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.567799,
-   "lng": -46.690882
-  },
-  {
    "nome": "Rodrigo Marques - Stand-up Comedy",
    "local": "Clube Barbixas de Comédia",
    "endereco": "Rua Augusta, 1129, São Paulo",
@@ -655,22 +575,6 @@
    "regra": "show",
    "lat": -23.544833,
    "lng": -46.644916
-  },
-  {
-   "nome": "Anedotas no Estilo XXI (Cópia) (Cópia)",
-   "local": "Bixiga Comedy",
-   "endereco": "Rua Rui Barbosa, Bela Vista, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-05",
-   "inicio": "21:00",
-   "fim_estimado": "22:45",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/anedotas-no-estilo-xxi-copia-copia/3641809",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.56063,
-   "lng": -46.645268
   },
   {
    "nome": "De William a Shakespeare - 05/11/2026 - 21 horas",
@@ -896,22 +800,6 @@
    "lng": -46.659767
   },
   {
-   "nome": "Danilo & Davi",
-   "local": "Villa Country",
-   "endereco": "Av. Francisco Matarazzo, 774, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-05",
-   "inicio": "23:00",
-   "fim_estimado": "03:15",
-   "incerteza_min": 90,
-   "publico_estimado": null,
-   "fonte": "https://www.ticket360.com.br/evento/33892/ingressos-para-danilo-e-davi",
-   "origem": "ticket360",
-   "regra": "abertura",
-   "lat": -23.52717,
-   "lng": -46.670426
-  },
-  {
    "nome": "Embalo com DJ Nuts",
    "local": "Mundo Pensante",
    "endereco": "Rua Treze de Maio, 830, Bela Vista, São Paulo",
@@ -929,7 +817,7 @@
   }
  ],
  "geocodificacao": {
-  "com_local": 54,
+  "com_local": 47,
   "sem_local": 4
  }
 }
