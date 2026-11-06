@@ -1,13 +1,20 @@
-FALHA Torre Lavanda no Cr1a | São Paulo
-FALHA Yu Musick – Oreia | São Paulo
-OK    Sepultura no Cine Joia | Cine Joia, 82, Praça Carlos Gomes, Glicério, Sé, São Paulo, Região Sud
-OK    Palmeiras x Remo | 1705, Avenida Francisco Matarazzo, Barra Funda, São Paulo, Região Sude
-OK    Jean Luc Ponty Project – Imaginary Voyag | Conjunto Nacional, 2073, Avenida Paulista, Cerqueira César, Consolação
-OK    Alzira E + Corte + Saravá | 1838, Rua Cardeal Arcoverde, Vila Madalena, Pinheiros, São Paulo, Regi
-FALHA Banana Frita no Carmem Convida Aya Ibeji | São Paulo
-OK    Juliana Linhares | 2134, Rua Artur de Azevedo, Pinheiros, São Paulo, Região Sudeste, 0540
-OK    Charanga do França | Mundo Pensante, 830, Rua Treze de Maio, Bixiga, Bela Vista, São Paulo,
-FALHA Baile da Sasha: After dos Maia | São Paulo
-OK    U2 Experience (U2 Rio) | Conjunto Nacional, 2073, Avenida Paulista, Cerqueira César, Consolação
-OK    Embalo com DJ Nuts | Mundo Pensante, 830, Rua Treze de Maio, Bixiga, Bela Vista, São Paulo,
-com local: 47  sem local: 4
+OK    Cartas & Reflexos – estreia Aline Cruz | Jai Club, 2676, Rua Vergueiro, Vila Mariana, São Paulo, Região Sudeste
+OK    Dance Party – Mark Lambert & Blue Note B | Conjunto Nacional, 2073, Avenida Paulista, Cerqueira César, Consolação
+OK    Alegría – Cirque du Soleil | Avenida Professor Fonseca Rodrigues, Vila Ida, Alto de Pinheiros, São 
+OK    Show Rafael Castro | 1838, Rua Cardeal Arcoverde, Vila Madalena, Pinheiros, São Paulo, Regi
+OK    Pedro Mizutani e Alan Bernardes | 2134, Rua Artur de Azevedo, Pinheiros, São Paulo, Região Sudeste, 0540
+FALHA Real Distro x Domply | Centro, São Paulo
+FALHA Rala Coxa – Artigo de Luxo (estreia) | Pinheiros, São Paulo
+OK    Opeth – The Last Will & Testament | Espaço Unimed, 795, Rua Tagipuru, Barra Funda, São Paulo, Região Sudes
+OK    Whole Festival – Cruising Village Night | 306, Rua Dom José de Barros, República, São Paulo, Região Sudeste, 010
+FALHA Rolê das Minas | São Paulo
+FALHA Longa Noite das Bruxas | Vila Clementino, São Paulo
+OK    Big Allanbik | Conjunto Nacional, 2073, Avenida Paulista, Cerqueira César, Consolação
+OK    Baile Café con Ron (Quimbará & Bogotá) | Conjunto Nacional, 2073, Avenida Paulista, Cerqueira César, Consolação
+OK    Tecnoma (Badroom, Baileárica e Errada) | Estúdio Lâmina, 108, sala 41, Avenida São João, Glicério, Sé, São Paul
+FALHA 25's Britney & Fever | Barra Funda, São Paulo
+OK    Jai Warped Tour | Jai Club, 2676, Rua Vergueiro, Vila Mariana, São Paulo, Região Sudeste
+OK    Vennoweem: For All Freaks | Casa da Luz, 512, Rua Mauá, Santa Ifigênia, República, São Paulo, Regi
+FALHA Violação | São Paulo
+FALHA Caju a Festa | São Paulo
+com local: 112  sem local: 7
