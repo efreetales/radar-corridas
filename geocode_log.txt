@@ -2,8 +2,8 @@ FALHA Music On São Paulo | Vale do Anhangabaú, Centro, São Paulo
 FALHA Bandaiada: Belford + Coroa + Wasted Kids | Pinheiros, São Paulo
 OK    Plastique Noir + SDH (Espanha) | Madame Underground Club, 873, Rua Conselheiro Ramalho, Bixiga, Bela Vi
 OK    The White Buffalo | 694, Avenida Francisco Matarazzo, Barra Funda, São Paulo, Região Sudes
-OK    Kleiton & Kledir (1ª sessão) | Conjunto Nacional, 2073, Avenida Paulista, Cerqueira César, Consolação
-OK    Baile Disco convida Duo Yori | Conjunto Nacional, 2073, Avenida Paulista, Cerqueira César, Consolação
+OK    Kleiton & Kledir (1ª sessão) | Conjunto Nacional, 2073, Avenida Paulista, Consolação, São Paulo, Regi
+OK    Baile Disco convida Duo Yori | Conjunto Nacional, 2073, Avenida Paulista, Consolação, São Paulo, Regi
 OK    Alegría – Cirque du Soleil | Avenida Professor Fonseca Rodrigues, Boaçava, Alto de Pinheiros, São P
 FALHA Gatonet | Centro, São Paulo
 FALHA Bass Nexus: Spass & Sweettooth | São Paulo
@@ -12,8 +12,8 @@ OK    Sepultura – show final da carreira | Bosch Car Service Rede AutoHaz, 225
 OK    MARO | 2134, Rua Artur de Azevedo, Pinheiros, São Paulo, Região Sudeste, 0540
 FALHA Whole Festival – 24h Nonstop | São Paulo
 FALHA Symphonia: Bounce Attack | Jardim Paulista, São Paulo
-OK    Kleiton & Kledir (2ª sessão) | Conjunto Nacional, 2073, Avenida Paulista, Cerqueira César, Consolação
-OK    Patife Band | Conjunto Nacional, 2073, Avenida Paulista, Cerqueira César, Consolação
+OK    Kleiton & Kledir (2ª sessão) | Conjunto Nacional, 2073, Avenida Paulista, Consolação, São Paulo, Regi
+OK    Patife Band | Conjunto Nacional, 2073, Avenida Paulista, Consolação, São Paulo, Regi
 FALHA Cluster | Centro, São Paulo
 OK    Vortex 323 – Doppelgänger | Fabrique, 1071, Rua Barra Funda, Barra Funda, Santa Cecília, São Paulo
-com local: 184  sem local: 8
+com local: 176  sem local: 8

@@ -1,5 +1,5 @@
 {
- "gerado_em": "2026-11-07T12:37:17-03:00",
+ "gerado_em": "2026-11-07T19:39:34-03:00",
  "data": "2026-11-07",
  "observacao": "Gerado automaticamente (Ticket360, Sympla e revisão semanal). Saída estimada pelas regras de tools/casas.json.",
  "eventos": [
@@ -114,22 +114,6 @@
    "regra": "show",
    "lat": -23.479264,
    "lng": -46.655283
-  },
-  {
-   "nome": "PAGODIN.",
-   "local": "ARENA CASAVERDENSE",
-   "endereco": "Rua Saguairu, Casa VERDE, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-07",
-   "inicio": "13:00",
-   "fim_estimado": "21:45",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/pagodin/3519833",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.511319,
-   "lng": -46.662462
   },
   {
    "nome": "Dayo Session - Edição Exclusiva",
@@ -419,6 +403,22 @@
    "lng": -46.660088
   },
   {
+   "nome": "PAGODIN.",
+   "local": "ARENA CASAVERDENSE",
+   "endereco": "Rua Saguairu, Casa VERDE, São Paulo",
+   "tipo": "show",
+   "data": "2026-11-07",
+   "inicio": "16:45",
+   "fim_estimado": "21:45",
+   "incerteza_min": 45,
+   "publico_estimado": null,
+   "fonte": "https://www.sympla.com.br/evento/pagodin/3519833",
+   "origem": "sympla",
+   "regra": "show",
+   "lat": -23.511319,
+   "lng": -46.662462
+  },
+  {
    "nome": "Você Vai Se Quiser",
    "local": "Casa de Francisca",
    "endereco": "R. Quintino Bocaiúva,22 - 1º andar, São Paulo",
@@ -435,20 +435,20 @@
    "lng": -46.634712
   },
   {
-   "nome": "ME CANTE UMA HISTÓRIA, NATÁLIA BOERE RECEBE KIKO ZAMBIANCHI",
-   "local": "Arena B3",
-   "endereco": "Praça Antônio Prado,48, São Paulo",
+   "nome": "Navalha na Carne",
+   "local": "Espaço Parlapatões",
+   "endereco": "Praça Franklin Roosevelt,158, São Paulo",
    "tipo": "show",
    "data": "2026-11-07",
    "inicio": "17:00",
    "fim_estimado": "18:45",
    "incerteza_min": 45,
    "publico_estimado": null,
-   "fonte": "https://bileto.sympla.com.br/event/128834",
+   "fonte": "https://bileto.sympla.com.br/event/128642",
    "origem": "sympla",
    "regra": "show",
-   "lat": -23.545674,
-   "lng": -46.63469
+   "lat": -23.548389,
+   "lng": -46.646793
   },
   {
    "nome": "Espetáculo das Optativas 2026 - Nós",
@@ -467,22 +467,6 @@
    "lng": -46.682733
   },
   {
-   "nome": "NIGHT RUN TIETÊ",
-   "local": "Parque Bruno Covas",
-   "endereco": "Avenida Guido Caloi, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-07",
-   "inicio": "17:00",
-   "fim_estimado": "18:30",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/night-run-tiete/3640624",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.646937,
-   "lng": -46.727466
-  },
-  {
    "nome": "Vamo Nessa | Especial Exaltasamba com Pagode do QDL & convidados",
    "local": "Boteco do Guaraci",
    "endereco": "Rua Guaranésia, Vila Maria, São Paulo",
@@ -497,22 +481,6 @@
    "regra": "festa",
    "lat": -23.514869,
    "lng": -46.588295
-  },
-  {
-   "nome": "ASSIM FALAVA ZARATUSTRA - Palavra, Música e Filosofia",
-   "local": "PSICADEIRO -SALA BEATRIZ SEGALL",
-   "endereco": "Rua Doutor Guilherme Bannitz, Itaim Bibi, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-07",
-   "inicio": "17:00",
-   "fim_estimado": "18:30",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/assim-falava-zaratustra-palavra-musica-e-filosofia/3620304",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.588914,
-   "lng": -46.672399
   },
   {
    "nome": "Naquele Modelo #2",
@@ -547,22 +515,6 @@
    "lng": -46.482137
   },
   {
-   "nome": "Navalha na Carne",
-   "local": "Espaço Parlapatões",
-   "endereco": "Praça Franklin Roosevelt,158, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-07",
-   "inicio": "17:00",
-   "fim_estimado": "18:45",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://bileto.sympla.com.br/event/128642",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.548389,
-   "lng": -46.646793
-  },
-  {
    "nome": "Brutality Fest 4",
    "local": "CA.FUNDO",
    "endereco": "Rua Teodoro Sampaio, São Paulo",
@@ -577,54 +529,6 @@
    "regra": "show",
    "lat": -23.567584,
    "lng": -46.69421
-  },
-  {
-   "nome": "SÁB 18h - 07/11/26 - Natal Mágico Circo Spacial",
-   "local": "Circo Spacial",
-   "endereco": "Avenida Atlântica, Jardim Tres Marias, São Paulo",
-   "tipo": "teatro",
-   "data": "2026-11-07",
-   "inicio": "18:00",
-   "fim_estimado": "19:30",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/sab-18h-07-11-26-natal-magico-circo-spacial/3617739",
-   "origem": "sympla",
-   "regra": "teatro",
-   "lat": -23.689868,
-   "lng": -46.715762
-  },
-  {
-   "nome": "[07/10 - 18h] Festival da Sociedade | O espetáculo de comédia mais com",
-   "local": "Sociedade do Humor",
-   "endereco": "Rua Bela Flor, Vila da Saúde, São Paulo",
-   "tipo": "teatro",
-   "data": "2026-11-07",
-   "inicio": "18:00",
-   "fim_estimado": "19:00",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/07-10-18h-festival-da-sociedade-o-espetaculo-de-comedia-mais-completo-da-cidade/3643075",
-   "origem": "sympla",
-   "regra": "teatro",
-   "lat": -23.603812,
-   "lng": -46.631789
-  },
-  {
-   "nome": "(STAND-UP GRATUITO) Matinê de Humor - Comédia Stand Up",
-   "local": "Acústico Comedy",
-   "endereco": "Rua da Consolação, Consolação, São Paulo",
-   "tipo": "teatro",
-   "data": "2026-11-07",
-   "inicio": "18:00",
-   "fim_estimado": "19:30",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/stand-up-gratuito-matine-de-humor-comedia-stand-up/3643893",
-   "origem": "sympla",
-   "regra": "teatro",
-   "lat": -23.555849,
-   "lng": -46.663484
   },
   {
    "nome": "Samba do POEIRA PURA - São Paulo!",
@@ -643,54 +547,6 @@
    "lng": -46.663842
   },
   {
-   "nome": "FESTIVAL DE ESPETÁCULOS - COLÉGIO MAHA-DEI: PETER PAN / COLÉGIO PENHA ",
-   "local": "COLÉGIO PENHA DE FRANÇA",
-   "endereco": "Rua Maria Teresa Assunção, Vila Sao Geraldo, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-07",
-   "inicio": "18:00",
-   "fim_estimado": "19:00",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/festival-de-espetaculos-colegio-maha-dei-peter-pan-colegio-penha-de-franca-pinoquio/3552445",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.516118,
-   "lng": -46.541768
-  },
-  {
-   "nome": "Aulão Das Estrelas Quarta Edição",
-   "local": "Why not arena",
-   "endereco": "Rua Deputado João Sussumu Hirata, Panamby, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-07",
-   "inicio": "18:00",
-   "fim_estimado": "22:00",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/aulao-das-estrelas-quarta-edicao/3602791",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.631068,
-   "lng": -46.728695
-  },
-  {
-   "nome": "Show Lírico Beneficente Essência com Andrea Bien",
-   "local": "Auditório Bezerra de Menezes - FEESP",
-   "endereco": "Rua Maria Paula, Bela Vista, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-07",
-   "inicio": "18:00",
-   "fim_estimado": "19:30",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/show-lirico-beneficente-essencia-com-andrea-bien/3602717",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.551734,
-   "lng": -46.638997
-  },
-  {
    "nome": "Hallowend",
    "local": "West End",
    "endereco": "Rua Tonelero, São Paulo",
@@ -705,22 +561,6 @@
    "regra": "show",
    "lat": -23.532231,
    "lng": -46.704194
-  },
-  {
-   "nome": "Espetáculo ATRÁS DO NEVOEIRO: O corpo não desaparece (Sessão 1)",
-   "local": "Teatro Hórus - Centro Cultural OCA",
-   "endereco": "Rua Juventus, Mooca, São Paulo",
-   "tipo": "teatro",
-   "data": "2026-11-07",
-   "inicio": "18:00",
-   "fim_estimado": "19:00",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/espetaculo-atras-do-nevoeiro-o-corpo-nao-desaparece-sessao-1/3594847",
-   "origem": "sympla",
-   "regra": "teatro",
-   "lat": -23.568167,
-   "lng": -46.593516
   },
   {
    "nome": "Bandaiada: Belford + Coroa + Wasted Kids",
@@ -768,22 +608,6 @@
    "regra": "show",
    "lat": -23.618751,
    "lng": -46.678362
-  },
-  {
-   "nome": "Confraria Comedy",
-   "local": "Clube Barbixas de Comédia",
-   "endereco": "Rua Augusta, 1129, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-07",
-   "inicio": "19:00",
-   "fim_estimado": "20:45",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://bileto.sympla.com.br/event/80898",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.554357,
-   "lng": -46.655983
   },
   {
    "nome": "DR - Discutindo A Relação",
@@ -1490,6 +1314,22 @@
    "lng": -46.541768
   },
   {
+   "nome": "FESTIVAL DE ESPETÁCULOS - COLÉGIO MAHA-DEI: MATILDA / COLÉGIO PENHA DE",
+   "local": "COLÉGIO PENHA DE FRANÇA",
+   "endereco": "Rua Maria Teresa Assunção, Vila Sao Geraldo, São Paulo",
+   "tipo": "show",
+   "data": "2026-11-07",
+   "inicio": "20:00",
+   "fim_estimado": "21:15",
+   "incerteza_min": 45,
+   "publico_estimado": null,
+   "fonte": "https://www.sympla.com.br/evento/festival-de-espetaculos-colegio-maha-dei-matilda-colegio-penha-de-franca-o-pequeno-principe/3552499",
+   "origem": "sympla",
+   "regra": "show",
+   "lat": -23.516118,
+   "lng": -46.541768
+  },
+  {
    "nome": "Mar Aberto _ 2ª temporada - Arroio Núcleo de Dança",
    "local": "A Próxima Companhia",
    "endereco": "Rua Barão de Campinas, São Paulo",
@@ -1650,6 +1490,22 @@
    "lng": -46.652939
   },
   {
+   "nome": "SCAP! Vol.06",
+   "local": "Rancho Mont Gomer",
+   "endereco": "Avenida Santa Inês, Mandaqui, São Paulo",
+   "tipo": "show",
+   "data": "2026-11-07",
+   "inicio": "20:00",
+   "fim_estimado": "03:45",
+   "incerteza_min": 45,
+   "publico_estimado": null,
+   "fonte": "https://www.sympla.com.br/evento/scap-vol-06/3631691",
+   "origem": "sympla",
+   "regra": "show",
+   "lat": -23.474542,
+   "lng": -46.630541
+  },
+  {
    "nome": "The White Buffalo",
    "local": "Audio",
    "endereco": "Av. Francisco Matarazzo, 694, Água Branca, São Paulo",
@@ -1776,6 +1632,22 @@
    "lng": -46.689383
   },
   {
+   "nome": "Viva a Música Brasileira|LEXY - Yasmin Ferrari - Sávio Reali",
+   "local": "Cardeal Pub",
+   "endereco": "Rua Cardeal Arcoverde, Pinheiros, São Paulo",
+   "tipo": "show",
+   "data": "2026-11-07",
+   "inicio": "20:15",
+   "fim_estimado": "00:45",
+   "incerteza_min": 45,
+   "publico_estimado": null,
+   "fonte": "https://www.sympla.com.br/evento/viva-a-musica-brasileira-lexy-yasmin-ferrari-savio-reali/3614749",
+   "origem": "sympla",
+   "regra": "show",
+   "lat": -23.562365,
+   "lng": -46.689383
+  },
+  {
    "nome": "PROVA DE VIDA",
    "local": "TUCA / PUC-SP",
    "endereco": "Rua Monte Alegre, 1024 - Perdizes, São Paulo",
@@ -1886,6 +1758,38 @@
    "regra": "show",
    "lat": -23.549058,
    "lng": -46.641955
+  },
+  {
+   "nome": "Espetáculo ATRÁS DO NEVOEIRO: O corpo não desaparece (Sessão 2)",
+   "local": "Teatro Hórus - Centro Cultural OCA",
+   "endereco": "Rua Juventus, Mooca, São Paulo",
+   "tipo": "teatro",
+   "data": "2026-11-07",
+   "inicio": "20:30",
+   "fim_estimado": "21:30",
+   "incerteza_min": 45,
+   "publico_estimado": null,
+   "fonte": "https://www.sympla.com.br/evento/espetaculo-atras-do-nevoeiro-o-corpo-nao-desaparece-sessao-2/3594867",
+   "origem": "sympla",
+   "regra": "teatro",
+   "lat": -23.568167,
+   "lng": -46.593516
+  },
+  {
+   "nome": "MARO - SO MUCH HAS CHANGED",
+   "local": "Casa Natura Musical",
+   "endereco": "Rua Artur de Azevedo, 2134, São Paulo",
+   "tipo": "show",
+   "data": "2026-11-07",
+   "inicio": "21:00",
+   "fim_estimado": "22:45",
+   "incerteza_min": 45,
+   "publico_estimado": null,
+   "fonte": "https://bileto.sympla.com.br/event/121158",
+   "origem": "sympla",
+   "regra": "show",
+   "lat": -23.567799,
+   "lng": -46.690882
   },
   {
    "nome": "Lelê Rodrigues em Solteiro sabor Casado - Comédia",
@@ -2000,22 +1904,6 @@
    "lng": -46.645268
   },
   {
-   "nome": "Barnabé do Brejo - Replay de Niver | SP | Bixiga Comedy",
-   "local": "Bixiga Comedy Club",
-   "endereco": "Rua Rui Barbosa, Bela Vista, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-07",
-   "inicio": "21:00",
-   "fim_estimado": "22:45",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/barnabe-do-brejo-replay-de-niver-sp-bixiga-comedy/3634014",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.56063,
-   "lng": -46.645268
-  },
-  {
    "nome": "VOCÊ NÃO VIU NADA - COMÉDIA STAND UP - SÁBADO",
    "local": "Lilith Comedy Club",
    "endereco": "Rua Capitão Pacheco e Chaves, Vila Prudente, São Paulo",
@@ -2094,22 +1982,6 @@
    "regra": "teatro",
    "lat": -23.557492,
    "lng": -46.645071
-  },
-  {
-   "nome": "MARO - SO MUCH HAS CHANGED",
-   "local": "Casa Natura Musical",
-   "endereco": "Rua Artur de Azevedo, 2134, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-07",
-   "inicio": "21:00",
-   "fim_estimado": "22:45",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://bileto.sympla.com.br/event/121158",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.567799,
-   "lng": -46.690882
   },
   {
    "nome": "PIADAS CANÁBICAS COM TIAGO CARVALHO 07/11 HARD BEER",
@@ -3070,7 +2942,7 @@
   }
  ],
  "geocodificacao": {
-  "com_local": 184,
+  "com_local": 176,
   "sem_local": 8
  }
 }
