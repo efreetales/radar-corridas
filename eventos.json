@@ -1,5 +1,5 @@
 {
- "gerado_em": "2026-11-09T16:44:09-03:00",
+ "gerado_em": "2026-11-09T22:58:55-03:00",
  "data": "2026-11-09",
  "observacao": "Gerado automaticamente (Ticket360, Sympla e revisão semanal). Saída estimada pelas regras de tools/casas.json.",
  "eventos": [
@@ -52,22 +52,6 @@
    "lng": -46.639557
   },
   {
-   "nome": "Get Up Stand Up Comedy 09/11",
-   "local": "Açaí Beach Bar",
-   "endereco": "Rua Augusta, Centro, São Paulo",
-   "tipo": "teatro",
-   "data": "2026-11-09",
-   "inicio": "19:00",
-   "fim_estimado": "22:00",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/get-up-stand-up-comedy-09-11/3646522",
-   "origem": "sympla",
-   "regra": "teatro",
-   "lat": -23.555157,
-   "lng": -46.656923
-  },
-  {
    "nome": "60 ANOS DE DOIS PERDIDOS NUMA NOITE SUJA",
    "local": "Pequeno Ato",
    "endereco": "Rua Doutor Teodoro Baima, Vila Buarque, São Paulo",
@@ -98,22 +82,6 @@
    "regra": "show",
    "lat": -23.548832,
    "lng": -46.646254
-  },
-  {
-   "nome": "Brasil Contemporâneo - Fernando Schuler & Martha Gabriel.",
-   "local": "Teatro Iguatemi",
-   "endereco": "Av. Brigadeiro Faria Lima,2232 - 10° Andar, São Paulo",
-   "tipo": "teatro",
-   "data": "2026-11-09",
-   "inicio": "20:00",
-   "fim_estimado": "22:00",
-   "incerteza_min": 30,
-   "publico_estimado": null,
-   "fonte": "https://bileto.sympla.com.br/event/127810",
-   "origem": "sympla",
-   "regra": "teatro",
-   "lat": -23.57704,
-   "lng": -46.690766
   },
   {
    "nome": "O Ovo e a Galinha",
@@ -162,38 +130,6 @@
    "regra": "show",
    "lat": -23.581457,
    "lng": -46.691832
-  },
-  {
-   "nome": "BIXIGA 70: ENTRE O ESTÚDIO E O PALCO, HAVIA UM TEATRO.",
-   "local": "Centro da Terra",
-   "endereco": "Rua Piracuama, Perdizes, São Paulo",
-   "tipo": "teatro",
-   "data": "2026-11-09",
-   "inicio": "20:00",
-   "fim_estimado": "22:00",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/bixiga-70-entre-o-estudio-e-o-palco-havia-um-teatro/3612551",
-   "origem": "sympla",
-   "regra": "teatro",
-   "lat": -23.540493,
-   "lng": -46.679971
-  },
-  {
-   "nome": "CRIATURA, UMA AUTÓPSIA",
-   "local": "ºAndar",
-   "endereco": "Rua Doutor Gabriel dos Santos, Santa Cecília, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-09",
-   "inicio": "20:00",
-   "fim_estimado": "21:10",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/criatura-uma-autopsia/3497017",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.533338,
-   "lng": -46.658438
   },
   {
    "nome": "Ballet de São Petesburgo apresenta: A BELA ADORMECIDA",
@@ -261,7 +197,7 @@
   }
  ],
  "geocodificacao": {
-  "com_local": 16,
+  "com_local": 12,
   "sem_local": 0
  }
 }
