@@ -1,4 +1,13 @@
-FALHA Raven Vinyl Club | São Paulo
-OK    Marina Lima – 15 anos do Cine Joia | Cine Joia, 82, Praça Carlos Gomes, Glicério, Sé, São Paulo, Região Sud
-OK    Marty Friedman | Rua Iguatemi, Vila Olímpia, Itaim Bibi, São Paulo, Região Sudeste, 014
-com local: 22  sem local: 1
+FALHA Fabio Faustino Quarteto | Bela Vista, São Paulo
+OK    Cachorro Grande | Cine Joia, 82, Praça Carlos Gomes, Glicério, Sé, São Paulo, Região Sud
+OK    Johnny Clarke | 180, Rua Treze de Maio, Bixiga, Bela Vista, São Paulo, Região Sudeste,
+FALHA Cine Cafundó + Baile do Mannrich | Pinheiros, São Paulo
+OK    Hayley Williams | Espaço Unimed, 795, Rua Tagipuru, Barra Funda, São Paulo, Região Sudes
+OK    Petrilli + Beco | Jai Club, 2676, Rua Vergueiro, Vila Mariana, São Paulo, Região Sudeste
+OK    Anná + Tuany + Piclenéticas | 1838, Rua Cardeal Arcoverde, Vila Madalena, Pinheiros, São Paulo, Regi
+OK    Blitz | Shopping Vila Olímpia, 360, Rua Olimpíadas, Vila Olímpia, Itaim Bibi, 
+OK    Afrojam-SP Axé & Funk | Mundo Pensante, 830, Rua Treze de Maio, Bixiga, Bela Vista, São Paulo,
+OK    Audição Nosso Interno Club (DJ Ariel) | 1100, Avenida Nove de Julho, Bixiga, Bela Vista, São Paulo, Região Sud
+OK    Magma Club Edition | 398, Rua Mato Grosso, Consolação, São Paulo, Região Sudeste, 01239-040
+OK    Embalo com DJ Nuts | Mundo Pensante, 830, Rua Treze de Maio, Bixiga, Bela Vista, São Paulo,
+com local: 57  sem local: 2
