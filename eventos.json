@@ -1,56 +1,8 @@
 {
- "gerado_em": "2026-11-11T14:03:44-03:00",
+ "gerado_em": "2026-11-11T22:28:03-03:00",
  "data": "2026-11-11",
  "observacao": "Gerado automaticamente (Ticket360, Sympla e revisão semanal). Saída estimada pelas regras de tools/casas.json.",
  "eventos": [
-  {
-   "nome": "Retail Media FC Summit 2026.2",
-   "local": "Dinastia Aceleradora",
-   "endereco": "Avenida Europa, Jardim Europa, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-11",
-   "inicio": "08:00",
-   "fim_estimado": "09:45",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/retail-media-fc-summit-2026-2/3621363",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.577645,
-   "lng": -46.680984
-  },
-  {
-   "nome": "A Conversa que Vira Pauta - 3ª edição",
-   "local": "D'Brescia Churrascaria – Faria Lima",
-   "endereco": "Avenida Brigadeiro Faria Lima, Itaim Bibi, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-11",
-   "inicio": "08:30",
-   "fim_estimado": "10:15",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/a-conversa-que-vira-pauta-3a-edicao/3609518",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.583814,
-   "lng": -46.683191
-  },
-  {
-   "nome": "Frota Summit 2026",
-   "local": "Espaço Center 3",
-   "endereco": "Avenida Paulista, Bela Vista, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-11",
-   "inicio": "09:00",
-   "fim_estimado": "10:45",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/frota-summit-2026/3486555",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.5579,
-   "lng": -46.659136
-  },
   {
    "nome": "Raven Vinyl Club: TODA QUARTA-FEIRA",
    "local": "The Raven Music Bar",
@@ -66,22 +18,6 @@
    "regra": "show",
    "lat": -23.554822,
    "lng": -46.688657
-  },
-  {
-   "nome": "Grupo Recomendo - Unidade Santana - Fazendo parcerias e negócios na re",
-   "local": "Recomendo Santana - North Beer",
-   "endereco": "Avenida Luiz Dumont Villares, Santana, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-11",
-   "inicio": "18:00",
-   "fim_estimado": "20:30",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/grupo-recomendo-unidade-santana-fazendo-parcerias-e-negocios-na-regiao/3624944",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.489655,
-   "lng": -46.610351
   },
   {
    "nome": "Raven Vinyl Club",
@@ -131,22 +67,6 @@
    "lng": -46.679042
   },
   {
-   "nome": "sounós | AI Wine",
-   "local": "Vila Madalena",
-   "endereco": "Rua Purpurina, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-11",
-   "inicio": "18:30",
-   "fim_estimado": "22:00",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/sounos-ai-wine/3598645",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.55372,
-   "lng": -46.690895
-  },
-  {
    "nome": "AUDIÇÃO DO NOVO ÁLBUM - CORUJA",
    "local": "Local a definir",
    "endereco": "São Paulo",
@@ -163,52 +83,20 @@
    "lng": -46.639557
   },
   {
-   "nome": "BRIDGE | UMA PONTE ATRAVÉS DA MÚSICA | 11/11 |19:00",
-   "local": "Espaço O acustico",
-   "endereco": "Rua Maria Cândida, Carandiru, São Paulo",
-   "tipo": "show",
+   "nome": "Peça Teatral Multimídia Nossa Palestina",
+   "local": "Al Janiah",
+   "endereco": "Rua Rui Barbosa, São Paulo",
+   "tipo": "teatro",
    "data": "2026-11-11",
-   "inicio": "19:00",
-   "fim_estimado": "22:00",
-   "incerteza_min": 45,
+   "inicio": "18:35",
+   "fim_estimado": "20:35",
+   "incerteza_min": 30,
    "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/bridge-uma-ponte-atraves-da-musica-11-11-19-00/3626942",
+   "fonte": "https://www.sympla.com.br/evento/peca-teatral-multimidia-nossa-palestina/3626299",
    "origem": "sympla",
-   "regra": "show",
-   "lat": -23.502045,
-   "lng": -46.611917
-  },
-  {
-   "nome": "Get Open Mic - Quartas 20h - 11/11",
-   "local": "Açaí Beach Bar",
-   "endereco": "Rua Augusta, Centro, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-11",
-   "inicio": "19:00",
-   "fim_estimado": "22:00",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/get-open-mic-quartas-20h-11-11/3646527",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.555157,
-   "lng": -46.656923
-  },
-  {
-   "nome": "Criar & Fluir Vino #1: Experiência de aquarela, mindfulness e vinho",
-   "local": "Vino! Moca",
-   "endereco": "Rua Lituânia, Mooca, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-11",
-   "inicio": "19:00",
-   "fim_estimado": "21:00",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/criar-fluir-vino-1-experiencia-de-aquarela-mindfulness-e-vinho/3628657",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.564479,
-   "lng": -46.586789
+   "regra": "teatro",
+   "lat": -23.557586,
+   "lng": -46.645212
   },
   {
    "nome": "Marina Lima – 15 anos do Cine Joia",
@@ -291,22 +179,6 @@
    "lng": -46.658438
   },
   {
-   "nome": "Stevan Gaipo - 10 anos de estrada | SP | Acústico Comedy",
-   "local": "Acustico Comedy",
-   "endereco": "Rua da Consolação, Consolação, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-11",
-   "inicio": "20:00",
-   "fim_estimado": "21:59",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/stevan-gaipo-10-anos-de-estrada-sp-acustico-comedy/3637647",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.555849,
-   "lng": -46.663484
-  },
-  {
    "nome": "Papagaio Comedy Club 11/11",
    "local": "R. Augusta, 550",
    "endereco": "Rua Augusta, São Paulo",
@@ -355,38 +227,6 @@
    "lng": -46.646133
   },
   {
-   "nome": "11 de NOVEMBRO - PERDA MAIOR",
-   "local": "CaSa SLamB",
-   "endereco": "Rua Mateus Grou, Pinheiros, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-11",
-   "inicio": "20:00",
-   "fim_estimado": "21:00",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/11-de-novembro-perda-maior/3603478",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.56492,
-   "lng": -46.683744
-  },
-  {
-   "nome": "Giovana Fagundes em Testando Novo Show",
-   "local": "Clube Barbixas de Comédia",
-   "endereco": "Rua Augusta, 1129, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-11",
-   "inicio": "20:30",
-   "fim_estimado": "22:15",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://bileto.sympla.com.br/event/115323",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.554357,
-   "lng": -46.655983
-  },
-  {
    "nome": "11.11| Pãozinho Solidário",
    "local": "Ponto de Encontro dos Pãoziners",
    "endereco": "Rua Líbero Badaró, Centro Histórico de São Paulo, São Paulo",
@@ -401,22 +241,6 @@
    "regra": "show",
    "lat": -23.544624,
    "lng": -46.635154
-  },
-  {
-   "nome": "DELVON LAMARR ORGAN TRIO",
-   "local": "Bourbon Street",
-   "endereco": "Rua dos Chanes, 127, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-11",
-   "inicio": "21:00",
-   "fim_estimado": "22:45",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://bileto.sympla.com.br/event/124852",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.614095,
-   "lng": -46.667509
   },
   {
    "nome": "The B-Side Session - Rubem Farias - JAZZNOSFUNDOS 20 ANOS no JazzB (QU",
@@ -484,38 +308,6 @@
    "local_aproximado": true
   },
   {
-   "nome": "Pegada de Gorila",
-   "local": "Casa de Francisca",
-   "endereco": "R. Quintino Bocaiúva,22 - 1º andar, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-11",
-   "inicio": "21:30",
-   "fim_estimado": "23:15",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://bileto.sympla.com.br/event/129901",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.548776,
-   "lng": -46.634712
-  },
-  {
-   "nome": "Bruno Cardozo // Convida Thiago Espirito Santo // 2ª Mostra de Piano &",
-   "local": "Casa de Francisca",
-   "endereco": "R. Quintino Bocaiúva,22 - 1º andar, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-11",
-   "inicio": "21:30",
-   "fim_estimado": "23:15",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://bileto.sympla.com.br/event/128724",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.548776,
-   "lng": -46.634712
-  },
-  {
    "nome": "Douglas Germano // Branco",
    "local": "Casa de Francisca",
    "endereco": "R. Quintino Bocaiúva,22 - 1º andar, São Paulo",
@@ -581,7 +373,7 @@
   }
  ],
  "geocodificacao": {
-  "com_local": 35,
+  "com_local": 22,
   "sem_local": 1
  }
 }
