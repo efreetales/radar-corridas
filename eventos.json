@@ -1,24 +1,8 @@
 {
- "gerado_em": "2026-11-12T14:31:37-03:00",
+ "gerado_em": "2026-11-12T21:08:55-03:00",
  "data": "2026-11-12",
  "observacao": "Gerado automaticamente (Ticket360, Sympla e revisão semanal). Saída estimada pelas regras de tools/casas.json.",
  "eventos": [
-  {
-   "nome": "Meetup ABFintechs | Duplicata Escritural: da Regulação à Operação",
-   "local": "Distrito",
-   "endereco": "Avenida Rebouças, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-12",
-   "inicio": "17:00",
-   "fim_estimado": "21:00",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/meetup-abfintechs-duplicata-escritural-da-regulacao-a-operacao/3627259",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.563631,
-   "lng": -46.675947
-  },
   {
    "nome": "Raven After-Work com Caiê Masseran",
    "local": "The Raven Music Bar",
@@ -99,20 +83,20 @@
    "lng": -46.691832
   },
   {
-   "nome": "Especial Quinta Delas | Experiência Guirlandas de Natal",
-   "local": "Edifício Geon",
-   "endereco": "Rua Vilela, Tatuapé, São Paulo",
+   "nome": "MD LOUNGE APRESENTA: NAHORAH",
+   "local": "MD LOUNGE",
+   "endereco": "Avenida Jacu-Pêssego, São Paulo",
    "tipo": "show",
    "data": "2026-11-12",
    "inicio": "18:30",
-   "fim_estimado": "20:30",
+   "fim_estimado": "20:15",
    "incerteza_min": 45,
    "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/especial-quinta-delas-experiencia-guirlandas-de-natal/3623023",
+   "fonte": "https://www.sympla.com.br/evento/md-lounge-apresenta-nahorah/3653822",
    "origem": "sympla",
    "regra": "show",
-   "lat": -23.540284,
-   "lng": -46.566619
+   "lat": -23.545691,
+   "lng": -46.446582
   },
   {
    "nome": "PHOTOWALK DISTRITO MOOCA NOTURNO | O LADO MAIS MODERNO DO BAIRRO",
@@ -227,38 +211,6 @@
    "lng": -46.64502
   },
   {
-   "nome": "Jantar às Cegas - Sabores, Sensações e Sentidos",
-   "local": "Alameda dos Guatás, 490",
-   "endereco": "Alameda dos Guatás, Vila da Saúde, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-12",
-   "inicio": "19:00",
-   "fim_estimado": "21:00",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/jantar-as-cegas-sabores-sensacoes-e-sentidos/3187016",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.614314,
-   "lng": -46.642814
-  },
-  {
-   "nome": "The Cake Canvas by Rebel",
-   "local": "Casa Banibas",
-   "endereco": "Rua Banibás, Alto de Pinheiros, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-12",
-   "inicio": "19:00",
-   "fim_estimado": "21:00",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/the-cake-canvas-by-rebel/3619703",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.553627,
-   "lng": -46.70682
-  },
-  {
    "nome": "SEU ZÉ - uma peça ritual de teatro",
    "local": "Complexo Cultural Funarte SP",
    "endereco": "Alameda Nothmann, São Paulo",
@@ -370,6 +322,22 @@
    "lng": -46.691733
   },
   {
+   "nome": "PIX OU PRESENTE O BAILE DO JVILA",
+   "local": "MD LOUNGE",
+   "endereco": "Avenida Jacu-Pêssego, São Paulo",
+   "tipo": "festa",
+   "data": "2026-11-12",
+   "inicio": "19:45",
+   "fim_estimado": "01:45",
+   "incerteza_min": 120,
+   "publico_estimado": null,
+   "fonte": "https://www.sympla.com.br/evento/pix-ou-presente-o-baile-do-jvila/3653833",
+   "origem": "sympla",
+   "regra": "festa",
+   "lat": -23.545691,
+   "lng": -46.446582
+  },
+  {
    "nome": "O Jogo Duro do Amor",
    "local": "Teatro do Shopping Villa Lobos",
    "endereco": "Av. Dra. Ruth Cardoso ,4777 - 4º andar, São Paulo",
@@ -384,22 +352,6 @@
    "regra": "teatro",
    "lat": -23.551872,
    "lng": -46.721986
-  },
-  {
-   "nome": "MARCO LUQUE - EM É DISSO QUE EU TÔ FALANDO!",
-   "local": "Teatro Fernando Torres",
-   "endereco": "Rua Padre Estevão Pernet, 588, São Paulo",
-   "tipo": "teatro",
-   "data": "2026-11-12",
-   "inicio": "20:00",
-   "fim_estimado": "22:00",
-   "incerteza_min": 30,
-   "publico_estimado": null,
-   "fonte": "https://bileto.sympla.com.br/event/105630",
-   "origem": "sympla",
-   "regra": "teatro",
-   "lat": -23.541959,
-   "lng": -46.567142
   },
   {
    "nome": "BOFETADA - QUINTA SEM VERGONHA feat CABARÉ DA KENIA - OPEN BAR 12/11/2",
@@ -482,22 +434,6 @@
    "lng": -46.653293
   },
   {
-   "nome": "INEFÁVEL",
-   "local": "ºAndar",
-   "endereco": "Rua Doutor Gabriel dos Santos, Santa Cecília, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-12",
-   "inicio": "20:00",
-   "fim_estimado": "20:50",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/inefavel/3637818",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.533338,
-   "lng": -46.658438
-  },
-  {
    "nome": "Moisés, O Musical",
    "local": "Av. Imperatriz Leopoldina, 550",
    "endereco": "Avenida Imperatriz Leopoldina, Vila Leopoldina, São Paulo",
@@ -512,6 +448,22 @@
    "regra": "teatro",
    "lat": -23.528127,
    "lng": -46.734331
+  },
+  {
+   "nome": "Kejo & Friends",
+   "local": "ribas espetaria",
+   "endereco": "Rua Carmine Perrela, São Paulo",
+   "tipo": "show",
+   "data": "2026-11-12",
+   "inicio": "20:00",
+   "fim_estimado": "21:45",
+   "incerteza_min": 45,
+   "publico_estimado": null,
+   "fonte": "https://www.sympla.com.br/evento/kejo-friends/3639653",
+   "origem": "sympla",
+   "regra": "show",
+   "lat": -23.641872,
+   "lng": -46.451899
   },
   {
    "nome": "A CULPA É DOS JAVALIS",
@@ -658,20 +610,36 @@
    "lng": -46.689006
   },
   {
-   "nome": "Jógujogo",
-   "local": "Clube Barbixas de Comédia",
-   "endereco": "Rua Augusta, 1129, São Paulo",
+   "nome": "OCUPAÇÃO NEGRUZZ - Com Rubi & Evandro Camperom",
+   "local": "CASA DA HISTÓRIA",
+   "endereco": "Rua Doutor Francisco Figueiredo Barreto, Vila Anglo Brasileira, São Paulo",
    "tipo": "show",
    "data": "2026-11-12",
-   "inicio": "20:30",
-   "fim_estimado": "22:15",
+   "inicio": "20:05",
+   "fim_estimado": "21:50",
    "incerteza_min": 45,
    "publico_estimado": null,
-   "fonte": "https://bileto.sympla.com.br/event/109040",
+   "fonte": "https://www.sympla.com.br/evento/ocupacao-negruzz-com-rubi-evandro-camperom/3634726",
    "origem": "sympla",
    "regra": "show",
-   "lat": -23.554357,
-   "lng": -46.655983
+   "lat": -23.531509,
+   "lng": -46.69327
+  },
+  {
+   "nome": "CHARLIE E A FANTÁSTICA FÁBRICA DE CHOCOLATE",
+   "local": "Teatro Mooca",
+   "endereco": "Rua Capitão Pacheco e Chaves,313, São Paulo",
+   "tipo": "teatro",
+   "data": "2026-11-12",
+   "inicio": "20:30",
+   "fim_estimado": "22:30",
+   "incerteza_min": 30,
+   "publico_estimado": null,
+   "fonte": "https://bileto.sympla.com.br/event/127827",
+   "origem": "sympla",
+   "regra": "teatro",
+   "lat": -23.579747,
+   "lng": -46.596554
   },
   {
    "nome": "Trio Dona Zefa no Canto da Ema",
@@ -752,22 +720,6 @@
    "regra": "show",
    "lat": -23.544833,
    "lng": -46.644916
-  },
-  {
-   "nome": "ANTIÉTICOS SHOW - STAND UP COMEDY - BIXIGA COMEDY",
-   "local": "Bixiga Comedy Club",
-   "endereco": "Rua Rui Barbosa, Bela Vista, São Paulo",
-   "tipo": "teatro",
-   "data": "2026-11-12",
-   "inicio": "21:00",
-   "fim_estimado": "23:00",
-   "incerteza_min": 30,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/antieticos-show-stand-up-comedy-bixiga-comedy/3634052",
-   "origem": "sympla",
-   "regra": "teatro",
-   "lat": -23.56063,
-   "lng": -46.645268
   },
   {
    "nome": "De William a Shakespeare - 12/11/2026 - 21 horas",
@@ -882,22 +834,6 @@
    "lng": -46.634712
   },
   {
-   "nome": "5 Edição Chama Play mais 30 Atrações",
-   "local": "Villa Country",
-   "endereco": "Av. Francisco Matarazzo, 774, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-12",
-   "inicio": "22:00",
-   "fim_estimado": "02:15",
-   "incerteza_min": 90,
-   "publico_estimado": null,
-   "fonte": "https://www.ticket360.com.br/evento/33881/ingressos-para-5-edicao-chama-play-mais-30-atracoes",
-   "origem": "ticket360",
-   "regra": "abertura",
-   "lat": -23.52717,
-   "lng": -46.670426
-  },
-  {
    "nome": "Audição Nosso Interno Club (DJ Ariel)",
    "local": "Arena Show SP",
    "endereco": "Av. Nove de Julho, 1100, Bela Vista, São Paulo",
@@ -947,7 +883,7 @@
   }
  ],
  "geocodificacao": {
-  "com_local": 57,
+  "com_local": 53,
   "sem_local": 2
  }
 }
