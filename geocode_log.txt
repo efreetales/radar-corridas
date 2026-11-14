@@ -6,7 +6,7 @@ OK    Nocturnal Depression | Jai Club, 2676, Rua Vergueiro, Vila Mariana, São P
 FALHA Gothic Night | Pinheiros, São Paulo
 OK    Autoramas + Tatá Aeroplano | 1838, Rua Cardeal Arcoverde, Vila Madalena, Pinheiros, São Paulo, Regi
 OK    Blitz | Shopping Vila Olímpia, 360, Rua Olimpíadas, Vila Olímpia, Itaim Bibi, 
-OK    Candlelight: O Melhor da MPB | MASP Suplicy, 1578, Avenida Paulista, Morro dos Ingleses, Bela Vista, 
+OK    Candlelight: O Melhor da MPB | Museu de Arte de São Paulo, 1578, Avenida Paulista, Morro dos Ingleses
 FALHA Contratempo | São Paulo
 FALHA Portal Onze – Inauguração | Bela Vista, São Paulo
 OK    Tá Na Mente | Avenida Salim Antônio Curiati, Vila Géa, Campo Grande, São Paulo, Regi
@@ -20,7 +20,7 @@ OK    P.O.D. Convida | 6712, Rua Vergueiro, Vila Firmiano Pinto, Cursino, São P
 OK    Baile do Gato | Beco 203, 609, Rua Augusta, Higienópolis, Consolação, São Paulo, Regiã
 OK    Discotecando Histórias | 272, Avenida São Luís, República, São Paulo, Região Sudeste, 01046-000
 OK    Sexta-Feira 13 Open Bar | Outs, 486, Rua Augusta, Higienópolis, Consolação, São Paulo, Região Su
-OK    Dopamina – after Hayley Williams | Rua Treze de Maio, Morro dos Ingleses, Bela Vista, São Paulo, Região S
+OK    Dopamina – after Hayley Williams | Rua Treze de Maio, Bixiga, Bela Vista, São Paulo, Região Sudeste, 0132
 OK    Peaches | Avenida Pacaembu, Barra Funda, São Paulo, Região Sudeste, 01233-060, B
 FALHA Yanamaste [M]eio | São Paulo
-com local: 126  sem local: 8
+com local: 109  sem local: 8

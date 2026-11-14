@@ -1,5 +1,5 @@
 {
- "gerado_em": "2026-11-13T14:08:09-03:00",
+ "gerado_em": "2026-11-13T21:17:20-03:00",
  "data": "2026-11-13",
  "observacao": "Gerado automaticamente (Ticket360, Sympla e revisão semanal). Saída estimada pelas regras de tools/casas.json.",
  "eventos": [
@@ -50,22 +50,6 @@
    "regra": "festa",
    "lat": -23.5189,
    "lng": -46.592225
-  },
-  {
-   "nome": "JUIZ PATRIARCA - RODÍZIO DE ESPETINHOS SALGADO E DOCE - TODAS AS SEXTA",
-   "local": "Chopperia e Espetinho do Juiz - Unidade Patriarca",
-   "endereco": "Avenida Antônio Estevão de Carvalho, Cidade Patriarca, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-13",
-   "inicio": "17:00",
-   "fim_estimado": "21:00",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/juiz-patriarca-rodizio-de-espetinhos-salgado-e-doce-todas-as-sextas/3648514",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.53045,
-   "lng": -46.503792
   },
   {
    "nome": "Festival MTV anos 2000 no St Johns Pub",
@@ -258,22 +242,6 @@
    "lng": -46.683744
   },
   {
-   "nome": "Dominando seu Café Filtrado",
-   "local": "Casa Hario Cafeteria & Brunch | Restaurante",
-   "endereco": "Rua Manuel Guedes, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-13",
-   "inicio": "19:00",
-   "fim_estimado": "21:00",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/dominando-seu-cafe-filtrado/3604656",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.584315,
-   "lng": -46.67921
-  },
-  {
    "nome": "Show com Ricardo Nash",
    "local": "Rua Tupi, 354",
    "endereco": "Rua Tupi, São Paulo",
@@ -402,6 +370,22 @@
    "lng": -46.62171
   },
   {
+   "nome": "Garage Light Fest 2° Edição",
+   "local": "Artéria Loft",
+   "endereco": "Rua da Consolação, São Paulo",
+   "tipo": "show",
+   "data": "2026-11-13",
+   "inicio": "19:30",
+   "fim_estimado": "00:00",
+   "incerteza_min": 45,
+   "publico_estimado": null,
+   "fonte": "https://www.sympla.com.br/evento/garage-light-fest-2deg-edicao/3630863",
+   "origem": "sympla",
+   "regra": "show",
+   "lat": -23.554316,
+   "lng": -46.661601
+  },
+  {
    "nome": "LIVRES PARA ADORAR UMA NOITE DE NATAL NO CIRCO",
    "local": "Circo Spacial",
    "endereco": "Avenida Atlântica, jardim três marias, São Paulo",
@@ -416,22 +400,6 @@
    "regra": "teatro",
    "lat": -23.689868,
    "lng": -46.715762
-  },
-  {
-   "nome": "Samba do Divino e Carica Sensação",
-   "local": "Praia da Tiquatira",
-   "endereco": "Av. Governador Carvalho Pinto, 2603, São Paulo",
-   "tipo": "festa",
-   "data": "2026-11-13",
-   "inicio": "20:00",
-   "fim_estimado": "02:00",
-   "incerteza_min": 120,
-   "publico_estimado": null,
-   "fonte": "https://www.ticket360.com.br/evento/34467/ingressos-para-samba-do-divino-e-carica-sensacao",
-   "origem": "ticket360",
-   "regra": "festa",
-   "lat": -23.513674,
-   "lng": -46.527839
   },
   {
    "nome": "A Caixa Preta – Versão Demo",
@@ -450,36 +418,36 @@
    "lng": -46.644213
   },
   {
-   "nome": "Tributo U2 One Love & Orquestra",
-   "local": "BTG Pactual Hall",
-   "endereco": "R. Bento Branco de Andrade Filho,722, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-13",
-   "inicio": "20:00",
-   "fim_estimado": "21:45",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://bileto.sympla.com.br/event/127348",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.650504,
-   "lng": -46.721077
-  },
-  {
-   "nome": "Entre um encontro e outro, a vida",
-   "local": "Teatro Paiol Cultural",
-   "endereco": "R. Amaral Gurgel, 164 - Vila Buarque, SP ,164, São Paulo",
+   "nome": "RITA LEE, UMA AUTOBIOGRAFIA MUSICAL - 2026",
+   "local": "Teatro Porto",
+   "endereco": "Alameda Barão de Piracicaba, 740, São Paulo",
    "tipo": "teatro",
    "data": "2026-11-13",
    "inicio": "20:00",
    "fim_estimado": "22:00",
    "incerteza_min": 30,
    "publico_estimado": null,
-   "fonte": "https://bileto.sympla.com.br/event/128333",
+   "fonte": "https://bileto.sympla.com.br/event/116591",
    "origem": "sympla",
    "regra": "teatro",
-   "lat": -23.632915,
-   "lng": -46.69946
+   "lat": -23.53223,
+   "lng": -46.644258
+  },
+  {
+   "nome": "I Voci d`Italia in Brasile - A Final",
+   "local": "Circolo Italiano San Paolo",
+   "endereco": "Avenida Ipiranga, Centro Histórico de São Paulo, São Paulo",
+   "tipo": "show",
+   "data": "2026-11-13",
+   "inicio": "20:00",
+   "fim_estimado": "22:00",
+   "incerteza_min": 45,
+   "publico_estimado": null,
+   "fonte": "https://www.sympla.com.br/evento/i-voci-d-italia-in-brasile-a-final/3633372",
+   "origem": "sympla",
+   "regra": "show",
+   "lat": -23.545476,
+   "lng": -46.643508
   },
   {
    "nome": "BOFETADA - SUPER SEXTA 13/11 - OPEN BAR $50",
@@ -512,22 +480,6 @@
    "regra": "show",
    "lat": -23.557963,
    "lng": -46.686867
-  },
-  {
-   "nome": "I Voci d`Italia in Brasile - A Final",
-   "local": "Circolo Italiano San Paolo",
-   "endereco": "Avenida Ipiranga, Centro Histórico de São Paulo, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-13",
-   "inicio": "20:00",
-   "fim_estimado": "22:00",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/i-voci-d-italia-in-brasile-a-final/3633372",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.545476,
-   "lng": -46.643508
   },
   {
    "nome": "VENTURA - RHYTHM & SOUL",
@@ -578,54 +530,6 @@
    "lng": -46.628058
   },
   {
-   "nome": "ENQUANTO O CASAMENTO NÃO SEPARE com MARCO ZENNI / STAND UP COMEDY em S",
-   "local": "My Fucking Comedy Club",
-   "endereco": "Alameda Santos, Jardim Paulista, São Paulo",
-   "tipo": "teatro",
-   "data": "2026-11-13",
-   "inicio": "20:00",
-   "fim_estimado": "21:15",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/enquanto-o-casamento-nao-separe-com-marco-zenni-stand-up-comedy-em-sao-paulo/3538970",
-   "origem": "sympla",
-   "regra": "teatro",
-   "lat": -23.562915,
-   "lng": -46.656574
-  },
-  {
-   "nome": "DR FELIPE ARTHUR em NOS ANAIS DA JUSTIÇA",
-   "local": "Violeta Comedy Bar",
-   "endereco": "Rua Augusta, Consolação, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-13",
-   "inicio": "20:00",
-   "fim_estimado": "21:45",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/dr-felipe-arthur-em-nos-anais-da-justica/3624960",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.555887,
-   "lng": -46.657313
-  },
-  {
-   "nome": "[13/11 - 20h] Laboratório da Sociedade | Espetáculo de comédia inédita",
-   "local": "Sociedade do Humor",
-   "endereco": "Rua Bela Flor, Vila da Saúde, São Paulo",
-   "tipo": "teatro",
-   "data": "2026-11-13",
-   "inicio": "20:00",
-   "fim_estimado": "21:00",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/13-11-20h-laboratorio-da-sociedade-espetaculo-de-comedia-inedita/3649962",
-   "origem": "sympla",
-   "regra": "teatro",
-   "lat": -23.603812,
-   "lng": -46.631789
-  },
-  {
    "nome": "TRANSLÚCIDA BRUTA &amp; ARTISTAS ASSOCIAD/S: EXPERIMENTO CYBORG MULHER",
    "local": "Centro da Terra",
    "endereco": "Rua Piracuama, Perdizes, São Paulo",
@@ -658,38 +562,6 @@
    "lng": -46.612059
   },
   {
-   "nome": "AS BRUXAS DE SALÉM",
-   "local": "Teatro Commune",
-   "endereco": "Rua da Consolação, Consolação, São Paulo",
-   "tipo": "teatro",
-   "data": "2026-11-13",
-   "inicio": "20:00",
-   "fim_estimado": "22:00",
-   "incerteza_min": 30,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/as-bruxas-de-salem/3504183",
-   "origem": "sympla",
-   "regra": "teatro",
-   "lat": -23.549148,
-   "lng": -46.652939
-  },
-  {
-   "nome": "Espetáculo \"DEPOIS DA CHUVA\" - Iason Cultural",
-   "local": "Ágora Teatro",
-   "endereco": "Rua Rui Barbosa, Bela Vista, São Paulo",
-   "tipo": "teatro",
-   "data": "2026-11-13",
-   "inicio": "20:00",
-   "fim_estimado": "21:10",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/espetaculo-depois-da-chuva-iason-cultural/3600136",
-   "origem": "sympla",
-   "regra": "teatro",
-   "lat": -23.56148,
-   "lng": -46.645269
-  },
-  {
    "nome": "Geek Match 4",
    "local": "Fan Hour Games and Burgers",
    "endereco": "Rua Artur de Azevedo, Pinheiros, São Paulo",
@@ -706,22 +578,6 @@
    "lng": -46.68042
   },
   {
-   "nome": "INEFÁVEL",
-   "local": "ºAndar",
-   "endereco": "Rua Doutor Gabriel dos Santos, Santa Cecília, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-13",
-   "inicio": "20:00",
-   "fim_estimado": "20:50",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/inefavel/3637825",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.533338,
-   "lng": -46.658438
-  },
-  {
    "nome": "Primeira Mostra de Repertório do Núcleo 1618",
    "local": "R. Bahia, 1260",
    "endereco": "Rua Bahia, Higienópolis, São Paulo",
@@ -736,22 +592,6 @@
    "regra": "show",
    "lat": -23.551576,
    "lng": -46.663516
-  },
-  {
-   "nome": "Renato Scarpin - 7x1 UMA COMÉDIA BOA PRA CACHORRO",
-   "local": "Rua Juventus, 28",
-   "endereco": "Rua Juventus, Parque da Mooca, São Paulo",
-   "tipo": "teatro",
-   "data": "2026-11-13",
-   "inicio": "20:00",
-   "fim_estimado": "21:00",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/renato-scarpin-7x1-uma-comedia-boa-pra-cachorro/3635606",
-   "origem": "sympla",
-   "regra": "teatro",
-   "lat": -23.568167,
-   "lng": -46.593516
   },
   {
    "nome": "Duo Juliana Rodrigues e Douglas Germano no Cachuera!",
@@ -784,38 +624,6 @@
    "regra": "teatro",
    "lat": -23.555849,
    "lng": -46.663484
-  },
-  {
-   "nome": "Andrea Polinelli",
-   "local": "Lá Maior - Espaço Cultural",
-   "endereco": "Rua Traipu, Pacaembu, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-13",
-   "inicio": "20:00",
-   "fim_estimado": "21:00",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/andrea-polinelli/3638234",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.53585,
-   "lng": -46.663755
-  },
-  {
-   "nome": "A CULPA É DOS JAVALIS",
-   "local": "Complexo Cultural Funarte SP",
-   "endereco": "Alameda Nothmann, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-13",
-   "inicio": "20:00",
-   "fim_estimado": "21:10",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/a-culpa-e-dos-javalis/3639419",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.535217,
-   "lng": -46.650559
   },
   {
    "nome": "Conexões - Espetáculo de Mentalismo",
@@ -914,22 +722,6 @@
    "lng": -46.640775
   },
   {
-   "nome": "Recital de Natal",
-   "local": "Condomínio vila Amalfi",
-   "endereco": "Rua Leonardo Cerveira Varandas, Morumbi, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-13",
-   "inicio": "20:00",
-   "fim_estimado": "21:00",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/recital-de-natal/3581106",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.623345,
-   "lng": -46.720947
-  },
-  {
    "nome": "RESSACA DE HALLOWEEN: O FECHAMENTO",
    "local": "Box 09 Showbar",
    "endereco": "Avenida Miruna, Moema, São Paulo",
@@ -946,22 +738,6 @@
    "lng": -46.660918
   },
   {
-   "nome": "Abajur Lilás",
-   "local": "Galpão Amado",
-   "endereco": "Rua Javaés, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-13",
-   "inicio": "20:00",
-   "fim_estimado": "21:15",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/abajur-lilas/3636456",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.522794,
-   "lng": -46.646792
-  },
-  {
    "nome": "13.11 - ESPETÁCULO TEHILIM",
    "local": "Teatro Paulo Eiró",
    "endereco": "Avenida Adolfo Pinheiro, São Paulo",
@@ -976,22 +752,6 @@
    "regra": "teatro",
    "lat": -23.646525,
    "lng": -46.701891
-  },
-  {
-   "nome": "OSMO",
-   "local": "Teatro de Arena Eugênio Kusnet",
-   "endereco": "Rua Doutor Teodoro Baima, São Paulo",
-   "tipo": "teatro",
-   "data": "2026-11-13",
-   "inicio": "20:00",
-   "fim_estimado": "21:15",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/osmo/3640670",
-   "origem": "sympla",
-   "regra": "teatro",
-   "lat": -23.546898,
-   "lng": -46.646338
   },
   {
    "nome": "Hayley Williams",
@@ -1121,38 +881,6 @@
    "lng": -46.640716
   },
   {
-   "nome": "MICHAEL JACKSON SINFÔNICO",
-   "local": "Teatro Bor",
-   "endereco": "R. Domingos de Morais,2970, São Paulo",
-   "tipo": "teatro",
-   "data": "2026-11-13",
-   "inicio": "20:30",
-   "fim_estimado": "22:30",
-   "incerteza_min": 30,
-   "publico_estimado": null,
-   "fonte": "https://bileto.sympla.com.br/event/124038",
-   "origem": "sympla",
-   "regra": "teatro",
-   "lat": -23.602395,
-   "lng": -46.637049
-  },
-  {
-   "nome": "BEE GEES BRAZIL",
-   "local": "Teatro Santa Cruz",
-   "endereco": "R. Domingos de Morais,2564 - Shopping Metrô Santa, São Paulo",
-   "tipo": "teatro",
-   "data": "2026-11-13",
-   "inicio": "21:00",
-   "fim_estimado": "23:00",
-   "incerteza_min": 30,
-   "publico_estimado": null,
-   "fonte": "https://bileto.sympla.com.br/event/128719",
-   "origem": "sympla",
-   "regra": "teatro",
-   "lat": -23.598797,
-   "lng": -46.637284
-  },
-  {
    "nome": "4 Frades e 2 Bebês - Uma Santa Comédia",
    "local": "Teatro Bibi Ferreira",
    "endereco": "Av. Brigadeiro Luiz Antônio, 931, São Paulo",
@@ -1233,6 +961,22 @@
    "lng": -46.662349
   },
   {
+   "nome": "Under Division Apres. CHARLIE SPARKS, TENSAL, Beau Didier & Isaiah",
+   "local": "Palacete da Sé",
+   "endereco": "Rua Roberto Simonsen, São Paulo",
+   "tipo": "show",
+   "data": "2026-11-13",
+   "inicio": "21:00",
+   "fim_estimado": "22:45",
+   "incerteza_min": 45,
+   "publico_estimado": null,
+   "fonte": "https://www.sympla.com.br/evento/under-division-apres-charlie-sparks-tensal-beau-didier-isaiah/3569668",
+   "origem": "sympla",
+   "regra": "show",
+   "lat": -23.54898,
+   "lng": -46.632355
+  },
+  {
    "nome": "Forró Não-Mono - penúltima do ano",
    "local": "R. Formosa, 65",
    "endereco": "Rua Formosa, São Paulo",
@@ -1263,22 +1007,6 @@
    "regra": "teatro",
    "lat": -23.581838,
    "lng": -46.588496
-  },
-  {
-   "nome": "Black Friday - Stand Up Comedy | SP | Bixiga Comedy",
-   "local": "Bixiga Comedy Club",
-   "endereco": "Rua Rui Barbosa, Bela Vista, São Paulo",
-   "tipo": "teatro",
-   "data": "2026-11-13",
-   "inicio": "21:00",
-   "fim_estimado": "23:00",
-   "incerteza_min": 30,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/black-friday-stand-up-comedy-sp-bixiga-comedy/3617057",
-   "origem": "sympla",
-   "regra": "teatro",
-   "lat": -23.56063,
-   "lng": -46.645268
   },
   {
    "nome": "UMA PILHA DE PRATOS NA COZINHA",
@@ -1437,8 +1165,8 @@
    "fonte": "https://programaparadois.com.br/eventos-sao-paulo-novembro-2026/",
    "origem": "semana",
    "regra": "teatro",
-   "lat": -23.5618,
-   "lng": -46.6558
+   "lat": -23.561498,
+   "lng": -46.655964
   },
   {
    "nome": "Contratempo",
@@ -2106,8 +1834,8 @@
    "fonte": "https://r.shotgun.live/en/events/dopamina-na-redoma-bixiga",
    "origem": "semana",
    "regra": "festa",
-   "lat": -23.562021,
-   "lng": -46.646052,
+   "lat": -23.55811,
+   "lng": -46.646476,
    "local_aproximado": true
   },
   {
@@ -2144,7 +1872,7 @@
   }
  ],
  "geocodificacao": {
-  "com_local": 126,
+  "com_local": 109,
   "sem_local": 8
  }
 }
