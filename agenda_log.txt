@@ -1,5 +1,5 @@
-Agenda 2026-11-13 (rodou 2026-11-13 21:17)
-Ticket360: 0 de hoje
-Sympla: 92 de hoje (7 páginas, total 103)
-semana.json: 25 de hoje
-Total: 117 {'sympla': 92, 'semana': 25}
+Agenda 2026-11-14 (rodou 2026-11-14 12:44)
+Ticket360: 4 de hoje
+Sympla: 160 de hoje (16 páginas, total 254)
+semana.json: 16 de hoje
+Total: 177 {'sympla': 160, 'semana': 16, 'ticket360': 1}
