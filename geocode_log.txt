@@ -14,4 +14,4 @@ FALHA Festa 2000 Nina Hit + Doutor DJ | Pinheiros, São Paulo
 OK    Kevin | 1121, Rua Solon, Bairro da Luz, Bom Retiro, São Paulo, Região Sudeste,
 OK    Apto1205 15ª edição | Rua Achilles Orlando Curtolo, Barra Funda, São Paulo, Região Sudeste, 
 OK    Bellakeo | 180, Rua Treze de Maio, Bixiga, Bela Vista, São Paulo, Região Sudeste,
-com local: 172  sem local: 5
+com local: 170  sem local: 5

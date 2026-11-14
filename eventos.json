@@ -1,5 +1,5 @@
 {
- "gerado_em": "2026-11-14T12:44:46-03:00",
+ "gerado_em": "2026-11-14T19:55:28-03:00",
  "data": "2026-11-14",
  "observacao": "Gerado automaticamente (Ticket360, Sympla e revisão semanal). Saída estimada pelas regras de tools/casas.json.",
  "eventos": [
@@ -148,6 +148,22 @@
    "lng": -46.609843
   },
   {
+   "nome": "Samba de Odé",
+   "local": "Casa da Umbanda de Oxossi",
+   "endereco": "Rua Cristalino Rolim de Freitas, Socorro, São Paulo",
+   "tipo": "festa",
+   "data": "2026-11-14",
+   "inicio": "14:00",
+   "fim_estimado": "19:30",
+   "incerteza_min": 120,
+   "publico_estimado": null,
+   "fonte": "https://www.sympla.com.br/evento/samba-de-ode/3627722",
+   "origem": "sympla",
+   "regra": "festa",
+   "lat": -23.663393,
+   "lng": -46.707149
+  },
+  {
    "nome": "#2 Feirinha da Fancha",
    "local": "Dilogia - Casa da Diversidade",
    "endereco": "Rua Conselheiro Carrão, Bela Vista, São Paulo",
@@ -178,22 +194,6 @@
    "regra": "festa",
    "lat": -23.561824,
    "lng": -46.694007
-  },
-  {
-   "nome": "Samba de Odé",
-   "local": "Casa da Umbanda de Oxossi",
-   "endereco": "Rua Cristalino Rolim de Freitas, Socorro, São Paulo",
-   "tipo": "festa",
-   "data": "2026-11-14",
-   "inicio": "14:00",
-   "fim_estimado": "19:30",
-   "incerteza_min": 120,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/samba-de-ode/3627722",
-   "origem": "sympla",
-   "regra": "festa",
-   "lat": -23.663393,
-   "lng": -46.707149
   },
   {
    "nome": "A FORÇA DE SER ELA: MULHERES QUE INSPIRAM E TRANSFORMAM",
@@ -452,38 +452,6 @@
    "lng": -46.678046
   },
   {
-   "nome": "O DELÍRIO E O TEMPO - Canções de Júlia Tygel sobre poemas de Manoel de",
-   "local": "PSICADEIRO -SALA BEATRIZ SEGALL",
-   "endereco": "Rua Doutor Guilherme Bannitz, Itaim Bibi, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-14",
-   "inicio": "17:00",
-   "fim_estimado": "18:30",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/o-delirio-e-o-tempo-cancoes-de-julia-tygel-sobre-poemas-de-manoel-de-barros-e-simon-tygel/3622285",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.588914,
-   "lng": -46.672399
-  },
-  {
-   "nome": "Espetáculo Teatral \"Peter Pan\" - 14/11/2026",
-   "local": "COLÉGIO OBJETIVO MONFORTE",
-   "endereco": "Praça Silva Teles, Itaim Paulista, São Paulo",
-   "tipo": "teatro",
-   "data": "2026-11-14",
-   "inicio": "17:00",
-   "fim_estimado": "18:20",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/espetaculo-teatral-peter-pan-14-11-2026/3552535",
-   "origem": "sympla",
-   "regra": "teatro",
-   "lat": -23.497698,
-   "lng": -46.400821
-  },
-  {
    "nome": "PREGO #1 @CAZADIRCE",
    "local": "CAZADIRCE",
    "endereco": "Rua Almirante Marques de Leão, São Paulo",
@@ -515,6 +483,22 @@
    "sem_local": true
   },
   {
+   "nome": "O Mágico de Oz",
+   "local": "Teatro Bibi Ferreira",
+   "endereco": "Av. Brigadeiro Luiz Antônio, 931, São Paulo",
+   "tipo": "teatro",
+   "data": "2026-11-14",
+   "inicio": "17:30",
+   "fim_estimado": "19:30",
+   "incerteza_min": 30,
+   "publico_estimado": null,
+   "fonte": "https://bileto.sympla.com.br/event/64140",
+   "origem": "sympla",
+   "regra": "teatro",
+   "lat": -23.5695,
+   "lng": -46.65079
+  },
+  {
    "nome": "Encontro com as Princesas",
    "local": "Teatro Raposo Shopping- Sala Bibi Ferreira",
    "endereco": "Rodovia Raposo Tavares,0 - km 14,5, São Paulo",
@@ -529,22 +513,6 @@
    "regra": "teatro",
    "lat": -23.588123,
    "lng": -46.753772
-  },
-  {
-   "nome": "14/Nov - NAMORO RÁPIDO - SPEED DATING - SOLTEIROS - CUPIDO EVENTOS - S",
-   "local": "The Raven Music Bar",
-   "endereco": "Rua Wisard, Vila Madalena, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-14",
-   "inicio": "17:30",
-   "fim_estimado": "19:30",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/14-nov-namoro-rapido-speed-dating-solteiros-cupido-eventos-singles/3622517",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.554822,
-   "lng": -46.688657
   },
   {
    "nome": "Vivência musical com Joaquin Fernandez",
@@ -578,22 +546,6 @@
    "sem_local": true
   },
   {
-   "nome": "Nando Viana - Coloca o cinto que a viagem vai ser longa",
-   "local": "Clube Barbixas de Comédia",
-   "endereco": "Rua Augusta, 1129, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-14",
-   "inicio": "18:00",
-   "fim_estimado": "19:45",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://bileto.sympla.com.br/event/115128",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.554357,
-   "lng": -46.655983
-  },
-  {
    "nome": "A PORTA MALDITA - MONOCROMA + MAÜZ + O ARMÊNIA",
    "local": "R. Luís Murat, 400",
    "endereco": "Rua Luís Murat, Pinheiros, São Paulo",
@@ -610,36 +562,20 @@
    "lng": -46.686867
   },
   {
-   "nome": "SÁB 18h - 14/11/26 - Natal Mágico Circo Spacial",
-   "local": "Circo Spacial",
-   "endereco": "Avenida Atlântica, Jardim Tres Marias, São Paulo",
-   "tipo": "teatro",
+   "nome": "RON CARTER por RAFA FERRARI TRIO",
+   "local": "Tavares Club",
+   "endereco": "Rua Aspicuelta, Vila Madalena, São Paulo",
+   "tipo": "show",
    "data": "2026-11-14",
    "inicio": "18:00",
-   "fim_estimado": "19:30",
+   "fim_estimado": "23:00",
    "incerteza_min": 45,
    "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/sab-18h-14-11-26-natal-magico-circo-spacial/3641660",
+   "fonte": "https://www.sympla.com.br/evento/ron-carter-por-rafa-ferrari-trio/3643156",
    "origem": "sympla",
-   "regra": "teatro",
-   "lat": -23.689868,
-   "lng": -46.715762
-  },
-  {
-   "nome": "[14/11 - 18h] Festival da Sociedade | O espetáculo de comédia mais com",
-   "local": "Sociedade do Humor",
-   "endereco": "Rua Bela Flor, Vila da Saúde, São Paulo",
-   "tipo": "teatro",
-   "data": "2026-11-14",
-   "inicio": "18:00",
-   "fim_estimado": "19:00",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/14-11-18h-festival-da-sociedade-o-espetaculo-de-comedia-mais-completo-da-cidade/3649961",
-   "origem": "sympla",
-   "regra": "teatro",
-   "lat": -23.603812,
-   "lng": -46.631789
+   "regra": "show",
+   "lat": -23.559312,
+   "lng": -46.691778
   },
   {
    "nome": "Teatro | Merda",
@@ -672,22 +608,6 @@
    "regra": "show",
    "lat": -23.488071,
    "lng": -46.583407
-  },
-  {
-   "nome": "(STAND-UP GRATUITO) Matinê de Humor - Comédia Stand Up",
-   "local": "Acústico Comedy",
-   "endereco": "Rua da Consolação, Consolação, São Paulo",
-   "tipo": "teatro",
-   "data": "2026-11-14",
-   "inicio": "18:00",
-   "fim_estimado": "19:30",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/stand-up-gratuito-matine-de-humor-comedia-stand-up/3651485",
-   "origem": "sympla",
-   "regra": "teatro",
-   "lat": -23.555849,
-   "lng": -46.663484
   },
   {
    "nome": "Aulão Das Estrelas Quarta Edição",
@@ -786,25 +706,9 @@
    "lng": -46.659219
   },
   {
-   "nome": "última gravação do Poltrona Laranja: assista ao vivo (eba)",
-   "local": "Estúdio Tavola",
-   "endereco": "Rua Senador Joaquim Ribeiro do Valle, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-14",
-   "inicio": "18:00",
-   "fim_estimado": "19:30",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/ultima-gravacao-do-poltrona-laranja-assista-ao-vivo-eba/3618006",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.529181,
-   "lng": -46.741389
-  },
-  {
    "nome": "Glow Flow - Ocean Edition - Yoga Imersivo",
    "local": "Studio Curva",
-   "endereco": "Rua Cônego Vicente Miguel Marino, Santa Cecília, São Paulo",
+   "endereco": "Rua Cônego Vicente Miguel Marino, São Paulo",
    "tipo": "show",
    "data": "2026-11-14",
    "inicio": "18:00",
@@ -816,6 +720,22 @@
    "regra": "show",
    "lat": -23.526736,
    "lng": -46.650975
+  },
+  {
+   "nome": "Plenitude yoga - NOITE DAS GAROTAS 14/11",
+   "local": "Sede Cultural",
+   "endereco": "Rua Marinho Falcão, São Paulo",
+   "tipo": "festa",
+   "data": "2026-11-14",
+   "inicio": "18:00",
+   "fim_estimado": "21:30",
+   "incerteza_min": 120,
+   "publico_estimado": null,
+   "fonte": "https://www.sympla.com.br/evento/plenitude-yoga-noite-das-garotas-14-11/3616623",
+   "origem": "sympla",
+   "regra": "festa",
+   "lat": -23.54761,
+   "lng": -46.690251
   },
   {
    "nome": "Batekoo Festival",
@@ -848,6 +768,22 @@
    "origem": "semana",
    "regra": "festa",
    "sem_local": true
+  },
+  {
+   "nome": "A Raiz",
+   "local": "Teatro Sérgio Cardoso",
+   "endereco": "Rua Rui Barbosa, 153, São Paulo",
+   "tipo": "teatro",
+   "data": "2026-11-14",
+   "inicio": "18:30",
+   "fim_estimado": "20:30",
+   "incerteza_min": 30,
+   "publico_estimado": null,
+   "fonte": "https://bileto.sympla.com.br/event/127367",
+   "origem": "sympla",
+   "regra": "teatro",
+   "lat": -23.558874,
+   "lng": -46.645314
   },
   {
    "nome": "O Nome do Tango no TEATRO ESTÚDIO",
@@ -1122,6 +1058,22 @@
    "lng": -46.574199
   },
   {
+   "nome": "Catedral Experience",
+   "local": "R. Anhaia, 1180",
+   "endereco": "Rua Anhaia, Bom Retiro, São Paulo",
+   "tipo": "show",
+   "data": "2026-11-14",
+   "inicio": "19:00",
+   "fim_estimado": "21:30",
+   "incerteza_min": 45,
+   "publico_estimado": null,
+   "fonte": "https://www.sympla.com.br/evento/catedral-experience/3386163",
+   "origem": "sympla",
+   "regra": "show",
+   "lat": -23.520214,
+   "lng": -46.646954
+  },
+  {
    "nome": "IAMX",
    "local": "Madame Underground Club",
    "endereco": "Rua Conselheiro Ramalho, 873, Bela Vista, São Paulo",
@@ -1152,22 +1104,6 @@
    "regra": "show",
    "lat": -23.568167,
    "lng": -46.593516
-  },
-  {
-   "nome": "O RISO É UMA PRECE - NOVO SHOW - Léo Ritter | NAF Unidade Irmã Nice",
-   "local": "Salão Nobre NAF Unidade Irmã Nice",
-   "endereco": "Rua João Vieira Prioste, Vila Carrao, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-14",
-   "inicio": "19:30",
-   "fim_estimado": "21:30",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/o-riso-e-uma-prece-novo-show-leo-ritter-naf-unidade-irma-nice/3555759",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.549723,
-   "lng": -46.546205
   },
   {
    "nome": "As profundezas da AlmA - Show Metamorphosis",
@@ -1202,20 +1138,20 @@
    "lng": -46.656597
   },
   {
-   "nome": "SENTIMENTAL - COM SAMM Oliveira",
-   "local": "Escola Clube da Música Ipiranga",
-   "endereco": "Rua Moreira e Costa, Ipiranga, São Paulo",
+   "nome": "Tour Candlelight Yoga SP - 14/11",
+   "local": "Simpatia257",
+   "endereco": "Rua Simpatia, Vila Madalena, São Paulo",
    "tipo": "show",
    "data": "2026-11-14",
    "inicio": "19:30",
-   "fim_estimado": "22:30",
+   "fim_estimado": "21:30",
    "incerteza_min": 45,
    "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/sentimental-com-samm-oliveira/3652668",
+   "fonte": "https://www.sympla.com.br/evento/tour-candlelight-yoga-sp-14-11/3632627",
    "origem": "sympla",
    "regra": "show",
-   "lat": -23.589799,
-   "lng": -46.608247
+   "lat": -23.554255,
+   "lng": -46.686652
   },
   {
    "nome": "Projeto Te Vejo no Palco - Show Joyce Alane",
@@ -1762,6 +1698,22 @@
    "lng": -46.694157
   },
   {
+   "nome": "SENTIMENTAL - COM SAMM Oliveira",
+   "local": "Escola Clube da Música Ipiranga",
+   "endereco": "Rua Moreira e Costa, Ipiranga, São Paulo",
+   "tipo": "show",
+   "data": "2026-11-14",
+   "inicio": "20:30",
+   "fim_estimado": "22:30",
+   "incerteza_min": 45,
+   "publico_estimado": null,
+   "fonte": "https://www.sympla.com.br/evento/sentimental-com-samm-oliveira/3652668",
+   "origem": "sympla",
+   "regra": "show",
+   "lat": -23.589799,
+   "lng": -46.608247
+  },
+  {
    "nome": "Palazzo Verde",
    "local": "PALAZZO VERDE",
    "endereco": "Av. Francisco Matarazzo,1748 - Comercial Casa das Caldeiras, Cj. 501, São Paulo",
@@ -2130,22 +2082,6 @@
    "lng": -46.667879
   },
   {
-   "nome": "Dri Santana - Pop & Rock Hits",
-   "local": "Bourbon Street",
-   "endereco": "Rua dos Chanes, 127, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-14",
-   "inicio": "22:00",
-   "fim_estimado": "23:45",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://bileto.sympla.com.br/event/129967",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.614095,
-   "lng": -46.667509
-  },
-  {
    "nome": "Tetê Espíndola // Só Tetê e Craviola",
    "local": "Casa de Francisca",
    "endereco": "R. Quintino Bocaiúva,22 - 1º andar, São Paulo",
@@ -2434,6 +2370,22 @@
    "lng": -46.663484
   },
   {
+   "nome": "Dri Santana - Pop & Rock Hits",
+   "local": "Bourbon Street",
+   "endereco": "Rua dos Chanes, 127, São Paulo",
+   "tipo": "show",
+   "data": "2026-11-14",
+   "inicio": "22:00",
+   "fim_estimado": "23:45",
+   "incerteza_min": 45,
+   "publico_estimado": null,
+   "fonte": "https://bileto.sympla.com.br/event/129967",
+   "origem": "sympla",
+   "regra": "show",
+   "lat": -23.614095,
+   "lng": -46.667509
+  },
+  {
    "nome": "Baile da Revoada",
    "local": "Estúdio Lâmina",
    "endereco": "Avenida São João, São Paulo",
@@ -2542,8 +2494,8 @@
    "fonte": "https://r.shotgun.live/en/events/apto-1205-15-edicao",
    "origem": "semana",
    "regra": "festa",
-   "lat": -23.521255,
-   "lng": -46.66945,
+   "lat": -23.523849,
+   "lng": -46.672645,
    "local_aproximado": true
   },
   {
@@ -2833,10 +2785,26 @@
    "regra": "abertura",
    "lat": -23.526772,
    "lng": -46.66024
+  },
+  {
+   "nome": "KICKS Hard Techno Experience",
+   "local": "Tarot bar",
+   "endereco": "Rua Inácio Pereira da Rocha, Alto do pinheiros, São Paulo",
+   "tipo": "festa",
+   "data": "2026-11-14",
+   "inicio": "23:00",
+   "fim_estimado": "04:30",
+   "incerteza_min": 120,
+   "publico_estimado": null,
+   "fonte": "https://www.sympla.com.br/evento/kicks-hard-techno-experience/3628113",
+   "origem": "sympla",
+   "regra": "festa",
+   "lat": -23.559253,
+   "lng": -46.687957
   }
  ],
  "geocodificacao": {
-  "com_local": 172,
+  "com_local": 170,
   "sem_local": 5
  }
 }
