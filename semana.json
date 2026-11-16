@@ -1,653 +1,559 @@
 {
- "gerado_em": "2026-11-09T08:58:10-03:00",
- "de": "2026-11-09",
- "ate": "2026-11-15",
+ "gerado_em": "2026-11-16T09:05:44-03:00",
+ "de": "2026-11-16",
+ "ate": "2026-11-22",
  "eventos": [
   {
-   "nome": "Clube do Rap",
-   "local": "Katarina Bar",
-   "endereco": "Av. São Luís, 272, República, São Paulo",
-   "data": "2026-11-09",
-   "inicio": "20:00",
-   "fim": "23:30",
-   "regra": "festa",
-   "publico_estimado": 200,
-   "fonte": "https://r.shotgun.live/en/events/clube-do-rap-edicao-novembro"
-  },
-  {
-   "nome": "Humberto Gessinger",
-   "local": "The Cavern Club",
-   "endereco": "Rua Olimpíadas, 360, Vila Olímpia, São Paulo",
-   "data": "2026-11-10",
-   "inicio": "21:00",
-   "regra": "show",
-   "publico_estimado": 600,
-   "fonte": "https://www.songkick.com/metro-areas/27274-brazil-sao-paulo/november-2026"
-  },
-  {
-   "nome": "Raven Vinyl Club",
-   "local": "The Raven Music Bar",
-   "endereco": "São Paulo",
-   "data": "2026-11-11",
-   "inicio": "18:00",
-   "regra": "festa",
-   "publico_estimado": null,
-   "fonte": "https://r.shotgun.live/en/events/raven-vinyl-club-3"
-  },
-  {
-   "nome": "Marina Lima – 15 anos do Cine Joia",
-   "local": "Cine Joia",
-   "endereco": "Praça Carlos Gomes, 82, Liberdade, São Paulo",
-   "data": "2026-11-11",
-   "inicio": "19:00",
-   "regra": "abertura",
-   "publico_estimado": 1000,
-   "fonte": "https://r.shotgun.live/en/events/marinalimanocinejoia"
-  },
-  {
-   "nome": "Marty Friedman",
-   "local": "Manifesto Bar",
-   "endereco": "Rua Iguatemi, 36, Itaim Bibi, São Paulo",
-   "data": "2026-11-11",
-   "inicio": "21:00",
-   "regra": "show",
-   "publico_estimado": 400,
-   "fonte": "https://www.songkick.com/metro-areas/27274-brazil-sao-paulo/november-2026"
-  },
-  {
-   "nome": "Fabio Faustino Quarteto",
-   "local": "Cr1a",
-   "endereco": "Bela Vista, São Paulo",
-   "data": "2026-11-12",
-   "inicio": "18:00",
-   "regra": "festa",
-   "publico_estimado": null,
-   "fonte": "https://r.shotgun.live/en/events/fabio-faustino-quarteto"
-  },
-  {
-   "nome": "Cachorro Grande",
-   "local": "Cine Joia",
-   "endereco": "Praça Carlos Gomes, 82, Liberdade, São Paulo",
-   "data": "2026-11-12",
-   "inicio": "19:00",
-   "regra": "abertura",
-   "publico_estimado": 1000,
-   "fonte": "https://r.shotgun.live/en/events/cachorrograndenocinejoia2026"
-  },
-  {
-   "nome": "Johnny Clarke",
-   "local": "Sol Y Sombra - SyS13",
-   "endereco": "Rua Treze de Maio, 180, Bela Vista, São Paulo",
-   "data": "2026-11-12",
-   "inicio": "19:00",
-   "regra": "festa",
-   "publico_estimado": 300,
-   "fonte": "https://r.shotgun.live/en/events/johnny-clarke-no-sys-13"
-  },
-  {
-   "nome": "Cine Cafundó + Baile do Mannrich",
-   "local": "Pinheiros (Shotgun)",
-   "endereco": "Pinheiros, São Paulo",
-   "data": "2026-11-12",
-   "inicio": "19:00",
-   "regra": "festa",
-   "publico_estimado": null,
-   "fonte": "https://r.shotgun.live/en/events/cine-cafundo-baile-do-mannrich-12-11"
-  },
-  {
-   "nome": "Hayley Williams",
-   "local": "Espaço Unimed",
-   "endereco": "Rua Tagipuru, 795, Barra Funda, São Paulo",
-   "data": "2026-11-12",
-   "inicio": "20:00",
-   "regra": "show",
-   "publico_estimado": 8000,
-   "fonte": "https://blog.gontijo.com.br/blog/shows-em-sao-paulo-em-novembro-de-2026-agenda-para-ir-de-onibus"
-  },
-  {
-   "nome": "Petrilli + Beco",
-   "local": "Jai Club",
-   "endereco": "Rua Vergueiro, 2676, Vila Mariana, São Paulo",
-   "data": "2026-11-12",
-   "inicio": "20:00",
-   "regra": "festa",
-   "publico_estimado": 300,
-   "fonte": "https://r.shotgun.live/en/events/petrilli-beco-jai-club-12-11-2026"
-  },
-  {
-   "nome": "Anná + Tuany + Piclenéticas",
-   "local": "Picles",
-   "endereco": "Rua Cardeal Arcoverde, 1838, Pinheiros, São Paulo",
-   "data": "2026-11-12",
-   "inicio": "20:00",
-   "regra": "festa",
-   "publico_estimado": 300,
-   "fonte": "https://r.shotgun.live/en/events/picleneticas-dj-flora-maria-2026-11-12"
-  },
-  {
-   "nome": "Blitz",
-   "local": "The Cavern Club",
-   "endereco": "Rua Olimpíadas, 360, Vila Olímpia, São Paulo",
-   "data": "2026-11-12",
-   "inicio": "21:00",
-   "regra": "show",
-   "publico_estimado": 600,
-   "fonte": "https://www.songkick.com/metro-areas/27274-brazil-sao-paulo/november-2026"
-  },
-  {
-   "nome": "Afrojam-SP Axé & Funk",
-   "local": "Mundo Pensante",
-   "endereco": "Rua Treze de Maio, 830, Bela Vista, São Paulo",
-   "data": "2026-11-12",
-   "inicio": "21:00",
-   "regra": "festa",
-   "publico_estimado": 400,
-   "fonte": "https://r.shotgun.live/en/events/12-11-afrojam-no-mundo-pensante"
-  },
-  {
-   "nome": "Audição Nosso Interno Club (DJ Ariel)",
-   "local": "Arena Show SP",
-   "endereco": "Av. Nove de Julho, 1100, Bela Vista, São Paulo",
-   "data": "2026-11-12",
-   "inicio": "22:00",
-   "fim": "05:00",
-   "regra": "festa",
-   "publico_estimado": 500,
-   "fonte": "https://r.shotgun.live/en/events/audicao-do-album-nosso-interno-club-dj-ariel"
-  },
-  {
-   "nome": "Magma Club Edition",
-   "local": "Club Jerome",
-   "endereco": "Rua Mato Grosso, 398, Consolação, São Paulo",
-   "data": "2026-11-12",
-   "inicio": "23:00",
-   "fim": "05:00",
-   "regra": "festa",
-   "publico_estimado": 400,
-   "fonte": "https://r.shotgun.live/en/events/magma-club-edition"
-  },
-  {
-   "nome": "Embalo com DJ Nuts",
-   "local": "Mundo Pensante",
-   "endereco": "Rua Treze de Maio, 830, Bela Vista, São Paulo",
-   "data": "2026-11-12",
-   "inicio": "23:59",
-   "regra": "festa",
-   "publico_estimado": 400,
-   "fonte": "https://r.shotgun.live/en/events/12-11-embalo-com-dj-nuts-no-mundo-pensante"
-  },
-  {
-   "nome": "Everyday People",
-   "local": "Fabriketa",
-   "endereco": "Rua do Bucolismo, 81, Brás, São Paulo",
-   "data": "2026-11-13",
-   "inicio": "18:00",
-   "fim": "03:00",
-   "regra": "festa",
-   "publico_estimado": 1500,
-   "fonte": "https://r.shotgun.live/en/events/everyday-people-sao-paulo-13-11-fabriketa"
-  },
-  {
-   "nome": "Deejazz no Cr1a",
-   "local": "Cr1a",
-   "endereco": "Bela Vista, São Paulo",
-   "data": "2026-11-13",
-   "inicio": "18:00",
-   "regra": "festa",
-   "publico_estimado": null,
-   "fonte": "https://r.shotgun.live/en/events/deejazz-no-cr-1-a"
-  },
-  {
-   "nome": "Hayley Williams",
-   "local": "Espaço Unimed",
-   "endereco": "Rua Tagipuru, 795, Barra Funda, São Paulo",
-   "data": "2026-11-13",
-   "inicio": "20:00",
-   "regra": "show",
-   "publico_estimado": 8000,
-   "fonte": "https://blog.gontijo.com.br/blog/shows-em-sao-paulo-em-novembro-de-2026-agenda-para-ir-de-onibus"
-  },
-  {
-   "nome": "The Lemon Twigs",
-   "local": "Casa Rockambole",
-   "endereco": "Rua Belmiro Braga, 119, Pinheiros, São Paulo",
-   "data": "2026-11-13",
-   "inicio": "20:00",
-   "regra": "abertura",
-   "publico_estimado": 500,
-   "fonte": "https://www.songkick.com/metro-areas/27274-brazil-sao-paulo/november-2026"
-  },
-  {
-   "nome": "Nocturnal Depression",
-   "local": "Jai Club",
-   "endereco": "Rua Vergueiro, 2676, Vila Mariana, São Paulo",
-   "data": "2026-11-13",
-   "inicio": "20:00",
-   "regra": "abertura",
-   "publico_estimado": 300,
-   "fonte": "https://www.songkick.com/metro-areas/27274-brazil-sao-paulo/november-2026"
-  },
-  {
-   "nome": "Gothic Night",
-   "local": "Pinheiros (Shotgun)",
-   "endereco": "Pinheiros, São Paulo",
-   "data": "2026-11-13",
-   "inicio": "20:00",
-   "regra": "festa",
-   "publico_estimado": null,
-   "fonte": "https://r.shotgun.live/en/events/gothic-night-ghost-rammstein-him"
-  },
-  {
-   "nome": "Autoramas + Tatá Aeroplano",
-   "local": "Picles",
-   "endereco": "Rua Cardeal Arcoverde, 1838, Pinheiros, São Paulo",
-   "data": "2026-11-13",
-   "inicio": "20:00",
-   "regra": "festa",
-   "publico_estimado": 300,
-   "fonte": "https://r.shotgun.live/en/events/autoramas-2026-11-13"
-  },
-  {
-   "nome": "Blitz",
-   "local": "The Cavern Club",
-   "endereco": "Rua Olimpíadas, 360, Vila Olímpia, São Paulo",
-   "data": "2026-11-13",
-   "inicio": "21:00",
-   "regra": "show",
-   "publico_estimado": 600,
-   "fonte": "https://www.songkick.com/metro-areas/27274-brazil-sao-paulo/november-2026"
-  },
-  {
-   "nome": "Candlelight: O Melhor da MPB",
-   "local": "MASP",
-   "endereco": "Av. Paulista, 1578, Bela Vista, São Paulo",
-   "data": "2026-11-13",
-   "inicio": "21:00",
-   "regra": "teatro",
-   "publico_estimado": 300,
-   "fonte": "https://programaparadois.com.br/eventos-sao-paulo-novembro-2026/"
-  },
-  {
-   "nome": "Contratempo",
-   "local": "Contratempo São Paulo",
-   "endereco": "São Paulo",
-   "data": "2026-11-13",
-   "inicio": "21:00",
-   "regra": "festa",
-   "publico_estimado": null,
-   "fonte": "https://r.shotgun.live/en/events/contra-tempo"
-  },
-  {
-   "nome": "Portal Onze – Inauguração",
-   "local": "Bela Vista (Shotgun)",
-   "endereco": "Bela Vista, São Paulo",
-   "data": "2026-11-13",
-   "inicio": "21:00",
-   "regra": "festa",
-   "publico_estimado": null,
-   "fonte": "https://r.shotgun.live/en/events/portal-onze-inauguracao-onze-onze"
-  },
-  {
-   "nome": "Tá Na Mente",
-   "local": "Terra SP",
-   "endereco": "Av. Salim Antônio Curiati, 160, Campo Grande, São Paulo",
-   "data": "2026-11-13",
-   "inicio": "22:00",
-   "regra": "abertura",
-   "publico_estimado": 3000,
-   "fonte": "https://www.songkick.com/metro-areas/27274-brazil-sao-paulo/november-2026"
-  },
-  {
-   "nome": "Teddney – Especial Britney",
-   "local": "Barra Funda (Shotgun)",
-   "endereco": "Barra Funda, São Paulo",
-   "data": "2026-11-13",
-   "inicio": "22:00",
-   "regra": "festa",
-   "publico_estimado": null,
-   "fonte": "https://r.shotgun.live/en/events/teddney25anosbritney"
-  },
-  {
-   "nome": "Phrenesi #002 Numen",
-   "local": "Teatro Mars",
-   "endereco": "Rua João Passalaqua, 80, Bela Vista, São Paulo",
-   "data": "2026-11-13",
-   "inicio": "22:00",
-   "fim": "06:00",
-   "regra": "festa",
-   "publico_estimado": 600,
-   "fonte": "https://r.shotgun.live/en/events/phrenesi-002-numen"
-  },
-  {
-   "nome": "After Dark Horror Story",
-   "local": "Amnesia Rock Bar",
-   "endereco": "São Paulo",
-   "data": "2026-11-13",
-   "inicio": "22:00",
-   "regra": "festa",
-   "publico_estimado": null,
-   "fonte": "https://r.shotgun.live/en/events/after-dark-horror-story-halloween-edition"
-  },
-  {
-   "nome": "Macumbia + Terra Tremesse",
-   "local": "Sol Y Sombra - SyS13",
-   "endereco": "Rua Treze de Maio, 180, Bela Vista, São Paulo",
-   "data": "2026-11-13",
-   "inicio": "22:00",
-   "fim": "04:00",
-   "regra": "festa",
-   "publico_estimado": 300,
-   "fonte": "https://r.shotgun.live/en/events/macumbia-terra-tremesse-no-sy-s-13"
-  },
-  {
-   "nome": "Nexttrack 2000",
-   "local": "Tarot Bar",
-   "endereco": "Rua Inácio Pereira da Rocha, 109, Alto de Pinheiros, São Paulo",
-   "data": "2026-11-13",
-   "inicio": "22:00",
-   "fim": "05:00",
-   "regra": "festa",
-   "publico_estimado": 300,
-   "fonte": "https://r.shotgun.live/en/events/nexttrack-2000-tarot"
-  },
-  {
-   "nome": "Disquet Red & Wild",
-   "local": "Home Club",
-   "endereco": "Rua Quinze de Novembro, 317, Centro Histórico, São Paulo",
-   "data": "2026-11-13",
-   "inicio": "22:00",
-   "fim": "06:00",
-   "regra": "festa",
-   "publico_estimado": 400,
-   "fonte": "https://r.shotgun.live/en/events/disquet-red-wild"
-  },
-  {
-   "nome": "P.O.D. Convida",
-   "local": "Dr Banana Club",
-   "endereco": "Rua Vergueiro, 6712, Vila Brasilio Machado, São Paulo",
-   "data": "2026-11-13",
-   "inicio": "22:00",
-   "fim": "06:00",
-   "regra": "festa",
-   "publico_estimado": 300,
-   "fonte": "https://r.shotgun.live/en/events/p-o-d-convida-p-o-d-jojo-pablito-anas-tacia"
-  },
-  {
-   "nome": "Baile do Gato",
-   "local": "Kat Klub",
-   "endereco": "Rua Augusta, 609, Consolação, São Paulo",
-   "data": "2026-11-13",
-   "inicio": "22:00",
-   "fim": "06:00",
-   "regra": "festa",
-   "publico_estimado": 300,
-   "fonte": "https://r.shotgun.live/en/events/baile-do-gato-13-11"
-  },
-  {
-   "nome": "Discotecando Histórias",
-   "local": "Katarina Bar",
-   "endereco": "Av. São Luís, 272, República, São Paulo",
-   "data": "2026-11-13",
-   "inicio": "22:00",
-   "regra": "festa",
-   "publico_estimado": 200,
-   "fonte": "https://r.shotgun.live/en/events/2-edicacao-discotecando-historias"
-  },
-  {
-   "nome": "Sexta-Feira 13 Open Bar",
-   "local": "Clube Outs",
-   "endereco": "Rua Augusta, 486, Consolação, São Paulo",
-   "data": "2026-11-13",
-   "inicio": "22:00",
-   "fim": "05:00",
-   "regra": "festa",
-   "publico_estimado": 400,
-   "fonte": "https://r.shotgun.live/en/events/sexta-feira-13-open-bar-festa-a-fantasia"
-  },
-  {
-   "nome": "Dopamina – after Hayley Williams",
-   "local": "Redoma Bixiga",
-   "endereco": "Rua Treze de Maio, 825 A, Bela Vista, São Paulo",
-   "data": "2026-11-13",
-   "inicio": "23:00",
-   "fim": "05:00",
-   "regra": "festa",
-   "publico_estimado": 500,
-   "fonte": "https://r.shotgun.live/en/events/dopamina-na-redoma-bixiga"
-  },
-  {
-   "nome": "Peaches",
-   "local": "ZIG Studio",
-   "endereco": "Av. Pacaembu, 33, Barra Funda, São Paulo",
-   "data": "2026-11-13",
-   "inicio": "23:00",
-   "fim": "06:00",
-   "regra": "festa",
-   "publico_estimado": 1500,
-   "fonte": "https://r.shotgun.live/en/events/peaches-aovivo-no-lube-so-rude-tour-zig-studio-sao-paulo"
-  },
-  {
-   "nome": "Yanamaste [M]eio",
-   "local": "São Paulo (Shotgun)",
-   "endereco": "São Paulo",
-   "data": "2026-11-13",
-   "inicio": "23:59",
-   "regra": "festa",
-   "publico_estimado": null,
-   "fonte": "https://r.shotgun.live/en/events/yanamaste-13-11-m-eio-8-edicao"
-  },
-  {
-   "nome": "Minhoqueens",
-   "local": "Baronesa Rooftop",
-   "endereco": "São Paulo",
-   "data": "2026-11-14",
-   "inicio": "15:00",
-   "regra": "festa",
-   "publico_estimado": null,
-   "fonte": "https://r.shotgun.live/en/events/estreia-minhoqueens-no-terraco-baronesa-14-11"
-  },
-  {
-   "nome": "Trommel x Mixordia",
-   "local": "Fabriketa",
-   "endereco": "Rua do Bucolismo, 81, Brás, São Paulo",
-   "data": "2026-11-14",
-   "inicio": "16:00",
-   "regra": "festa",
-   "publico_estimado": 1500,
-   "fonte": "https://r.shotgun.live/en/events/trommel-x-mixordia"
-  },
-  {
-   "nome": "Lab&Music",
-   "local": "Pinheiros (Shotgun)",
-   "endereco": "Pinheiros, São Paulo",
-   "data": "2026-11-14",
-   "inicio": "17:00",
-   "regra": "festa",
-   "publico_estimado": null,
-   "fonte": "https://shotgun.live/en/events/lab-music"
-  },
-  {
-   "nome": "Ola Show com Cumbierama",
-   "local": "Campos Elíseos (Shotgun)",
-   "endereco": "Campos Elíseos, São Paulo",
-   "data": "2026-11-14",
-   "inicio": "17:30",
-   "regra": "festa",
-   "publico_estimado": null,
-   "fonte": "https://shotgun.live/en/events/ola-show-com-cumbierama-convidados"
-  },
-  {
-   "nome": "Batekoo Festival",
-   "local": "Arena Canindé",
-   "endereco": "Rua Comendador Nestor Pereira, 33, Canindé, São Paulo",
-   "data": "2026-11-14",
-   "inicio": "18:00",
-   "regra": "festa",
-   "publico_estimado": 10000,
-   "fonte": "https://r.shotgun.live/en/cities/sao-paulo?page=2"
-  },
-  {
-   "nome": "Campeonato de Assobio + Patife Band",
-   "local": "Pinheiros (Shotgun)",
-   "endereco": "Pinheiros, São Paulo",
-   "data": "2026-11-14",
-   "inicio": "18:00",
-   "regra": "festa",
-   "publico_estimado": null,
-   "fonte": "https://shotgun.live/en/events/campeonato-de-assobio-17h-21h-2026-11-14"
-  },
-  {
-   "nome": "IAMX",
-   "local": "Madame Underground Club",
-   "endereco": "Rua Conselheiro Ramalho, 873, Bela Vista, São Paulo",
-   "data": "2026-11-14",
-   "inicio": "19:00",
-   "regra": "abertura",
-   "publico_estimado": 400,
-   "fonte": "https://www.songkick.com/metro-areas/27274-brazil-sao-paulo/november-2026"
-  },
-  {
-   "nome": "Guilherme Arantes",
-   "local": "Tokio Marine Hall",
-   "endereco": "Rua Bragança Paulista, 1281, Chácara Santo Antônio, São Paulo",
-   "data": "2026-11-14",
-   "inicio": "20:00",
-   "regra": "abertura",
-   "publico_estimado": 3000,
-   "fonte": "https://www.songkick.com/venues/482001-tokio-marine-hall"
-  },
-  {
-   "nome": "Horse Meat Disco",
-   "local": "House Of Love",
-   "endereco": "Rua Dom José de Barros, 306, República, São Paulo",
-   "data": "2026-11-14",
-   "inicio": "20:00",
-   "fim": "06:00",
-   "regra": "festa",
-   "publico_estimado": 800,
-   "fonte": "https://r.shotgun.live/en/events/horse-meat-disco-sp"
-  },
-  {
-   "nome": "Allfavela 10 anos",
-   "local": "Parque Jacaranda (Shotgun)",
-   "endereco": "Parque Jacaranda, São Paulo",
-   "data": "2026-11-14",
-   "inicio": "20:00",
-   "regra": "festa",
-   "publico_estimado": null,
-   "fonte": "https://shotgun.live/en/events/allfavela-10-anos"
-  },
-  {
-   "nome": "Marisa Monte",
+   "nome": "Mariah Carey – Christmas Time",
    "local": "Nubank Parque",
    "endereco": "Av. Francisco Matarazzo, 1705, Água Branca, São Paulo",
-   "data": "2026-11-14",
+   "data": "2026-11-17",
    "inicio": "21:00",
    "regra": "show",
    "publico_estimado": 40000,
-   "fonte": "https://tmc.com.br/?p=80868"
+   "fonte": "https://catracalivre.com.br/gira/show-mariah-careys-christmas-time-allianz-parque-sp/"
   },
   {
-   "nome": "Letrux e Duda Beat",
-   "local": "Sala São Paulo",
-   "endereco": "Praça Júlio Prestes, 16, Luz, São Paulo",
-   "data": "2026-11-14",
-   "inicio": "21:00",
-   "regra": "show",
-   "publico_estimado": 1500,
-   "fonte": "https://www.songkick.com/concerts/43339097-letrux-at-sala-sao-paulo"
-  },
-  {
-   "nome": "Chico César",
-   "local": "Hotel Unique",
-   "endereco": "Av. Brigadeiro Luís Antônio, 4700, Jardim Paulista, São Paulo",
-   "data": "2026-11-14",
-   "inicio": "21:00",
-   "regra": "show",
-   "publico_estimado": 300,
-   "fonte": "https://www.songkick.com/metro-areas/27274-brazil-sao-paulo/november-2026"
-  },
-  {
-   "nome": "Maglore",
-   "local": "Sesc Belenzinho",
-   "endereco": "Rua Padre Adelino, 1000, Belenzinho, São Paulo",
-   "data": "2026-11-14",
-   "inicio": "21:00",
-   "regra": "show",
-   "publico_estimado": 800,
-   "fonte": "https://www.songkick.com/metro-areas/27274-brazil-sao-paulo/november-2026"
-  },
-  {
-   "nome": "Festa 2000 Nina Hit + Doutor DJ",
-   "local": "Pinheiros (Shotgun)",
-   "endereco": "Pinheiros, São Paulo",
-   "data": "2026-11-14",
-   "inicio": "21:00",
-   "regra": "festa",
-   "publico_estimado": null,
-   "fonte": "https://shotgun.live/en/events/omg-especial-2010-funks-doutor-dj-2026-11-14"
-  },
-  {
-   "nome": "Kevin",
-   "local": "Festa Kevin (Bom Retiro)",
-   "endereco": "Rua Solon, 1121, Bom Retiro, São Paulo",
-   "data": "2026-11-14",
-   "inicio": "22:00",
-   "fim": "08:00",
-   "regra": "festa",
-   "publico_estimado": 800,
-   "fonte": "https://r.shotgun.live/en/events/kevin-14-11-sao-paulo"
-  },
-  {
-   "nome": "Apto1205 15ª edição",
-   "local": "Barraco SP",
-   "endereco": "Rua Achilles Orlando Curtolo, 649, Parque Industrial Tomas Edson, São Paulo",
-   "data": "2026-11-14",
-   "inicio": "22:00",
-   "fim": "06:00",
-   "regra": "festa",
-   "publico_estimado": 500,
-   "fonte": "https://r.shotgun.live/en/events/apto-1205-15-edicao"
-  },
-  {
-   "nome": "Bellakeo",
-   "local": "Sol Y Sombra - SyS13",
-   "endereco": "Rua Treze de Maio, 180, Bela Vista, São Paulo",
-   "data": "2026-11-14",
-   "inicio": "22:00",
-   "regra": "festa",
-   "publico_estimado": 300,
-   "fonte": "https://shotgun.live/en/events/bellakeo-no-sy-s-13"
-  },
-  {
-   "nome": "Naiahcústica",
-   "local": "Itaim Bibi (Shotgun)",
-   "endereco": "Itaim Bibi, São Paulo",
-   "data": "2026-11-15",
-   "inicio": "18:00",
-   "regra": "show",
-   "publico_estimado": null,
-   "fonte": "https://shotgun.live/en/events/naiahcustica-encontro-ao-vivo"
-  },
-  {
-   "nome": "BDS@20 – BNegão Trio, Maj",
-   "local": "Bela Vista (Shotgun)",
-   "endereco": "Bela Vista, São Paulo",
-   "data": "2026-11-15",
-   "inicio": "18:00",
-   "regra": "show",
-   "publico_estimado": null,
-   "fonte": "https://shotgun.live/en/events/bds-20-de-abya-yala-a-palestina-bnegao-trio-maj-e-mais"
-  },
-  {
-   "nome": "Ty Segall",
+   "nome": "Luedji Luna",
    "local": "Cine Joia",
    "endereco": "Praça Carlos Gomes, 82, Liberdade, São Paulo",
-   "data": "2026-11-15",
+   "data": "2026-11-18",
    "inicio": "19:00",
    "regra": "abertura",
+   "publico_estimado": 900,
+   "fonte": "https://shotgun.live/es/events/luedjilunanocinejoia"
+  },
+  {
+   "nome": "Mariah Carey – Christmas Time (extra)",
+   "local": "Nubank Parque",
+   "endereco": "Av. Francisco Matarazzo, 1705, Água Branca, São Paulo",
+   "data": "2026-11-18",
+   "inicio": "21:00",
+   "regra": "show",
+   "publico_estimado": 40000,
+   "fonte": "https://www.riotimesonline.com/mariah-carey-brazil-concerts-november-2026-sao-paulo-rio-de-janeiro-christmas-time-tour/"
+  },
+  {
+   "nome": "CA7RIEL & Paco Amoroso",
+   "local": "Espaço Unimed",
+   "endereco": "Rua Tagipuru, 795, Barra Funda, São Paulo",
+   "data": "2026-11-18",
+   "inicio": "21:00",
+   "regra": "show",
+   "publico_estimado": 8000,
+   "fonte": "https://www.livenation.com.br/en/event/ca7riel-and-paco-amoroso-free-spirits-world-tour-sao-paulo-tickets-edp1662360"
+  },
+  {
+   "nome": "Corinthians x Botafogo",
+   "local": "Neo Química Arena",
+   "endereco": "Av. Miguel Ignácio Curi, 111, Artur Alvim, São Paulo",
+   "data": "2026-11-18",
+   "inicio": "21:30",
+   "regra": "futebol",
+   "publico_estimado": 40000,
+   "fonte": "https://tribunadejundiai.com.br/mais/esportes/brasileirao-paralisa-na-ultima-data-fifa-do-ano-veja-quando-a-35a-rodada/"
+  },
+  {
+   "nome": "Jazz Fusion",
+   "local": "Bela Vista (Shotgun)",
+   "endereco": "Bela Vista, São Paulo",
+   "data": "2026-11-19",
+   "inicio": "18:00",
+   "regra": "show",
+   "publico_estimado": 150,
+   "fonte": "https://shotgun.live/es/events/jazz-fusion"
+  },
+  {
+   "nome": "Luiz Barata + Nitcho & Gustavo Neves",
+   "local": "Vila Mariana (Shotgun)",
+   "endereco": "Vila Mariana, São Paulo",
+   "data": "2026-11-19",
+   "inicio": "19:00",
+   "regra": "show",
+   "publico_estimado": 200,
+   "fonte": "https://shotgun.live/es/events/luiz-barata-com-nitcho-gustavo-neves"
+  },
+  {
+   "nome": "Ensaio Bloco da Piranha – Ocupação Fervo",
+   "local": "Água Branca (Shotgun)",
+   "endereco": "Água Branca, São Paulo",
+   "data": "2026-11-19",
+   "inicio": "19:00",
+   "regra": "festa",
+   "publico_estimado": 400,
+   "fonte": "https://shotgun.live/es/events/ensaio-aberto-do-bloco-da-piranha-no"
+  },
+  {
+   "nome": "Aimée Drag Show",
+   "local": "República (Shotgun)",
+   "endereco": "República, São Paulo",
+   "data": "2026-11-19",
+   "inicio": "19:00",
+   "regra": "show",
+   "publico_estimado": 150,
+   "fonte": "https://shotgun.live/es/events/aimee-drag-show-com-desiree-beck-19-11-quinta"
+  },
+  {
+   "nome": "Quelynah convida Leilah Moreno",
+   "local": "Pinheiros (Shotgun)",
+   "endereco": "Pinheiros, São Paulo",
+   "data": "2026-11-19",
+   "inicio": "19:00",
+   "regra": "show",
+   "publico_estimado": 300,
+   "fonte": "https://shotgun.live/es/events/quelynah-convida-leilah-moreno-dj-max-nos-beatz-e-mc-xuxu"
+  },
+  {
+   "nome": "Maré Tardia",
+   "local": "Casa Rockambole",
+   "endereco": "Rua Belmiro Braga, 119, Pinheiros, São Paulo",
+   "data": "2026-11-19",
+   "inicio": "20:00",
+   "regra": "abertura",
+   "publico_estimado": 300,
+   "fonte": "https://songkick.com/metro-areas/27274-brazil-sao-paulo/2026"
+  },
+  {
+   "nome": "Festival Sertanejo (Jads & Jadson, Munhoz & Mariano)",
+   "local": "Villa Country",
+   "endereco": "Av. Francisco Matarazzo, 774, Água Branca, São Paulo",
+   "data": "2026-11-19",
+   "inicio": "20:00",
+   "regra": "abertura",
+   "publico_estimado": 4000,
+   "fonte": "https://visitesaopaulo.com/evento/festival-sertanejo-com-jads-jadson-munhoz-mariano-fiduma-jeca-e-mais-2026/"
+  },
+  {
+   "nome": "Saulo Duarte – Baile Quente",
+   "local": "Pinheiros (Shotgun)",
+   "endereco": "Pinheiros, São Paulo",
+   "data": "2026-11-19",
+   "inicio": "20:00",
+   "regra": "festa",
+   "publico_estimado": 300,
+   "fonte": "https://shotgun.live/es/events/choroes-da-pisadinha-2026-11-19"
+  },
+  {
+   "nome": "EELF: Deekapz, Pijus, DJ Windows 7",
+   "local": "Âmago",
+   "endereco": "São Paulo",
+   "data": "2026-11-19",
+   "inicio": "20:00",
+   "regra": "festa",
+   "publico_estimado": 300,
+   "fonte": "https://www.technoairlines.com/events/sao-paulo"
+  },
+  {
+   "nome": "14 Bis",
+   "local": "The Cavern Club",
+   "endereco": "Rua Olimpíadas, 360, Vila Olímpia, São Paulo",
+   "data": "2026-11-19",
+   "inicio": "21:00",
+   "regra": "show",
+   "publico_estimado": 600,
+   "fonte": "https://songkick.com/metro-areas/27274-brazil-sao-paulo/2026"
+  },
+  {
+   "nome": "Pagode da Dessa",
+   "local": "Mundo Pensante",
+   "endereco": "Rua Treze de Maio, 830, Bela Vista, São Paulo",
+   "data": "2026-11-19",
+   "inicio": "21:00",
+   "regra": "festa",
+   "publico_estimado": 500,
+   "fonte": "https://shotgun.live/es/events/19-11-pagode-da-dessa"
+  },
+  {
+   "nome": "Crema Club 19.11",
+   "local": "Crema Club",
+   "endereco": "São Paulo",
+   "data": "2026-11-19",
+   "inicio": "21:00",
+   "regra": "festa",
+   "publico_estimado": 400,
+   "fonte": "https://www.technoairlines.com/events/sao-paulo"
+  },
+  {
+   "nome": "São Paulo x Fluminense",
+   "local": "MorumBIS",
+   "endereco": "Praça Roberto Gomes Pedrosa, 1, Morumbi, São Paulo",
+   "data": "2026-11-19",
+   "inicio": "21:30",
+   "regra": "futebol",
+   "publico_estimado": 50000,
+   "fonte": "https://tribunadejundiai.com.br/mais/esportes/brasileirao-paralisa-na-ultima-data-fifa-do-ano-veja-quando-a-35a-rodada/"
+  },
+  {
+   "nome": "Funkonhas x Bday Jejedazs",
+   "local": "Bela Vista (Shotgun)",
+   "endereco": "Bela Vista, São Paulo",
+   "data": "2026-11-19",
+   "inicio": "22:00",
+   "regra": "festa",
+   "publico_estimado": 300,
+   "fonte": "https://shotgun.live/es/events/funkonhas-x-bday-jejedazs"
+  },
+  {
+   "nome": "Entrópica",
+   "local": "Sol Y Sombra - SyS13",
+   "endereco": "Rua Treze de Maio, 180, Bela Vista, São Paulo",
+   "data": "2026-11-19",
+   "inicio": "22:00",
+   "regra": "festa",
+   "publico_estimado": 400,
+   "fonte": "https://shotgun.live/es/events/entropica-no-sy-s-13"
+  },
+  {
+   "nome": "Moving D-Edge: Kolombo, Dopecupid",
+   "local": "D-Edge",
+   "endereco": "Av. Auro Soares de Moura Andrade, 141, Barra Funda, São Paulo",
+   "data": "2026-11-19",
+   "inicio": "22:00",
+   "regra": "festa",
    "publico_estimado": 1000,
-   "fonte": "https://www.songkick.com/venues/1539788-cine-joia"
+   "fonte": "https://www.technoairlines.com/events/sao-paulo"
+  },
+  {
+   "nome": "Consciência Negra – Equipe Zimbabwe (sound system)",
+   "local": "Festival Consciência Negra – Av. Ipiranga",
+   "endereco": "Av. Ipiranga, República, São Paulo",
+   "data": "2026-11-20",
+   "inicio": "16:00",
+   "fim": "20:00",
+   "regra": "festa",
+   "publico_estimado": 2000,
+   "fonte": "https://catracalivre.com.br/gira/festival-da-consciencia-negra-traz-shows-gratuitos-de-seu-jorge-samba-de-dandara-os-prettos-e-mais-ao-centro-de-sp/"
+  },
+  {
+   "nome": "Consciência Negra – Amaro Freitas",
+   "local": "Festival Consciência Negra – Praça Dom José Gaspar",
+   "endereco": "Praça Dom José Gaspar, República, São Paulo",
+   "data": "2026-11-20",
+   "inicio": "17:00",
+   "regra": "show",
+   "publico_estimado": 2000,
+   "fonte": "https://catracalivre.com.br/gira/festival-da-consciencia-negra-traz-shows-gratuitos-de-seu-jorge-samba-de-dandara-os-prettos-e-mais-ao-centro-de-sp/"
+  },
+  {
+   "nome": "Consciência Negra – Dejavu",
+   "local": "Festival Consciência Negra – Viaduto do Chá",
+   "endereco": "Viaduto do Chá, Centro Histórico, São Paulo",
+   "data": "2026-11-20",
+   "inicio": "17:00",
+   "regra": "show",
+   "publico_estimado": 2000,
+   "fonte": "https://catracalivre.com.br/gira/festival-da-consciencia-negra-traz-shows-gratuitos-de-seu-jorge-samba-de-dandara-os-prettos-e-mais-ao-centro-de-sp/"
+  },
+  {
+   "nome": "Mia Wicthoff – Será Você? Tour",
+   "local": "Vila Mariana (Shotgun)",
+   "endereco": "Vila Mariana, São Paulo",
+   "data": "2026-11-20",
+   "inicio": "18:00",
+   "regra": "show",
+   "publico_estimado": 300,
+   "fonte": "https://shotgun.live/es/events/mia-witchoff-convidados-especiais-sera-voce-tour"
+  },
+  {
+   "nome": "The Under 8ª Edição",
+   "local": "República (Shotgun)",
+   "endereco": "República, São Paulo",
+   "data": "2026-11-20",
+   "inicio": "19:00",
+   "regra": "festa",
+   "publico_estimado": 300,
+   "fonte": "https://shotgun.live/es/events/the-under-8-edicao"
+  },
+  {
+   "nome": "Sérgio Estranho convida Nabru + DJ Lebre",
+   "local": "Picles",
+   "endereco": "Rua Cardeal Arcoverde, 1838, Pinheiros, São Paulo",
+   "data": "2026-11-20",
+   "inicio": "20:00",
+   "regra": "show",
+   "publico_estimado": 250,
+   "fonte": "https://shotgun.live/es/events/sergio-estranho-convida-nabru-2026-11-20"
+  },
+  {
+   "nome": "HE.SHE.THEY. – Cristobal Pesce",
+   "local": "Sonora Garden",
+   "endereco": "Rua Comendador Nestor Pereira, 33, Canindé, São Paulo",
+   "data": "2026-11-20",
+   "inicio": "20:00",
+   "regra": "festa",
+   "publico_estimado": 1500,
+   "fonte": "https://www.technoairlines.com/events/sao-paulo"
+  },
+  {
+   "nome": "Consciência Negra – Os Prettos, Almir Guineto, Dudu Nobre",
+   "local": "Festival Consciência Negra – Av. São João",
+   "endereco": "Av. São João, Centro Histórico, São Paulo",
+   "data": "2026-11-20",
+   "inicio": "20:30",
+   "regra": "show",
+   "publico_estimado": 20000,
+   "fonte": "https://catracalivre.com.br/gira/festival-da-consciencia-negra-traz-shows-gratuitos-de-seu-jorge-samba-de-dandara-os-prettos-e-mais-ao-centro-de-sp/"
+  },
+  {
+   "nome": "Best of Blues and Rock – Eddie Vedder",
+   "local": "Parque Ibirapuera (Auditório - plateia externa)",
+   "endereco": "Av. Pedro Álvares Cabral, s/n, Ibirapuera, São Paulo",
+   "data": "2026-11-20",
+   "inicio": "21:00",
+   "regra": "show",
+   "publico_estimado": 15000,
+   "fonte": "https://www.riotimesonline.com/best-of-blues-and-rock-2026-sao-paulo-brazil-ibirapuera-november-20-22-eddie-vedder-roger-daltrey/"
+  },
+  {
+   "nome": "14 Bis",
+   "local": "The Cavern Club",
+   "endereco": "Rua Olimpíadas, 360, Vila Olímpia, São Paulo",
+   "data": "2026-11-20",
+   "inicio": "21:00",
+   "regra": "show",
+   "publico_estimado": 600,
+   "fonte": "https://songkick.com/metro-areas/27274-brazil-sao-paulo/2026"
+  },
+  {
+   "nome": "Crema Club 20.11",
+   "local": "Crema Club",
+   "endereco": "São Paulo",
+   "data": "2026-11-20",
+   "inicio": "21:00",
+   "regra": "festa",
+   "publico_estimado": 400,
+   "fonte": "https://www.technoairlines.com/events/sao-paulo"
+  },
+  {
+   "nome": "Luau O Rappa & Natiruts (Banda A Tropa)",
+   "local": "Jai Club",
+   "endereco": "Rua Vergueiro, 2676, Vila Mariana, São Paulo",
+   "data": "2026-11-20",
+   "inicio": "23:00",
+   "regra": "festa",
+   "publico_estimado": 500,
+   "fonte": "https://shotgun.live/es/events/especial-o-rappa-natiruts-por-banda-a-tropa-jai-club"
+  },
+  {
+   "nome": "From House to Disco – Subb-an",
+   "local": "Edifício Martinelli",
+   "endereco": "Rua São Bento, 405, Centro Histórico, São Paulo",
+   "data": "2026-11-20",
+   "inicio": "23:00",
+   "regra": "festa",
+   "publico_estimado": 800,
+   "fonte": "https://www.technoairlines.com/events/sao-paulo"
+  },
+  {
+   "nome": "Freak Chic D-Edge: CJ Jeff, Bauhouse",
+   "local": "D-Edge",
+   "endereco": "Av. Auro Soares de Moura Andrade, 141, Barra Funda, São Paulo",
+   "data": "2026-11-20",
+   "inicio": "23:59",
+   "regra": "festa",
+   "publico_estimado": 1000,
+   "fonte": "https://www.technoairlines.com/events/sao-paulo"
+  },
+  {
+   "nome": "Palmeiras x Flamengo",
+   "local": "Nubank Parque",
+   "endereco": "Av. Francisco Matarazzo, 1705, Água Branca, São Paulo",
+   "data": "2026-11-21",
+   "inicio": "16:30",
+   "regra": "futebol",
+   "publico_estimado": 42000,
+   "fonte": "https://acritica.net/esportes/cbf-define-data-horario-palmeiras-flamengo-brasileirao-21-novembro/"
+  },
+  {
+   "nome": "Consciência Negra – Mental Abstrato",
+   "local": "Festival Consciência Negra – Viaduto do Chá",
+   "endereco": "Viaduto do Chá, Centro Histórico, São Paulo",
+   "data": "2026-11-21",
+   "inicio": "17:00",
+   "regra": "show",
+   "publico_estimado": 2000,
+   "fonte": "https://catracalivre.com.br/gira/festival-da-consciencia-negra-traz-shows-gratuitos-de-seu-jorge-samba-de-dandara-os-prettos-e-mais-ao-centro-de-sp/"
+  },
+  {
+   "nome": "Consciência Negra – Jonathan Ferr",
+   "local": "Festival Consciência Negra – Praça Dom José Gaspar",
+   "endereco": "Praça Dom José Gaspar, República, São Paulo",
+   "data": "2026-11-21",
+   "inicio": "17:00",
+   "regra": "show",
+   "publico_estimado": 2000,
+   "fonte": "https://catracalivre.com.br/gira/festival-da-consciencia-negra-traz-shows-gratuitos-de-seu-jorge-samba-de-dandara-os-prettos-e-mais-ao-centro-de-sp/"
+  },
+  {
+   "nome": "Consciência Negra – Afrogroove (vinil)",
+   "local": "Festival Consciência Negra – Rua Dom José de Barros",
+   "endereco": "Rua Dom José de Barros, República, São Paulo",
+   "data": "2026-11-21",
+   "inicio": "17:00",
+   "fim": "21:00",
+   "regra": "festa",
+   "publico_estimado": 800,
+   "fonte": "https://catracalivre.com.br/gira/festival-da-consciencia-negra-traz-shows-gratuitos-de-seu-jorge-samba-de-dandara-os-prettos-e-mais-ao-centro-de-sp/"
+  },
+  {
+   "nome": "Moacyr Luz & Samba do Trabalhador",
+   "local": "Dois-Dois (Campos Elíseos)",
+   "endereco": "Campos Elíseos, São Paulo",
+   "data": "2026-11-21",
+   "inicio": "17:00",
+   "regra": "festa",
+   "publico_estimado": 600,
+   "fonte": "https://shotgun.live/es/events/moacyrluzesambadotrabalhador"
+  },
+  {
+   "nome": "Menestrel – Relicário 10 Anos",
+   "local": "Jai Club",
+   "endereco": "Rua Vergueiro, 2676, Vila Mariana, São Paulo",
+   "data": "2026-11-21",
+   "inicio": "17:30",
+   "regra": "show",
+   "publico_estimado": 500,
+   "fonte": "https://shotgun.live/es/events/menestrelsp"
+  },
+  {
+   "nome": "The Mönic + Zezza Vic + Charlie D",
+   "local": "Picles",
+   "endereco": "Rua Cardeal Arcoverde, 1838, Pinheiros, São Paulo",
+   "data": "2026-11-21",
+   "inicio": "18:00",
+   "regra": "show",
+   "publico_estimado": 250,
+   "fonte": "https://shotgun.live/es/events/a-ultima-valsa-despedida-joan-the-monic-picles-2026-10-21"
+  },
+  {
+   "nome": "Love Love Leste + Izza Soul",
+   "local": "Vila Nhocuné (Shotgun)",
+   "endereco": "Vila Nhocuné, São Paulo",
+   "data": "2026-11-21",
+   "inicio": "19:00",
+   "regra": "festa",
+   "publico_estimado": 400,
+   "fonte": "https://shotgun.live/es/events/love-love-leste-izza-soul-gusto-dj-fogaca-orpheus"
+  },
+  {
+   "nome": "Caetano Veloso nos Festivais",
+   "local": "Espaço Unimed",
+   "endereco": "Rua Tagipuru, 795, Barra Funda, São Paulo",
+   "data": "2026-11-21",
+   "inicio": "20:00",
+   "regra": "abertura",
+   "publico_estimado": 8000,
+   "fonte": "https://visitesaopaulo.com/evento/caetano-veloso-nos-festivais-2026/"
+  },
+  {
+   "nome": "Best of Blues and Rock – Roger Daltrey",
+   "local": "Parque Ibirapuera (Auditório - plateia externa)",
+   "endereco": "Av. Pedro Álvares Cabral, s/n, Ibirapuera, São Paulo",
+   "data": "2026-11-21",
+   "inicio": "21:00",
+   "regra": "show",
+   "publico_estimado": 15000,
+   "fonte": "https://www.riotimesonline.com/best-of-blues-and-rock-2026-sao-paulo-brazil-ibirapuera-november-20-22-eddie-vedder-roger-daltrey/"
+  },
+  {
+   "nome": "ZZ Top",
+   "local": "Suhai Music Hall",
+   "endereco": "Av. das Nações Unidas, 22540, Jurubatuba, São Paulo",
+   "data": "2026-11-21",
+   "inicio": "21:00",
+   "regra": "show",
+   "publico_estimado": 5000,
+   "fonte": "https://www.riotimesonline.com/what-to-do-in-sao-paulo-in-november-2026/"
+  },
+  {
+   "nome": "Let's Groove",
+   "local": "The Cavern Club",
+   "endereco": "Rua Olimpíadas, 360, Vila Olímpia, São Paulo",
+   "data": "2026-11-21",
+   "inicio": "21:00",
+   "regra": "show",
+   "publico_estimado": 600,
+   "fonte": "https://songkick.com/metro-areas/27274-brazil-sao-paulo/2026"
+  },
+  {
+   "nome": "Summer Electro Indie – Breno, Bamboloki",
+   "local": "Pinheiros (Shotgun)",
+   "endereco": "Pinheiros, São Paulo",
+   "data": "2026-11-21",
+   "inicio": "21:00",
+   "regra": "festa",
+   "publico_estimado": 300,
+   "fonte": "https://shotgun.live/es/events/summer-electro-indie-breno-bamboloki-allvesmay-2026-11-21"
+  },
+  {
+   "nome": "Crema Club 21.11",
+   "local": "Crema Club",
+   "endereco": "São Paulo",
+   "data": "2026-11-21",
+   "inicio": "21:00",
+   "regra": "festa",
+   "publico_estimado": 400,
+   "fonte": "https://www.technoairlines.com/events/sao-paulo"
+  },
+  {
+   "nome": "Darkwave Party – Ressaca de Halloween",
+   "local": "Pinheiros (Shotgun)",
+   "endereco": "Pinheiros, São Paulo",
+   "data": "2026-11-21",
+   "inicio": "23:00",
+   "regra": "festa",
+   "publico_estimado": 300,
+   "fonte": "https://shotgun.live/es/events/darkwave"
+  },
+  {
+   "nome": "Unreal",
+   "local": "Komplexo Tempo",
+   "endereco": "São Paulo",
+   "data": "2026-11-21",
+   "inicio": "23:00",
+   "regra": "festa",
+   "publico_estimado": 2000,
+   "fonte": "https://www.technoairlines.com/events/sao-paulo"
+  },
+  {
+   "nome": "Nave D-Edge: Supernova, Kenny Larkin",
+   "local": "D-Edge",
+   "endereco": "Av. Auro Soares de Moura Andrade, 141, Barra Funda, São Paulo",
+   "data": "2026-11-21",
+   "inicio": "23:59",
+   "regra": "festa",
+   "publico_estimado": 1000,
+   "fonte": "https://www.technoairlines.com/events/sao-paulo"
+  },
+  {
+   "nome": "Hot Chip",
+   "local": "Audio",
+   "endereco": "Av. Francisco Matarazzo, 694, Água Branca, São Paulo",
+   "data": "2026-11-22",
+   "inicio": "19:00",
+   "regra": "abertura",
+   "publico_estimado": 3000,
+   "fonte": "https://baressp.com.br/shows/hot-chip-retorna-a-sao-paulo-para-show-unico-no-brasil-em-novembro"
+  },
+  {
+   "nome": "Jorge Aragão",
+   "local": "Terra SP",
+   "endereco": "Av. Salim Antônio Curiati, 160, Campo Grande, São Paulo",
+   "data": "2026-11-22",
+   "inicio": "19:00",
+   "regra": "abertura",
+   "publico_estimado": 3000,
+   "fonte": "https://songkick.com/metro-areas/27274-brazil-sao-paulo/2026"
+  },
+  {
+   "nome": "Best of Blues and Rock – Eddie Vedder",
+   "local": "Parque Ibirapuera (Auditório - plateia externa)",
+   "endereco": "Av. Pedro Álvares Cabral, s/n, Ibirapuera, São Paulo",
+   "data": "2026-11-22",
+   "inicio": "21:00",
+   "regra": "show",
+   "publico_estimado": 15000,
+   "fonte": "https://www.riotimesonline.com/best-of-blues-and-rock-2026-sao-paulo-brazil-ibirapuera-november-20-22-eddie-vedder-roger-daltrey/"
   }
  ]
 }
