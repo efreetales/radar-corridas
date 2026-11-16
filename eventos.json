@@ -1,24 +1,8 @@
 {
- "gerado_em": "2026-11-16T09:06:03-03:00",
+ "gerado_em": "2026-11-16T16:30:31-03:00",
  "data": "2026-11-16",
  "observacao": "Gerado automaticamente (Ticket360, Sympla e revisão semanal). Saída estimada pelas regras de tools/casas.json.",
  "eventos": [
-  {
-   "nome": "Maxtel Conecta",
-   "local": "SETCESP - Sindicato das Empresas de Transportes de Carga de São Paulo e Região",
-   "endereco": "Rua Orlando Monteiro, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-16",
-   "inicio": "07:00",
-   "fim_estimado": "08:45",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/maxtel-conecta/3655869",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.517334,
-   "lng": -46.581801
-  },
   {
    "nome": "CIDADE CSC 2026",
    "local": "Pavilhão Verde - Expo Center Norte, São Paulo - SP",
@@ -146,6 +130,22 @@
    "regra": "festa",
    "lat": -23.546646,
    "lng": -46.646218
+  },
+  {
+   "nome": "Do grão à xícara: pequenos prazeres do dia a dia.",
+   "local": "Catedral Metropolitana Nossa Senhora da Assunção",
+   "endereco": "Praça da Sé, Praça da Sé, s/n - Centro, São Paulo",
+   "tipo": "show",
+   "data": "2026-11-16",
+   "inicio": "19:34",
+   "fim_estimado": "21:19",
+   "incerteza_min": 45,
+   "publico_estimado": null,
+   "fonte": "https://www.sympla.com.br/evento/do-grao-a-xicara-pequenos-prazeres-do-dia-a-dia/3592401",
+   "origem": "sympla",
+   "regra": "show",
+   "lat": -23.55031,
+   "lng": -46.634201
   },
   {
    "nome": "BIXIGA 70: ENTRE O ESTÚDIO E O PALCO, HAVIA UM TEATRO. (20h)",
