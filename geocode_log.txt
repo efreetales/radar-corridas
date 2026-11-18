@@ -1,2 +1,5 @@
-OK    Mariah Carey – Christmas Time | 1705, Avenida Francisco Matarazzo, Barra Funda, São Paulo, Região Sude
-com local: 11  sem local: 0
+OK    Luedji Luna | Cine Joia, 82, Praça Carlos Gomes, Glicério, Sé, São Paulo, Região Sud
+OK    Mariah Carey – Christmas Time (extra) | 1705, Avenida Francisco Matarazzo, Barra Funda, São Paulo, Região Sude
+OK    CA7RIEL & Paco Amoroso | Espaço Unimed, 795, Rua Tagipuru, Barra Funda, São Paulo, Região Sudes
+OK    Corinthians x Botafogo | Avenida Miguel Ignácio Curi, Avenida Miguel Inácio Curi, Vila Campanel
+com local: 43  sem local: 0
