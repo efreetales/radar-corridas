@@ -1,5 +1,17 @@
-OK    Luedji Luna | Cine Joia, 82, Praça Carlos Gomes, Glicério, Sé, São Paulo, Região Sud
-OK    Mariah Carey – Christmas Time (extra) | 1705, Avenida Francisco Matarazzo, Barra Funda, São Paulo, Região Sude
-OK    CA7RIEL & Paco Amoroso | Espaço Unimed, 795, Rua Tagipuru, Barra Funda, São Paulo, Região Sudes
-OK    Corinthians x Botafogo | Avenida Miguel Ignácio Curi, Avenida Miguel Inácio Curi, Vila Campanel
-com local: 24  sem local: 0
+FALHA Jazz Fusion | Bela Vista, São Paulo
+FALHA Luiz Barata + Nitcho & Gustavo Neves | Vila Mariana, São Paulo
+FALHA Ensaio Bloco da Piranha – Ocupação Fervo | Água Branca, São Paulo
+FALHA Aimée Drag Show | República, São Paulo
+FALHA Quelynah convida Leilah Moreno | Pinheiros, São Paulo
+OK    Maré Tardia | 119, Rua Belmiro Braga, Vila Madalena, Pinheiros, São Paulo, Região Su
+OK    Festival Sertanejo (Jads & Jadson, Munho | 774, Avenida Francisco Matarazzo, Barra Funda, São Paulo, Região Sudes
+FALHA Saulo Duarte – Baile Quente | Pinheiros, São Paulo
+FALHA EELF: Deekapz, Pijus, DJ Windows 7 | São Paulo
+OK    14 Bis | Shopping Vila Olímpia, 360, Rua Olimpíadas, Vila Olímpia, Itaim Bibi, 
+OK    Pagode da Dessa | Mundo Pensante, 830, Rua Treze de Maio, Bixiga, Bela Vista, São Paulo,
+FALHA Crema Club 19.11 | São Paulo
+OK    São Paulo x Fluminense | MorumBIS, 1, Praça Roberto Gomes Pedrosa, Morumbi, São Paulo, Região S
+FALHA Funkonhas x Bday Jejedazs | Bela Vista, São Paulo
+OK    Entrópica | 180, Rua Treze de Maio, Bixiga, Bela Vista, São Paulo, Região Sudeste,
+OK    Moving D-Edge: Kolombo, Dopecupid | Avenida Auro Soares de Moura Andrade, Barra Funda, São Paulo, Região S
+com local: 90  sem local: 9
