@@ -1,5 +1,5 @@
 {
- "gerado_em": "2026-11-18T14:58:01-03:00",
+ "gerado_em": "2026-11-18T22:04:43-03:00",
  "data": "2026-11-18",
  "observacao": "Gerado automaticamente (Ticket360, Sympla e revisão semanal). Saída estimada pelas regras de tools/casas.json.",
  "eventos": [
@@ -84,22 +84,6 @@
    "lng": -46.686507
   },
   {
-   "nome": "Como transformar boas ideias e mobilizar as pessoas · Inovação, lidera",
-   "local": "BASE Coworking · Nubank Parque",
-   "endereco": "Avenida Francisco Matarazzo, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-18",
-   "inicio": "18:30",
-   "fim_estimado": "20:00",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/como-transformar-boas-ideias-e-mobilizar-as-pessoas-inovacao-lideranca-e-networking/3652680",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.525624,
-   "lng": -46.679868
-  },
-  {
    "nome": "Jantar com Empresários",
    "local": "Rancho Português",
    "endereco": "Rua Alvorada, Vila Olímpia, São Paulo",
@@ -132,22 +116,6 @@
    "lng": -46.636328
   },
   {
-   "nome": "Happy Hour SKAT Alemão Transatlântico",
-   "local": "Villa Blue Tree Transatlântico",
-   "endereco": "Rua Verbo Divino, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-18",
-   "inicio": "19:00",
-   "fim_estimado": "21:00",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/happy-hour-skat-alemao-transatlantico/3299518",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.631014,
-   "lng": -46.70912
-  },
-  {
    "nome": "Watch Party | A Guarda Costas",
    "local": "Up Frei Caneca",
    "endereco": "Rua Frei Caneca, São Paulo",
@@ -162,22 +130,6 @@
    "regra": "festa",
    "lat": -23.55621,
    "lng": -46.656379
-  },
-  {
-   "nome": "Jantar Científico | MTZ 60 na Ginecologia",
-   "local": "Coco Bambu JK",
-   "endereco": "Avenida Antônio Joaquim de Moura Andrade, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-18",
-   "inicio": "19:00",
-   "fim_estimado": "22:00",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/jantar-cientifico-mtz-60-na-ginecologia/3613849",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.585631,
-   "lng": -46.670434
   },
   {
    "nome": "Entardecer de Vinhos Brasileiros + Monte seu Quebra-Quebra | Edição Es",
@@ -228,22 +180,6 @@
    "lng": -46.635924
   },
   {
-   "nome": "Aulão com Bel Martinelli e Arroio núcleo de dança - 18 de novembro de ",
-   "local": "Condô Cultural",
-   "endereco": "Rua Mundo Novo, Perdizes, São Paulo",
-   "tipo": "teatro",
-   "data": "2026-11-18",
-   "inicio": "19:30",
-   "fim_estimado": "21:30",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/aulao-com-bel-martinelli-e-arroio-nucleo-de-danca-18-de-novembro-de-2026/3623084",
-   "origem": "sympla",
-   "regra": "teatro",
-   "lat": -23.538955,
-   "lng": -46.69506
-  },
-  {
    "nome": "Jantar de lançamento da SBPP",
    "local": "Restaurante Ecco",
    "endereco": "Rua Amauri, Jardim Paulistano, São Paulo",
@@ -260,22 +196,6 @@
    "lng": -46.683154
   },
   {
-   "nome": "Echoes: O melhor do Pink Floyd",
-   "local": "BTG Pactual Hall",
-   "endereco": "R. Bento Branco de Andrade Filho,722, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-18",
-   "inicio": "20:00",
-   "fim_estimado": "21:45",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://bileto.sympla.com.br/event/124093",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.650504,
-   "lng": -46.721077
-  },
-  {
    "nome": "Analu canta Forró no Canto da Ema",
    "local": "CANTO DA EMA",
    "endereco": "Avenida Brigadeiro Faria Lima, Pinheiros, São Paulo",
@@ -290,22 +210,6 @@
    "regra": "festa",
    "lat": -23.561955,
    "lng": -46.694941
-  },
-  {
-   "nome": "EXTENDED GROUND PART. PHILIP SOMERVELL E MNTH (20h)",
-   "local": "Centro da Terra",
-   "endereco": "Rua Piracuama, Perdizes, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-18",
-   "inicio": "20:00",
-   "fim_estimado": "22:00",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/extended-ground-part-philip-somervell-e-mnth-20h/3646758",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.540493,
-   "lng": -46.679971
   },
   {
    "nome": "LUA DE SANGUE",
@@ -356,22 +260,6 @@
    "lng": -46.718085
   },
   {
-   "nome": "TÔ DE PLANTÃO' COM DIEGO BISOU",
-   "local": "Teatro Santa Cruz",
-   "endereco": "R. Domingos de Morais,2564 - Shopping Metrô Santa, São Paulo",
-   "tipo": "teatro",
-   "data": "2026-11-18",
-   "inicio": "20:00",
-   "fim_estimado": "22:00",
-   "incerteza_min": 30,
-   "publico_estimado": null,
-   "fonte": "https://bileto.sympla.com.br/event/128713",
-   "origem": "sympla",
-   "regra": "teatro",
-   "lat": -23.598797,
-   "lng": -46.637284
-  },
-  {
    "nome": "Lançamento Single Espiral",
    "local": "Rooftap",
    "endereco": "Rua Guararapes, Brooklin, São Paulo",
@@ -386,22 +274,6 @@
    "regra": "show",
    "lat": -23.603322,
    "lng": -46.691733
-  },
-  {
-   "nome": "Get Open Mic - Quartas 20h - 18/11",
-   "local": "Açaí Beach Bar",
-   "endereco": "Rua Augusta, Centro, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-18",
-   "inicio": "20:00",
-   "fim_estimado": "21:00",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/get-open-mic-quartas-20h-18-11/3657669",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.555157,
-   "lng": -46.656923
   },
   {
    "nome": "18.11| Pãozinho Solidário",
@@ -420,86 +292,6 @@
    "lng": -46.635154
   },
   {
-   "nome": "Noite Baobá",
-   "local": "Clube Barbixas de Comédia",
-   "endereco": "Rua Augusta, 1129, São Paulo",
-   "tipo": "festa",
-   "data": "2026-11-18",
-   "inicio": "20:30",
-   "fim_estimado": "02:30",
-   "incerteza_min": 120,
-   "publico_estimado": null,
-   "fonte": "https://bileto.sympla.com.br/event/113365",
-   "origem": "sympla",
-   "regra": "festa",
-   "lat": -23.554357,
-   "lng": -46.655983
-  },
-  {
-   "nome": "Alex Zakia no Fino da Bossa",
-   "local": "Fino da Bossa - Canção de Autor",
-   "endereco": "Avenida Brigadeiro Faria Lima, Itaim Bibi, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-18",
-   "inicio": "20:30",
-   "fim_estimado": "22:00",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/alex-zakia-no-fino-da-bossa/3547608",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.562865,
-   "lng": -46.694157
-  },
-  {
-   "nome": "A IMPOSSÍVEL VERSÃO MODERNA DA PAIXÃO - SEGUNDA TEMPORADA - 3",
-   "local": "CENTRO CULTURAL VILA OURO PRETO",
-   "endereco": "Rua Maria José, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-18",
-   "inicio": "20:30",
-   "fim_estimado": "21:40",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/a-impossivel-versao-moderna-da-paixao-segunda-temporada-3/3642522",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.556969,
-   "lng": -46.643436
-  },
-  {
-   "nome": "Cesar Soares no Mirante 469 - Fino da Bossa",
-   "local": "Fino da Bossa - Canção de Autor",
-   "endereco": "Avenida Brigadeiro Faria Lima, Itaim Bibi, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-18",
-   "inicio": "20:30",
-   "fim_estimado": "22:00",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/cesar-soares-no-mirante-469-fino-da-bossa/3624628",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.562865,
-   "lng": -46.694157
-  },
-  {
-   "nome": "NATHI GAITEIRA EM SP (ZONA NORTE) Teatro Sir Isaac Newton",
-   "local": "Teatro Sir Isaac Newton (TEATROSIN)",
-   "endereco": "Avenida Doutor Abílio Sampaio, Vila Gustavo, São Paulo",
-   "tipo": "teatro",
-   "data": "2026-11-18",
-   "inicio": "21:00",
-   "fim_estimado": "23:00",
-   "incerteza_min": 30,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/nathi-gaiteira-em-sp-zona-norte-teatro-sir-isaac-newton/3655610",
-   "origem": "sympla",
-   "regra": "teatro",
-   "lat": -23.479955,
-   "lng": -46.586498
-  },
-  {
    "nome": "Quarta do Standup Comedy às 21h no Bixiga Comedy",
    "local": "Bixiga Comedy Club",
    "endereco": "Rua Rui Barbosa, Bela Vista, São Paulo",
@@ -512,22 +304,6 @@
    "fonte": "https://www.sympla.com.br/evento/quarta-do-standup-comedy-as-21h-no-bixiga-comedy/3631571",
    "origem": "sympla",
    "regra": "teatro",
-   "lat": -23.56063,
-   "lng": -46.645268
-  },
-  {
-   "nome": "Nando Viana - A Vontade | Sp | Bixiga Comedy",
-   "local": "Bixiga Comedy Club",
-   "endereco": "Rua Rui Barbosa, Bela Vista, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-18",
-   "inicio": "21:00",
-   "fim_estimado": "22:45",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/nando-viana-a-vontade-sp-bixiga-comedy/3581970",
-   "origem": "sympla",
-   "regra": "show",
    "lat": -23.56063,
    "lng": -46.645268
   },
@@ -546,22 +322,6 @@
    "regra": "show",
    "lat": -23.521915,
    "lng": -46.687801
-  },
-  {
-   "nome": "BLUES JAM",
-   "local": "Bourbon Street",
-   "endereco": "Rua dos Chanes, 127, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-18",
-   "inicio": "21:00",
-   "fim_estimado": "22:45",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://bileto.sympla.com.br/event/114220",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.614095,
-   "lng": -46.667509
   },
   {
    "nome": "Mariah Carey – Christmas Time (extra)",
@@ -596,54 +356,6 @@
    "lng": -46.668013
   },
   {
-   "nome": "Adriana Moreira // Balaio da Moreira",
-   "local": "Casa de Francisca",
-   "endereco": "R. Quintino Bocaiúva,22 - 1º andar, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-18",
-   "inicio": "21:30",
-   "fim_estimado": "23:15",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://bileto.sympla.com.br/event/129244",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.548776,
-   "lng": -46.634712
-  },
-  {
-   "nome": "Otis Selimane // Músicas de Mbira e Outros Contos Bantu",
-   "local": "Casa de Francisca",
-   "endereco": "R. Quintino Bocaiúva,22 - 1º andar, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-18",
-   "inicio": "21:30",
-   "fim_estimado": "23:15",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://bileto.sympla.com.br/event/129459",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.548776,
-   "lng": -46.634712
-  },
-  {
-   "nome": "Cristóvão Bastos e convidados // 2ª Mostra de Piano & Suas Criaturas",
-   "local": "Casa de Francisca",
-   "endereco": "R. Quintino Bocaiúva,22 - 1º andar, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-18",
-   "inicio": "21:30",
-   "fim_estimado": "23:15",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://bileto.sympla.com.br/event/129462",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.548776,
-   "lng": -46.634712
-  },
-  {
    "nome": "Corinthians x Botafogo",
    "local": "Neo Química Arena",
    "endereco": "Av. Miguel Ignácio Curi, 111, Artur Alvim, São Paulo",
@@ -659,22 +371,6 @@
    "lat": -23.544416,
    "lng": -46.465123,
    "local_aproximado": true
-  },
-  {
-   "nome": "Lançamento FAÍSCA de GAÊ + Ana Spalter | Mamãe Bar",
-   "local": "MAMÃE BAR",
-   "endereco": "Rua Lopes Chaves, Barra Funda, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-18",
-   "inicio": "22:00",
-   "fim_estimado": "02:00",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/lancamento-faisca-de-gae-ana-spalter-mamae-bar/3641743",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.529838,
-   "lng": -46.659021
   },
   {
    "nome": "CCPC 18/11 QUARTA PROIBIDA - FUNKHALL, DANCEHALL E SHATTA + TECHNO das",
@@ -694,7 +390,7 @@
   }
  ],
  "geocodificacao": {
-  "com_local": 43,
+  "com_local": 24,
   "sem_local": 0
  }
 }
