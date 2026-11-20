@@ -14,4 +14,4 @@ OK    São Paulo x Fluminense | MorumBIS, 1, Praça Roberto Gomes Pedrosa, Morum
 FALHA Funkonhas x Bday Jejedazs | Bela Vista, São Paulo
 OK    Entrópica | 180, Rua Treze de Maio, Bixiga, Bela Vista, São Paulo, Região Sudeste,
 OK    Moving D-Edge: Kolombo, Dopecupid | Avenida Auro Soares de Moura Andrade, Barra Funda, São Paulo, Região S
-com local: 90  sem local: 9
+com local: 65  sem local: 9
