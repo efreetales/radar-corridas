@@ -6,6 +6,7 @@ FALHA Moacyr Luz & Samba do Trabalhador | Campos Elíseos, São Paulo
 OK    Menestrel – Relicário 10 Anos | Jai Club, 2676, Rua Vergueiro, Vila Mariana, São Paulo, Região Sudeste
 OK    The Mönic + Zezza Vic + Charlie D | 1838, Rua Cardeal Arcoverde, Vila Madalena, Pinheiros, São Paulo, Regi
 FALHA Love Love Leste + Izza Soul | Vila Nhocuné, São Paulo
+OK    Caetano Veloso nos Festivais | Espaço Unimed, 795, Rua Tagipuru, Barra Funda, São Paulo, Região Sudes
 FALHA Best of Blues and Rock – Roger Daltrey | Av. Pedro Álvares Cabral, s/n, Ibirapuera, São Paulo
 OK    ZZ Top | Condomínio São Paulo Headquarters, 22833, Avenida das Nações Unidas, V
 OK    Let's Groove | Shopping Vila Olímpia, 360, Rua Olimpíadas, Vila Olímpia, Itaim Bibi, 
@@ -14,4 +15,4 @@ FALHA Crema Club 21.11 | São Paulo
 FALHA Darkwave Party – Ressaca de Halloween | Pinheiros, São Paulo
 FALHA Unreal | São Paulo
 OK    Nave D-Edge: Supernova, Kenny Larkin | Avenida Auro Soares de Moura Andrade, Barra Funda, São Paulo, Região S
-com local: 128  sem local: 10
+com local: 121  sem local: 10

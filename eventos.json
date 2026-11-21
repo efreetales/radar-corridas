@@ -1,5 +1,5 @@
 {
- "gerado_em": "2026-11-21T13:44:34-03:00",
+ "gerado_em": "2026-11-21T20:45:18-03:00",
  "data": "2026-11-21",
  "observacao": "Gerado automaticamente (Ticket360, Sympla e revisão semanal). Saída estimada pelas regras de tools/casas.json.",
  "eventos": [
@@ -84,22 +84,6 @@
    "lng": -46.588295
   },
   {
-   "nome": "Feijoada no Pomar do Vinho",
-   "local": "Pomar do Vinho",
-   "endereco": "Rua Embaixador João Neves da Fontoura, Santana, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-21",
-   "inicio": "14:00",
-   "fim_estimado": "20:00",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/feijoada-no-pomar-do-vinho/3651170",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.502062,
-   "lng": -46.633596
-  },
-  {
    "nome": "COF COF BAILE - SUNSET",
    "local": "Espaço energia",
    "endereco": "Rua Estado do Ceará, Jardim Egle, São Paulo",
@@ -180,20 +164,20 @@
    "lng": -46.679021
   },
   {
-   "nome": "SERGINHO LACERDA EM SÃO MATEUS/SP - VIDA DE PAI - STAND UP COMEDY",
-   "local": "Teatro Caritas",
-   "endereco": "Rua Pedro Paulino dos Santos, 157, São Paulo",
+   "nome": "MALSYRIA",
+   "local": "Teatro Paiol Cultural",
+   "endereco": "R. Amaral Gurgel, 164 - Vila Buarque, SP ,164, São Paulo",
    "tipo": "teatro",
    "data": "2026-11-21",
    "inicio": "17:00",
    "fim_estimado": "19:00",
    "incerteza_min": 30,
    "publico_estimado": null,
-   "fonte": "https://bileto.sympla.com.br/event/126651",
+   "fonte": "https://bileto.sympla.com.br/event/124055",
    "origem": "sympla",
    "regra": "teatro",
-   "lat": -23.610487,
-   "lng": -46.472428
+   "lat": -23.632915,
+   "lng": -46.69946
   },
   {
    "nome": "Samba Que Elas Querem",
@@ -288,54 +272,6 @@
    "lng": -46.636402
   },
   {
-   "nome": "SÁB 18h - 21/11/26 - Natal Mágico Circo Spacial",
-   "local": "Circo Spacial",
-   "endereco": "Avenida Atlântica, Jardim Tres Marias, São Paulo",
-   "tipo": "teatro",
-   "data": "2026-11-21",
-   "inicio": "18:00",
-   "fim_estimado": "19:30",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/sab-18h-21-11-26-natal-magico-circo-spacial/3642322",
-   "origem": "sympla",
-   "regra": "teatro",
-   "lat": -23.689868,
-   "lng": -46.715762
-  },
-  {
-   "nome": "Cássia Silva e Artur Araújo cantam Clube da Esquina",
-   "local": "Espaço Kuai Tema",
-   "endereco": "Avenida Ipiranga, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-21",
-   "inicio": "18:00",
-   "fim_estimado": "20:00",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/cassia-silva-e-artur-araujo-cantam-clube-da-esquina/3639969",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.541623,
-   "lng": -46.639858
-  },
-  {
-   "nome": "[21/11 - 18h] Festival da Sociedade | O espetáculo de comédia mais com",
-   "local": "Sociedade do Humor",
-   "endereco": "Rua Bela Flor, Vila da Saúde, São Paulo",
-   "tipo": "teatro",
-   "data": "2026-11-21",
-   "inicio": "18:00",
-   "fim_estimado": "19:00",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/21-11-18h-festival-da-sociedade-o-espetaculo-de-comedia-mais-completo-da-cidade/3657253",
-   "origem": "sympla",
-   "regra": "teatro",
-   "lat": -23.603812,
-   "lng": -46.631789
-  },
-  {
    "nome": "BAILE MENSAL VPR - NOVEMBRO 2026",
    "local": "Bronx011",
    "endereco": "Rua Inácio Pereira da Rocha, Pinheiros, São Paulo",
@@ -350,38 +286,6 @@
    "regra": "festa",
    "lat": -23.560597,
    "lng": -46.69006
-  },
-  {
-   "nome": "(STAND-UP GRATUITO) Matinê de Humor - Comédia Stand Up",
-   "local": "Acústico Comedy",
-   "endereco": "Rua da Consolação, Consolação, São Paulo",
-   "tipo": "teatro",
-   "data": "2026-11-21",
-   "inicio": "18:00",
-   "fim_estimado": "19:30",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/stand-up-gratuito-matine-de-humor-comedia-stand-up/3656456",
-   "origem": "sympla",
-   "regra": "teatro",
-   "lat": -23.555849,
-   "lng": -46.663484
-  },
-  {
-   "nome": "MAMMA MIA! - Mostra de Dança e Teatro",
-   "local": "Teatro Ressurreição",
-   "endereco": "Rua dos Jornalistas, São Paulo",
-   "tipo": "teatro",
-   "data": "2026-11-21",
-   "inicio": "18:00",
-   "fim_estimado": "20:00",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/mamma-mia-mostra-de-danca-e-teatro/3582241",
-   "origem": "sympla",
-   "regra": "teatro",
-   "lat": -23.644747,
-   "lng": -46.638946
   },
   {
    "nome": "COSMIC PVT",
@@ -432,6 +336,22 @@
    "lng": -46.689006
   },
   {
+   "nome": "FESTA DO TÍTULO - PÓS JOGO CARINÁS",
+   "local": "Quintal do Espeto Carinás",
+   "endereco": "Avenida dos Carinás, Indianópolis, São Paulo",
+   "tipo": "festa",
+   "data": "2026-11-21",
+   "inicio": "18:30",
+   "fim_estimado": "23:00",
+   "incerteza_min": 120,
+   "publico_estimado": null,
+   "fonte": "https://www.sympla.com.br/evento/festa-do-titulo-pos-jogo-carinas/3662427",
+   "origem": "sympla",
+   "regra": "festa",
+   "lat": -23.614621,
+   "lng": -46.665744
+  },
+  {
    "nome": "Entre Elas: Seu comercial faz o negócio crescer e sua imagem posiciona",
    "local": "R. Guararapes, 548",
    "endereco": "Rua Guararapes, Cidade Monções, São Paulo",
@@ -462,6 +382,22 @@
    "regra": "show",
    "lat": -23.686731,
    "lng": -46.704458
+  },
+  {
+   "nome": "Madame apresenta: GHOST DANCE (UK) + ARTE NO ESCURO",
+   "local": "MADAME CLUB",
+   "endereco": "Rua Conselheiro Ramalho, Bela Vista, São Paulo",
+   "tipo": "show",
+   "data": "2026-11-21",
+   "inicio": "19:00",
+   "fim_estimado": "23:59",
+   "incerteza_min": 45,
+   "publico_estimado": null,
+   "fonte": "https://www.sympla.com.br/evento/madame-apresenta-ghost-dance-uk-arte-no-escuro/3532355",
+   "origem": "sympla",
+   "regra": "show",
+   "lat": -23.559626,
+   "lng": -46.644078
   },
   {
    "nome": "LOS REGGAE convida FILOSOFIA REGGAE e DJ CLEITON RASTA",
@@ -592,36 +528,20 @@
    "lng": -46.691832
   },
   {
-   "nome": "SPHT O tour mais inusitado de Sampa",
-   "local": "Pecorino Bar & Trattoria Higienópolis",
-   "endereco": "Rua Coronel José Eusébio, Consolação, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-21",
-   "inicio": "19:00",
-   "fim_estimado": "20:30",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/spht-o-tour-mais-inusitado-de-sampa/3626736",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.551629,
-   "lng": -46.659278
-  },
-  {
-   "nome": "PISADA - Abertura de Processo",
-   "local": "Casa Teatro de Utopias",
-   "endereco": "Rua Duílio, Lapa, São Paulo",
+   "nome": "MANCHETES RODRIGUIANAS - Direção Flavia Pucci",
+   "local": "Basalto Teatro Bar",
+   "endereco": "Rua Cardeal Leme, Bela Vista, São Paulo",
    "tipo": "teatro",
    "data": "2026-11-21",
    "inicio": "19:00",
-   "fim_estimado": "20:15",
-   "incerteza_min": 45,
+   "fim_estimado": "21:00",
+   "incerteza_min": 30,
    "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/pisada-abertura-de-processo/3641468",
+   "fonte": "https://www.sympla.com.br/evento/manchetes-rodriguianas-direcao-flavia-pucci/3635859",
    "origem": "sympla",
    "regra": "teatro",
-   "lat": -23.523174,
-   "lng": -46.69326
+   "lat": -23.559377,
+   "lng": -46.648968
   },
   {
    "nome": "Goela Hits - Goela Bar - 21.11 (Sábado)",
@@ -656,22 +576,6 @@
    "lng": -46.6889
   },
   {
-   "nome": "SHOW DE MÁGICA - PINTOR DO ABSURDO",
-   "local": "Clube da Mágica Clandestina",
-   "endereco": "Rua da Consolação, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-21",
-   "inicio": "19:00",
-   "fim_estimado": "20:15",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/show-de-magica-pintor-do-absurdo/3660873",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.555849,
-   "lng": -46.663484
-  },
-  {
    "nome": "cantante dourado | apresentação intimista em São Paulo",
    "local": "Casa Magdala",
    "endereco": "Rua Rifaina, São Paulo",
@@ -686,22 +590,6 @@
    "regra": "show",
    "lat": -23.543105,
    "lng": -46.693964
-  },
-  {
-   "nome": "Osmar Campbell em Conselhos Amorosos",
-   "local": "Clube Barbixas de Comédia",
-   "endereco": "Rua Augusta, 1129, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-21",
-   "inicio": "19:00",
-   "fim_estimado": "20:45",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://bileto.sympla.com.br/event/101899",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.554357,
-   "lng": -46.655983
   },
   {
    "nome": "HARD NIGHT | MISTER ROCK IN SAMPA | 21/11 — SÁBADO",
@@ -765,6 +653,22 @@
    "origem": "semana",
    "regra": "festa",
    "sem_local": true
+  },
+  {
+   "nome": "Luther King o Musical",
+   "local": "Teatro Nissi",
+   "endereco": "Av. Brigadeiro Luís Antonio, 884, São Paulo",
+   "tipo": "teatro",
+   "data": "2026-11-21",
+   "inicio": "19:30",
+   "fim_estimado": "21:30",
+   "incerteza_min": 30,
+   "publico_estimado": null,
+   "fonte": "https://bileto.sympla.com.br/event/128912",
+   "origem": "sympla",
+   "regra": "teatro",
+   "lat": -23.557521,
+   "lng": -46.641252
   },
   {
    "nome": "BURUNDANGA",
@@ -845,6 +749,22 @@
    "regra": "show",
    "lat": -23.548389,
    "lng": -46.646793
+  },
+  {
+   "nome": "O MENOR PALCO DO MUNDO com Vladimir Brichta",
+   "local": "Teatro VIVO",
+   "endereco": "Avenida Doutor Chucri Zaidan, 2460 - Morumbi, São Paulo",
+   "tipo": "teatro",
+   "data": "2026-11-21",
+   "inicio": "20:00",
+   "fim_estimado": "22:00",
+   "incerteza_min": 30,
+   "publico_estimado": null,
+   "fonte": "https://bileto.sympla.com.br/event/126035",
+   "origem": "sympla",
+   "regra": "teatro",
+   "lat": -23.620116,
+   "lng": -46.701099
   },
   {
    "nome": "SUMMER ELETRO BLITZ - Os hits que marcaram o início dos anos 2000!",
@@ -1071,22 +991,6 @@
    "lng": -46.650559
   },
   {
-   "nome": "ALLEGRESSE 10 ANOS",
-   "local": "Teatro Multiplan MorumbiShopping",
-   "endereco": "Av. Roque Petroni Jr., Piso G2,1089 - MORUMBISHOPPING, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-21",
-   "inicio": "20:00",
-   "fim_estimado": "21:45",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://bileto.sympla.com.br/event/127923",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.624403,
-   "lng": -46.699543
-  },
-  {
    "nome": "Amado Batista",
    "local": "Centro cultural João do Camaro",
    "endereco": "Rua Ivar Beckman, São Paulo",
@@ -1135,6 +1039,22 @@
    "lng": -46.656101
   },
   {
+   "nome": "Caetano Veloso nos Festivais",
+   "local": "Espaço Unimed",
+   "endereco": "Rua Tagipuru, 795, Barra Funda, São Paulo",
+   "tipo": "show",
+   "data": "2026-11-21",
+   "inicio": "20:00",
+   "fim_estimado": "00:15",
+   "incerteza_min": 90,
+   "publico_estimado": 8000,
+   "fonte": "https://visitesaopaulo.com/evento/caetano-veloso-nos-festivais-2026/",
+   "origem": "semana",
+   "regra": "abertura",
+   "lat": -23.528041,
+   "lng": -46.668013
+  },
+  {
    "nome": "Samira Chamma no Fino da Bossa",
    "local": "Fino da Bossa - Canção de Autor",
    "endereco": "Avenida Brigadeiro Faria Lima, Itaim Bibi, São Paulo",
@@ -1165,22 +1085,6 @@
    "regra": "show",
    "lat": -23.579062,
    "lng": -46.640716
-  },
-  {
-   "nome": "Retrô 2 Mil com Dead Fish, Pelanza, Hevo84, Hateen e mais",
-   "local": "Juventus Live Hall",
-   "endereco": "Rua Juventus, 690, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-21",
-   "inicio": "21:00",
-   "fim_estimado": "22:45",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.ticket360.com.br/evento/34062/ingressos-para-retro-2-mil-com-dead-fish-hevo84-marcelo-strike-e-hateen",
-   "origem": "ticket360",
-   "regra": "show",
-   "lat": -23.572155,
-   "lng": -46.589
   },
   {
    "nome": "Cordel do Fogo Encantado apresenta primeiro álbum",
@@ -1391,22 +1295,6 @@
    "lng": -46.687252
   },
   {
-   "nome": "BERNARDO VELOSO com QUASE UM SHOW NOVO",
-   "local": "Alameda dos Aicás, 1185",
-   "endereco": "Alameda dos Aicás, MOEMA, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-21",
-   "inicio": "21:00",
-   "fim_estimado": "23:00",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/bernardo-veloso-com-quase-um-show-novo/3653056",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.614267,
-   "lng": -46.663141
-  },
-  {
    "nome": "Best of Blues and Rock – Roger Daltrey",
    "local": "Parque Ibirapuera (Auditório - plateia externa)",
    "endereco": "Av. Pedro Álvares Cabral, s/n, Ibirapuera, São Paulo",
@@ -1484,20 +1372,20 @@
    "sem_local": true
   },
   {
-   "nome": "Caetano Veloso nos Festivais",
-   "local": "Espaço Unimed",
-   "endereco": "Rua Tagipuru, 795, São Paulo",
+   "nome": "SPHT O tour mais inusitado de Sampa",
+   "local": "Pecorino Bar & Trattoria Higienópolis",
+   "endereco": "Rua Coronel José Eusébio, Consolação, São Paulo",
    "tipo": "show",
    "data": "2026-11-21",
-   "inicio": "22:00",
-   "fim_estimado": "02:15",
-   "incerteza_min": 90,
+   "inicio": "21:30",
+   "fim_estimado": "23:00",
+   "incerteza_min": 45,
    "publico_estimado": null,
-   "fonte": "https://www.ticket360.com.br/evento/33579/ingressos-para-caetano-nos-festivais",
-   "origem": "ticket360",
-   "regra": "abertura",
-   "lat": -23.527601,
-   "lng": -46.667879
+   "fonte": "https://www.sympla.com.br/evento/spht-o-tour-mais-inusitado-de-sampa/3626746",
+   "origem": "sympla",
+   "regra": "show",
+   "lat": -23.551629,
+   "lng": -46.659278
   },
   {
    "nome": "MUSEU DAS ILUSÕES SP SHOPPING SP MARKET",
@@ -2204,7 +2092,7 @@
   }
  ],
  "geocodificacao": {
-  "com_local": 128,
+  "com_local": 121,
   "sem_local": 10
  }
 }
