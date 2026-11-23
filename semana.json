@@ -1,559 +1,1177 @@
 {
- "gerado_em": "2026-11-16T09:05:44-03:00",
- "de": "2026-11-16",
- "ate": "2026-11-22",
+ "gerado_em": "2026-11-23T08:58:33-03:00",
+ "de": "2026-11-23",
+ "ate": "2026-11-29",
  "eventos": [
   {
-   "nome": "Mariah Carey – Christmas Time",
-   "local": "Nubank Parque",
-   "endereco": "Av. Francisco Matarazzo, 1705, Água Branca, São Paulo",
-   "data": "2026-11-17",
-   "inicio": "21:00",
-   "regra": "show",
-   "publico_estimado": 40000,
-   "fonte": "https://catracalivre.com.br/gira/show-mariah-careys-christmas-time-allianz-parque-sp/"
+   "nome": "Godspeed You! Black Emperor",
+   "local": "Audio",
+   "endereco": "Av. Francisco Matarazzo, 694, Água Branca, São Paulo",
+   "data": "2026-11-23",
+   "inicio": "19:00",
+   "regra": "abertura",
+   "publico_estimado": 3000,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
   },
   {
-   "nome": "Luedji Luna",
+   "nome": "New Order + Jovens Ateus",
+   "local": "Espaço Unimed",
+   "endereco": "Rua Tagipuru, 795, Barra Funda, São Paulo",
+   "data": "2026-11-23",
+   "inicio": "19:00",
+   "regra": "abertura",
+   "publico_estimado": 8000,
+   "fonte": "https://programaparadois.com.br/eventos-sao-paulo-novembro-2026/"
+  },
+  {
+   "nome": "Doce Encontro",
+   "local": "Bar Templo",
+   "endereco": "Bar Templo, São Paulo",
+   "data": "2026-11-23",
+   "inicio": "20:00",
+   "regra": "festa",
+   "publico_estimado": null,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Marquinhos Sensação",
+   "local": "Bate Fundo",
+   "endereco": "Bate Fundo, São Paulo",
+   "data": "2026-11-23",
+   "inicio": "20:00",
+   "regra": "festa",
+   "publico_estimado": null,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Clube do Rap",
+   "local": "Katarina Bar",
+   "endereco": "Av. São Luís, 272, República, São Paulo",
+   "data": "2026-11-23",
+   "inicio": "22:00",
+   "regra": "festa",
+   "publico_estimado": 500,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Loyle Carner",
    "local": "Cine Joia",
    "endereco": "Praça Carlos Gomes, 82, Liberdade, São Paulo",
-   "data": "2026-11-18",
+   "data": "2026-11-24",
    "inicio": "19:00",
    "regra": "abertura",
    "publico_estimado": 900,
-   "fonte": "https://shotgun.live/es/events/luedjilunanocinejoia"
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
   },
   {
-   "nome": "Mariah Carey – Christmas Time (extra)",
-   "local": "Nubank Parque",
-   "endereco": "Av. Francisco Matarazzo, 1705, Água Branca, São Paulo",
-   "data": "2026-11-18",
+   "nome": "Godspeed You! Black Emperor (2ª data)",
+   "local": "Audio",
+   "endereco": "Av. Francisco Matarazzo, 694, Água Branca, São Paulo",
+   "data": "2026-11-24",
+   "inicio": "19:00",
+   "regra": "abertura",
+   "publico_estimado": 3000,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Johnny Marr",
+   "local": "Tokio Marine Hall",
+   "endereco": "Rua Bragança Paulista, 1281, Chácara Santo Antônio, São Paulo",
+   "data": "2026-11-24",
+   "inicio": "19:00",
+   "regra": "abertura",
+   "publico_estimado": 3500,
+   "fonte": "https://programaparadois.com.br/eventos-sao-paulo-novembro-2026/"
+  },
+  {
+   "nome": "Dying Fetus",
+   "local": "Burning House",
+   "endereco": "Burning House, São Paulo",
+   "data": "2026-11-24",
+   "inicio": "19:00",
+   "regra": "abertura",
+   "publico_estimado": null,
+   "fonte": "https://programaparadois.com.br/eventos-sao-paulo-novembro-2026/"
+  },
+  {
+   "nome": "Vitória Maldonado",
+   "local": "Blue Note São Paulo",
+   "endereco": "Av. Paulista, 2073, Conjunto Nacional, Consolação, São Paulo",
+   "data": "2026-11-24",
+   "inicio": "20:00",
+   "regra": "show",
+   "publico_estimado": 300,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Festival MUCHO! – La Bomba de Tiempo",
+   "local": "Casa Natura Musical",
+   "endereco": "Rua Artur de Azevedo, 2134, Pinheiros, São Paulo",
+   "data": "2026-11-24",
    "inicio": "21:00",
    "regra": "show",
-   "publico_estimado": 40000,
-   "fonte": "https://www.riotimesonline.com/mariah-carey-brazil-concerts-november-2026-sao-paulo-rio-de-janeiro-christmas-time-tour/"
+   "publico_estimado": 900,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
   },
   {
-   "nome": "CA7RIEL & Paco Amoroso",
+   "nome": "Thamiris Cunha",
+   "local": "Sesc Consolação",
+   "endereco": "Rua Dr. Vila Nova, 245, Vila Buarque, São Paulo",
+   "data": "2026-11-24",
+   "inicio": "21:00",
+   "regra": "show",
+   "publico_estimado": 300,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "New Order",
    "local": "Espaço Unimed",
    "endereco": "Rua Tagipuru, 795, Barra Funda, São Paulo",
-   "data": "2026-11-18",
+   "data": "2026-11-25",
+   "inicio": "19:00",
+   "regra": "abertura",
+   "publico_estimado": 8000,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Of Monsters and Men",
+   "local": "Audio",
+   "endereco": "Av. Francisco Matarazzo, 694, Água Branca, São Paulo",
+   "data": "2026-11-25",
+   "inicio": "19:00",
+   "regra": "abertura",
+   "publico_estimado": 3000,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Mel Lisboa",
+   "local": "Blue Note São Paulo",
+   "endereco": "Av. Paulista, 2073, Conjunto Nacional, Consolação, São Paulo",
+   "data": "2026-11-25",
+   "inicio": "20:00",
+   "regra": "show",
+   "publico_estimado": 300,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Mariana Fagundes – gravação de DVD",
+   "local": "Varanda Estaiada",
+   "endereco": "Varanda Estaiada, São Paulo",
+   "data": "2026-11-25",
    "inicio": "21:00",
    "regra": "show",
-   "publico_estimado": 8000,
-   "fonte": "https://www.livenation.com.br/en/event/ca7riel-and-paco-amoroso-free-spirits-world-tour-sao-paulo-tickets-edp1662360"
+   "publico_estimado": null,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
   },
   {
-   "nome": "Corinthians x Botafogo",
-   "local": "Neo Química Arena",
-   "endereco": "Av. Miguel Ignácio Curi, 111, Artur Alvim, São Paulo",
-   "data": "2026-11-18",
-   "inicio": "21:30",
-   "regra": "futebol",
-   "publico_estimado": 40000,
-   "fonte": "https://tribunadejundiai.com.br/mais/esportes/brasileirao-paralisa-na-ultima-data-fifa-do-ano-veja-quando-a-35a-rodada/"
-  },
-  {
-   "nome": "Jazz Fusion",
-   "local": "Bela Vista (Shotgun)",
-   "endereco": "Bela Vista, São Paulo",
-   "data": "2026-11-19",
-   "inicio": "18:00",
+   "nome": "Mosquito",
+   "local": "Bona Casa de Música",
+   "endereco": "Bona Casa de Música, São Paulo",
+   "data": "2026-11-25",
+   "inicio": "21:00",
    "regra": "show",
-   "publico_estimado": 150,
-   "fonte": "https://shotgun.live/es/events/jazz-fusion"
+   "publico_estimado": null,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
   },
   {
-   "nome": "Luiz Barata + Nitcho & Gustavo Neves",
-   "local": "Vila Mariana (Shotgun)",
-   "endereco": "Vila Mariana, São Paulo",
-   "data": "2026-11-19",
+   "nome": "Rômulo Alexis, Nathalia Grilo e Lwiza Gannibal",
+   "local": "Sesc Pinheiros",
+   "endereco": "Rua Paes Leme, 195, Pinheiros, São Paulo",
+   "data": "2026-11-25",
+   "inicio": "21:00",
+   "regra": "show",
+   "publico_estimado": 800,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Duca Belintani",
+   "local": "Bourbon Street",
+   "endereco": "Rua dos Chanés, 127, Moema, São Paulo",
+   "data": "2026-11-25",
+   "inicio": "21:30",
+   "regra": "show",
+   "publico_estimado": 400,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Elba Ramalho",
+   "local": "Canto da Ema",
+   "endereco": "Av. Brigadeiro Faria Lima, 364, Pinheiros, São Paulo",
+   "data": "2026-11-25",
+   "inicio": "22:00",
+   "regra": "show",
+   "publico_estimado": 800,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Club Harpya – Vogue Night",
+   "local": "Polly Bar",
+   "endereco": "Polly Bar, São Paulo",
+   "data": "2026-11-25",
+   "inicio": "23:00",
+   "regra": "festa",
+   "publico_estimado": null,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Bruno & Marrone – Fazenda Churrascada",
+   "local": "Fazenda Churrascada",
+   "endereco": "Fazenda Churrascada, São Paulo",
+   "data": "2026-11-26",
+   "inicio": "14:00",
+   "regra": "festa",
+   "publico_estimado": null,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Tricky",
+   "local": "Cine Joia",
+   "endereco": "Praça Carlos Gomes, 82, Liberdade, São Paulo",
+   "data": "2026-11-26",
    "inicio": "19:00",
+   "regra": "abertura",
+   "publico_estimado": 900,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Candlelight: Rainhas da Sofrência",
+   "local": "Theatro São Pedro",
+   "endereco": "Rua Barra Funda, 171, Barra Funda, São Paulo",
+   "data": "2026-11-26",
+   "inicio": "19:00",
+   "regra": "teatro",
+   "publico_estimado": 600,
+   "fonte": "https://programaparadois.com.br/eventos-sao-paulo-novembro-2026/"
+  },
+  {
+   "nome": "São Paulo x Remo",
+   "local": "MorumBIS",
+   "endereco": "Praça Roberto Gomes Pedrosa, 1, Morumbi, São Paulo",
+   "data": "2026-11-26",
+   "inicio": "20:00",
+   "regra": "futebol",
+   "publico_estimado": 45000,
+   "fonte": "https://diariodopara.com.br/bola/cbf-tabela-rodadas-finais-brasileirao-datas-horarios-locais/"
+  },
+  {
+   "nome": "Banda Comitatus",
+   "local": "Blue Note São Paulo",
+   "endereco": "Av. Paulista, 2073, Conjunto Nacional, Consolação, São Paulo",
+   "data": "2026-11-26",
+   "inicio": "20:00",
+   "regra": "show",
+   "publico_estimado": 300,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Baile de Finados",
+   "local": "Sesc Itaquera",
+   "endereco": "Av. Fernando do Espírito Santo Alves de Mattos, 1000, Itaquera, São Paulo",
+   "data": "2026-11-26",
+   "inicio": "20:00",
+   "regra": "show",
+   "publico_estimado": 1000,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Prettos",
+   "local": "Sesc Bom Retiro",
+   "endereco": "Alameda Nothmann, 185, Bom Retiro, São Paulo",
+   "data": "2026-11-26",
+   "inicio": "21:00",
+   "regra": "show",
+   "publico_estimado": 400,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Tori – Areia e Voz",
+   "local": "Casa de Francisca",
+   "endereco": "Rua Quintino Bocaiúva, 22, Sé, São Paulo",
+   "data": "2026-11-26",
+   "inicio": "21:00",
    "regra": "show",
    "publico_estimado": 200,
-   "fonte": "https://shotgun.live/es/events/luiz-barata-com-nitcho-gustavo-neves"
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
   },
   {
-   "nome": "Ensaio Bloco da Piranha – Ocupação Fervo",
-   "local": "Água Branca (Shotgun)",
-   "endereco": "Água Branca, São Paulo",
-   "data": "2026-11-19",
-   "inicio": "19:00",
-   "regra": "festa",
-   "publico_estimado": 400,
-   "fonte": "https://shotgun.live/es/events/ensaio-aberto-do-bloco-da-piranha-no"
-  },
-  {
-   "nome": "Aimée Drag Show",
-   "local": "República (Shotgun)",
-   "endereco": "República, São Paulo",
-   "data": "2026-11-19",
-   "inicio": "19:00",
-   "regra": "show",
-   "publico_estimado": 150,
-   "fonte": "https://shotgun.live/es/events/aimee-drag-show-com-desiree-beck-19-11-quinta"
-  },
-  {
-   "nome": "Quelynah convida Leilah Moreno",
-   "local": "Pinheiros (Shotgun)",
-   "endereco": "Pinheiros, São Paulo",
-   "data": "2026-11-19",
-   "inicio": "19:00",
-   "regra": "show",
-   "publico_estimado": 300,
-   "fonte": "https://shotgun.live/es/events/quelynah-convida-leilah-moreno-dj-max-nos-beatz-e-mc-xuxu"
-  },
-  {
-   "nome": "Maré Tardia",
-   "local": "Casa Rockambole",
-   "endereco": "Rua Belmiro Braga, 119, Pinheiros, São Paulo",
-   "data": "2026-11-19",
-   "inicio": "20:00",
-   "regra": "abertura",
-   "publico_estimado": 300,
-   "fonte": "https://songkick.com/metro-areas/27274-brazil-sao-paulo/2026"
-  },
-  {
-   "nome": "Festival Sertanejo (Jads & Jadson, Munhoz & Mariano)",
+   "nome": "Maiara & Maraisa",
    "local": "Villa Country",
    "endereco": "Av. Francisco Matarazzo, 774, Água Branca, São Paulo",
-   "data": "2026-11-19",
+   "data": "2026-11-26",
+   "inicio": "21:00",
+   "regra": "abertura",
+   "publico_estimado": 4000,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Alzira e Senhora do Tempo",
+   "local": "Bona Casa de Música",
+   "endereco": "Bona Casa de Música, São Paulo",
+   "data": "2026-11-26",
+   "inicio": "21:00",
+   "regra": "show",
+   "publico_estimado": null,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Lua Bernardo",
+   "local": "Sesc Pompeia",
+   "endereco": "Rua Clélia, 93, Pompeia, São Paulo",
+   "data": "2026-11-26",
+   "inicio": "21:00",
+   "regra": "show",
+   "publico_estimado": 800,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Candlelight: Tributo a Taylor Swift",
+   "local": "Theatro São Pedro",
+   "endereco": "Rua Barra Funda, 171, Barra Funda, São Paulo",
+   "data": "2026-11-26",
+   "inicio": "21:00",
+   "regra": "teatro",
+   "publico_estimado": 600,
+   "fonte": "https://programaparadois.com.br/eventos-sao-paulo-novembro-2026/"
+  },
+  {
+   "nome": "Black Cats Rock",
+   "local": "Manifesto Bar",
+   "endereco": "Rua Iguatemi, 36, Itaim Bibi, São Paulo",
+   "data": "2026-11-26",
+   "inicio": "22:00",
+   "regra": "show",
+   "publico_estimado": 400,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Moving – Dogghauz Showcase",
+   "local": "D-Edge",
+   "endereco": "Av. Auro Soares de Moura Andrade, 141, Barra Funda, São Paulo",
+   "data": "2026-11-26",
+   "inicio": "22:00",
+   "regra": "festa",
+   "publico_estimado": 1000,
+   "fonte": "https://agendaeletronica.com.br/"
+  },
+  {
+   "nome": "A Perfect Circle + Puscifer",
+   "local": "Suhai Music Hall",
+   "endereco": "Av. das Nações Unidas, 22540, Jurubatuba, São Paulo",
+   "data": "2026-11-27",
+   "inicio": "19:00",
+   "regra": "abertura",
+   "publico_estimado": 4000,
+   "fonte": "https://programaparadois.com.br/eventos-sao-paulo-novembro-2026/"
+  },
+  {
+   "nome": "Fagner",
+   "local": "Tokio Marine Hall",
+   "endereco": "Rua Bragança Paulista, 1281, Chácara Santo Antônio, São Paulo",
+   "data": "2026-11-27",
+   "inicio": "20:00",
+   "regra": "abertura",
+   "publico_estimado": 3500,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Somos 90 – A Reunião do Pagode",
+   "local": "Nubank Parque",
+   "endereco": "Av. Francisco Matarazzo, 1705, Água Branca, São Paulo",
+   "data": "2026-11-27",
+   "inicio": "20:00",
+   "regra": "show",
+   "publico_estimado": 40000,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Pop3",
+   "local": "Blue Note São Paulo",
+   "endereco": "Av. Paulista, 2073, Conjunto Nacional, Consolação, São Paulo",
+   "data": "2026-11-27",
+   "inicio": "20:00",
+   "regra": "show",
+   "publico_estimado": 300,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Samba da Victória",
+   "local": "Sesc 24 de Maio",
+   "endereco": "Rua 24 de Maio, 109, República, São Paulo",
+   "data": "2026-11-27",
+   "inicio": "20:00",
+   "regra": "show",
+   "publico_estimado": 400,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Gian & Giovani – DVD Planeta Sonho",
+   "local": "Vibra São Paulo",
+   "endereco": "Av. das Nações Unidas, 17955, Vila Almeida, São Paulo",
+   "data": "2026-11-27",
+   "inicio": "20:00",
+   "regra": "abertura",
+   "publico_estimado": 6000,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Rashid",
+   "local": "Sesc Bom Retiro",
+   "endereco": "Alameda Nothmann, 185, Bom Retiro, São Paulo",
+   "data": "2026-11-27",
+   "inicio": "21:00",
+   "regra": "show",
+   "publico_estimado": 400,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Ferrugem e Turma do Pagode",
+   "local": "Terra SP",
+   "endereco": "Av. Salim Antônio Curiati, 160, Campo Grande, São Paulo",
+   "data": "2026-11-27",
+   "inicio": "21:00",
+   "regra": "abertura",
+   "publico_estimado": 5000,
+   "fonte": "https://livehoje.com.br/agenda-de-shows/sao-paulo"
+  },
+  {
+   "nome": "Grag Queen",
+   "local": "Sesc Santana",
+   "endereco": "Av. Luiz Dumont Villares, 579, Santana, São Paulo",
+   "data": "2026-11-27",
+   "inicio": "21:00",
+   "regra": "show",
+   "publico_estimado": 400,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Devotos",
+   "local": "Sesc Pompeia",
+   "endereco": "Rua Clélia, 93, Pompeia, São Paulo",
+   "data": "2026-11-27",
+   "inicio": "21:00",
+   "regra": "show",
+   "publico_estimado": 800,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Thomas Strønen & Time Is a Blind Guide",
+   "local": "Sesc Belenzinho",
+   "endereco": "Rua Padre Adelino, 1000, Belenzinho, São Paulo",
+   "data": "2026-11-27",
+   "inicio": "21:00",
+   "regra": "show",
+   "publico_estimado": 800,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Orquestra Brasil Jazz Sinfônica",
+   "local": "Sesc Pinheiros",
+   "endereco": "Rua Paes Leme, 195, Pinheiros, São Paulo",
+   "data": "2026-11-27",
+   "inicio": "21:00",
+   "regra": "show",
+   "publico_estimado": 800,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "BRIME!",
+   "local": "Sesc Belenzinho",
+   "endereco": "Rua Padre Adelino, 1000, Belenzinho, São Paulo",
+   "data": "2026-11-27",
+   "inicio": "21:30",
+   "regra": "show",
+   "publico_estimado": 800,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Suel",
+   "local": "Chopperia e Espetinho do Juiz (Patriarca)",
+   "endereco": "Chopperia e Espetinho do Juiz (Patriarca), São Paulo",
+   "data": "2026-11-27",
+   "inicio": "22:00",
+   "regra": "festa",
+   "publico_estimado": null,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Velhas Virgens – 40 anos",
+   "local": "Manifesto Bar",
+   "endereco": "Rua Iguatemi, 36, Itaim Bibi, São Paulo",
+   "data": "2026-11-27",
+   "inicio": "22:00",
+   "regra": "show",
+   "publico_estimado": 400,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Piseiro em Dose Dupla / Washington Brasileiro",
+   "local": "Arena Mega Sports",
+   "endereco": "Arena Mega Sports, São Paulo",
+   "data": "2026-11-27",
+   "inicio": "22:00",
+   "regra": "festa",
+   "publico_estimado": null,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Pablo, Netto Brito, Silfarley e Simone Morena",
+   "local": "CTN - Centro de Tradições Nordestinas",
+   "endereco": "Rua Jacofer, 615, Limão, São Paulo",
+   "data": "2026-11-27",
+   "inicio": "22:00",
+   "regra": "festa",
+   "publico_estimado": 3000,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Chininha + Ricardinho Lima",
+   "local": "Império Espeto Bar",
+   "endereco": "Império Espeto Bar, São Paulo",
+   "data": "2026-11-27",
+   "inicio": "22:00",
+   "regra": "festa",
+   "publico_estimado": null,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Matuê",
+   "local": "Arena+",
+   "endereco": "Arena+, São Paulo",
+   "data": "2026-11-27",
+   "inicio": "22:00",
+   "regra": "festa",
+   "publico_estimado": null,
+   "fonte": "https://livehoje.com.br/agenda-de-shows/sao-paulo"
+  },
+  {
+   "nome": "Rádio Nacional – 80 em Alta Frequência",
+   "local": "Bourbon Street",
+   "endereco": "Rua dos Chanés, 127, Moema, São Paulo",
+   "data": "2026-11-27",
+   "inicio": "22:00",
+   "regra": "show",
+   "publico_estimado": 400,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Peel Slowly (And Dance)",
+   "local": "Dr Banana Club",
+   "endereco": "Rua Vergueiro, 6712, Vila Brasilio Machado, São Paulo",
+   "data": "2026-11-27",
+   "inicio": "23:00",
+   "regra": "festa",
+   "publico_estimado": 400,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Safa Baile – Festa da Peruca",
+   "local": "Picles",
+   "endereco": "Rua Cardeal Arcoverde, 1838, Pinheiros, São Paulo",
+   "data": "2026-11-27",
+   "inicio": "23:00",
+   "regra": "festa",
+   "publico_estimado": 400,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Freak Chic – Cesare vs Disorder",
+   "local": "D-Edge",
+   "endereco": "Av. Auro Soares de Moura Andrade, 141, Barra Funda, São Paulo",
+   "data": "2026-11-27",
+   "inicio": "23:59",
+   "regra": "festa",
+   "publico_estimado": 1000,
+   "fonte": "https://agendaeletronica.com.br/"
+  },
+  {
+   "nome": "Garota VIP 2026",
+   "local": "Mercado Livre Arena Pacaembu",
+   "endereco": "Praça Charles Miller, s/n, Pacaembu, São Paulo",
+   "data": "2026-11-28",
+   "inicio": "14:00",
+   "regra": "festa",
+   "publico_estimado": 20000,
+   "fonte": "https://livehoje.com.br/agenda-de-shows/sao-paulo"
+  },
+  {
+   "nome": "Life São Paulo – Michael Bibi (One Life)",
+   "local": "Arena Pinheiros",
+   "endereco": "Arena Pinheiros, São Paulo",
+   "data": "2026-11-28",
+   "inicio": "14:00",
+   "regra": "festa",
+   "publico_estimado": null,
+   "fonte": "https://agendaeletronica.com.br/"
+  },
+  {
+   "nome": "Quintal do Tô de Folga",
+   "local": "Arena Imperador Sportbar",
+   "endereco": "Arena Imperador Sportbar, São Paulo",
+   "data": "2026-11-28",
+   "inicio": "18:00",
+   "regra": "festa",
+   "publico_estimado": null,
+   "fonte": "https://livehoje.com.br/agenda-de-shows/sao-paulo"
+  },
+  {
+   "nome": "Encontro de Batuqueiros",
+   "local": "Galpão Zona Norte",
+   "endereco": "Galpão Zona Norte, São Paulo",
+   "data": "2026-11-28",
+   "inicio": "18:00",
+   "regra": "festa",
+   "publico_estimado": null,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "DONALD – 25 anos",
+   "local": "Hangar 110",
+   "endereco": "Rua Rodolfo Miranda, 110, Bom Retiro, São Paulo",
+   "data": "2026-11-28",
+   "inicio": "19:00",
+   "regra": "abertura",
+   "publico_estimado": 800,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Gipsy Kings",
+   "local": "Suhai Music Hall",
+   "endereco": "Av. das Nações Unidas, 22540, Jurubatuba, São Paulo",
+   "data": "2026-11-28",
    "inicio": "20:00",
    "regra": "abertura",
    "publico_estimado": 4000,
-   "fonte": "https://visitesaopaulo.com/evento/festival-sertanejo-com-jads-jadson-munhoz-mariano-fiduma-jeca-e-mais-2026/"
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
   },
   {
-   "nome": "Saulo Duarte – Baile Quente",
-   "local": "Pinheiros (Shotgun)",
-   "endereco": "Pinheiros, São Paulo",
-   "data": "2026-11-19",
-   "inicio": "20:00",
-   "regra": "festa",
-   "publico_estimado": 300,
-   "fonte": "https://shotgun.live/es/events/choroes-da-pisadinha-2026-11-19"
-  },
-  {
-   "nome": "EELF: Deekapz, Pijus, DJ Windows 7",
-   "local": "Âmago",
-   "endereco": "São Paulo",
-   "data": "2026-11-19",
-   "inicio": "20:00",
-   "regra": "festa",
-   "publico_estimado": 300,
-   "fonte": "https://www.technoairlines.com/events/sao-paulo"
-  },
-  {
-   "nome": "14 Bis",
-   "local": "The Cavern Club",
-   "endereco": "Rua Olimpíadas, 360, Vila Olímpia, São Paulo",
-   "data": "2026-11-19",
-   "inicio": "21:00",
-   "regra": "show",
-   "publico_estimado": 600,
-   "fonte": "https://songkick.com/metro-areas/27274-brazil-sao-paulo/2026"
-  },
-  {
-   "nome": "Pagode da Dessa",
-   "local": "Mundo Pensante",
-   "endereco": "Rua Treze de Maio, 830, Bela Vista, São Paulo",
-   "data": "2026-11-19",
-   "inicio": "21:00",
-   "regra": "festa",
-   "publico_estimado": 500,
-   "fonte": "https://shotgun.live/es/events/19-11-pagode-da-dessa"
-  },
-  {
-   "nome": "Crema Club 19.11",
-   "local": "Crema Club",
-   "endereco": "São Paulo",
-   "data": "2026-11-19",
-   "inicio": "21:00",
-   "regra": "festa",
-   "publico_estimado": 400,
-   "fonte": "https://www.technoairlines.com/events/sao-paulo"
-  },
-  {
-   "nome": "São Paulo x Fluminense",
-   "local": "MorumBIS",
-   "endereco": "Praça Roberto Gomes Pedrosa, 1, Morumbi, São Paulo",
-   "data": "2026-11-19",
-   "inicio": "21:30",
-   "regra": "futebol",
-   "publico_estimado": 50000,
-   "fonte": "https://tribunadejundiai.com.br/mais/esportes/brasileirao-paralisa-na-ultima-data-fifa-do-ano-veja-quando-a-35a-rodada/"
-  },
-  {
-   "nome": "Funkonhas x Bday Jejedazs",
-   "local": "Bela Vista (Shotgun)",
-   "endereco": "Bela Vista, São Paulo",
-   "data": "2026-11-19",
-   "inicio": "22:00",
-   "regra": "festa",
-   "publico_estimado": 300,
-   "fonte": "https://shotgun.live/es/events/funkonhas-x-bday-jejedazs"
-  },
-  {
-   "nome": "Entrópica",
-   "local": "Sol Y Sombra - SyS13",
-   "endereco": "Rua Treze de Maio, 180, Bela Vista, São Paulo",
-   "data": "2026-11-19",
-   "inicio": "22:00",
-   "regra": "festa",
-   "publico_estimado": 400,
-   "fonte": "https://shotgun.live/es/events/entropica-no-sy-s-13"
-  },
-  {
-   "nome": "Moving D-Edge: Kolombo, Dopecupid",
-   "local": "D-Edge",
-   "endereco": "Av. Auro Soares de Moura Andrade, 141, Barra Funda, São Paulo",
-   "data": "2026-11-19",
-   "inicio": "22:00",
-   "regra": "festa",
-   "publico_estimado": 1000,
-   "fonte": "https://www.technoairlines.com/events/sao-paulo"
-  },
-  {
-   "nome": "Consciência Negra – Equipe Zimbabwe (sound system)",
-   "local": "Festival Consciência Negra – Av. Ipiranga",
-   "endereco": "Av. Ipiranga, República, São Paulo",
-   "data": "2026-11-20",
-   "inicio": "16:00",
-   "fim": "20:00",
-   "regra": "festa",
-   "publico_estimado": 2000,
-   "fonte": "https://catracalivre.com.br/gira/festival-da-consciencia-negra-traz-shows-gratuitos-de-seu-jorge-samba-de-dandara-os-prettos-e-mais-ao-centro-de-sp/"
-  },
-  {
-   "nome": "Consciência Negra – Amaro Freitas",
-   "local": "Festival Consciência Negra – Praça Dom José Gaspar",
-   "endereco": "Praça Dom José Gaspar, República, São Paulo",
-   "data": "2026-11-20",
-   "inicio": "17:00",
-   "regra": "show",
-   "publico_estimado": 2000,
-   "fonte": "https://catracalivre.com.br/gira/festival-da-consciencia-negra-traz-shows-gratuitos-de-seu-jorge-samba-de-dandara-os-prettos-e-mais-ao-centro-de-sp/"
-  },
-  {
-   "nome": "Consciência Negra – Dejavu",
-   "local": "Festival Consciência Negra – Viaduto do Chá",
-   "endereco": "Viaduto do Chá, Centro Histórico, São Paulo",
-   "data": "2026-11-20",
-   "inicio": "17:00",
-   "regra": "show",
-   "publico_estimado": 2000,
-   "fonte": "https://catracalivre.com.br/gira/festival-da-consciencia-negra-traz-shows-gratuitos-de-seu-jorge-samba-de-dandara-os-prettos-e-mais-ao-centro-de-sp/"
-  },
-  {
-   "nome": "Mia Wicthoff – Será Você? Tour",
-   "local": "Vila Mariana (Shotgun)",
-   "endereco": "Vila Mariana, São Paulo",
-   "data": "2026-11-20",
-   "inicio": "18:00",
-   "regra": "show",
-   "publico_estimado": 300,
-   "fonte": "https://shotgun.live/es/events/mia-witchoff-convidados-especiais-sera-voce-tour"
-  },
-  {
-   "nome": "The Under 8ª Edição",
-   "local": "República (Shotgun)",
-   "endereco": "República, São Paulo",
-   "data": "2026-11-20",
-   "inicio": "19:00",
-   "regra": "festa",
-   "publico_estimado": 300,
-   "fonte": "https://shotgun.live/es/events/the-under-8-edicao"
-  },
-  {
-   "nome": "Sérgio Estranho convida Nabru + DJ Lebre",
-   "local": "Picles",
-   "endereco": "Rua Cardeal Arcoverde, 1838, Pinheiros, São Paulo",
-   "data": "2026-11-20",
+   "nome": "Lobão",
+   "local": "Blue Note São Paulo",
+   "endereco": "Av. Paulista, 2073, Conjunto Nacional, Consolação, São Paulo",
+   "data": "2026-11-28",
    "inicio": "20:00",
    "regra": "show",
-   "publico_estimado": 250,
-   "fonte": "https://shotgun.live/es/events/sergio-estranho-convida-nabru-2026-11-20"
-  },
-  {
-   "nome": "HE.SHE.THEY. – Cristobal Pesce",
-   "local": "Sonora Garden",
-   "endereco": "Rua Comendador Nestor Pereira, 33, Canindé, São Paulo",
-   "data": "2026-11-20",
-   "inicio": "20:00",
-   "regra": "festa",
-   "publico_estimado": 1500,
-   "fonte": "https://www.technoairlines.com/events/sao-paulo"
-  },
-  {
-   "nome": "Consciência Negra – Os Prettos, Almir Guineto, Dudu Nobre",
-   "local": "Festival Consciência Negra – Av. São João",
-   "endereco": "Av. São João, Centro Histórico, São Paulo",
-   "data": "2026-11-20",
-   "inicio": "20:30",
-   "regra": "show",
-   "publico_estimado": 20000,
-   "fonte": "https://catracalivre.com.br/gira/festival-da-consciencia-negra-traz-shows-gratuitos-de-seu-jorge-samba-de-dandara-os-prettos-e-mais-ao-centro-de-sp/"
-  },
-  {
-   "nome": "Best of Blues and Rock – Eddie Vedder",
-   "local": "Parque Ibirapuera (Auditório - plateia externa)",
-   "endereco": "Av. Pedro Álvares Cabral, s/n, Ibirapuera, São Paulo",
-   "data": "2026-11-20",
-   "inicio": "21:00",
-   "regra": "show",
-   "publico_estimado": 15000,
-   "fonte": "https://www.riotimesonline.com/best-of-blues-and-rock-2026-sao-paulo-brazil-ibirapuera-november-20-22-eddie-vedder-roger-daltrey/"
-  },
-  {
-   "nome": "14 Bis",
-   "local": "The Cavern Club",
-   "endereco": "Rua Olimpíadas, 360, Vila Olímpia, São Paulo",
-   "data": "2026-11-20",
-   "inicio": "21:00",
-   "regra": "show",
-   "publico_estimado": 600,
-   "fonte": "https://songkick.com/metro-areas/27274-brazil-sao-paulo/2026"
-  },
-  {
-   "nome": "Crema Club 20.11",
-   "local": "Crema Club",
-   "endereco": "São Paulo",
-   "data": "2026-11-20",
-   "inicio": "21:00",
-   "regra": "festa",
-   "publico_estimado": 400,
-   "fonte": "https://www.technoairlines.com/events/sao-paulo"
-  },
-  {
-   "nome": "Luau O Rappa & Natiruts (Banda A Tropa)",
-   "local": "Jai Club",
-   "endereco": "Rua Vergueiro, 2676, Vila Mariana, São Paulo",
-   "data": "2026-11-20",
-   "inicio": "23:00",
-   "regra": "festa",
-   "publico_estimado": 500,
-   "fonte": "https://shotgun.live/es/events/especial-o-rappa-natiruts-por-banda-a-tropa-jai-club"
-  },
-  {
-   "nome": "From House to Disco – Subb-an",
-   "local": "Edifício Martinelli",
-   "endereco": "Rua São Bento, 405, Centro Histórico, São Paulo",
-   "data": "2026-11-20",
-   "inicio": "23:00",
-   "regra": "festa",
-   "publico_estimado": 800,
-   "fonte": "https://www.technoairlines.com/events/sao-paulo"
-  },
-  {
-   "nome": "Freak Chic D-Edge: CJ Jeff, Bauhouse",
-   "local": "D-Edge",
-   "endereco": "Av. Auro Soares de Moura Andrade, 141, Barra Funda, São Paulo",
-   "data": "2026-11-20",
-   "inicio": "23:59",
-   "regra": "festa",
-   "publico_estimado": 1000,
-   "fonte": "https://www.technoairlines.com/events/sao-paulo"
-  },
-  {
-   "nome": "Palmeiras x Flamengo",
-   "local": "Nubank Parque",
-   "endereco": "Av. Francisco Matarazzo, 1705, Água Branca, São Paulo",
-   "data": "2026-11-21",
-   "inicio": "16:30",
-   "regra": "futebol",
-   "publico_estimado": 42000,
-   "fonte": "https://acritica.net/esportes/cbf-define-data-horario-palmeiras-flamengo-brasileirao-21-novembro/"
-  },
-  {
-   "nome": "Consciência Negra – Mental Abstrato",
-   "local": "Festival Consciência Negra – Viaduto do Chá",
-   "endereco": "Viaduto do Chá, Centro Histórico, São Paulo",
-   "data": "2026-11-21",
-   "inicio": "17:00",
-   "regra": "show",
-   "publico_estimado": 2000,
-   "fonte": "https://catracalivre.com.br/gira/festival-da-consciencia-negra-traz-shows-gratuitos-de-seu-jorge-samba-de-dandara-os-prettos-e-mais-ao-centro-de-sp/"
-  },
-  {
-   "nome": "Consciência Negra – Jonathan Ferr",
-   "local": "Festival Consciência Negra – Praça Dom José Gaspar",
-   "endereco": "Praça Dom José Gaspar, República, São Paulo",
-   "data": "2026-11-21",
-   "inicio": "17:00",
-   "regra": "show",
-   "publico_estimado": 2000,
-   "fonte": "https://catracalivre.com.br/gira/festival-da-consciencia-negra-traz-shows-gratuitos-de-seu-jorge-samba-de-dandara-os-prettos-e-mais-ao-centro-de-sp/"
-  },
-  {
-   "nome": "Consciência Negra – Afrogroove (vinil)",
-   "local": "Festival Consciência Negra – Rua Dom José de Barros",
-   "endereco": "Rua Dom José de Barros, República, São Paulo",
-   "data": "2026-11-21",
-   "inicio": "17:00",
-   "fim": "21:00",
-   "regra": "festa",
-   "publico_estimado": 800,
-   "fonte": "https://catracalivre.com.br/gira/festival-da-consciencia-negra-traz-shows-gratuitos-de-seu-jorge-samba-de-dandara-os-prettos-e-mais-ao-centro-de-sp/"
-  },
-  {
-   "nome": "Moacyr Luz & Samba do Trabalhador",
-   "local": "Dois-Dois (Campos Elíseos)",
-   "endereco": "Campos Elíseos, São Paulo",
-   "data": "2026-11-21",
-   "inicio": "17:00",
-   "regra": "festa",
-   "publico_estimado": 600,
-   "fonte": "https://shotgun.live/es/events/moacyrluzesambadotrabalhador"
-  },
-  {
-   "nome": "Menestrel – Relicário 10 Anos",
-   "local": "Jai Club",
-   "endereco": "Rua Vergueiro, 2676, Vila Mariana, São Paulo",
-   "data": "2026-11-21",
-   "inicio": "17:30",
-   "regra": "show",
-   "publico_estimado": 500,
-   "fonte": "https://shotgun.live/es/events/menestrelsp"
-  },
-  {
-   "nome": "The Mönic + Zezza Vic + Charlie D",
-   "local": "Picles",
-   "endereco": "Rua Cardeal Arcoverde, 1838, Pinheiros, São Paulo",
-   "data": "2026-11-21",
-   "inicio": "18:00",
-   "regra": "show",
-   "publico_estimado": 250,
-   "fonte": "https://shotgun.live/es/events/a-ultima-valsa-despedida-joan-the-monic-picles-2026-10-21"
-  },
-  {
-   "nome": "Love Love Leste + Izza Soul",
-   "local": "Vila Nhocuné (Shotgun)",
-   "endereco": "Vila Nhocuné, São Paulo",
-   "data": "2026-11-21",
-   "inicio": "19:00",
-   "regra": "festa",
-   "publico_estimado": 400,
-   "fonte": "https://shotgun.live/es/events/love-love-leste-izza-soul-gusto-dj-fogaca-orpheus"
-  },
-  {
-   "nome": "Caetano Veloso nos Festivais",
-   "local": "Espaço Unimed",
-   "endereco": "Rua Tagipuru, 795, Barra Funda, São Paulo",
-   "data": "2026-11-21",
-   "inicio": "20:00",
-   "regra": "abertura",
-   "publico_estimado": 8000,
-   "fonte": "https://visitesaopaulo.com/evento/caetano-veloso-nos-festivais-2026/"
-  },
-  {
-   "nome": "Best of Blues and Rock – Roger Daltrey",
-   "local": "Parque Ibirapuera (Auditório - plateia externa)",
-   "endereco": "Av. Pedro Álvares Cabral, s/n, Ibirapuera, São Paulo",
-   "data": "2026-11-21",
-   "inicio": "21:00",
-   "regra": "show",
-   "publico_estimado": 15000,
-   "fonte": "https://www.riotimesonline.com/best-of-blues-and-rock-2026-sao-paulo-brazil-ibirapuera-november-20-22-eddie-vedder-roger-daltrey/"
-  },
-  {
-   "nome": "ZZ Top",
-   "local": "Suhai Music Hall",
-   "endereco": "Av. das Nações Unidas, 22540, Jurubatuba, São Paulo",
-   "data": "2026-11-21",
-   "inicio": "21:00",
-   "regra": "show",
-   "publico_estimado": 5000,
-   "fonte": "https://www.riotimesonline.com/what-to-do-in-sao-paulo-in-november-2026/"
-  },
-  {
-   "nome": "Let's Groove",
-   "local": "The Cavern Club",
-   "endereco": "Rua Olimpíadas, 360, Vila Olímpia, São Paulo",
-   "data": "2026-11-21",
-   "inicio": "21:00",
-   "regra": "show",
-   "publico_estimado": 600,
-   "fonte": "https://songkick.com/metro-areas/27274-brazil-sao-paulo/2026"
-  },
-  {
-   "nome": "Summer Electro Indie – Breno, Bamboloki",
-   "local": "Pinheiros (Shotgun)",
-   "endereco": "Pinheiros, São Paulo",
-   "data": "2026-11-21",
-   "inicio": "21:00",
-   "regra": "festa",
    "publico_estimado": 300,
-   "fonte": "https://shotgun.live/es/events/summer-electro-indie-breno-bamboloki-allvesmay-2026-11-21"
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
   },
   {
-   "nome": "Crema Club 21.11",
-   "local": "Crema Club",
-   "endereco": "São Paulo",
-   "data": "2026-11-21",
-   "inicio": "21:00",
-   "regra": "festa",
-   "publico_estimado": 400,
-   "fonte": "https://www.technoairlines.com/events/sao-paulo"
-  },
-  {
-   "nome": "Darkwave Party – Ressaca de Halloween",
-   "local": "Pinheiros (Shotgun)",
-   "endereco": "Pinheiros, São Paulo",
-   "data": "2026-11-21",
-   "inicio": "23:00",
-   "regra": "festa",
-   "publico_estimado": 300,
-   "fonte": "https://shotgun.live/es/events/darkwave"
-  },
-  {
-   "nome": "Unreal",
-   "local": "Komplexo Tempo",
-   "endereco": "São Paulo",
-   "data": "2026-11-21",
-   "inicio": "23:00",
-   "regra": "festa",
-   "publico_estimado": 2000,
-   "fonte": "https://www.technoairlines.com/events/sao-paulo"
-  },
-  {
-   "nome": "Nave D-Edge: Supernova, Kenny Larkin",
-   "local": "D-Edge",
-   "endereco": "Av. Auro Soares de Moura Andrade, 141, Barra Funda, São Paulo",
-   "data": "2026-11-21",
-   "inicio": "23:59",
-   "regra": "festa",
-   "publico_estimado": 1000,
-   "fonte": "https://www.technoairlines.com/events/sao-paulo"
-  },
-  {
-   "nome": "Hot Chip",
+   "nome": "Giant Rooks",
    "local": "Audio",
    "endereco": "Av. Francisco Matarazzo, 694, Água Branca, São Paulo",
-   "data": "2026-11-22",
-   "inicio": "19:00",
+   "data": "2026-11-28",
+   "inicio": "20:00",
    "regra": "abertura",
    "publico_estimado": 3000,
-   "fonte": "https://baressp.com.br/shows/hot-chip-retorna-a-sao-paulo-para-show-unico-no-brasil-em-novembro"
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
   },
   {
-   "nome": "Jorge Aragão",
+   "nome": "BNegão",
+   "local": "Sesc Bom Retiro",
+   "endereco": "Alameda Nothmann, 185, Bom Retiro, São Paulo",
+   "data": "2026-11-28",
+   "inicio": "20:00",
+   "regra": "show",
+   "publico_estimado": 400,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Cristovão Bastos e Rogério Caetano",
+   "local": "Sesc Belenzinho",
+   "endereco": "Rua Padre Adelino, 1000, Belenzinho, São Paulo",
+   "data": "2026-11-28",
+   "inicio": "20:00",
+   "regra": "show",
+   "publico_estimado": 800,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Vozes Vissungeiras",
+   "local": "Sesc Vila Mariana",
+   "endereco": "Rua Pelotas, 141, Vila Mariana, São Paulo",
+   "data": "2026-11-28",
+   "inicio": "20:00",
+   "regra": "show",
+   "publico_estimado": 600,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Ivyson",
+   "local": "Sesc Avenida Paulista",
+   "endereco": "Av. Paulista, 119, Bela Vista, São Paulo",
+   "data": "2026-11-28",
+   "inicio": "20:00",
+   "regra": "show",
+   "publico_estimado": 300,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Maria Gadú",
    "local": "Terra SP",
    "endereco": "Av. Salim Antônio Curiati, 160, Campo Grande, São Paulo",
-   "data": "2026-11-22",
-   "inicio": "19:00",
+   "data": "2026-11-28",
+   "inicio": "21:00",
    "regra": "abertura",
-   "publico_estimado": 3000,
-   "fonte": "https://songkick.com/metro-areas/27274-brazil-sao-paulo/2026"
+   "publico_estimado": 5000,
+   "fonte": "https://livehoje.com.br/agenda-de-shows/sao-paulo"
   },
   {
-   "nome": "Best of Blues and Rock – Eddie Vedder",
-   "local": "Parque Ibirapuera (Auditório - plateia externa)",
-   "endereco": "Av. Pedro Álvares Cabral, s/n, Ibirapuera, São Paulo",
-   "data": "2026-11-22",
+   "nome": "Renato da Rocinha",
+   "local": "Sesc Belenzinho",
+   "endereco": "Rua Padre Adelino, 1000, Belenzinho, São Paulo",
+   "data": "2026-11-28",
    "inicio": "21:00",
    "regra": "show",
-   "publico_estimado": 15000,
-   "fonte": "https://www.riotimesonline.com/best-of-blues-and-rock-2026-sao-paulo-brazil-ibirapuera-november-20-22-eddie-vedder-roger-daltrey/"
+   "publico_estimado": 800,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Seal – 30 anos de Seal I e II",
+   "local": "Nubank Parque",
+   "endereco": "Av. Francisco Matarazzo, 1705, Água Branca, São Paulo",
+   "data": "2026-11-28",
+   "inicio": "21:00",
+   "regra": "show",
+   "publico_estimado": 40000,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Babymetal",
+   "local": "Espaço Unimed",
+   "endereco": "Rua Tagipuru, 795, Barra Funda, São Paulo",
+   "data": "2026-11-28",
+   "inicio": "21:00",
+   "regra": "show",
+   "publico_estimado": 8000,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Letrux – fim da turnê",
+   "local": "Casa Natura Musical",
+   "endereco": "Rua Artur de Azevedo, 2134, Pinheiros, São Paulo",
+   "data": "2026-11-28",
+   "inicio": "21:00",
+   "regra": "show",
+   "publico_estimado": 900,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Over Night 38 anos – Turbo B",
+   "local": "Juventus Live Hall",
+   "endereco": "Rua Juventus, 690, Mooca, São Paulo",
+   "data": "2026-11-28",
+   "inicio": "21:00",
+   "regra": "festa",
+   "publico_estimado": 1500,
+   "fonte": "https://agendaeletronica.com.br/"
+  },
+  {
+   "nome": "I Love Encruza",
+   "local": "Sesc Pompeia",
+   "endereco": "Rua Clélia, 93, Pompeia, São Paulo",
+   "data": "2026-11-28",
+   "inicio": "21:00",
+   "regra": "show",
+   "publico_estimado": 800,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Netto Brito e Simone Morena",
+   "local": "Arena+",
+   "endereco": "Arena+, São Paulo",
+   "data": "2026-11-28",
+   "inicio": "22:00",
+   "regra": "festa",
+   "publico_estimado": null,
+   "fonte": "https://livehoje.com.br/agenda-de-shows/sao-paulo"
+  },
+  {
+   "nome": "Piseiro Fest / Washington Brasileiro",
+   "local": "Guarapirão Dance",
+   "endereco": "Guarapirão Dance, São Paulo",
+   "data": "2026-11-28",
+   "inicio": "22:00",
+   "regra": "festa",
+   "publico_estimado": null,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Mr Dan, Rick e Ricardinho Lima",
+   "local": "Musta Gastro Beach",
+   "endereco": "Musta Gastro Beach, São Paulo",
+   "data": "2026-11-28",
+   "inicio": "22:00",
+   "regra": "festa",
+   "publico_estimado": null,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Marvvila",
+   "local": "Império Espeto Bar",
+   "endereco": "Império Espeto Bar, São Paulo",
+   "data": "2026-11-28",
+   "inicio": "22:00",
+   "regra": "festa",
+   "publico_estimado": null,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Leandro Sapucahy",
+   "local": "Bar Templo",
+   "endereco": "Bar Templo, São Paulo",
+   "data": "2026-11-28",
+   "inicio": "22:00",
+   "regra": "festa",
+   "publico_estimado": null,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Renan Oliveira",
+   "local": "NaRua Bar",
+   "endereco": "NaRua Bar, São Paulo",
+   "data": "2026-11-28",
+   "inicio": "22:00",
+   "regra": "festa",
+   "publico_estimado": null,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Eduardinho dos Teclados + Máfia do Piseiro",
+   "local": "Brilho da Lua",
+   "endereco": "Brilho da Lua, São Paulo",
+   "data": "2026-11-28",
+   "inicio": "22:00",
+   "regra": "festa",
+   "publico_estimado": null,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Mistura Fina – A Noite da Elegância",
+   "local": "Clube Piratininga",
+   "endereco": "Clube Piratininga, São Paulo",
+   "data": "2026-11-28",
+   "inicio": "22:00",
+   "regra": "festa",
+   "publico_estimado": null,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Eduardinho",
+   "local": "Monarca Bar",
+   "endereco": "Monarca Bar, São Paulo",
+   "data": "2026-11-28",
+   "inicio": "22:00",
+   "regra": "festa",
+   "publico_estimado": null,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Rodrigo Ogi – Crônicas da Cidade Cinza 15 anos",
+   "local": "Blue Note São Paulo",
+   "endereco": "Av. Paulista, 2073, Conjunto Nacional, Consolação, São Paulo",
+   "data": "2026-11-28",
+   "inicio": "22:30",
+   "regra": "show",
+   "publico_estimado": 300,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Thug em São Paulo: Kehlani, Flo, Tyla e Tinashe",
+   "local": "Katarina Bar",
+   "endereco": "Av. São Luís, 272, República, São Paulo",
+   "data": "2026-11-28",
+   "inicio": "23:00",
+   "regra": "festa",
+   "publico_estimado": 500,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Los Palmeras – Fantastika Bailable",
+   "local": "Sol Y Sombra - SyS13",
+   "endereco": "Rua Treze de Maio, 180, Bela Vista, São Paulo",
+   "data": "2026-11-28",
+   "inicio": "23:00",
+   "regra": "festa",
+   "publico_estimado": 500,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Febre90s",
+   "local": "Cine Joia",
+   "endereco": "Praça Carlos Gomes, 82, Liberdade, São Paulo",
+   "data": "2026-11-28",
+   "inicio": "23:00",
+   "regra": "festa",
+   "publico_estimado": 900,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Bandaiada",
+   "local": "Picles",
+   "endereco": "Rua Cardeal Arcoverde, 1838, Pinheiros, São Paulo",
+   "data": "2026-11-28",
+   "inicio": "23:00",
+   "regra": "festa",
+   "publico_estimado": 400,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Wav3 + Boli",
+   "local": "Home Club",
+   "endereco": "Rua Quinze de Novembro, 317, Centro Histórico, São Paulo",
+   "data": "2026-11-28",
+   "inicio": "23:00",
+   "regra": "festa",
+   "publico_estimado": 600,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "NAVE – Amine Edge, Ragie Ban e Bapp",
+   "local": "D-Edge",
+   "endereco": "Av. Auro Soares de Moura Andrade, 141, Barra Funda, São Paulo",
+   "data": "2026-11-28",
+   "inicio": "23:59",
+   "regra": "festa",
+   "publico_estimado": 1000,
+   "fonte": "https://agendaeletronica.com.br/"
+  },
+  {
+   "nome": "Superafter – Diogo Accioly e Stereo",
+   "local": "D-Edge",
+   "endereco": "Av. Auro Soares de Moura Andrade, 141, Barra Funda, São Paulo",
+   "data": "2026-11-29",
+   "inicio": "05:00",
+   "regra": "festa",
+   "publico_estimado": 1000,
+   "fonte": "https://agendaeletronica.com.br/"
+  },
+  {
+   "nome": "Pagode da Gigi",
+   "local": "Sesc Interlagos",
+   "endereco": "Av. Manuel Alves Soares, 1100, Parque Colonial, São Paulo",
+   "data": "2026-11-29",
+   "inicio": "15:00",
+   "regra": "show",
+   "publico_estimado": 800,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Reggae Live Station – Edson Gomes, Groundation",
+   "local": "Espaço Unimed",
+   "endereco": "Rua Tagipuru, 795, Barra Funda, São Paulo",
+   "data": "2026-11-29",
+   "inicio": "16:00",
+   "regra": "abertura",
+   "publico_estimado": 8000,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Arrocha Zona Sul – Netto Brito, Pablo, Simone Morena",
+   "local": "Campo do River",
+   "endereco": "Campo do River, São Paulo",
+   "data": "2026-11-29",
+   "inicio": "16:00",
+   "regra": "festa",
+   "publico_estimado": null,
+   "fonte": "https://livehoje.com.br/agenda-de-shows/sao-paulo"
+  },
+  {
+   "nome": "Saulo Fernandes – Amor, Música e Axé",
+   "local": "Varanda Estaiada",
+   "endereco": "Varanda Estaiada, São Paulo",
+   "data": "2026-11-29",
+   "inicio": "17:00",
+   "regra": "show",
+   "publico_estimado": null,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Vou Pro Sereno",
+   "local": "NaRua Bar",
+   "endereco": "NaRua Bar, São Paulo",
+   "data": "2026-11-29",
+   "inicio": "18:00",
+   "regra": "festa",
+   "publico_estimado": null,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Aterciopelados",
+   "local": "Cine Joia",
+   "endereco": "Praça Carlos Gomes, 82, Liberdade, São Paulo",
+   "data": "2026-11-29",
+   "inicio": "18:00",
+   "regra": "abertura",
+   "publico_estimado": 900,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "KARD",
+   "local": "Audio",
+   "endereco": "Av. Francisco Matarazzo, 694, Água Branca, São Paulo",
+   "data": "2026-11-29",
+   "inicio": "18:00",
+   "regra": "abertura",
+   "publico_estimado": 3000,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Marquinhos Sensação",
+   "local": "Bar do Major",
+   "endereco": "Bar do Major, São Paulo",
+   "data": "2026-11-29",
+   "inicio": "18:00",
+   "regra": "festa",
+   "publico_estimado": null,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Matheusinho, Doce Momento e Kako Chocolata",
+   "local": "Império Espeto Bar",
+   "endereco": "Império Espeto Bar, São Paulo",
+   "data": "2026-11-29",
+   "inicio": "18:00",
+   "regra": "festa",
+   "publico_estimado": null,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "XLOV – LATAM Tour II",
+   "local": "Vibra São Paulo",
+   "endereco": "Av. das Nações Unidas, 17955, Vila Almeida, São Paulo",
+   "data": "2026-11-29",
+   "inicio": "18:00",
+   "regra": "abertura",
+   "publico_estimado": 6000,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Ayrton Montarroyos",
+   "local": "Sesc Vila Mariana",
+   "endereco": "Rua Pelotas, 141, Vila Mariana, São Paulo",
+   "data": "2026-11-29",
+   "inicio": "18:00",
+   "regra": "show",
+   "publico_estimado": 600,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Sandro Luiz – Omolu",
+   "local": "Bar Templo",
+   "endereco": "Bar Templo, São Paulo",
+   "data": "2026-11-29",
+   "inicio": "18:00",
+   "regra": "festa",
+   "publico_estimado": null,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Forró Cintura de Mola",
+   "local": "Espaço WM",
+   "endereco": "Espaço WM, São Paulo",
+   "data": "2026-11-29",
+   "inicio": "18:00",
+   "regra": "festa",
+   "publico_estimado": null,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Pagode dos Meninos, Samba Tá Aí e Kiaxé",
+   "local": "Monarca Bar",
+   "endereco": "Monarca Bar, São Paulo",
+   "data": "2026-11-29",
+   "inicio": "18:00",
+   "regra": "festa",
+   "publico_estimado": null,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Orquestra Brasileira de Cantores Cegos",
+   "local": "Sesc Pinheiros",
+   "endereco": "Rua Paes Leme, 195, Pinheiros, São Paulo",
+   "data": "2026-11-29",
+   "inicio": "18:00",
+   "regra": "show",
+   "publico_estimado": 800,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Washington Brasileiro",
+   "local": "Kibexiga Show",
+   "endereco": "Kibexiga Show, São Paulo",
+   "data": "2026-11-29",
+   "inicio": "18:00",
+   "regra": "festa",
+   "publico_estimado": null,
+   "fonte": "https://livehoje.com.br/agenda-de-shows/sao-paulo"
+  },
+  {
+   "nome": "My Dying Bride + Necrot",
+   "local": "Fabrique Club",
+   "endereco": "Rua Barra Funda, 1071, Barra Funda, São Paulo",
+   "data": "2026-11-29",
+   "inicio": "18:00",
+   "regra": "abertura",
+   "publico_estimado": 1000,
+   "fonte": "https://programaparadois.com.br/eventos-sao-paulo-novembro-2026/"
+  },
+  {
+   "nome": "Corinthians x Grêmio",
+   "local": "Neo Química Arena",
+   "endereco": "Av. Miguel Ignácio Curi, 111, Artur Alvim, São Paulo",
+   "data": "2026-11-29",
+   "inicio": "18:30",
+   "regra": "futebol",
+   "publico_estimado": 45000,
+   "fonte": "https://diariodopara.com.br/bola/cbf-tabela-rodadas-finais-brasileirao-datas-horarios-locais/"
+  },
+  {
+   "nome": "Pearl Jam (Blue Note)",
+   "local": "Blue Note São Paulo",
+   "endereco": "Av. Paulista, 2073, Conjunto Nacional, Consolação, São Paulo",
+   "data": "2026-11-29",
+   "inicio": "19:00",
+   "regra": "show",
+   "publico_estimado": 300,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Tiê",
+   "local": "Bourbon Street",
+   "endereco": "Rua dos Chanés, 127, Moema, São Paulo",
+   "data": "2026-11-29",
+   "inicio": "19:00",
+   "regra": "show",
+   "publico_estimado": 400,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Militarie Gun",
+   "local": "Hangar 110",
+   "endereco": "Rua Rodolfo Miranda, 110, Bom Retiro, São Paulo",
+   "data": "2026-11-29",
+   "inicio": "19:00",
+   "regra": "abertura",
+   "publico_estimado": 800,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Juca Novaes",
+   "local": "Bona Casa de Música",
+   "endereco": "Bona Casa de Música, São Paulo",
+   "data": "2026-11-29",
+   "inicio": "19:00",
+   "regra": "show",
+   "publico_estimado": null,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
+  },
+  {
+   "nome": "Sinistra",
+   "local": "Manifesto Bar",
+   "endereco": "Rua Iguatemi, 36, Itaim Bibi, São Paulo",
+   "data": "2026-11-29",
+   "inicio": "20:00",
+   "regra": "show",
+   "publico_estimado": 400,
+   "fonte": "https://www.soundquest.com.br/agenda/sp/2026-11"
   }
  ]
 }
