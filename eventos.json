@@ -1,5 +1,5 @@
 {
- "gerado_em": "2026-11-22T14:04:10-03:00",
+ "gerado_em": "2026-11-22T21:12:16-03:00",
  "data": "2026-11-22",
  "observacao": "Gerado automaticamente (Ticket360, Sympla e revisão semanal). Saída estimada pelas regras de tools/casas.json.",
  "eventos": [
@@ -100,38 +100,6 @@
    "lng": -46.687342
   },
   {
-   "nome": "Dance & Groove Prainha da Vila 3ª Edição! (22/11)",
-   "local": "Prainha da Vila bar",
-   "endereco": "Rua Diamantina, Vila Maria, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-22",
-   "inicio": "14:00",
-   "fim_estimado": "21:00",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/dance-groove-prainha-da-vila-3a-edicao-22-11/3575153",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.5189,
-   "lng": -46.592225
-  },
-  {
-   "nome": "SARAU das Cherrys - Ed. Duas Perdidas",
-   "local": "Studio Raphael Zaiden Escola de Dança e Música",
-   "endereco": "Rua Augusta, Consolação, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-22",
-   "inicio": "14:00",
-   "fim_estimado": "20:00",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/sarau-das-cherrys-ed-duas-perdidas/3614517",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.552899,
-   "lng": -46.654535
-  },
-  {
    "nome": "SAMBA QUE É MASSA - O CANTO DE TODAS AS RAÇAS",
    "local": "Arena Beach Imigrantes - Posto 011",
    "endereco": "Rua Santa Cruz, Vila Mariana, São Paulo",
@@ -178,38 +146,6 @@
    "regra": "show",
    "lat": -23.526772,
    "lng": -46.66024
-  },
-  {
-   "nome": "Campeonato The Pole Dancer",
-   "local": "Love Cabaret",
-   "endereco": "Rua Araújo, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-22",
-   "inicio": "15:30",
-   "fim_estimado": "00:00",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/campeonato-the-pole-dancer/3601863",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.545828,
-   "lng": -46.645068
-  },
-  {
-   "nome": "Audição dos Alunos da Pri Vianna",
-   "local": "PARTISANS PUB",
-   "endereco": "Rua Cônego Eugênio Leite, Pinheiros, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-22",
-   "inicio": "16:00",
-   "fim_estimado": "21:00",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/audicao-dos-alunos-da-pri-vianna/3647361",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.561014,
-   "lng": -46.68254
   },
   {
    "nome": "Conecta com: Alysson e Paula Souto",
@@ -260,6 +196,22 @@
    "lng": -46.699543
   },
   {
+   "nome": "Casa Museu Ema Klabin",
+   "local": "Casa Museu Ema Klabin",
+   "endereco": "RUA PORTUGAL, 43, São Paulo",
+   "tipo": "show",
+   "data": "2026-11-22",
+   "inicio": "17:00",
+   "fim_estimado": "18:45",
+   "incerteza_min": 45,
+   "publico_estimado": null,
+   "fonte": "https://bileto.sympla.com.br/event/103630",
+   "origem": "sympla",
+   "regra": "show",
+   "lat": -23.573584,
+   "lng": -46.678257
+  },
+  {
    "nome": "Garagem + Bate Fundo no Moleque Travesso",
    "local": "Moleque Travesso",
    "endereco": "Avenida do Café, Vila Guarani, São Paulo",
@@ -308,20 +260,20 @@
    "lng": -46.651332
   },
   {
-   "nome": "Arpi Alto no Brasil",
-   "local": "Praça das Artes",
-   "endereco": "Avenida São João, São Paulo",
+   "nome": "Natal na Vila 2026",
+   "local": "Eventos da Vila Leopoldina",
+   "endereco": "Rua Guaipá, Vila Leopoldina, São Paulo",
    "tipo": "show",
    "data": "2026-11-22",
    "inicio": "17:00",
-   "fim_estimado": "18:30",
+   "fim_estimado": "18:45",
    "incerteza_min": 45,
    "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/arpi-alto-no-brasil/3651740",
+   "fonte": "https://www.sympla.com.br/evento/natal-na-vila-2026/3662868",
    "origem": "sympla",
    "regra": "show",
-   "lat": -23.544402,
-   "lng": -46.637343
+   "lat": -23.52123,
+   "lng": -46.727465
   },
   {
    "nome": "Nicolas Krassik + Filpo e a Feira no FERVO",
@@ -338,38 +290,6 @@
    "regra": "show",
    "lat": -23.521915,
    "lng": -46.687801
-  },
-  {
-   "nome": "Boca de Ouro",
-   "local": "Complexo Cultural Funarte SP",
-   "endereco": "Alameda Nothmann, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-22",
-   "inicio": "17:00",
-   "fim_estimado": "18:30",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/boca-de-ouro/3616475",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.535217,
-   "lng": -46.650559
-  },
-  {
-   "nome": "Recital de canto - alunos da prof. Angélica Menezes",
-   "local": "Espaço Núcleo",
-   "endereco": "Rua Belas-Artes, Ipiranga, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-22",
-   "inicio": "18:00",
-   "fim_estimado": "19:30",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/recital-de-canto-alunos-da-prof-angelica-menezes/3645583",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.600826,
-   "lng": -46.614091
   },
   {
    "nome": "GRAVAÇÃO AUDIOVISUAL — SAMBA DA FEIRA | BAR DO JUIZ IMPERADOR | DOM-22",
@@ -404,54 +324,6 @@
    "lng": -46.686867
   },
   {
-   "nome": "DOM 18h - 22/11/26 - Natal Mágico Circo Spacial",
-   "local": "Circo Spacial",
-   "endereco": "Avenida Atlântica, Jardim Tres Marias, São Paulo",
-   "tipo": "teatro",
-   "data": "2026-11-22",
-   "inicio": "18:00",
-   "fim_estimado": "19:30",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/dom-18h-22-11-26-natal-magico-circo-spacial/3649332",
-   "origem": "sympla",
-   "regra": "teatro",
-   "lat": -23.689868,
-   "lng": -46.715762
-  },
-  {
-   "nome": "[22/11 - 18h] A Sociedade é Delas | Espetáculo de comédia com elenco e",
-   "local": "Sociedade do Humor",
-   "endereco": "Rua Bela Flor, Vila da Saúde, São Paulo",
-   "tipo": "teatro",
-   "data": "2026-11-22",
-   "inicio": "18:00",
-   "fim_estimado": "19:00",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/22-11-18h-a-sociedade-e-delas-espetaculo-de-comedia-com-elenco-exclusivamente-feminino/3657255",
-   "origem": "sympla",
-   "regra": "teatro",
-   "lat": -23.603812,
-   "lng": -46.631789
-  },
-  {
-   "nome": "TRUE WEST",
-   "local": "Teatro Do Núcleo Experimental",
-   "endereco": "Rua Barra Funda, Barra Funda, São Paulo",
-   "tipo": "teatro",
-   "data": "2026-11-22",
-   "inicio": "18:00",
-   "fim_estimado": "19:30",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/true-west/3636667",
-   "origem": "sympla",
-   "regra": "teatro",
-   "lat": -23.52928,
-   "lng": -46.656993
-  },
-  {
    "nome": "BOB FOSSE - O Show Vai Continuar (Cópia)",
    "local": "Sede do Grupo Ria",
    "endereco": "Rua Sebastião Pereira, Vila Buarque, São Paulo",
@@ -468,52 +340,20 @@
    "lng": -46.648638
   },
   {
-   "nome": "Epifanias Noturnas: o show",
-   "local": "ºAndar",
-   "endereco": "Rua Doutor Gabriel dos Santos, São Paulo",
+   "nome": "QUICK MASSAGE - CUBO ITAU 08 DE DEZEMBRO",
+   "local": "Alameda Vicente Pinzon, 54",
+   "endereco": "Alameda Vicente Pinzon, Vila Olímpia, São Paulo",
    "tipo": "show",
    "data": "2026-11-22",
    "inicio": "18:00",
-   "fim_estimado": "19:00",
+   "fim_estimado": "19:45",
    "incerteza_min": 45,
    "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/epifanias-noturnas-o-show/3619158",
+   "fonte": "https://www.sympla.com.br/evento/quick-massage-cubo-itau-08-de-dezembro/3662853",
    "origem": "sympla",
    "regra": "show",
-   "lat": -23.533338,
-   "lng": -46.658438
-  },
-  {
-   "nome": "ALMOÇO COM A ESTRELA",
-   "local": "Casa de Artes SP",
-   "endereco": "Rua Major Sertório, Vila Buarque, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-22",
-   "inicio": "18:00",
-   "fim_estimado": "19:30",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/almoco-com-a-estrela/3573630",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.545208,
-   "lng": -46.648684
-  },
-  {
-   "nome": "Forró das Minas // Festa do Vermelho",
-   "local": "Casa de Francisca",
-   "endereco": "R. Quintino Bocaiúva,22 - 1º andar, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-22",
-   "inicio": "18:30",
-   "fim_estimado": "20:15",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://bileto.sympla.com.br/event/117024",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.548776,
-   "lng": -46.634712
+   "lat": -23.596645,
+   "lng": -46.686908
   },
   {
    "nome": "Campeonato de Improvisação - FIP 6",
@@ -548,22 +388,6 @@
    "lng": -46.593516
   },
   {
-   "nome": "Ishtar - Um Encontro entre Música e Dança",
-   "local": "Rua Anete Queiroz Lacerda, 42",
-   "endereco": "Rua Anete Queiroz Lacerda, Butantã, São Paulo",
-   "tipo": "teatro",
-   "data": "2026-11-22",
-   "inicio": "18:30",
-   "fim_estimado": "20:00",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/ishtar-um-encontro-entre-musica-e-danca/3648162",
-   "origem": "sympla",
-   "regra": "teatro",
-   "lat": -23.578302,
-   "lng": -46.731385
-  },
-  {
    "nome": "Ó do Forró no Canto da Ema",
    "local": "CANTO DA EMA",
    "endereco": "Avenida Brigadeiro Faria Lima, Pinheiros, São Paulo",
@@ -596,54 +420,6 @@
    "lng": -46.645268
   },
   {
-   "nome": "EVE MAYER em QUE MUNDO EU VOU DEIXAR PRO MEU FILHO? - Stand Up Comedy",
-   "local": "Violeta Comedy Bar",
-   "endereco": "Rua Augusta, Consolação, São Paulo",
-   "tipo": "teatro",
-   "data": "2026-11-22",
-   "inicio": "19:00",
-   "fim_estimado": "21:00",
-   "incerteza_min": 30,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/eve-mayer-em-que-mundo-eu-vou-deixar-pro-meu-filho-stand-up-comedy/3624962",
-   "origem": "sympla",
-   "regra": "teatro",
-   "lat": -23.555887,
-   "lng": -46.657313
-  },
-  {
-   "nome": "NOITE DE COMÉDIA SECRETA | Comedy Club do Danilo Gentili",
-   "local": "My Fucking Comedy Club",
-   "endereco": "Alameda Santos, São Paulo",
-   "tipo": "teatro",
-   "data": "2026-11-22",
-   "inicio": "19:00",
-   "fim_estimado": "20:15",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/noite-de-comedia-secreta-comedy-club-do-danilo-gentili/3630217",
-   "origem": "sympla",
-   "regra": "teatro",
-   "lat": -23.562915,
-   "lng": -46.656574
-  },
-  {
-   "nome": "Negrito - Rindo no Escuro | SP | Bixiga Comedy",
-   "local": "Bixiga Comedy Club",
-   "endereco": "Rua Rui Barbosa, Bela Vista, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-22",
-   "inicio": "19:00",
-   "fim_estimado": "20:45",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/negrito-rindo-no-escuro-sp-bixiga-comedy/3631714",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.56063,
-   "lng": -46.645268
-  },
-  {
    "nome": "A LITURGIA DA QUEDA | 22 de novembro (domingo) | 19h",
    "local": "Nosso Canto Espaço de Arte e Cultura",
    "endereco": "Rua Pedro Taques, Consolação, São Paulo",
@@ -658,22 +434,6 @@
    "regra": "show",
    "lat": -23.552492,
    "lng": -46.656915
-  },
-  {
-   "nome": "Espetáculo \"DEPOIS DA CHUVA\" - Iason Cultural",
-   "local": "Ágora Teatro",
-   "endereco": "Rua Rui Barbosa, Bela Vista, São Paulo",
-   "tipo": "teatro",
-   "data": "2026-11-22",
-   "inicio": "19:00",
-   "fim_estimado": "20:10",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/espetaculo-depois-da-chuva-iason-cultural/3600083",
-   "origem": "sympla",
-   "regra": "teatro",
-   "lat": -23.56148,
-   "lng": -46.645269
   },
   {
    "nome": "AMANHÃ É SEGUNDA - STAND UP COMEDY - 22/11",
@@ -724,22 +484,6 @@
    "lng": -46.687252
   },
   {
-   "nome": "Pássaro",
-   "local": "Studio Zoe",
-   "endereco": "Rua Croata, Vila Ipojuca, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-22",
-   "inicio": "19:00",
-   "fim_estimado": "20:45",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/passaro/3633014",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.530195,
-   "lng": -46.705696
-  },
-  {
    "nome": "Hot Chip",
    "local": "Audio",
    "endereco": "Av. Francisco Matarazzo, 694, Água Branca, São Paulo",
@@ -771,22 +515,6 @@
    "lat": -23.672143,
    "lng": -46.694062,
    "local_aproximado": true
-  },
-  {
-   "nome": "TRIBUTO À LEGIÃO URBANA - MONTE CASTELO, MUITO ALÉM DO ACÚSTICO no TEA",
-   "local": "Teatro Santa Cruz",
-   "endereco": "R. Domingos de Morais,2564 - Shopping Metrô Santa, São Paulo",
-   "tipo": "teatro",
-   "data": "2026-11-22",
-   "inicio": "19:30",
-   "fim_estimado": "21:30",
-   "incerteza_min": 30,
-   "publico_estimado": null,
-   "fonte": "https://bileto.sympla.com.br/event/128835",
-   "origem": "sympla",
-   "regra": "teatro",
-   "lat": -23.598797,
-   "lng": -46.637284
   },
   {
    "nome": "BOFETADA - BOFESUNDAY 22/11 OPEN BAR $40 (DOMINGO)",
@@ -821,38 +549,6 @@
    "lng": -46.731656
   },
   {
-   "nome": "O Peso do Pássaro Morto monólogo inspirado no livro de Aline Bei",
-   "local": "Pequeno Ato",
-   "endereco": "Rua Doutor Teodoro Baima, Centro, São Paulo",
-   "tipo": "teatro",
-   "data": "2026-11-22",
-   "inicio": "20:00",
-   "fim_estimado": "21:00",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/o-peso-do-passaro-morto-monologo-inspirado-no-livro-de-aline-bei/3638055",
-   "origem": "sympla",
-   "regra": "teatro",
-   "lat": -23.546646,
-   "lng": -46.646218
-  },
-  {
-   "nome": "Suassuna em Suma - 22/11/2026 - 20 horas",
-   "local": "TEATRO DOM CAIXOTE",
-   "endereco": "Avenida Pompéia, Vila Pompéia, São Paulo",
-   "tipo": "teatro",
-   "data": "2026-11-22",
-   "inicio": "20:00",
-   "fim_estimado": "21:00",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/suassuna-em-suma-22-11-2026-20-horas/3657208",
-   "origem": "sympla",
-   "regra": "teatro",
-   "lat": -23.533528,
-   "lng": -46.687069
-  },
-  {
    "nome": "A ERA DO RADÍO",
    "local": "Cine Bijou",
    "endereco": "Praça Franklin Roosevelt, CONSOLAÇÃO, São Paulo",
@@ -885,22 +581,6 @@
    "lng": -46.667509
   },
   {
-   "nome": "Nem todo morto descansa em paz",
-   "local": "Complexo Cultural Funarte SP",
-   "endereco": "Alameda Nothmann, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-22",
-   "inicio": "20:00",
-   "fim_estimado": "21:00",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/nem-todo-morto-descansa-em-paz/3615315",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.535217,
-   "lng": -46.650559
-  },
-  {
    "nome": "DAÍRA CANTA BELCHIOR - AMAR E MUDAR AS COISAS - 10 ANOS - SP",
    "local": "Rooftap",
    "endereco": "Rua Guararapes, Brooklin, São Paulo",
@@ -915,22 +595,6 @@
    "regra": "show",
    "lat": -23.603322,
    "lng": -46.691733
-  },
-  {
-   "nome": "Divertida Noite - Stand up comedy | SP | Bixiga Comedy",
-   "local": "Bixiga Comedy Club",
-   "endereco": "Rua Rui Barbosa, Bela Vista, São Paulo",
-   "tipo": "teatro",
-   "data": "2026-11-22",
-   "inicio": "21:00",
-   "fim_estimado": "23:00",
-   "incerteza_min": 30,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/divertida-noite-stand-up-comedy-sp-bixiga-comedy/3657361",
-   "origem": "sympla",
-   "regra": "teatro",
-   "lat": -23.56063,
-   "lng": -46.645268
   },
   {
    "nome": "Divertida Gente STANDUP COMEDY",
@@ -964,22 +628,6 @@
    "sem_local": true
   },
   {
-   "nome": "Ref Nox 2.0",
-   "local": "Mansão Morumbi",
-   "endereco": "Rua Viriato Correia, São Paulo",
-   "tipo": "show",
-   "data": "2026-11-22",
-   "inicio": "22:00",
-   "fim_estimado": "06:00",
-   "incerteza_min": 45,
-   "publico_estimado": null,
-   "fonte": "https://www.sympla.com.br/evento/ref-nox-2-0/3657921",
-   "origem": "sympla",
-   "regra": "show",
-   "lat": -23.613985,
-   "lng": -46.719474
-  },
-  {
    "nome": "22.11 - ART LOUNGE",
    "local": "ART LOUNGE",
    "endereco": "Praça Benedito Calixto, São Paulo",
@@ -997,7 +645,7 @@
   }
  ],
  "geocodificacao": {
-  "com_local": 61,
+  "com_local": 39,
   "sem_local": 1
  }
 }

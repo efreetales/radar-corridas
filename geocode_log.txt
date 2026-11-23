@@ -1,4 +1,4 @@
 OK    Hot Chip | 694, Avenida Francisco Matarazzo, Barra Funda, São Paulo, Região Sudes
 OK    Jorge Aragão | Avenida Salim Antônio Curiati, Vila Géa, Campo Grande, São Paulo, Regi
 FALHA Best of Blues and Rock – Eddie Vedder | Av. Pedro Álvares Cabral, s/n, Ibirapuera, São Paulo
-com local: 61  sem local: 1
+com local: 39  sem local: 1
