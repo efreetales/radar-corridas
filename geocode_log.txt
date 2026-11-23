@@ -1,4 +1,6 @@
-OK    Hot Chip | 694, Avenida Francisco Matarazzo, Barra Funda, São Paulo, Região Sudes
-OK    Jorge Aragão | Avenida Salim Antônio Curiati, Vila Géa, Campo Grande, São Paulo, Regi
-FALHA Best of Blues and Rock – Eddie Vedder | Av. Pedro Álvares Cabral, s/n, Ibirapuera, São Paulo
-com local: 39  sem local: 1
+OK    Godspeed You! Black Emperor | 694, Avenida Francisco Matarazzo, Barra Funda, São Paulo, Região Sudes
+OK    New Order + Jovens Ateus | Espaço Unimed, 795, Rua Tagipuru, Barra Funda, São Paulo, Região Sudes
+FALHA Doce Encontro | Bar Templo, São Paulo
+FALHA Marquinhos Sensação | Bate Fundo, São Paulo
+OK    Clube do Rap | 272, Avenida São Luís, República, São Paulo, Região Sudeste, 01046-000
+com local: 18  sem local: 2
