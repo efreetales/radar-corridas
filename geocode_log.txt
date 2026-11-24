@@ -3,4 +3,4 @@ OK    New Order + Jovens Ateus | Espaço Unimed, 795, Rua Tagipuru, Barra Funda,
 FALHA Doce Encontro | Bar Templo, São Paulo
 FALHA Marquinhos Sensação | Bate Fundo, São Paulo
 OK    Clube do Rap | 272, Avenida São Luís, República, São Paulo, Região Sudeste, 01046-000
-com local: 18  sem local: 2
+com local: 3  sem local: 2
