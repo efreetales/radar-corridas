@@ -1,6 +1,8 @@
-OK    Godspeed You! Black Emperor | 694, Avenida Francisco Matarazzo, Barra Funda, São Paulo, Região Sudes
-OK    New Order + Jovens Ateus | Espaço Unimed, 795, Rua Tagipuru, Barra Funda, São Paulo, Região Sudes
-FALHA Doce Encontro | Bar Templo, São Paulo
-FALHA Marquinhos Sensação | Bate Fundo, São Paulo
-OK    Clube do Rap | 272, Avenida São Luís, República, São Paulo, Região Sudeste, 01046-000
-com local: 3  sem local: 2
+OK    Loyle Carner | Cine Joia, 82, Praça Carlos Gomes, Glicério, Sé, São Paulo, Região Sud
+OK    Godspeed You! Black Emperor (2ª data) | 694, Avenida Francisco Matarazzo, Barra Funda, São Paulo, Região Sudes
+OK    Johnny Marr | Rua Bragança Paulista, Granja Julieta, Santo Amaro, São Paulo, Região 
+FALHA Dying Fetus | Burning House, São Paulo
+OK    Vitória Maldonado | Conjunto Nacional, 2073, Avenida Paulista, Cerqueira César, Consolação
+OK    Festival MUCHO! – La Bomba de Tiempo | 2134, Rua Artur de Azevedo, Jardim Europa, Pinheiros, São Paulo, Regiã
+OK    Thamiris Cunha | SESC Consolação, 245, Rua Doutor Vila Nova, Vila Buarque, Consolação, 
+com local: 36  sem local: 1
