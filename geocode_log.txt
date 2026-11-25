@@ -1,8 +1,9 @@
-OK    Loyle Carner | Cine Joia, 82, Praça Carlos Gomes, Glicério, Sé, São Paulo, Região Sud
-OK    Godspeed You! Black Emperor (2ª data) | 694, Avenida Francisco Matarazzo, Barra Funda, São Paulo, Região Sudes
-OK    Johnny Marr | Rua Bragança Paulista, Granja Julieta, Santo Amaro, São Paulo, Região 
-FALHA Dying Fetus | Burning House, São Paulo
-OK    Vitória Maldonado | Conjunto Nacional, 2073, Avenida Paulista, Cerqueira César, Consolação
-OK    Festival MUCHO! – La Bomba de Tiempo | 2134, Rua Artur de Azevedo, Jardim Europa, Pinheiros, São Paulo, Regiã
-OK    Thamiris Cunha | SESC Consolação, 245, Rua Doutor Vila Nova, Vila Buarque, Consolação, 
-com local: 16  sem local: 1
+OK    New Order | Espaço Unimed, 795, Rua Tagipuru, Barra Funda, São Paulo, Região Sudes
+OK    Of Monsters and Men | 694, Avenida Francisco Matarazzo, Barra Funda, São Paulo, Região Sudes
+OK    Mel Lisboa | Conjunto Nacional, 2073, Avenida Paulista, Consolação, São Paulo, Regi
+FALHA Mariana Fagundes – gravação de DVD | Varanda Estaiada, São Paulo
+FALHA Mosquito | Bona Casa de Música, São Paulo
+OK    Rômulo Alexis, Nathalia Grilo e Lwiza Ga | Rua Paes Leme, 79, 79A, Rua Pais Leme, Vila Madalena, Pinheiros, São P
+OK    Elba Ramalho | Canto da Ema, 364, Avenida Brigadeiro Faria Lima, Vila Madalena, Pinhe
+FALHA Club Harpya – Vogue Night | Polly Bar, São Paulo
+com local: 48  sem local: 3
