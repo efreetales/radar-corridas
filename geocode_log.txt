@@ -5,4 +5,4 @@ FALHA Dying Fetus | Burning House, São Paulo
 OK    Vitória Maldonado | Conjunto Nacional, 2073, Avenida Paulista, Cerqueira César, Consolação
 OK    Festival MUCHO! – La Bomba de Tiempo | 2134, Rua Artur de Azevedo, Jardim Europa, Pinheiros, São Paulo, Regiã
 OK    Thamiris Cunha | SESC Consolação, 245, Rua Doutor Vila Nova, Vila Buarque, Consolação, 
-com local: 36  sem local: 1
+com local: 16  sem local: 1
