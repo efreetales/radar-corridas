@@ -4,6 +4,7 @@ OK    Mel Lisboa | Conjunto Nacional, 2073, Avenida Paulista, Consolação, São
 FALHA Mariana Fagundes – gravação de DVD | Varanda Estaiada, São Paulo
 FALHA Mosquito | Bona Casa de Música, São Paulo
 OK    Rômulo Alexis, Nathalia Grilo e Lwiza Ga | Rua Paes Leme, 79, 79A, Rua Pais Leme, Vila Madalena, Pinheiros, São P
-OK    Elba Ramalho | Canto da Ema, 364, Avenida Brigadeiro Faria Lima, Vila Madalena, Pinhe
+OK    Duca Belintani | Bourbon Street Music Club, 127, Rua dos Chanés, Indianópolis, Moema, S
+OK    Elba Ramalho | 364, Avenida Brigadeiro Faria Lima, Vila Madalena, Pinheiros, São Paul
 FALHA Club Harpya – Vogue Night | Polly Bar, São Paulo
-com local: 48  sem local: 3
+com local: 21  sem local: 3
