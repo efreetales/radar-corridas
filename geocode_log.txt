@@ -1,12 +1,14 @@
 OK    Tricky | Cine Joia, 82, Praça Carlos Gomes, Glicério, Sé, São Paulo, Região Sud
 OK    Candlelight: Rainhas da Sofrência | Rua Barra Funda, Barra Funda, São Paulo, Região Sudeste, 01140-080, Br
 OK    São Paulo x Remo | MorumBIS, 1, Praça Roberto Gomes Pedrosa, Morumbi, São Paulo, Região S
-OK    Banda Comitatus | Conjunto Nacional, 2073, Avenida Paulista, Cerqueira César, Consolação
+OK    Banda Comitatus | Conjunto Nacional, 2073, Avenida Paulista, Consolação, São Paulo, Regi
 OK    Baile de Finados | Avenida Fernando Do Espirito Santo Alves De Mattos, Rua Jonh Speers, J
 OK    Prettos | Alameda Nothmann, Bairro da Luz, Bom Retiro, São Paulo, Região Sudeste
+OK    Tori – Areia e Voz | Edifício Palacete Tereza Toledo Lara, 22, Rua Quintino Bocaiuva, Glicé
+OK    Maiara & Maraisa | 774, Avenida Francisco Matarazzo, Barra Funda, São Paulo, Região Sudes
 FALHA Alzira e Senhora do Tempo | Bona Casa de Música, São Paulo
 OK    Lua Bernardo | Sesc Pompéia, 93, Rua Clélia, Pompéia, Perdizes, São Paulo, Região Sud
 OK    Candlelight: Tributo a Taylor Swift | Rua Barra Funda, Barra Funda, São Paulo, Região Sudeste, 01140-080, Br
 OK    Black Cats Rock | Rua Iguatemi, Vila Olímpia, Itaim Bibi, São Paulo, Região Sudeste, 014
 OK    Moving – Dogghauz Showcase | Avenida Auro Soares de Moura Andrade, Barra Funda, São Paulo, Região S
-com local: 77  sem local: 1
+com local: 30  sem local: 1
