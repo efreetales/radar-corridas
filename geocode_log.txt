@@ -1,14 +1,22 @@
-OK    Tricky | Cine Joia, 82, Praça Carlos Gomes, Glicério, Sé, São Paulo, Região Sud
-OK    Candlelight: Rainhas da Sofrência | Rua Barra Funda, Barra Funda, São Paulo, Região Sudeste, 01140-080, Br
-OK    São Paulo x Remo | MorumBIS, 1, Praça Roberto Gomes Pedrosa, Morumbi, São Paulo, Região S
-OK    Banda Comitatus | Conjunto Nacional, 2073, Avenida Paulista, Consolação, São Paulo, Regi
-OK    Baile de Finados | Avenida Fernando Do Espirito Santo Alves De Mattos, Rua Jonh Speers, J
-OK    Prettos | Alameda Nothmann, Bairro da Luz, Bom Retiro, São Paulo, Região Sudeste
-OK    Tori – Areia e Voz | Edifício Palacete Tereza Toledo Lara, 22, Rua Quintino Bocaiuva, Glicé
-OK    Maiara & Maraisa | 774, Avenida Francisco Matarazzo, Barra Funda, São Paulo, Região Sudes
-FALHA Alzira e Senhora do Tempo | Bona Casa de Música, São Paulo
-OK    Lua Bernardo | Sesc Pompéia, 93, Rua Clélia, Pompéia, Perdizes, São Paulo, Região Sud
-OK    Candlelight: Tributo a Taylor Swift | Rua Barra Funda, Barra Funda, São Paulo, Região Sudeste, 01140-080, Br
-OK    Black Cats Rock | Rua Iguatemi, Vila Olímpia, Itaim Bibi, São Paulo, Região Sudeste, 014
-OK    Moving – Dogghauz Showcase | Avenida Auro Soares de Moura Andrade, Barra Funda, São Paulo, Região S
-com local: 30  sem local: 1
+OK    A Perfect Circle + Puscifer | Condomínio São Paulo Headquarters, 22833, Avenida das Nações Unidas, V
+OK    Fagner | Rua Bragança Paulista, Granja Julieta, Santo Amaro, São Paulo, Região 
+OK    Pop3 | Conjunto Nacional, 2073, Avenida Paulista, Cerqueira César, Consolação
+OK    Samba da Victória | SESC 24 de Maio, 109, Rua Vinte e Quatro de Maio, República, São Paulo
+OK    Gian & Giovani – DVD Planeta Sonho | Vibra São Paulo, 17955, Avenida das Nações Unidas, Granja Julieta, San
+OK    Rashid | Alameda Nothmann, Bairro da Luz, Bom Retiro, São Paulo, Região Sudeste
+OK    Ferrugem e Turma do Pagode | Avenida Salim Antônio Curiati, Vila Géa, Campo Grande, São Paulo, Regi
+OK    Grag Queen | Avenida Luiz Dumont Villares, Jardim São Paulo, Santana, São Paulo, Re
+OK    Devotos | Sesc Pompéia, 93, Rua Clélia, Pompéia, Perdizes, São Paulo, Região Sud
+OK    Thomas Strønen & Time Is a Blind Guide | 1000, Rua Padre Adelino, Belém, São Paulo, Região Sudeste, 03303-000, 
+OK    Orquestra Brasil Jazz Sinfônica | Rua Paes Leme, 79, 79A, Rua Pais Leme, Vila Madalena, Pinheiros, São P
+OK    BRIME! | 1000, Rua Padre Adelino, Belém, São Paulo, Região Sudeste, 03303-000, 
+FALHA Suel | Chopperia e Espetinho do Juiz (Patriarca), São Paulo
+OK    Velhas Virgens – 40 anos | Rua Iguatemi, Vila Olímpia, Itaim Bibi, São Paulo, Região Sudeste, 014
+FALHA Piseiro em Dose Dupla / Washington Brasi | Arena Mega Sports, São Paulo
+OK    Pablo, Netto Brito, Silfarley e Simone M | Centro de Tradições Nordestinas, 615, Rua Jacofer, VIla Prado, Limão, 
+FALHA Chininha + Ricardinho Lima | Império Espeto Bar, São Paulo
+OK    Matuê | Neo Química Arena, 111, Avenida Miguel Inácio Curi, Vila Carmosina, It
+OK    Peel Slowly (And Dance) | 6712, Rua Vergueiro, Vila Firmiano Pinto, Cursino, São Paulo, Região S
+OK    Safa Baile – Festa da Peruca | 1838, Rua Cardeal Arcoverde, Vila Madalena, Pinheiros, São Paulo, Regi
+OK    Freak Chic – Cesare vs Disorder | Avenida Auro Soares de Moura Andrade, Barra Funda, São Paulo, Região S
+com local: 128  sem local: 3
