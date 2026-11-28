@@ -1,11 +1,11 @@
 OK    A Perfect Circle + Puscifer | Condomínio São Paulo Headquarters, 22833, Avenida das Nações Unidas, V
 OK    Fagner | Rua Bragança Paulista, Granja Julieta, Santo Amaro, São Paulo, Região 
-OK    Pop3 | Conjunto Nacional, 2073, Avenida Paulista, Cerqueira César, Consolação
+OK    Pop3 | Conjunto Nacional, 2073, Avenida Paulista, Consolação, São Paulo, Regi
 OK    Samba da Victória | SESC 24 de Maio, 109, Rua Vinte e Quatro de Maio, República, São Paulo
 OK    Gian & Giovani – DVD Planeta Sonho | Vibra São Paulo, 17955, Avenida das Nações Unidas, Granja Julieta, San
 OK    Rashid | Alameda Nothmann, Bairro da Luz, Bom Retiro, São Paulo, Região Sudeste
 OK    Ferrugem e Turma do Pagode | Avenida Salim Antônio Curiati, Vila Géa, Campo Grande, São Paulo, Regi
-OK    Grag Queen | Avenida Luiz Dumont Villares, Jardim São Paulo, Santana, São Paulo, Re
+OK    Grag Queen | Avenida Luiz Dumont Villares, Vila Paulicéia, Santana, São Paulo, Regi
 OK    Devotos | Sesc Pompéia, 93, Rua Clélia, Pompéia, Perdizes, São Paulo, Região Sud
 OK    Thomas Strønen & Time Is a Blind Guide | 1000, Rua Padre Adelino, Belém, São Paulo, Região Sudeste, 03303-000, 
 OK    Orquestra Brasil Jazz Sinfônica | Rua Paes Leme, 79, 79A, Rua Pais Leme, Vila Madalena, Pinheiros, São P
@@ -16,7 +16,8 @@ FALHA Piseiro em Dose Dupla / Washington Brasi | Arena Mega Sports, São Paulo
 OK    Pablo, Netto Brito, Silfarley e Simone M | Centro de Tradições Nordestinas, 615, Rua Jacofer, VIla Prado, Limão, 
 FALHA Chininha + Ricardinho Lima | Império Espeto Bar, São Paulo
 OK    Matuê | Neo Química Arena, 111, Avenida Miguel Inácio Curi, Vila Carmosina, It
+OK    Rádio Nacional – 80 em Alta Frequência | Bourbon Street Music Club, 127, Rua dos Chanés, Indianópolis, Moema, S
 OK    Peel Slowly (And Dance) | 6712, Rua Vergueiro, Vila Firmiano Pinto, Cursino, São Paulo, Região S
 OK    Safa Baile – Festa da Peruca | 1838, Rua Cardeal Arcoverde, Vila Madalena, Pinheiros, São Paulo, Regi
 OK    Freak Chic – Cesare vs Disorder | Avenida Auro Soares de Moura Andrade, Barra Funda, São Paulo, Região S
-com local: 128  sem local: 3
+com local: 88  sem local: 3
